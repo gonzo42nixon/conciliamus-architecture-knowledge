@@ -16,7 +16,11 @@
         "btp",
         "decoupling",
         "resilience"
-      ]
+      ],
+      "description": "Trennung von Netzwerk-Ingest/Transport und atomarer Geschäftslogik zur Erzielung von Fehlertoleranz und Skalierbarkeit.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 11
     },
     {
       "id": "architecture/existence-check-and-routing",
@@ -30,7 +34,11 @@
         "idempotency",
         "s4hana",
         "content-based-router"
-      ]
+      ],
+      "description": "Idempotente Existenzprüfung via OData GET und deterministische Verzweigung zu POST, PATCH oder Fehlerbehandlung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 7
     },
     {
       "id": "architecture/process-direct-interconnect",
@@ -44,7 +52,11 @@
         "performance",
         "in-memory",
         "btp"
-      ]
+      ],
+      "description": "Latenzfreie, speicherinterne Kommunikation zwischen Integration Flows innerhalb desselben Cloud Integration Tenants.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 6
     },
     {
       "id": "architecture/resilience-and-dead-letter",
@@ -58,7 +70,11 @@
         "dlq",
         "data-store",
         "replay"
-      ]
+      ],
+      "description": "Zweikanalige Fehlerdifferenzierung in Business Errors (Audit Log) und Technical Errors (Data Store DLQ mit selektivem Replay).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 7
     },
     {
       "id": "architecture/session-and-csrf-handshake",
@@ -73,7 +89,11 @@
         "cookies",
         "s4hana",
         "http"
-      ]
+      ],
+      "description": "Handhabung von CSRF-Tokens und Session-Cookies bei schreibenden OData-Aufrufen auf SAP S/4HANA.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 2
     },
     {
       "id": "architecture/streaming-iterating-splitter",
@@ -87,7 +107,11 @@
         "memory-management",
         "cpi",
         "json"
-      ]
+      ],
+      "description": "Speicheroptimierte Zerlegung von JSON-Massen-Batches ohne Erzeugung von Java Out-Of-Memory Fehlern.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 2
     },
     {
       "id": "data-contracts/custom-header-properties",
@@ -101,7 +125,11 @@
         "custom-headers",
         "audit",
         "fulltext-search"
-      ]
+      ],
+      "description": "Definition der im BTP Message Processing Log gesetzten Metadaten für Volltextsuche und Audit-Trails.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 2
     },
     {
       "id": "data-contracts/mdm-inbound-contract",
@@ -114,7 +142,11 @@
         "json",
         "schema",
         "validation"
-      ]
+      ],
+      "description": "Schnittstellenspezifikation und Validierungsregeln für die vom Quellsystem JSD-MDM übermittelten JSON-Sammelbatches.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 3
     },
     {
       "id": "data-contracts/s4-odata-mapping",
@@ -127,7 +159,11 @@
         "odata",
         "s4hana",
         "api-business-partner"
-      ]
+      ],
+      "description": "Vollständige Zuordnungsmatrix zwischen MDM-Feldern und den SAP OData Entitäten A_BusinessPartner und Address.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 4
     },
     {
       "id": "decisions/adr-001-dual-iflow-decoupling",
@@ -140,7 +176,11 @@
         "dual-iflow",
         "decoupling",
         "cpi"
-      ]
+      ],
+      "description": "Aufteilung der Integrationslogik in zwei separate iFlows zur Gewährleistung von Fehlerisolation und Ressourcenschonung.",
+      "status": "accepted",
+      "domain": "General",
+      "degree": 6
     },
     {
       "id": "decisions/adr-002-process-direct",
@@ -154,7 +194,11 @@
         "jms",
         "performance",
         "cpi"
-      ]
+      ],
+      "description": "Nutzung des ProcessDirect-Adapters zur latenzfreien internen Kopplung ohne JMS-Ressourcenbindung.",
+      "status": "accepted",
+      "domain": "General",
+      "degree": 4
     },
     {
       "id": "decisions/adr-003-bpmn-method-and-style",
@@ -168,7 +212,11 @@
         "method-and-style",
         "bruce-silver",
         "governance"
-      ]
+      ],
+      "description": "Durchgängige Anwendung der Nomenklatur- und Modellierungsstandards von Bruce Silver für selbstdokumentierende Enterprise-iFlows.",
+      "status": "accepted",
+      "domain": "General",
+      "degree": 5
     },
     {
       "id": "decisions/adr-004-data-store-dlq",
@@ -182,7 +230,11 @@
         "dlq",
         "resilience",
         "replay"
-      ]
+      ],
+      "description": "Einsatz eines persistenten BTP Data Stores für fehlgeschlagene Einzelnachrichten zur Ermöglichung eines punktuellen Wiederanlaufs.",
+      "status": "accepted",
+      "domain": "General",
+      "degree": 5
     },
     {
       "id": "decisions/adr-005-single-viewport-fiori",
@@ -196,7 +248,11 @@
         "ui-design",
         "single-viewport",
         "pills"
-      ]
+      ],
+      "description": "Umstellung der Test-Runner Web-App auf ein striktes 100% no-outer-scroll Layout mit interaktiven aufklappbaren JSON-Pills.",
+      "status": "accepted",
+      "domain": "General",
+      "degree": 2
     },
     {
       "id": "iflows/batch-receiver-iflow",
@@ -211,7 +267,11 @@
         "bpmn",
         "streaming",
         "ingest"
-      ]
+      ],
+      "description": "Spezifikation des Ingestion-iFlows zur Annahme von MDM-Massen-Batches, syntaktischen Vorvalidierung und Streaming-Zerlegung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 11
     },
     {
       "id": "iflows/item-processor-iflow",
@@ -227,7 +287,11 @@
         "routing",
         "s4hana",
         "error-handling"
-      ]
+      ],
+      "description": "Spezifikation des verarbeitenden iFlows für Validierung, OData GET Existenzprüfung, deterministisches Routing und S/4HANA OData Aufrufe.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 19
     },
     {
       "id": "iflows/reprocessor-iflow",
@@ -241,7 +305,11 @@
         "data-store",
         "replay",
         "resilience"
-      ]
+      ],
+      "description": "Spezifikation des Wiederanlauf-Flows zum selektiven Wiedereinspielen fehlgeschlagener Datensätze aus der Dead Letter Queue.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 5
     },
     {
       "id": "presentation-and-ui/fiori-workbench-ui",
@@ -256,7 +324,11 @@
         "single-viewport",
         "test-runner",
         "firebase-auth"
-      ]
+      ],
+      "description": "Architektur der Single-Viewport Fiori Horizon Web-Applikation mit aufklappbaren RGB-JSON-Pills und Monitoring-Drawer.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 3
     },
     {
       "id": "presentation-and-ui/pecha-kucha-20x20",
@@ -270,7 +342,11 @@
         "timer",
         "audio",
         "firebase-auth"
-      ]
+      ],
+      "description": "Konzeption, Sprechtexte, Zeitsteuerung und technische Umsetzung der interaktiven 20x20 Präsentation (6:40 Min.).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 2
     },
     {
       "id": "qa/core-architecture-faq",
@@ -283,7 +359,11 @@
         "architecture",
         "agent",
         "reasoning"
-      ]
+      ],
+      "description": "Kanonische Fragen und Antworten zur Architektur für den API-Architektur-Agenten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 4
     },
     {
       "id": "qa/error-handling-faq",
@@ -297,7 +377,11 @@
         "dlq",
         "troubleshooting",
         "errors"
-      ]
+      ],
+      "description": "Antworten auf Fragen zu Fehlerbehandlung, Dead Letter Queue und Wiederanlaufstrategien.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 3
     },
     {
       "id": "verification/istqb-test-strategy",
@@ -310,7 +394,11 @@
         "testing",
         "test-matrix",
         "qa"
-      ]
+      ],
+      "description": "Systematische Testabdeckung nach ISTQB CTFL Prinzipien (Äquivalenzklassen, Grenzwertanalyse, Fehlerfall-Prüfung).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 3
     },
     {
       "id": "verification/live-btp-execution",
@@ -323,7 +411,11 @@
         "btp",
         "http-200",
         "verification"
-      ]
+      ],
+      "description": "Vollständiger Nachweis des erfolgreichen Live-Durchlaufs auf dem SAP BTP Tenant am 04.09.2026 mit HTTP 200 OK.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 9
     },
     {
       "id": "verification/sandbox-limitations-405",
@@ -337,7 +429,11 @@
         "limitation",
         "s4hana",
         "odata"
-      ]
+      ],
+      "description": "Umgang mit der read-only Beschränkung der SAP Business Accelerator Hub Sandbox für schreibende OData-Aufrufe.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 1
     }
   ],
   "edges": [

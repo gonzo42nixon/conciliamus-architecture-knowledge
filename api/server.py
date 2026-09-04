@@ -9,7 +9,8 @@ import re
 import json
 from typing import Optional, List, Dict, Any
 import yaml
-from fastapi import FastAPI, HTTPException, Query, Path
+from fastapi import FastAPI, HTTPException, Query, Path, Request
+from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -19,6 +20,8 @@ if sys.stdout.encoding != 'utf-8':
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 KNOWLEDGE_DIR = os.path.join(ROOT_DIR, "knowledge")
 GRAPH_PATH = os.path.join(ROOT_DIR, "graph", "knowledge-graph.json")
+SITE_DIR = os.path.join(ROOT_DIR, "site")
+INDEX_HTML_PATH = os.path.join(SITE_DIR, "index.html")
 
 FRONTMATTER_REGEX = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 
@@ -103,6 +106,9 @@ def root_info():
     return {
         "title": "Conciliamus Architecture Knowledge API",
         "standard": "Google Open Knowledge Format (OKF v0.2)",
+        "graphViewerUrl": "/graph",
+        "obsidianViewerUrl": "/obsidian",
+        "obsidianVaultPath": ROOT_DIR,
         "docsUrl": "/docs",
         "redocUrl": "/redoc",
         "status": "ready"
@@ -177,9 +183,18 @@ def get_decision_record(adr_number: str):
 
 @app.get("/graph", tags=["Knowledge Graph"])
 def get_knowledge_graph(
+    request: Request,
     focusNode: Optional[str] = Query(None, description="Ausgangsknoten"),
-    depth: int = Query(2, ge=1, le=5)
+    depth: int = Query(2, ge=1, le=5),
+    format: Optional[str] = Query(None, description="Format ('html' oder 'json')")
 ):
+    accept = request.headers.get("accept", "")
+    is_browser = "text/html" in accept and "application/json" not in accept
+    if format == "html" or (is_browser and format != "json"):
+        if os.path.exists(INDEX_HTML_PATH):
+            with open(INDEX_HTML_PATH, "r", encoding="utf-8") as f:
+                return HTMLResponse(content=f.read())
+
     if not os.path.exists(GRAPH_PATH):
         raise HTTPException(status_code=500, detail="knowledge-graph.json nicht generiert. Bitte tooling/build_graph.py ausführen.")
     with open(GRAPH_PATH, "r", encoding="utf-8") as f:
@@ -213,6 +228,14 @@ def get_knowledge_graph(
         "nodes": filtered_nodes,
         "edges": collected_edges
     }
+
+@app.get("/obsidian", response_class=HTMLResponse, tags=["Obsidian Graph"])
+@app.get("/view", response_class=HTMLResponse, tags=["Obsidian Graph"])
+def view_obsidian_workspace():
+    if not os.path.exists(INDEX_HTML_PATH):
+        raise HTTPException(status_code=404, detail="site/index.html nicht gefunden.")
+    with open(INDEX_HTML_PATH, "r", encoding="utf-8") as f:
+        return HTMLResponse(content=f.read())
 
 @app.post("/rules/verify", response_model=VerifyRuleResponse, tags=["Architecture Rules"])
 def verify_architecture_rule(req: VerifyRuleRequest):

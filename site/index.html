@@ -1,236 +1,816 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de" class="h-full">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Conciliamus Architecture Knowledge Graph (OKF v0.2)</title>
+  <title>Conciliamus Architecture Vault (Obsidian Graph & Notes)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <style>
-    body { font-family: 'Open Sans', sans-serif; }
-    #network { width: 100%; height: 100%; }
-    .custom-scrollbar::-webkit-scrollbar { width: 5px; }
-    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; }
+    code, pre { font-family: 'JetBrains Mono', monospace; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #16161e; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #475569; }
+    .markdown-body { color: #e2e8f0; font-size: 0.875rem; line-height: 1.7; }
+    .markdown-body h1 { font-size: 1.4rem; font-weight: 700; color: #f8fafc; margin-top: 1.2rem; margin-bottom: 0.6rem; border-bottom: 1px solid #334155; padding-bottom: 0.4rem; }
+    .markdown-body h2 { font-size: 1.18rem; font-weight: 600; color: #f1f5f9; margin-top: 1.1rem; margin-bottom: 0.5rem; border-bottom: 1px solid #282e3e; padding-bottom: 0.3rem; }
+    .markdown-body h3 { font-size: 1.05rem; font-weight: 600; color: #e2e8f0; margin-top: 0.9rem; margin-bottom: 0.4rem; }
+    .markdown-body p { margin-bottom: 0.85rem; }
+    .markdown-body ul, .markdown-body ol { margin-bottom: 0.85rem; padding-left: 1.4rem; list-style-type: disc; }
+    .markdown-body ol { list-style-type: decimal; }
+    .markdown-body li { margin-bottom: 0.25rem; }
+    .markdown-body a { color: #818cf8; text-decoration: underline; text-underline-offset: 2px; }
+    .markdown-body a:hover { color: #a5b4fc; }
+    .markdown-body blockquote { border-left: 3px solid #7c3aed; background: rgba(124, 58, 237, 0.08); padding: 0.6rem 0.9rem; margin-bottom: 0.85rem; border-radius: 0 0.375rem 0.375rem 0; color: #cbd5e1; font-style: italic; }
+    .markdown-body code:not(pre code) { background: #242938; color: #f43f5e; padding: 0.15rem 0.35rem; border-radius: 0.25rem; font-size: 0.8rem; }
+    .markdown-body pre { background: #0f131d !important; border: 1px solid #262e42; border-radius: 0.5rem; padding: 0.85rem; margin-bottom: 1rem; overflow-x: auto; position: relative; }
+    .markdown-body table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.8rem; }
+    .markdown-body th, .markdown-body td { border: 1px solid #334155; padding: 0.45rem 0.65rem; text-align: left; }
+    .markdown-body th { background: #1e2433; color: #f1f5f9; font-weight: 600; }
+    .markdown-body tr:nth-child(even) { background: rgba(30, 41, 59, 0.4); }
   </style>
 </head>
-<body class="h-full bg-slate-900 text-slate-100 flex flex-col overflow-hidden select-none">
+<body class="h-full bg-[#111116] text-slate-200 flex flex-col overflow-hidden select-none">
 
-  <!-- Shell Header -->
-  <header class="h-12 bg-slate-950 border-b border-slate-800 px-4 flex items-center justify-between z-10 shrink-0">
+  <!-- Obsidian Vault Header -->
+  <header class="h-13 bg-[#16161e] border-b border-[#242432] px-4 py-2 flex items-center justify-between z-20 shrink-0">
     <div class="flex items-center gap-3">
-      <div class="w-7 h-7 rounded bg-[#0070f2] text-white flex items-center justify-center font-black text-xs shadow-sm">
-        OKF
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-700 text-white flex items-center justify-center text-sm shadow-md shadow-purple-900/30 ring-1 ring-purple-400/30">
+        <i class="fa-solid fa-gem"></i>
       </div>
       <div>
-        <h1 class="text-xs font-bold text-white tracking-wide">Conciliamus Architecture Knowledge Graph</h1>
-        <div class="text-[10px] text-slate-400 font-mono">Google Open Knowledge Format v0.2 • 24 Knoten • 63 Kanten</div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-xs font-bold text-white tracking-wide">Conciliamus Architecture Vault</h1>
+          <span class="px-1.5 py-0.2 text-[9px] font-mono bg-purple-950/80 text-purple-300 border border-purple-700/50 rounded">OKF v0.2</span>
+        </div>
+        <div class="text-[10px] text-slate-400 flex items-center gap-2 font-mono">
+          <span><span class="text-purple-400 font-bold" id="hdrNodeCount">24</span> Knoten</span>
+          <span>•</span>
+          <span><span class="text-purple-400 font-bold" id="hdrEdgeCount">63</span> Kanten</span>
+          <span>•</span>
+          <span class="text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Verifiziert</span>
+        </div>
       </div>
     </div>
 
-    <!-- Search & Filter Controls -->
-    <div class="flex items-center gap-2.5">
-      <div class="relative">
-        <i class="fa-solid fa-search absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
-        <input id="searchInput" type="text" placeholder="Knoten suchen..." oninput="onSearch(this.value)" class="pl-8 pr-3 py-1 bg-slate-900 border border-slate-700 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#0070f2] w-48 transition">
+    <!-- Center: Obsidian Instant Search -->
+    <div class="relative max-w-sm w-full mx-4">
+      <div class="relative flex items-center">
+        <i class="fa-solid fa-search absolute left-3 text-slate-500 text-xs"></i>
+        <input id="searchInput" type="text" placeholder="Graph durchsuchen (z.B. Dual-iFlow, ADR, CSRF)..." 
+               oninput="onSearch(this.value)" onkeydown="onSearchKey(event)"
+               class="w-full pl-8 pr-8 py-1.5 bg-[#1a1a24] border border-[#2e2e40] focus:border-purple-500 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-purple-500/50 transition font-sans shadow-inner">
+        <button id="searchClear" onclick="clearSearch()" class="hidden absolute right-2.5 text-slate-500 hover:text-slate-300 text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
       </div>
-      <select id="typeFilter" onchange="filterByType(this.value)" class="bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300 py-1 px-2 focus:outline-none focus:border-[#0070f2]">
-        <option value="all">Alle Typen</option>
-        <option value="Architecture Concept">Architecture Concept</option>
-        <option value="iFlow Specification">iFlow Specification</option>
-        <option value="Decision Record">Decision Record (ADR)</option>
-        <option value="Data Contract">Data Contract</option>
-        <option value="Test Evidence">Test Evidence</option>
-        <option value="Presentation Concept">Presentation</option>
-        <option value="UI Concept">UI Concept</option>
-        <option value="Architecture FAQ">Architecture FAQ</option>
-      </select>
-      <button onclick="resetView()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-xs text-slate-200 transition flex items-center gap-1.5" title="Ansicht zentrieren">
-        <i class="fa-solid fa-arrows-to-dot text-slate-400"></i>
-        <span class="hidden sm:inline">Zentrieren</span>
+      <div id="searchDropdown" class="hidden absolute top-full mt-1 left-0 right-0 bg-[#1a1a26] border border-[#333348] rounded-lg shadow-2xl max-h-64 overflow-y-auto custom-scrollbar z-50 text-xs">
+      </div>
+    </div>
+
+    <!-- Right Controls: Quick Actions & Obsidian Desktop Guide -->
+    <div class="flex items-center gap-2">
+      <button onclick="resetView()" class="px-2.5 py-1.5 bg-[#1e1e2c] hover:bg-[#28283c] border border-[#303044] rounded-lg text-xs text-slate-300 hover:text-white transition flex items-center gap-1.5 shadow-sm" title="Graph zentrieren">
+        <i class="fa-solid fa-crosshairs text-purple-400"></i>
+        <span class="hidden md:inline">Zentrieren</span>
       </button>
+
+      <button id="physicsBtn" onclick="togglePhysics()" class="px-2.5 py-1.5 bg-[#1e1e2c] hover:bg-[#28283c] border border-[#303044] rounded-lg text-xs text-slate-300 hover:text-white transition flex items-center gap-1.5 shadow-sm" title="Simulation anhalten/fortsetzen">
+        <i class="fa-solid fa-pause text-amber-400" id="physicsIcon"></i>
+        <span class="hidden md:inline" id="physicsText">Physik Stop</span>
+      </button>
+
+      <button onclick="openObsidianModal()" class="px-2.5 py-1.5 bg-gradient-to-r from-purple-700 to-indigo-700 hover:from-purple-600 hover:to-indigo-600 text-white font-medium rounded-lg text-xs transition flex items-center gap-1.5 shadow-md shadow-purple-900/30" title="In Desktop Obsidian öffnen">
+        <i class="fa-solid fa-gem"></i>
+        <span>Obsidian Vault</span>
+      </button>
+
+      <a href="/docs" target="_blank" class="px-2.5 py-1.5 bg-[#1e1e2c] hover:bg-[#28283c] border border-[#303044] rounded-lg text-xs text-slate-400 hover:text-white transition flex items-center gap-1.5" title="FastAPI Swagger Dokumentation">
+        <i class="fa-solid fa-book text-slate-400"></i>
+        <span class="hidden lg:inline">API Docs</span>
+      </a>
     </div>
   </header>
+  <!-- Filter Bar (Chips with Obsidian Colors) -->
+  <div class="h-9 bg-[#14141c] border-b border-[#242432] px-4 flex items-center gap-2 overflow-x-auto custom-scrollbar shrink-0 text-xs">
+    <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mr-1">Filter:</span>
+    <button onclick="filterCategory('all', this)" class="filter-chip active px-2 py-0.5 rounded-full text-[11px] bg-purple-900/50 text-purple-300 border border-purple-600 font-medium flex items-center gap-1.5 transition">
+      <span>Alle Knoten</span>
+      <span class="bg-purple-800/80 text-[10px] px-1 rounded font-mono">24</span>
+    </button>
+    <button onclick="filterCategory('Architecture Concept', this)" class="filter-chip px-2 py-0.5 rounded-full text-[11px] bg-[#1a1a26] text-slate-300 border border-[#2e2e42] hover:border-indigo-500 flex items-center gap-1.5 transition">
+      <span class="w-2 h-2 rounded-full bg-[#8b5cf6]"></span>
+      <span>Architektur</span>
+      <span class="text-slate-400 text-[10px] font-mono">6</span>
+    </button>
+    <button onclick="filterCategory('iFlow Specification', this)" class="filter-chip px-2 py-0.5 rounded-full text-[11px] bg-[#1a1a26] text-slate-300 border border-[#2e2e42] hover:border-emerald-500 flex items-center gap-1.5 transition">
+      <span class="w-2 h-2 rounded-full bg-[#10b981]"></span>
+      <span>iFlows</span>
+      <span class="text-slate-400 text-[10px] font-mono">3</span>
+    </button>
+    <button onclick="filterCategory('Decision Record', this)" class="filter-chip px-2 py-0.5 rounded-full text-[11px] bg-[#1a1a26] text-slate-300 border border-[#2e2e42] hover:border-amber-500 flex items-center gap-1.5 transition">
+      <span class="w-2 h-2 rounded-full bg-[#f59e0b]"></span>
+      <span>ADRs</span>
+      <span class="text-slate-400 text-[10px] font-mono">5</span>
+    </button>
+    <button onclick="filterCategory('Data Contract', this)" class="filter-chip px-2 py-0.5 rounded-full text-[11px] bg-[#1a1a26] text-slate-300 border border-[#2e2e42] hover:border-cyan-500 flex items-center gap-1.5 transition">
+      <span class="w-2 h-2 rounded-full bg-[#06b6d4]"></span>
+      <span>Kontrakte</span>
+      <span class="text-slate-400 text-[10px] font-mono">3</span>
+    </button>
+    <button onclick="filterCategory('Test Evidence', this)" class="filter-chip px-2 py-0.5 rounded-full text-[11px] bg-[#1a1a26] text-slate-300 border border-[#2e2e42] hover:border-rose-500 flex items-center gap-1.5 transition">
+      <span class="w-2 h-2 rounded-full bg-[#f43f5e]"></span>
+      <span>Tests & Nachweise</span>
+      <span class="text-slate-400 text-[10px] font-mono">3</span>
+    </button>
+    <button onclick="filterCategory('Presentation Concept', this)" class="filter-chip px-2 py-0.5 rounded-full text-[11px] bg-[#1a1a26] text-slate-300 border border-[#2e2e42] hover:border-fuchsia-500 flex items-center gap-1.5 transition">
+      <span class="w-2 h-2 rounded-full bg-[#d946ef]"></span>
+      <span>Präsentation & UI</span>
+      <span class="text-slate-400 text-[10px] font-mono">2</span>
+    </button>
+    <button onclick="filterCategory('Architecture FAQ', this)" class="filter-chip px-2 py-0.5 rounded-full text-[11px] bg-[#1a1a26] text-slate-300 border border-[#2e2e42] hover:border-slate-400 flex items-center gap-1.5 transition">
+      <span class="w-2 h-2 rounded-full bg-[#64748b]"></span>
+      <span>FAQs</span>
+      <span class="text-slate-400 text-[10px] font-mono">2</span>
+    </button>
+  </div>
 
-  <!-- Main Viewport (Graph + Drawer) -->
+  <!-- Main Viewport: Split Layout (Graph Canvas + Obsidian Note Reader) -->
   <div class="flex-1 flex min-h-0 relative overflow-hidden">
-    
-    <!-- Graph Canvas -->
-    <div id="network" class="flex-1 bg-[#0f172a]"></div>
 
-    <!-- Node Detail Drawer -->
-    <aside id="detailDrawer" class="w-96 bg-slate-950 border-l border-slate-800 flex flex-col p-4 space-y-4 overflow-y-auto custom-scrollbar transition-all duration-300 transform translate-x-full absolute right-0 inset-y-0 z-20 shadow-2xl">
-      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
-        <div>
-          <span id="detailType" class="text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-700"></span>
-          <h2 id="detailTitle" class="text-sm font-bold text-white mt-1.5"></h2>
-          <div id="detailId" class="text-[11px] font-mono text-slate-400 mt-0.5"></div>
+    <!-- Left: Obsidian Interactive Force Graph -->
+    <div class="flex-1 relative bg-[#111116] overflow-hidden flex flex-col">
+      <div id="network" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+
+      <!-- Floating Graph Controls (Bottom Left) -->
+      <div class="absolute bottom-4 left-4 bg-[#181822]/90 backdrop-blur border border-[#2c2c3e] rounded-xl p-1.5 flex items-center gap-1 shadow-2xl z-10">
+        <button onclick="zoomIn()" class="w-8 h-8 rounded-lg hover:bg-[#262638] text-slate-300 hover:text-white flex items-center justify-center transition" title="Vergrößern">
+          <i class="fa-solid fa-plus text-xs"></i>
+        </button>
+        <button onclick="zoomOut()" class="w-8 h-8 rounded-lg hover:bg-[#262638] text-slate-300 hover:text-white flex items-center justify-center transition" title="Verkleinern">
+          <i class="fa-solid fa-minus text-xs"></i>
+        </button>
+        <button onclick="resetView()" class="w-8 h-8 rounded-lg hover:bg-[#262638] text-slate-300 hover:text-white flex items-center justify-center transition" title="Ansicht einpassen">
+          <i class="fa-solid fa-arrows-to-dot text-xs"></i>
+        </button>
+        <div class="w-px h-5 bg-[#2c2c3e] mx-1"></div>
+        <button onclick="togglePhysics()" class="w-8 h-8 rounded-lg hover:bg-[#262638] text-amber-400 hover:text-amber-300 flex items-center justify-center transition" title="Physik Simulation">
+          <i class="fa-solid fa-atom text-xs"></i>
+        </button>
+      </div>
+
+      <!-- Floating Legend (Bottom Center) -->
+      <div class="absolute bottom-4 right-4 bg-[#181822]/80 backdrop-blur border border-[#2c2c3e] rounded-xl px-3 py-1.5 text-[10px] text-slate-400 flex items-center gap-3 z-10 shadow-lg pointer-events-none">
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#8b5cf6]"></span> Konzept</span>
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#10b981]"></span> iFlow</span>
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#f59e0b]"></span> ADR</span>
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#06b6d4]"></span> Kontrakt</span>
+        <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-[#f43f5e]"></span> Test</span>
+        <span class="text-slate-500 font-mono">• Radius = Grad der Vernetzung</span>
+      </div>
+    </div>
+
+    <!-- Right: Obsidian Markdown Note Reader & Backlink Explorer -->
+    <aside id="notePane" class="w-[520px] max-w-[90vw] bg-[#16161f] border-l border-[#242432] flex flex-col z-20 shadow-2xl transition-all duration-300 ease-in-out shrink-0">
+      <div class="h-12 bg-[#1a1a26] border-b border-[#28283a] px-4 flex items-center justify-between shrink-0">
+        <div class="flex items-center gap-2 overflow-hidden">
+          <i class="fa-regular fa-file-lines text-purple-400 text-xs shrink-0"></i>
+          <span id="noteBreadcrumb" class="text-xs font-mono text-slate-400 truncate">knowledge/architecture/dual-iflow-pattern.md</span>
         </div>
-        <button onclick="closeDrawer()" class="w-6 h-6 rounded hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
+        <div class="flex items-center gap-2 shrink-0">
+          <a id="noteGithubLink" href="#" target="_blank" class="w-7 h-7 rounded hover:bg-[#28283a] text-slate-400 hover:text-white flex items-center justify-center text-xs transition" title="In GitHub Repository öffnen">
+            <i class="fa-brands fa-github"></i>
+          </a>
+          <button onclick="collapseNotePane()" class="w-7 h-7 rounded hover:bg-[#28283a] text-slate-400 hover:text-white flex items-center justify-center text-xs transition" title="Notiz minimieren">
+            <i class="fa-solid fa-angles-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto custom-scrollbar p-5 space-y-5">
+        <div>
+          <div class="flex items-center gap-2 mb-2">
+            <span id="noteTypeBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase bg-purple-900/60 text-purple-300 border border-purple-700/60"></span>
+            <span id="noteStatusBadge" class="px-2 py-0.5 rounded text-[10px] font-mono font-bold tracking-wider uppercase bg-emerald-950/70 text-emerald-300 border border-emerald-700/60 flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              <span id="noteStatusText">VERIFIED</span>
+            </span>
+          </div>
+          <h2 id="noteTitle" class="text-lg font-bold text-white leading-snug tracking-tight"></h2>
+          <div id="noteDegreeText" class="text-[11px] text-purple-400 font-mono mt-1"></div>
+        </div>
+
+        <div class="bg-[#1c1c28] border border-[#2a2a3c] rounded-xl p-3.5 space-y-2.5 shadow-sm text-xs">
+          <div class="flex items-center justify-between cursor-pointer" onclick="toggleFrontmatter()">
+            <div class="flex items-center gap-2 text-[11px] font-bold text-slate-400 uppercase tracking-wider font-mono">
+              <i class="fa-solid fa-sliders text-purple-400"></i>
+              <span>Obsidian Frontmatter & Metadaten</span>
+            </div>
+            <i id="fmToggleIcon" class="fa-solid fa-chevron-up text-slate-500 text-xs transition-transform"></i>
+          </div>
+
+          <div id="fmContent" class="space-y-2 pt-1 border-t border-[#2a2a3c]">
+            <div class="grid grid-cols-3 gap-1 text-[11px]">
+              <span class="text-slate-500 font-mono">OKF ID:</span>
+              <span id="noteId" class="col-span-2 text-slate-300 font-mono break-all"></span>
+            </div>
+            <div class="grid grid-cols-3 gap-1 text-[11px]">
+              <span class="text-slate-500 font-mono">Domain:</span>
+              <span id="noteDomain" class="col-span-2 text-slate-300"></span>
+            </div>
+            <div class="grid grid-cols-3 gap-1 text-[11px]">
+              <span class="text-slate-500 font-mono">Schlagworte:</span>
+              <div id="noteTags" class="col-span-2 flex flex-wrap gap-1"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="noteMarkdown" class="markdown-body select-text"></div>
+
+        <div class="border-t border-[#2a2a3c] pt-4 space-y-4">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-wider">
+                <i class="fa-solid fa-arrow-left-long text-emerald-400"></i>
+                <span>Eingehende Referenzen (<span id="inboundCount" class="text-emerald-400 font-mono">0</span>)</span>
+              </div>
+              <span class="text-[10px] text-slate-500">Notizen, die auf diese verweisen</span>
+            </div>
+            <div id="inboundLinks" class="space-y-1.5"></div>
+          </div>
+
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2 text-xs font-bold text-slate-300 uppercase tracking-wider">
+                <i class="fa-solid fa-arrow-right-long text-purple-400"></i>
+                <span>Ausgehende Verknüpfungen (<span id="outboundCount" class="text-purple-400 font-mono">0</span>)</span>
+              </div>
+              <span class="text-[10px] text-slate-500">Notizen, die hier referenziert werden</span>
+            </div>
+            <div id="outboundLinks" class="space-y-1.5"></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Expand Bar when Pane Collapsed -->
+    <button id="expandPaneBtn" onclick="expandNotePane()" class="hidden absolute right-0 top-1/2 -translate-y-1/2 bg-[#1a1a26] hover:bg-[#28283a] border border-[#2e2e42] text-slate-300 hover:text-white px-1.5 py-4 rounded-l-lg shadow-2xl z-30 transition flex flex-col items-center gap-2" title="Notiz öffnen">
+      <i class="fa-solid fa-angles-left text-xs text-purple-400"></i>
+      <span class="text-[10px] uppercase font-mono tracking-widest [writing-mode:vertical-lr] rotate-180">Notiz lesen</span>
+    </button>
+  </div>
+
+  <!-- Obsidian Desktop Vault Modal -->
+  <div id="obsidianModal" class="hidden fixed inset-0 bg-black/75 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+    <div class="bg-[#1a1a26] border border-[#33334c] rounded-2xl max-w-xl w-full p-6 space-y-4 shadow-2xl">
+      <div class="flex items-start justify-between border-b border-[#2e2e42] pb-3">
+        <div class="flex items-center gap-3">
+          <div class="w-9 h-9 rounded-xl bg-purple-600/30 text-purple-400 flex items-center justify-center text-lg ring-1 ring-purple-500/40">
+            <i class="fa-solid fa-gem"></i>
+          </div>
+          <div>
+            <h3 class="text-sm font-bold text-white">In Obsidian Desktop öffnen</h3>
+            <div class="text-[11px] text-slate-400">Das Repository ist als nativer Obsidian-Vault vorkonfiguriert!</div>
+          </div>
+        </div>
+        <button onclick="closeObsidianModal()" class="w-7 h-7 rounded hover:bg-[#28283c] text-slate-400 hover:text-white flex items-center justify-center text-xs">
           <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <div class="space-y-1.5">
-        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Beschreibung</div>
-        <p id="detailDesc" class="text-xs text-slate-300 leading-relaxed"></p>
+      <div class="space-y-3 text-xs text-slate-300 leading-relaxed">
+        <p>Da alle Dokumente im <strong>Google Open Knowledge Format (OKF)</strong> als reines Markdown mit YAML-Frontmatter vorliegen, können Sie diesen Ordner direkt als Vault in <strong>Obsidian</strong> öffnen:</p>
+        
+        <div class="bg-[#111118] border border-[#2a2a3c] rounded-xl p-3 space-y-2">
+          <div class="text-[11px] font-mono text-slate-400">Lokaler Vault-Pfad:</div>
+          <div class="flex items-center gap-2 bg-[#161622] px-3 py-2 rounded-lg border border-[#2e2e42]">
+            <input id="vaultPathInput" type="text" readonly value="C:/Users/druef/.gemini/antigravity/scratch/conciliamus-architecture-knowledge" class="w-full bg-transparent font-mono text-xs text-purple-300 focus:outline-none select-all">
+            <button onclick="copyVaultPath()" class="px-2.5 py-1 bg-purple-700 hover:bg-purple-600 text-white rounded text-xs font-semibold shrink-0 transition flex items-center gap-1">
+              <i class="fa-solid fa-copy"></i>
+              <span id="copyBtnText">Kopieren</span>
+            </button>
+          </div>
+        </div>
+
+        <ol class="space-y-2 pl-4 list-decimal marker:text-purple-400 text-slate-300">
+          <li>Starten Sie die <strong>Obsidian</strong> Desktop-App (<a href="https://obsidian.md" target="_blank" class="text-purple-400 underline">obsidian.md</a>).</li>
+          <li>Klicken Sie auf <strong>"Open folder as vault"</strong> (Ordner als Vault öffnen).</li>
+          <li>Wählen Sie den oben stehenden Pfad aus.</li>
+          <li><strong>Fertig:</strong> Die Graph-View, Farben für ADRs, iFlows und Konzepte sowie alle Verlinkungen sind in <code>.obsidian/graph.json</code> vorkonfiguriert!</li>
+        </ol>
       </div>
 
-      <div class="space-y-1.5">
-        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Schlagworte (Tags)</div>
-        <div id="detailTags" class="flex flex-wrap gap-1.5"></div>
+      <div class="pt-2 border-t border-[#2e2e42] flex justify-end">
+        <button onclick="closeObsidianModal()" class="px-4 py-1.5 bg-[#28283c] hover:bg-[#33334c] text-white rounded-lg text-xs font-medium transition">
+          Schließen
+        </button>
       </div>
-
-      <div class="space-y-2 border-t border-slate-800 pt-3">
-        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Verknüpfte Relationen (<span id="relCount">0</span>)</div>
-        <div id="detailRelations" class="space-y-1.5 text-xs font-mono"></div>
-      </div>
-
-      <div class="pt-3 border-t border-slate-800">
-        <a id="detailGithubLink" href="#" target="_blank" class="w-full py-2 px-3 bg-[#0070f2] hover:bg-[#0056bd] text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition shadow">
-          <i class="fa-brands fa-github"></i>
-          <span>Markdown-Quelle in GitHub ansehen</span>
-        </a>
-      </div>
-    </aside>
-
+    </div>
   </div>
 
+  <!-- Embedded Graph Data & Notes -->
   <script>
-    const graphData = {"okfVersion": "0.2", "nodesCount": 24, "edgesCount": 63, "nodes": [{"id": "architecture/dual-iflow-pattern", "label": "Dual-iFlow Entkopplungsmuster", "type": "Architecture Concept", "path": "/architecture/dual-iflow-pattern.md", "tags": ["architecture", "pattern", "dual-iflow", "cpi", "btp", "decoupling", "resilience"]}, {"id": "architecture/existence-check-and-routing", "label": "Existenzpr\u00fcfung & Deterministische Router-Matrix", "type": "Architecture Concept", "path": "/architecture/existence-check-and-routing.md", "tags": ["architecture", "odata", "routing", "idempotency", "s4hana", "content-based-router"]}, {"id": "architecture/process-direct-interconnect", "label": "ProcessDirect Interconnect", "type": "Architecture Concept", "path": "/architecture/process-direct-interconnect.md", "tags": ["architecture", "process-direct", "cpi", "performance", "in-memory", "btp"]}, {"id": "architecture/resilience-and-dead-letter", "label": "Resilienz & Dead-Letter-Behandlung", "type": "Architecture Concept", "path": "/architecture/resilience-and-dead-letter.md", "tags": ["architecture", "resilience", "error-handling", "dlq", "data-store", "replay"]}, {"id": "architecture/session-and-csrf-handshake", "label": "Session & CSRF Handshake", "type": "Architecture Concept", "path": "/architecture/session-and-csrf-handshake.md", "tags": ["architecture", "csrf", "security", "odata", "cookies", "s4hana", "http"]}, {"id": "architecture/streaming-iterating-splitter", "label": "Streaming Iterating Splitter", "type": "Architecture Concept", "path": "/architecture/streaming-iterating-splitter.md", "tags": ["architecture", "splitter", "streaming", "memory-management", "cpi", "json"]}, {"id": "data-contracts/custom-header-properties", "label": "Custom Header Properties & Message Processing Log (MPL)", "type": "Data Contract", "path": "/data-contracts/custom-header-properties.md", "tags": ["contract", "monitoring", "mpl", "custom-headers", "audit", "fulltext-search"]}, {"id": "data-contracts/mdm-inbound-contract", "label": "MDM Inbound JSON Kontrakt", "type": "Data Contract", "path": "/data-contracts/mdm-inbound-contract.md", "tags": ["contract", "mdm", "json", "schema", "validation"]}, {"id": "data-contracts/s4-odata-mapping", "label": "SAP S/4HANA OData Mapping", "type": "Data Contract", "path": "/data-contracts/s4-odata-mapping.md", "tags": ["contract", "mapping", "odata", "s4hana", "api-business-partner"]}, {"id": "decisions/adr-001-dual-iflow-decoupling", "label": "ADR-001: Dual-iFlow Entkopplungsmuster", "type": "Decision Record", "path": "/decisions/adr-001-dual-iflow-decoupling.md", "tags": ["adr", "architecture-decision", "dual-iflow", "decoupling", "cpi"]}, {"id": "decisions/adr-002-process-direct", "label": "ADR-002: ProcessDirect statt Message Queues f\u00fcr iFlow-Kopplung", "type": "Decision Record", "path": "/decisions/adr-002-process-direct.md", "tags": ["adr", "architecture-decision", "process-direct", "jms", "performance", "cpi"]}, {"id": "decisions/adr-003-bpmn-method-and-style", "label": "ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)", "type": "Decision Record", "path": "/decisions/adr-003-bpmn-method-and-style.md", "tags": ["adr", "architecture-decision", "bpmn", "method-and-style", "bruce-silver", "governance"]}, {"id": "decisions/adr-004-data-store-dlq", "label": "ADR-004: Data Store f\u00fcr Dead-Letter-Queue & Selektiven Replay", "type": "Decision Record", "path": "/decisions/adr-004-data-store-dlq.md", "tags": ["adr", "architecture-decision", "data-store", "dlq", "resilience", "replay"]}, {"id": "decisions/adr-005-single-viewport-fiori", "label": "ADR-005: Single-Viewport Ergonomie f\u00fcr die Fiori Workbench", "type": "Decision Record", "path": "/decisions/adr-005-single-viewport-fiori.md", "tags": ["adr", "architecture-decision", "fiori", "ui-design", "single-viewport", "pills"]}, {"id": "iflows/batch-receiver-iflow", "label": "IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher", "type": "iFlow Specification", "path": "/iflows/batch-receiver-iflow.md", "tags": ["iflow", "batch-receiver", "cpi", "btp", "bpmn", "streaming", "ingest"]}, {"id": "iflows/item-processor-iflow", "label": "IFL_MDM_BP_Item_Processor: Atomare Partner-Verarbeitung", "type": "iFlow Specification", "path": "/iflows/item-processor-iflow.md", "tags": ["iflow", "item-processor", "cpi", "btp", "odata", "routing", "s4hana", "error-handling"]}, {"id": "iflows/reprocessor-iflow", "label": "IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf", "type": "iFlow Specification", "path": "/iflows/reprocessor-iflow.md", "tags": ["iflow", "reprocessor", "dlq", "data-store", "replay", "resilience"]}, {"id": "presentation-and-ui/fiori-workbench-ui", "label": "SAP Fiori Integration Workbench & Test-Runner", "type": "UI Concept", "path": "/presentation-and-ui/fiori-workbench-ui.md", "tags": ["ui", "fiori", "workbench", "json-pills", "single-viewport", "test-runner", "firebase-auth"]}, {"id": "presentation-and-ui/pecha-kucha-20x20", "label": "Pecha Kucha 20x20 Pr\u00e4sentationsarchitektur", "type": "Presentation Concept", "path": "/presentation-and-ui/pecha-kucha-20x20.md", "tags": ["ui", "pecha-kucha", "presentation", "timer", "audio", "firebase-auth"]}, {"id": "qa/core-architecture-faq", "label": "Zentrale Architekturfragen & Antworten", "type": "Architecture FAQ", "path": "/qa/core-architecture-faq.md", "tags": ["qa", "faq", "architecture", "agent", "reasoning"]}, {"id": "qa/error-handling-faq", "label": "Resilienz- und Troubleshooting-FAQ", "type": "Architecture FAQ", "path": "/qa/error-handling-faq.md", "tags": ["qa", "faq", "resilience", "dlq", "troubleshooting", "errors"]}, {"id": "verification/istqb-test-strategy", "label": "ISTQB Teststrategie & Testfallmatrix", "type": "Test Evidence", "path": "/verification/istqb-test-strategy.md", "tags": ["evidence", "istqb", "testing", "test-matrix", "qa"]}, {"id": "verification/live-btp-execution", "label": "Live-End-to-End Testlauf auf SAP BTP", "type": "Test Evidence", "path": "/verification/live-btp-execution.md", "tags": ["evidence", "live-test", "btp", "http-200", "verification"]}, {"id": "verification/sandbox-limitations-405", "label": "SAP Sandbox Limitationen & HTTP 405 Handling", "type": "Test Evidence", "path": "/verification/sandbox-limitations-405.md", "tags": ["evidence", "sandbox", "http-405", "limitation", "s4hana", "odata"]}], "edges": [{"source": "architecture/dual-iflow-pattern", "target": "iflows/batch-receiver-iflow", "relation": "contains"}, {"source": "architecture/dual-iflow-pattern", "target": "iflows/item-processor-iflow", "relation": "contains"}, {"source": "architecture/dual-iflow-pattern", "target": "decisions/adr-001-dual-iflow-decoupling", "relation": "implements"}, {"source": "architecture/dual-iflow-pattern", "target": "architecture/process-direct-interconnect", "relation": "dependsOn"}, {"source": "architecture/dual-iflow-pattern", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "architecture/existence-check-and-routing", "target": "iflows/item-processor-iflow", "relation": "contains"}, {"source": "architecture/existence-check-and-routing", "target": "data-contracts/s4-odata-mapping", "relation": "implements"}, {"source": "architecture/existence-check-and-routing", "target": "verification/istqb-test-strategy", "relation": "verifies"}, {"source": "architecture/process-direct-interconnect", "target": "decisions/adr-002-process-direct", "relation": "implements"}, {"source": "architecture/process-direct-interconnect", "target": "architecture/dual-iflow-pattern", "relation": "dependsOn"}, {"source": "architecture/process-direct-interconnect", "target": "iflows/item-processor-iflow", "relation": "routesTo"}, {"source": "architecture/resilience-and-dead-letter", "target": "decisions/adr-004-data-store-dlq", "relation": "implements"}, {"source": "architecture/resilience-and-dead-letter", "target": "iflows/reprocessor-iflow", "relation": "contains"}, {"source": "architecture/resilience-and-dead-letter", "target": "iflows/item-processor-iflow", "relation": "handlesError"}, {"source": "architecture/session-and-csrf-handshake", "target": "iflows/item-processor-iflow", "relation": "contains"}, {"source": "architecture/session-and-csrf-handshake", "target": "architecture/existence-check-and-routing", "relation": "dependsOn"}, {"source": "architecture/streaming-iterating-splitter", "target": "iflows/batch-receiver-iflow", "relation": "contains"}, {"source": "architecture/streaming-iterating-splitter", "target": "architecture/process-direct-interconnect", "relation": "routesTo"}, {"source": "data-contracts/custom-header-properties", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "data-contracts/custom-header-properties", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "data-contracts/mdm-inbound-contract", "target": "iflows/batch-receiver-iflow", "relation": "implements"}, {"source": "data-contracts/mdm-inbound-contract", "target": "data-contracts/s4-odata-mapping", "relation": "routesTo"}, {"source": "data-contracts/s4-odata-mapping", "target": "data-contracts/mdm-inbound-contract", "relation": "dependsOn"}, {"source": "data-contracts/s4-odata-mapping", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-001-dual-iflow-decoupling", "target": "architecture/dual-iflow-pattern", "relation": "implementedBy"}, {"source": "decisions/adr-001-dual-iflow-decoupling", "target": "iflows/batch-receiver-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-001-dual-iflow-decoupling", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-002-process-direct", "target": "architecture/process-direct-interconnect", "relation": "implementedBy"}, {"source": "decisions/adr-002-process-direct", "target": "decisions/adr-001-dual-iflow-decoupling", "relation": "dependsOn"}, {"source": "decisions/adr-003-bpmn-method-and-style", "target": "iflows/batch-receiver-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-003-bpmn-method-and-style", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-004-data-store-dlq", "target": "architecture/resilience-and-dead-letter", "relation": "implementedBy"}, {"source": "decisions/adr-004-data-store-dlq", "target": "iflows/reprocessor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-005-single-viewport-fiori", "target": "presentation-and-ui/fiori-workbench-ui", "relation": "implementedBy"}, {"source": "iflows/batch-receiver-iflow", "target": "architecture/dual-iflow-pattern", "relation": "partOf"}, {"source": "iflows/batch-receiver-iflow", "target": "iflows/item-processor-iflow", "relation": "routesTo"}, {"source": "iflows/batch-receiver-iflow", "target": "decisions/adr-003-bpmn-method-and-style", "relation": "implements"}, {"source": "iflows/batch-receiver-iflow", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "iflows/item-processor-iflow", "target": "architecture/dual-iflow-pattern", "relation": "partOf"}, {"source": "iflows/item-processor-iflow", "target": "iflows/batch-receiver-iflow", "relation": "routedFrom"}, {"source": "iflows/item-processor-iflow", "target": "architecture/existence-check-and-routing", "relation": "implements"}, {"source": "iflows/item-processor-iflow", "target": "architecture/resilience-and-dead-letter", "relation": "implements"}, {"source": "iflows/item-processor-iflow", "target": "decisions/adr-003-bpmn-method-and-style", "relation": "implements"}, {"source": "iflows/item-processor-iflow", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "iflows/reprocessor-iflow", "target": "decisions/adr-004-data-store-dlq", "relation": "implements"}, {"source": "iflows/reprocessor-iflow", "target": "iflows/item-processor-iflow", "relation": "routesTo"}, {"source": "presentation-and-ui/fiori-workbench-ui", "target": "decisions/adr-005-single-viewport-fiori", "relation": "implements"}, {"source": "presentation-and-ui/fiori-workbench-ui", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "presentation-and-ui/pecha-kucha-20x20", "target": "decisions/adr-003-bpmn-method-and-style", "relation": "references"}, {"source": "presentation-and-ui/pecha-kucha-20x20", "target": "verification/live-btp-execution", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "architecture/dual-iflow-pattern", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "architecture/existence-check-and-routing", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "decisions/adr-001-dual-iflow-decoupling", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "decisions/adr-002-process-direct", "relation": "references"}, {"source": "qa/error-handling-faq", "target": "architecture/resilience-and-dead-letter", "relation": "references"}, {"source": "qa/error-handling-faq", "target": "iflows/reprocessor-iflow", "relation": "references"}, {"source": "qa/error-handling-faq", "target": "decisions/adr-004-data-store-dlq", "relation": "references"}, {"source": "verification/istqb-test-strategy", "target": "architecture/existence-check-and-routing", "relation": "verifies"}, {"source": "verification/istqb-test-strategy", "target": "architecture/resilience-and-dead-letter", "relation": "verifies"}, {"source": "verification/live-btp-execution", "target": "architecture/dual-iflow-pattern", "relation": "verifies"}, {"source": "verification/live-btp-execution", "target": "iflows/batch-receiver-iflow", "relation": "verifies"}, {"source": "verification/live-btp-execution", "target": "iflows/item-processor-iflow", "relation": "verifies"}, {"source": "verification/sandbox-limitations-405", "target": "iflows/item-processor-iflow", "relation": "verifies"}]};
+    const graphData = {"okfVersion": "0.2", "nodesCount": 24, "edgesCount": 63, "nodes": [{"id": "architecture/dual-iflow-pattern", "label": "Dual-iFlow Entkopplungsmuster", "type": "Architecture Concept", "path": "/architecture/dual-iflow-pattern.md", "tags": ["architecture", "pattern", "dual-iflow", "cpi", "btp", "decoupling", "resilience"], "description": "Trennung von Netzwerk-Ingest/Transport und atomarer Geschäftslogik zur Erzielung von Fehlertoleranz und Skalierbarkeit.", "status": "verified", "domain": "General", "degree": 11}, {"id": "architecture/existence-check-and-routing", "label": "Existenzprüfung & Deterministische Router-Matrix", "type": "Architecture Concept", "path": "/architecture/existence-check-and-routing.md", "tags": ["architecture", "odata", "routing", "idempotency", "s4hana", "content-based-router"], "description": "Idempotente Existenzprüfung via OData GET und deterministische Verzweigung zu POST, PATCH oder Fehlerbehandlung.", "status": "verified", "domain": "General", "degree": 7}, {"id": "architecture/process-direct-interconnect", "label": "ProcessDirect Interconnect", "type": "Architecture Concept", "path": "/architecture/process-direct-interconnect.md", "tags": ["architecture", "process-direct", "cpi", "performance", "in-memory", "btp"], "description": "Latenzfreie, speicherinterne Kommunikation zwischen Integration Flows innerhalb desselben Cloud Integration Tenants.", "status": "verified", "domain": "General", "degree": 6}, {"id": "architecture/resilience-and-dead-letter", "label": "Resilienz & Dead-Letter-Behandlung", "type": "Architecture Concept", "path": "/architecture/resilience-and-dead-letter.md", "tags": ["architecture", "resilience", "error-handling", "dlq", "data-store", "replay"], "description": "Zweikanalige Fehlerdifferenzierung in Business Errors (Audit Log) und Technical Errors (Data Store DLQ mit selektivem Replay).", "status": "verified", "domain": "General", "degree": 7}, {"id": "architecture/session-and-csrf-handshake", "label": "Session & CSRF Handshake", "type": "Architecture Concept", "path": "/architecture/session-and-csrf-handshake.md", "tags": ["architecture", "csrf", "security", "odata", "cookies", "s4hana", "http"], "description": "Handhabung von CSRF-Tokens und Session-Cookies bei schreibenden OData-Aufrufen auf SAP S/4HANA.", "status": "verified", "domain": "General", "degree": 2}, {"id": "architecture/streaming-iterating-splitter", "label": "Streaming Iterating Splitter", "type": "Architecture Concept", "path": "/architecture/streaming-iterating-splitter.md", "tags": ["architecture", "splitter", "streaming", "memory-management", "cpi", "json"], "description": "Speicheroptimierte Zerlegung von JSON-Massen-Batches ohne Erzeugung von Java Out-Of-Memory Fehlern.", "status": "verified", "domain": "General", "degree": 2}, {"id": "data-contracts/custom-header-properties", "label": "Custom Header Properties & Message Processing Log (MPL)", "type": "Data Contract", "path": "/data-contracts/custom-header-properties.md", "tags": ["contract", "monitoring", "mpl", "custom-headers", "audit", "fulltext-search"], "description": "Definition der im BTP Message Processing Log gesetzten Metadaten für Volltextsuche und Audit-Trails.", "status": "verified", "domain": "General", "degree": 2}, {"id": "data-contracts/mdm-inbound-contract", "label": "MDM Inbound JSON Kontrakt", "type": "Data Contract", "path": "/data-contracts/mdm-inbound-contract.md", "tags": ["contract", "mdm", "json", "schema", "validation"], "description": "Schnittstellenspezifikation und Validierungsregeln für die vom Quellsystem JSD-MDM übermittelten JSON-Sammelbatches.", "status": "verified", "domain": "General", "degree": 3}, {"id": "data-contracts/s4-odata-mapping", "label": "SAP S/4HANA OData Mapping", "type": "Data Contract", "path": "/data-contracts/s4-odata-mapping.md", "tags": ["contract", "mapping", "odata", "s4hana", "api-business-partner"], "description": "Vollständige Zuordnungsmatrix zwischen MDM-Feldern und den SAP OData Entitäten A_BusinessPartner und Address.", "status": "verified", "domain": "General", "degree": 4}, {"id": "decisions/adr-001-dual-iflow-decoupling", "label": "ADR-001: Dual-iFlow Entkopplungsmuster", "type": "Decision Record", "path": "/decisions/adr-001-dual-iflow-decoupling.md", "tags": ["adr", "architecture-decision", "dual-iflow", "decoupling", "cpi"], "description": "Aufteilung der Integrationslogik in zwei separate iFlows zur Gewährleistung von Fehlerisolation und Ressourcenschonung.", "status": "accepted", "domain": "General", "degree": 6}, {"id": "decisions/adr-002-process-direct", "label": "ADR-002: ProcessDirect statt Message Queues für iFlow-Kopplung", "type": "Decision Record", "path": "/decisions/adr-002-process-direct.md", "tags": ["adr", "architecture-decision", "process-direct", "jms", "performance", "cpi"], "description": "Nutzung des ProcessDirect-Adapters zur latenzfreien internen Kopplung ohne JMS-Ressourcenbindung.", "status": "accepted", "domain": "General", "degree": 4}, {"id": "decisions/adr-003-bpmn-method-and-style", "label": "ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)", "type": "Decision Record", "path": "/decisions/adr-003-bpmn-method-and-style.md", "tags": ["adr", "architecture-decision", "bpmn", "method-and-style", "bruce-silver", "governance"], "description": "Durchgängige Anwendung der Nomenklatur- und Modellierungsstandards von Bruce Silver für selbstdokumentierende Enterprise-iFlows.", "status": "accepted", "domain": "General", "degree": 5}, {"id": "decisions/adr-004-data-store-dlq", "label": "ADR-004: Data Store für Dead-Letter-Queue & Selektiven Replay", "type": "Decision Record", "path": "/decisions/adr-004-data-store-dlq.md", "tags": ["adr", "architecture-decision", "data-store", "dlq", "resilience", "replay"], "description": "Einsatz eines persistenten BTP Data Stores für fehlgeschlagene Einzelnachrichten zur Ermöglichung eines punktuellen Wiederanlaufs.", "status": "accepted", "domain": "General", "degree": 5}, {"id": "decisions/adr-005-single-viewport-fiori", "label": "ADR-005: Single-Viewport Ergonomie für die Fiori Workbench", "type": "Decision Record", "path": "/decisions/adr-005-single-viewport-fiori.md", "tags": ["adr", "architecture-decision", "fiori", "ui-design", "single-viewport", "pills"], "description": "Umstellung der Test-Runner Web-App auf ein striktes 100% no-outer-scroll Layout mit interaktiven aufklappbaren JSON-Pills.", "status": "accepted", "domain": "General", "degree": 2}, {"id": "iflows/batch-receiver-iflow", "label": "IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher", "type": "iFlow Specification", "path": "/iflows/batch-receiver-iflow.md", "tags": ["iflow", "batch-receiver", "cpi", "btp", "bpmn", "streaming", "ingest"], "description": "Spezifikation des Ingestion-iFlows zur Annahme von MDM-Massen-Batches, syntaktischen Vorvalidierung und Streaming-Zerlegung.", "status": "verified", "domain": "General", "degree": 11}, {"id": "iflows/item-processor-iflow", "label": "IFL_MDM_BP_Item_Processor: Atomare Partner-Verarbeitung", "type": "iFlow Specification", "path": "/iflows/item-processor-iflow.md", "tags": ["iflow", "item-processor", "cpi", "btp", "odata", "routing", "s4hana", "error-handling"], "description": "Spezifikation des verarbeitenden iFlows für Validierung, OData GET Existenzprüfung, deterministisches Routing und S/4HANA OData Aufrufe.", "status": "verified", "domain": "General", "degree": 19}, {"id": "iflows/reprocessor-iflow", "label": "IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf", "type": "iFlow Specification", "path": "/iflows/reprocessor-iflow.md", "tags": ["iflow", "reprocessor", "dlq", "data-store", "replay", "resilience"], "description": "Spezifikation des Wiederanlauf-Flows zum selektiven Wiedereinspielen fehlgeschlagener Datensätze aus der Dead Letter Queue.", "status": "verified", "domain": "General", "degree": 5}, {"id": "presentation-and-ui/fiori-workbench-ui", "label": "SAP Fiori Integration Workbench & Test-Runner", "type": "UI Concept", "path": "/presentation-and-ui/fiori-workbench-ui.md", "tags": ["ui", "fiori", "workbench", "json-pills", "single-viewport", "test-runner", "firebase-auth"], "description": "Architektur der Single-Viewport Fiori Horizon Web-Applikation mit aufklappbaren RGB-JSON-Pills und Monitoring-Drawer.", "status": "verified", "domain": "General", "degree": 3}, {"id": "presentation-and-ui/pecha-kucha-20x20", "label": "Pecha Kucha 20x20 Präsentationsarchitektur", "type": "Presentation Concept", "path": "/presentation-and-ui/pecha-kucha-20x20.md", "tags": ["ui", "pecha-kucha", "presentation", "timer", "audio", "firebase-auth"], "description": "Konzeption, Sprechtexte, Zeitsteuerung und technische Umsetzung der interaktiven 20x20 Präsentation (6:40 Min.).", "status": "verified", "domain": "General", "degree": 2}, {"id": "qa/core-architecture-faq", "label": "Zentrale Architekturfragen & Antworten", "type": "Architecture FAQ", "path": "/qa/core-architecture-faq.md", "tags": ["qa", "faq", "architecture", "agent", "reasoning"], "description": "Kanonische Fragen und Antworten zur Architektur für den API-Architektur-Agenten.", "status": "verified", "domain": "General", "degree": 4}, {"id": "qa/error-handling-faq", "label": "Resilienz- und Troubleshooting-FAQ", "type": "Architecture FAQ", "path": "/qa/error-handling-faq.md", "tags": ["qa", "faq", "resilience", "dlq", "troubleshooting", "errors"], "description": "Antworten auf Fragen zu Fehlerbehandlung, Dead Letter Queue und Wiederanlaufstrategien.", "status": "verified", "domain": "General", "degree": 3}, {"id": "verification/istqb-test-strategy", "label": "ISTQB Teststrategie & Testfallmatrix", "type": "Test Evidence", "path": "/verification/istqb-test-strategy.md", "tags": ["evidence", "istqb", "testing", "test-matrix", "qa"], "description": "Systematische Testabdeckung nach ISTQB CTFL Prinzipien (Äquivalenzklassen, Grenzwertanalyse, Fehlerfall-Prüfung).", "status": "verified", "domain": "General", "degree": 3}, {"id": "verification/live-btp-execution", "label": "Live-End-to-End Testlauf auf SAP BTP", "type": "Test Evidence", "path": "/verification/live-btp-execution.md", "tags": ["evidence", "live-test", "btp", "http-200", "verification"], "description": "Vollständiger Nachweis des erfolgreichen Live-Durchlaufs auf dem SAP BTP Tenant am 04.09.2026 mit HTTP 200 OK.", "status": "verified", "domain": "General", "degree": 9}, {"id": "verification/sandbox-limitations-405", "label": "SAP Sandbox Limitationen & HTTP 405 Handling", "type": "Test Evidence", "path": "/verification/sandbox-limitations-405.md", "tags": ["evidence", "sandbox", "http-405", "limitation", "s4hana", "odata"], "description": "Umgang mit der read-only Beschränkung der SAP Business Accelerator Hub Sandbox für schreibende OData-Aufrufe.", "status": "verified", "domain": "General", "degree": 1}], "edges": [{"source": "architecture/dual-iflow-pattern", "target": "iflows/batch-receiver-iflow", "relation": "contains"}, {"source": "architecture/dual-iflow-pattern", "target": "iflows/item-processor-iflow", "relation": "contains"}, {"source": "architecture/dual-iflow-pattern", "target": "decisions/adr-001-dual-iflow-decoupling", "relation": "implements"}, {"source": "architecture/dual-iflow-pattern", "target": "architecture/process-direct-interconnect", "relation": "dependsOn"}, {"source": "architecture/dual-iflow-pattern", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "architecture/existence-check-and-routing", "target": "iflows/item-processor-iflow", "relation": "contains"}, {"source": "architecture/existence-check-and-routing", "target": "data-contracts/s4-odata-mapping", "relation": "implements"}, {"source": "architecture/existence-check-and-routing", "target": "verification/istqb-test-strategy", "relation": "verifies"}, {"source": "architecture/process-direct-interconnect", "target": "decisions/adr-002-process-direct", "relation": "implements"}, {"source": "architecture/process-direct-interconnect", "target": "architecture/dual-iflow-pattern", "relation": "dependsOn"}, {"source": "architecture/process-direct-interconnect", "target": "iflows/item-processor-iflow", "relation": "routesTo"}, {"source": "architecture/resilience-and-dead-letter", "target": "decisions/adr-004-data-store-dlq", "relation": "implements"}, {"source": "architecture/resilience-and-dead-letter", "target": "iflows/reprocessor-iflow", "relation": "contains"}, {"source": "architecture/resilience-and-dead-letter", "target": "iflows/item-processor-iflow", "relation": "handlesError"}, {"source": "architecture/session-and-csrf-handshake", "target": "iflows/item-processor-iflow", "relation": "contains"}, {"source": "architecture/session-and-csrf-handshake", "target": "architecture/existence-check-and-routing", "relation": "dependsOn"}, {"source": "architecture/streaming-iterating-splitter", "target": "iflows/batch-receiver-iflow", "relation": "contains"}, {"source": "architecture/streaming-iterating-splitter", "target": "architecture/process-direct-interconnect", "relation": "routesTo"}, {"source": "data-contracts/custom-header-properties", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "data-contracts/custom-header-properties", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "data-contracts/mdm-inbound-contract", "target": "iflows/batch-receiver-iflow", "relation": "implements"}, {"source": "data-contracts/mdm-inbound-contract", "target": "data-contracts/s4-odata-mapping", "relation": "routesTo"}, {"source": "data-contracts/s4-odata-mapping", "target": "data-contracts/mdm-inbound-contract", "relation": "dependsOn"}, {"source": "data-contracts/s4-odata-mapping", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-001-dual-iflow-decoupling", "target": "architecture/dual-iflow-pattern", "relation": "implementedBy"}, {"source": "decisions/adr-001-dual-iflow-decoupling", "target": "iflows/batch-receiver-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-001-dual-iflow-decoupling", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-002-process-direct", "target": "architecture/process-direct-interconnect", "relation": "implementedBy"}, {"source": "decisions/adr-002-process-direct", "target": "decisions/adr-001-dual-iflow-decoupling", "relation": "dependsOn"}, {"source": "decisions/adr-003-bpmn-method-and-style", "target": "iflows/batch-receiver-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-003-bpmn-method-and-style", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-004-data-store-dlq", "target": "architecture/resilience-and-dead-letter", "relation": "implementedBy"}, {"source": "decisions/adr-004-data-store-dlq", "target": "iflows/reprocessor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-005-single-viewport-fiori", "target": "presentation-and-ui/fiori-workbench-ui", "relation": "implementedBy"}, {"source": "iflows/batch-receiver-iflow", "target": "architecture/dual-iflow-pattern", "relation": "partOf"}, {"source": "iflows/batch-receiver-iflow", "target": "iflows/item-processor-iflow", "relation": "routesTo"}, {"source": "iflows/batch-receiver-iflow", "target": "decisions/adr-003-bpmn-method-and-style", "relation": "implements"}, {"source": "iflows/batch-receiver-iflow", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "iflows/item-processor-iflow", "target": "architecture/dual-iflow-pattern", "relation": "partOf"}, {"source": "iflows/item-processor-iflow", "target": "iflows/batch-receiver-iflow", "relation": "routedFrom"}, {"source": "iflows/item-processor-iflow", "target": "architecture/existence-check-and-routing", "relation": "implements"}, {"source": "iflows/item-processor-iflow", "target": "architecture/resilience-and-dead-letter", "relation": "implements"}, {"source": "iflows/item-processor-iflow", "target": "decisions/adr-003-bpmn-method-and-style", "relation": "implements"}, {"source": "iflows/item-processor-iflow", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "iflows/reprocessor-iflow", "target": "decisions/adr-004-data-store-dlq", "relation": "implements"}, {"source": "iflows/reprocessor-iflow", "target": "iflows/item-processor-iflow", "relation": "routesTo"}, {"source": "presentation-and-ui/fiori-workbench-ui", "target": "decisions/adr-005-single-viewport-fiori", "relation": "implements"}, {"source": "presentation-and-ui/fiori-workbench-ui", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "presentation-and-ui/pecha-kucha-20x20", "target": "decisions/adr-003-bpmn-method-and-style", "relation": "references"}, {"source": "presentation-and-ui/pecha-kucha-20x20", "target": "verification/live-btp-execution", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "architecture/dual-iflow-pattern", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "architecture/existence-check-and-routing", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "decisions/adr-001-dual-iflow-decoupling", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "decisions/adr-002-process-direct", "relation": "references"}, {"source": "qa/error-handling-faq", "target": "architecture/resilience-and-dead-letter", "relation": "references"}, {"source": "qa/error-handling-faq", "target": "iflows/reprocessor-iflow", "relation": "references"}, {"source": "qa/error-handling-faq", "target": "decisions/adr-004-data-store-dlq", "relation": "references"}, {"source": "verification/istqb-test-strategy", "target": "architecture/existence-check-and-routing", "relation": "verifies"}, {"source": "verification/istqb-test-strategy", "target": "architecture/resilience-and-dead-letter", "relation": "verifies"}, {"source": "verification/live-btp-execution", "target": "architecture/dual-iflow-pattern", "relation": "verifies"}, {"source": "verification/live-btp-execution", "target": "iflows/batch-receiver-iflow", "relation": "verifies"}, {"source": "verification/live-btp-execution", "target": "iflows/item-processor-iflow", "relation": "verifies"}, {"source": "verification/sandbox-limitations-405", "target": "iflows/item-processor-iflow", "relation": "verifies"}]};
+    const embeddedNotes = {"architecture/dual-iflow-pattern": {"id": "architecture/dual-iflow-pattern", "path": "/architecture/dual-iflow-pattern.md", "frontmatter": {"id": "architecture/dual-iflow-pattern", "type": "Architecture Concept", "title": "Dual-iFlow Entkopplungsmuster", "description": "Trennung von Netzwerk-Ingest/Transport und atomarer Geschäftslogik zur Erzielung von Fehlertoleranz und Skalierbarkeit.", "resource": "btp://conciliamus/architecture/dual-iflow", "tags": ["architecture", "pattern", "dual-iflow", "cpi", "btp", "decoupling", "resilience"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "contains", "target": "/iflows/batch-receiver-iflow.md"}, {"type": "contains", "target": "/iflows/item-processor-iflow.md"}, {"type": "implements", "target": "/decisions/adr-001-dual-iflow-decoupling.md"}, {"type": "dependsOn", "target": "/architecture/process-direct-interconnect.md"}, {"type": "verifies", "target": "/verification/live-btp-execution.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# Dual-iFlow Entkopplungsmuster\n\n## Motivation & Problemstellung\nWird ein Batch von 10 oder mehr Geschäftspartnern in einem einzigen monolithischen iFlow verarbeitet, führt das Scheitern eines einzelnen Partner-Datensatzes (z.B. durch Validierungsfehler oder ERP-Sperren) unweigerlich zum Gesamtabbruch der Transaktion. Zudem blockiert ein langer sequentieller Lauf den eingehenden HTTP-Thread.\n\n## Architektur-Lösung\nDie Lösung teilt den Prozess streng in zwei lose gekoppelte Artefakte auf:\n\n1. **`IFL_MDM_BP_Batch_Receiver` (Ingest- & Transport-Ebene):**\n   - Nimmt den HTTPS-Batch entgegen.\n   - Führt eine syntaktische Validierung des Gesamt-JSON durch.\n   - Extrahiert Batch-Metadaten (`batchId`, `sourceSystem`, `bpTotalCount`).\n   - Zerlegt den Batch via **Streaming Iterating Splitter** in Einzelsätze.\n   - Übergibt jeden Satz an den internen Endpunkt `/conciliamus/v1/businesspartners/item`.\n2. **`IFL_MDM_BP_Item_Processor` (Fachliche Verarbeitungs-Ebene):**\n   - Agiert als atomarer Einzelverarbeiter.\n   - Führt die fachliche Validierung (Email, Land, Pflichtfelder) durch.\n   - Führt die OData GET Existenzprüfung aus.\n   - Entscheidet über POST (Neuanlage) oder PATCH (Delta-Update).\n   - Fängt Fehler isoliert im Exception Subprocess ab.\n\n## Vorteile\n- **Fehlerisolation:** Scheitert Partner #5, werden die Partner #1-4 und #6-10 davon nicht beeinträchtigt.\n- **Unabhängige Skalierbarkeit:** Der Item Processor kann je nach Worker-Thread-Kapazität parallelisiert werden.\n- **Wartbarkeit:** Änderungen an der OData-Struktur betreffen nur iFlow 2, nicht den Ingest-Kanal.\n"}, "architecture/existence-check-and-routing": {"id": "architecture/existence-check-and-routing", "path": "/architecture/existence-check-and-routing.md", "frontmatter": {"id": "architecture/existence-check-and-routing", "type": "Architecture Concept", "title": "Existenzprüfung & Deterministische Router-Matrix", "description": "Idempotente Existenzprüfung via OData GET und deterministische Verzweigung zu POST, PATCH oder Fehlerbehandlung.", "resource": "btp://conciliamus/architecture/existence-routing", "tags": ["architecture", "odata", "routing", "idempotency", "s4hana", "content-based-router"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "contains", "target": "/iflows/item-processor-iflow.md"}, {"type": "implements", "target": "/data-contracts/s4-odata-mapping.md"}, {"type": "verifies", "target": "/verification/istqb-test-strategy.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# Existenzprüfung & Deterministische Router-Matrix\n\n## Idempotenz-Konzept\nUm Mehrfachanlagen von Geschäftspartnern zu verhindern (z.B. bei wiederholtem Senden desselben Batches), fragt der Prozess vor jeder schreibenden Aktion das Zielsystem ab:\n\n```http\nGET /s4hanacloud/sap/opu/odata/sap/API_BUSINESS_PARTNER/A_BusinessPartner?$filter=SearchTerm1 eq '${property.externalId}'&$select=BusinessPartner,SearchTerm1,OrganizationBPName1 HTTP/1.1\nHost: sandbox.api.sap.com\nAccept: application/json\nAPIKey: {{SANDBOX_API_KEY}}\n```\n\n## Entscheidungsmatrix\n\n| Trefferanzahl | Ziel-Operation | Ziel-Pfad | Bedeutung / Verhalten |\n| :--- | :--- | :--- | :--- |\n| **`0` Treffer** | **POST** | `/A_BusinessPartner` | Neuanlage (Deep Insert mit Adresse & Kommunikation) |\n| **`1` Treffer** | **PATCH** | `/A_BusinessPartner('{id}')` | Aktualisierung: Interne ID wird dynamisch in URI eingesetzt |\n| **`>1` Treffer** | **Fachlicher Fehler** | *(Abbruch Einzelsatz)* | Duplikat im SAP-System (`FAILED_BUSINESS`) |\n\n## Dynamische URI-Adressierung bei PATCH\nWird genau ein Treffer gefunden, liest ein Groovy-Skript die SAP-Geschäftspartnernummer aus der Antwort aus:\n```groovy\ndef bpNumber = jsonResponse.d.results[0].BusinessPartner\nmessage.setProperty(\"bpNumber\", bpNumber)\nmessage.setHeader(\"CamelHttpPath\", \"/A_BusinessPartner('\" + bpNumber + \"')\")\n```\nEs existiert **keine statische ID-Hinterlegung** im Flow.\n"}, "architecture/process-direct-interconnect": {"id": "architecture/process-direct-interconnect", "path": "/architecture/process-direct-interconnect.md", "frontmatter": {"id": "architecture/process-direct-interconnect", "type": "Architecture Concept", "title": "ProcessDirect Interconnect", "description": "Latenzfreie, speicherinterne Kommunikation zwischen Integration Flows innerhalb desselben Cloud Integration Tenants.", "resource": "btp://conciliamus/architecture/process-direct", "tags": ["architecture", "process-direct", "cpi", "performance", "in-memory", "btp"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implements", "target": "/decisions/adr-002-process-direct.md"}, {"type": "dependsOn", "target": "/architecture/dual-iflow-pattern.md"}, {"type": "routesTo", "target": "/iflows/item-processor-iflow.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# ProcessDirect Interconnect\n\n## Funktionsweise\nDer `ProcessDirect`-Adapter verbindet zwei Integration Flows, die auf demselben Worker-Node bzw. Tenant der SAP Cloud Integration laufen. Der Aufruf erfolgt über ein internes Java-Methoden-Routing im Hauptspeicher:\n- **Kein TCP/IP Overhead:** Keine TLS-Verschlüsselung innerhalb der Tenant-Grenze nötig.\n- **Keine Serialisierungskosten:** Objekte werden direkt im JVM-Speicher referenziert.\n- **Transaktionale Konsistenz:** Fehlerzustände können synchron an den aufrufenden Flow propagiert werden, wenn konfiguriert.\n\n## Konfiguration in Conciliamus\n- **Sender-Adresse in `IFL_MDM_BP_Item_Processor`:** `/conciliamus/v1/businesspartners/item`\n- **Receiver-Adapter in `IFL_MDM_BP_Batch_Receiver`:**\n  - Adapter-Typ: `ProcessDirect`\n  - Address: `/conciliamus/v1/businesspartners/item`\n"}, "architecture/resilience-and-dead-letter": {"id": "architecture/resilience-and-dead-letter", "path": "/architecture/resilience-and-dead-letter.md", "frontmatter": {"id": "architecture/resilience-and-dead-letter", "type": "Architecture Concept", "title": "Resilienz & Dead-Letter-Behandlung", "description": "Zweikanalige Fehlerdifferenzierung in Business Errors (Audit Log) und Technical Errors (Data Store DLQ mit selektivem Replay).", "resource": "btp://conciliamus/architecture/resilience-dlq", "tags": ["architecture", "resilience", "error-handling", "dlq", "data-store", "replay"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implements", "target": "/decisions/adr-004-data-store-dlq.md"}, {"type": "contains", "target": "/iflows/reprocessor-iflow.md"}, {"type": "handlesError", "target": "/iflows/item-processor-iflow.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# Resilienz & Dead-Letter-Behandlung\n\n## Dual-Channel Fehlerbehandlung\nIn Enterprise-Schnittstellen dürfen fachliche Datenfehler niemals dieselbe Fehlerbehandlung wie technische Netzwerkausfälle durchlaufen:\n\n```mermaid\nflowchart TD\n    ERR[Fehler im Item Processor] --> CLASSIFY{Fehlerursache}\n    \n    CLASSIFY -->|Ungültige Daten, Formatfehler, Dublette| BIZ[Fachlicher Fehler: FAILED_BUSINESS]\n    CLASSIFY -->|Timeout, HTTP 500, Connection Refused| TECH[Technischer Fehler: FAILED_TECHNICAL]\n    \n    BIZ --> AUDIT[Audit Log & MPL Custom Status]\n    BIZ --> NO_RETRY[Kein automatischer Wiederanlauf!]\n    \n    TECH --> DS[Data Store: BP_FAILED_QUEUE]\n    DS --> REPLAY[Selektiver Replay via IFL_MDM_BP_Reprocessor]\n```\n\n## Fachliche Fehler (Non-Retryable)\n- **Ursachen:** Fehlende `externalId`, ungültige E-Mail-Syntax, Land nicht ISO-2, Mehrfachtreffer im OData GET.\n- **Behandlung:** Sofortige Protokollierung in den Message Attachments (`Validation_Errors.txt`), Status `FAILED_BUSINESS`. Ein erneutes automatisches Senden ist sinnlos, da der Fehler in den Daten liegt.\n\n## Technische Fehler (Retryable)\n- **Ursachen:** Timeout gegen S/4HANA, HTTP 503 Service Unavailable, Netzwerkunterbrechung.\n- **Behandlung:** Der Original-Payload des Einzelsatzes wird als Eintrag in der persistenten Data Store Queue `BP_FAILED_QUEUE` gesichert.\n- **Vorteil:** Nach Beseitigung der Störung kann der Satz einzeln verarbeitet werden, ohne den gesamten Batch erneut aus dem MDM anfordern zu müssen.\n"}, "architecture/session-and-csrf-handshake": {"id": "architecture/session-and-csrf-handshake", "path": "/architecture/session-and-csrf-handshake.md", "frontmatter": {"id": "architecture/session-and-csrf-handshake", "type": "Architecture Concept", "title": "Session & CSRF Handshake", "description": "Handhabung von CSRF-Tokens und Session-Cookies bei schreibenden OData-Aufrufen auf SAP S/4HANA.", "resource": "btp://conciliamus/architecture/csrf-handshake", "tags": ["architecture", "csrf", "security", "odata", "cookies", "s4hana", "http"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "contains", "target": "/iflows/item-processor-iflow.md"}, {"type": "dependsOn", "target": "/architecture/existence-check-and-routing.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# Session & CSRF Handshake\n\n## Sicherheitsmechanismus in SAP OData\nSAP S/4HANA schützt alle mutierenden HTTP-Methoden (`POST`, `PUT`, `PATCH`, `DELETE`) gegen Cross-Site Request Forgery (CSRF). Ein direkter schreibender Call ohne Token wird mit `HTTP 403 Forbidden` abgewiesen.\n\n## Two-Legged Handshake Ablauf\n1. **Pre-Flight Fetch:**\n   - Ein vorangehender `GET`- oder `HEAD`-Request wird mit dem Header `X-CSRF-Token: Fetch` an das Zielsystem gesendet.\n   - Der S/4HANA-Server antwortet mit:\n     - `X-CSRF-Token: <token-string>`\n     - `Set-Cookie: SAP_SESSIONID_...; MYSAPSSO2=...`\n2. **Session Cookie Propagation:**\n   - In SAP Cloud Integration wird der HTTP-Empfängeradapter so konfiguriert oder über Scripting gesteuert, dass sowohl das Token (`X-CSRF-Token`) als auch die Session-Cookies im darauffolgenden `POST`/`PATCH` mitgeführt werden.\n   - Dadurch ordnet S/4HANA den Schreibzugriff derselben authentifizierten Benutzersitzung zu.\n"}, "architecture/streaming-iterating-splitter": {"id": "architecture/streaming-iterating-splitter", "path": "/architecture/streaming-iterating-splitter.md", "frontmatter": {"id": "architecture/streaming-iterating-splitter", "type": "Architecture Concept", "title": "Streaming Iterating Splitter", "description": "Speicheroptimierte Zerlegung von JSON-Massen-Batches ohne Erzeugung von Java Out-Of-Memory Fehlern.", "resource": "btp://conciliamus/architecture/streaming-splitter", "tags": ["architecture", "splitter", "streaming", "memory-management", "cpi", "json"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "contains", "target": "/iflows/batch-receiver-iflow.md"}, {"type": "routesTo", "target": "/architecture/process-direct-interconnect.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# Streaming Iterating Splitter\n\n## Herausforderung\nGroße JSON-Batches mit hunderten oder tausenden Datensätzen überfordern den JVM-Heap von SAP Cloud Integration, wenn der gesamte Batch als DOM-Objektbaum in den Speicher geladen wird.\n\n## Lösungsansatz in Conciliamus\n1. **JSON-to-XML Konvertierung:** Der eingehende Batch wird in einen XML-Envelope transformiert.\n2. **Iterating Splitter mit Streaming-Aktivierung:**\n   - Expression Type: `XPath`\n   - XPath Expression: `//businessPartners`\n   - **Streaming Mode: Enabled (Checked):** Statt das gesamte Dokument einzulesen, nutzt der Splitter einen StAX-basierten Cursor (Streaming API for XML).\n3. **XML-to-JSON Rücktransformation:** Jeder vereinzelte Datensatz wird im Stream zurück nach JSON formatiert und via ProcessDirect abgesetzt.\n"}, "data-contracts/custom-header-properties": {"id": "data-contracts/custom-header-properties", "path": "/data-contracts/custom-header-properties.md", "frontmatter": {"id": "data-contracts/custom-header-properties", "type": "Data Contract", "title": "Custom Header Properties & Message Processing Log (MPL)", "description": "Definition der im BTP Message Processing Log gesetzten Metadaten für Volltextsuche und Audit-Trails.", "resource": "btp://conciliamus/contracts/custom-headers", "tags": ["contract", "monitoring", "mpl", "custom-headers", "audit", "fulltext-search"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implementedBy", "target": "/iflows/item-processor-iflow.md"}, {"type": "verifies", "target": "/verification/live-btp-execution.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# Custom Header Properties & Message Processing Log (MPL)\n\n## Zweck\nIn der SAP Integration Suite können Nachrichten im Web-Monitoring über `Custom Header Properties` durchsucht werden. Dies ermöglicht es dem Betriebsteam, gezielt nach der externen MDM-ID oder der ermittelten SAP-Partnernummer zu suchen.\n\n## Registrierte Properties\n\n```groovy\ndef msgLog = messageLogFactory.getMessageLog(message)\nif (msgLog != null) {\n    msgLog.addCustomHeaderProperty(\"BatchId\", batchId)\n    msgLog.addCustomHeaderProperty(\"ExternalId\", externalId)\n    msgLog.addCustomHeaderProperty(\"CompanyName\", company)\n    msgLog.addCustomHeaderProperty(\"City\", city)\n    msgLog.addCustomHeaderProperty(\"Country\", country)\n    msgLog.addCustomHeaderProperty(\"Operation\", plannedOperation) // POST oder PATCH\n    msgLog.addCustomHeaderProperty(\"BP_Number\", bpNumber)         // gefundene/neue ID\n}\n```\n\n## Custom Status Werte (`SAP_MessageProcessingLogCustomStatus`)\n- `POST_PLANNED`: Neuanlage ermittelt und vorbereitet\n- `PATCH_PLANNED`: Existierender Datensatz erkannt, Update vorbereitet\n- `VERIFIED_POST` / `VERIFIED_PATCH`: Erfolgreich an S/4HANA übermittelt\n- `FAILED_BUSINESS`: Validierungsfehler (ungültige Mail, Dublette)\n- `FAILED_TECHNICAL`: Netzwerk-/Timeout-Fehler (in DLQ gesichert)\n"}, "data-contracts/mdm-inbound-contract": {"id": "data-contracts/mdm-inbound-contract", "path": "/data-contracts/mdm-inbound-contract.md", "frontmatter": {"id": "data-contracts/mdm-inbound-contract", "type": "Data Contract", "title": "MDM Inbound JSON Kontrakt", "description": "Schnittstellenspezifikation und Validierungsregeln für die vom Quellsystem JSD-MDM übermittelten JSON-Sammelbatches.", "resource": "btp://conciliamus/contracts/mdm-inbound", "tags": ["contract", "mdm", "json", "schema", "validation"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implements", "target": "/iflows/batch-receiver-iflow.md"}, {"type": "routesTo", "target": "/data-contracts/s4-odata-mapping.md"}], "sources": [{"id": "mdm-schema", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/testdata/Testdaten.json", "title": "Original-Testdaten JSD-MDM"}]}, "body": "# MDM Inbound JSON Kontrakt\n\n## JSON-Struktur\n```json\n{\n  \"batchId\": \"BP-20260714-001\",\n  \"createdAt\": \"2026-07-14T09:00:00Z\",\n  \"sourceSystem\": \"JSD-MDM\",\n  \"businessPartners\": [\n    {\n      \"externalId\": \"CUST15\",\n      \"company\": \"Musterfirma Berlin GmbH\",\n      \"street\": \"Musterstraße\",\n      \"houseNumber\": \"10\",\n      \"postalCode\": \"10115\",\n      \"city\": \"Berlin\",\n      \"country\": \"DE\",\n      \"email\": \"kontakt@musterfirma-berlin.de\",\n      \"phone\": \"+49 30 10000001\",\n      \"vatId\": \"DE100000001\"\n    }\n  ]\n}\n```\n\n## Validierungsregeln\n1. **`batchId`:** Pflichtfeld, Muster `BP-YYYYMMDD-NNN`.\n2. **`businessPartners`:** Pflicht-Array, mindestens 1 Element.\n3. **`externalId`:** Nicht-leerer String, max. 20 Zeichen (wird auf `SearchTerm1` gemappt).\n4. **`company`:** Nicht-leerer String, max. 40 Zeichen (wird auf `OrganizationBPName1` gemappt).\n5. **`country`:** Exakt 2 Großbuchstaben (ISO 3166-1 alpha-2, z.B. `DE`).\n6. **`email`:** Valide E-Mail-Syntax (Regex `^[^@]+@[^@]+\\.[^@]+$`).\n"}, "data-contracts/s4-odata-mapping": {"id": "data-contracts/s4-odata-mapping", "path": "/data-contracts/s4-odata-mapping.md", "frontmatter": {"id": "data-contracts/s4-odata-mapping", "type": "Data Contract", "title": "SAP S/4HANA OData Mapping", "description": "Vollständige Zuordnungsmatrix zwischen MDM-Feldern und den SAP OData Entitäten A_BusinessPartner und Address.", "resource": "btp://conciliamus/contracts/s4-odata-mapping", "tags": ["contract", "mapping", "odata", "s4hana", "api-business-partner"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "dependsOn", "target": "/data-contracts/mdm-inbound-contract.md"}, {"type": "implementedBy", "target": "/iflows/item-processor-iflow.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# SAP S/4HANA OData Mapping\n\n## Feldzuordnung\n\n| MDM Feld | SAP OData Feld | Datentyp | Beschreibung |\n| :--- | :--- | :--- | :--- |\n| `externalId` | `SearchTerm1` | String(20) | Primärer Suchbegriff für die Existenzprüfung |\n| `company` | `OrganizationBPName1` | String(40) | Firmenname / Name der Organisation |\n| `street` | `to_BusinessPartnerAddress[0].StreetName` | String(60) | Straßenbezeichnung |\n| `houseNumber` | `to_BusinessPartnerAddress[0].HouseNumber` | String(10) | Hausnummer |\n| `postalCode` | `to_BusinessPartnerAddress[0].PostalCode` | String(10) | Postleitzahl |\n| `city` | `to_BusinessPartnerAddress[0].CityName` | String(40) | Ort / Stadt |\n| `country` | `to_BusinessPartnerAddress[0].Country` | String(2) | ISO 3166-1 alpha-2 Ländercode |\n| `email` | `to_BusinessPartnerAddress[0].to_EmailAddress[0].EmailAddress` | String(241) | E-Mail-Adresse |\n| `phone` | `to_BusinessPartnerAddress[0].to_PhoneNumber[0].PhoneNumber` | String(30) | Telefonnummer |\n\n## Gesetzte Konstanten\n- `BusinessPartnerCategory`: `\"2\"` (Organisation)\n- `BusinessPartnerGrouping`: `\"BP02\"` (Standard-Nummernkreis)\n- `Language`: `\"DE\"`\n- `CorrespondenceLanguage`: `\"DE\"`\n"}, "decisions/adr-001-dual-iflow-decoupling": {"id": "decisions/adr-001-dual-iflow-decoupling", "path": "/decisions/adr-001-dual-iflow-decoupling.md", "frontmatter": {"id": "decisions/adr-001-dual-iflow-decoupling", "type": "Decision Record", "title": "ADR-001: Dual-iFlow Entkopplungsmuster", "description": "Aufteilung der Integrationslogik in zwei separate iFlows zur Gewährleistung von Fehlerisolation und Ressourcenschonung.", "resource": "btp://conciliamus/decisions/ADR-001", "tags": ["adr", "architecture-decision", "dual-iflow", "decoupling", "cpi"], "status": "accepted", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implementedBy", "target": "/architecture/dual-iflow-pattern.md"}, {"type": "implementedBy", "target": "/iflows/batch-receiver-iflow.md"}, {"type": "implementedBy", "target": "/iflows/item-processor-iflow.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# ADR-001: Dual-iFlow Entkopplungsmuster\n\n## Status\nAkzeptiert (Accepted)\n\n## Kontext\nEin externes MDM-System liefert Sammelbatches von Geschäftspartnern. Im Zielsystem SAP S/4HANA müssen Einzeloperationen durchgeführt werden. In einem monolithischen iFlow würde der Ausfall eines einzelnen Satzes den Gesamtbatch abbrechen und die HTTP-Verbindung des Senders unnötig lange blockieren.\n\n## Entscheidung\nWir trennen die Verarbeitung strikt in:\n1. `IFL_MDM_BP_Batch_Receiver` (Ingest, Validierung, Streaming-Split)\n2. `IFL_MDM_BP_Item_Processor` (Einzelverarbeitung, Existenzcheck, POST/PATCH)\n\n## Konsequenzen\n- **Positiv:** Volle Fehlerisolation; scheiternde Datensätze blockieren nicht die erfolgreichen Partner.\n- **Positiv:** Wartbarkeit und getrenntes Monitoring.\n- **Negativ:** Zwei deployte iFlow-Artefakte im Tenant zu verwalten.\n"}, "decisions/adr-002-process-direct": {"id": "decisions/adr-002-process-direct", "path": "/decisions/adr-002-process-direct.md", "frontmatter": {"id": "decisions/adr-002-process-direct", "type": "Decision Record", "title": "ADR-002: ProcessDirect statt Message Queues für iFlow-Kopplung", "description": "Nutzung des ProcessDirect-Adapters zur latenzfreien internen Kopplung ohne JMS-Ressourcenbindung.", "resource": "btp://conciliamus/decisions/ADR-002", "tags": ["adr", "architecture-decision", "process-direct", "jms", "performance", "cpi"], "status": "accepted", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implementedBy", "target": "/architecture/process-direct-interconnect.md"}, {"type": "dependsOn", "target": "/decisions/adr-001-dual-iflow-decoupling.md"}], "sources": [{"id": "btp-doku", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/btp_setup_doku.md", "title": "BTP Testaccount & Integration Suite Einrichtung", "author": "Dieter Rüffler"}]}, "body": "# ADR-002: ProcessDirect statt Message Queues für iFlow-Kopplung\n\n## Status\nAkzeptiert (Accepted)\n\n## Kontext\nFür die Kopplung zwischen Ingestion- und Verarbeitungs-iFlow stehen auf SAP BTP Cloud Integration primär `ProcessDirect` und `JMS (Message Queues)` zur Verfügung. JMS erfordert ein separates Message-Queue-Kontingent (in Trial begrenzt, in Produktion kostenintensiv).\n\n## Entscheidung\nWir nutzen den **`ProcessDirect`**-Adapter. Er verbindet Flows innerhalb desselben Tenants rein speicherintern (In-Memory Java Call), ohne TCP/IP-Overhead und ohne JMS-Queue-Kosten.\n\n## Konsequenzen\n- **Positiv:** Höchste Durchsatzrate und minimale Latenz.\n- **Positiv:** Keine Abhängigkeit von JMS-Broker-Kapazitäten.\n- **Negativ:** Synchroner Aufruf blockiert den Thread des aufrufenden Flows während der Ausführung.\n"}, "decisions/adr-003-bpmn-method-and-style": {"id": "decisions/adr-003-bpmn-method-and-style", "path": "/decisions/adr-003-bpmn-method-and-style.md", "frontmatter": {"id": "decisions/adr-003-bpmn-method-and-style", "type": "Decision Record", "title": "ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)", "description": "Durchgängige Anwendung der Nomenklatur- und Modellierungsstandards von Bruce Silver für selbstdokumentierende Enterprise-iFlows.", "resource": "btp://conciliamus/decisions/ADR-003", "tags": ["adr", "architecture-decision", "bpmn", "method-and-style", "bruce-silver", "governance"], "status": "accepted", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implementedBy", "target": "/iflows/batch-receiver-iflow.md"}, {"type": "implementedBy", "target": "/iflows/item-processor-iflow.md"}], "sources": [{"id": "bruce-silver-book", "resource": "https://www.methodandstyle.com/books/bpmn-method-and-style/", "title": "BPMN Method and Style (2nd Edition)", "author": "Bruce Silver"}]}, "body": "# ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)\n\n## Status\nAkzeptiert (Accepted)\n\n## Kontext\nViele Integration Flows in Enterprise-Landschaften sind unleserlich modelliert: kryptische Task-Namen, unklare Gateway-Bedingungen, fehlende semantische Trennung von Aktionen und Zuständen.\n\n## Entscheidung\nWir etablieren die Nomenklatur nach **Bruce Silver (Method & Style)**:\n1. **Tasks:** Werden strikt als `[Aktiv-Verb] + [Objekt]` benannt (z.B. `Existenz prüfen`, `Delta patchen`, `Header registrieren`).\n2. **Events:** Werden als Zustände im Partizip Perfekt formuliert (`Batch empfangen`, `Treffer ermittelt`).\n3. **Gateways:** Der Gateway-Rhombus bleibt unbeschriftet; die ausgehenden Sequenzflüsse tragen die Bedingungen. Der Default-Pfad wird schraffiert gekennzeichnet.\n\n## Konsequenzen\n- **Positiv:** iFlows sind für Fachbereich, Betriebsführung und Entwickler sofort selbsterklärend.\n- **Positiv:** Drastische Reduktion von Dokumentations- und Einarbeitungsaufwand.\n"}, "decisions/adr-004-data-store-dlq": {"id": "decisions/adr-004-data-store-dlq", "path": "/decisions/adr-004-data-store-dlq.md", "frontmatter": {"id": "decisions/adr-004-data-store-dlq", "type": "Decision Record", "title": "ADR-004: Data Store für Dead-Letter-Queue & Selektiven Replay", "description": "Einsatz eines persistenten BTP Data Stores für fehlgeschlagene Einzelnachrichten zur Ermöglichung eines punktuellen Wiederanlaufs.", "resource": "btp://conciliamus/decisions/ADR-004", "tags": ["adr", "architecture-decision", "data-store", "dlq", "resilience", "replay"], "status": "accepted", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implementedBy", "target": "/architecture/resilience-and-dead-letter.md"}, {"type": "implementedBy", "target": "/iflows/reprocessor-iflow.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# ADR-004: Data Store für Dead-Letter-Queue & Selektiven Replay\n\n## Status\nAkzeptiert (Accepted)\n\n## Kontext\nBei technischen Netzwerkfehlern oder ERP-Ausfällen dürfen fehlgeschlagene Partnerdaten weder verloren gehen noch darf der Quell-Batch im MDM komplett neu getriggert werden (da dies zu doppelten OData-Zugriffen auf bereits angelegte Datensätze führen würde).\n\n## Entscheidung\nWir nutzen den **BTP Cloud Integration Data Store** (`BP_FAILED_QUEUE`) als Dead Letter Queue:\n- Fehlgeschlagene Einzelsätze werden serialisiert dort abgelegt.\n- Ein Replay-Flow (`IFL_MDM_BP_Reprocessor`) kann diese Sätze einzeln wiedereinspielen.\n\n## Konsequenzen\n- **Positiv:** Kein Batch-Re-Run erforderlich.\n- **Positiv:** Vollständige Nachvollziehbarkeit und Behebung von Transaktionsstörungen.\n"}, "decisions/adr-005-single-viewport-fiori": {"id": "decisions/adr-005-single-viewport-fiori", "path": "/decisions/adr-005-single-viewport-fiori.md", "frontmatter": {"id": "decisions/adr-005-single-viewport-fiori", "type": "Decision Record", "title": "ADR-005: Single-Viewport Ergonomie für die Fiori Workbench", "description": "Umstellung der Test-Runner Web-App auf ein striktes 100% no-outer-scroll Layout mit interaktiven aufklappbaren JSON-Pills.", "resource": "btp://conciliamus/decisions/ADR-005", "tags": ["adr", "architecture-decision", "fiori", "ui-design", "single-viewport", "pills"], "status": "accepted", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implementedBy", "target": "/presentation-and-ui/fiori-workbench-ui.md"}], "sources": [{"id": "test-runner-app", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/test_runner_app.html", "title": "SAP Fiori Integration Test Runner & Workbench", "author": "Dieter Rüffler"}]}, "body": "# ADR-005: Single-Viewport Ergonomie für die Fiori Workbench\n\n## Status\nAkzeptiert (Accepted)\n\n## Kontext\nIn früheren Fassungen wanderte der Container „INBOUND PAYLOAD“ durch feste Mindesthöhen (`min-h-[580px]`) auf kleineren Bildschirmen nach unten aus dem sichtbaren Bereich heraus, wodurch eine unvorteilhafte äußere Fensterscrollbar entstand.\n\n## Entscheidung\n1. **Single-Viewport-Locking:** `html, body` werden auf `height: 100vh; overflow: hidden;` festgelegt.\n2. **Container-internes Scrollen:** Nur die Textarea bzw. der Pills-Baum erhalten `flex-1 min-h-0 overflow-y-auto`.\n3. **Interaktive JSON-Pills:** Einführung eines hierarchischen, aufklappbaren Pill-Modus mit RGB-Farbstatus (POST/PATCH/FEHLER) zur schnellen Analyse umfangreicher Payloads.\n\n## Konsequenzen\n- **Positiv:** Die Unterkante der Karte bleibt auf jedem Monitor immer sichtbar; keine störende Fensterscrollbar.\n- **Positiv:** Signifikant höhere Übersichtlichkeit und spielerische Erkundung der Hierarchien.\n"}, "iflows/batch-receiver-iflow": {"id": "iflows/batch-receiver-iflow", "path": "/iflows/batch-receiver-iflow.md", "frontmatter": {"id": "iflows/batch-receiver-iflow", "type": "iFlow Specification", "title": "IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher", "description": "Spezifikation des Ingestion-iFlows zur Annahme von MDM-Massen-Batches, syntaktischen Vorvalidierung und Streaming-Zerlegung.", "resource": "btp://conciliamus/iflows/IFL_MDM_BP_Batch_Receiver", "tags": ["iflow", "batch-receiver", "cpi", "btp", "bpmn", "streaming", "ingest"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "partOf", "target": "/architecture/dual-iflow-pattern.md"}, {"type": "routesTo", "target": "/iflows/item-processor-iflow.md"}, {"type": "implements", "target": "/decisions/adr-003-bpmn-method-and-style.md"}, {"type": "verifies", "target": "/verification/live-btp-execution.md"}], "sources": [{"id": "btp-doku", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/btp_setup_doku.md", "title": "BTP Testaccount & Integration Suite Einrichtung", "author": "Dieter Rüffler"}]}, "body": "# IFL_MDM_BP_Batch_Receiver\n\n## Technische Kenndaten\n- **Paket:** `Conciliamus - Business Partner Integration`\n- **Technischer Name:** `IFL_MDM_BP_Batch_Receiver`\n- **Inbound-Adapter:** HTTPS\n- **URL-Pfad:** `/http/conciliamus/v1/businesspartners/batch`\n- **Sicherheits-Level:** Rollenbasiert (`ESBMessaging.send`) + OAuth 2.0 Client Credentials Grant\n- **CSRF-Schutz:** Konfiguriert im HTTPS-Sender\n- **Status im Tenant:** `Deployed` / `Started`\n\n## Modellierung nach Bruce Silver (Method & Style)\n1. **Start-Event:** `Batch empfangen`\n2. **Task 1:** `Syntax validieren` (Groovy Script: Prüfung auf gültiges JSON und Vorhandensein von `batchId` und `businessPartners`).\n3. **Task 2:** `Metadaten extrahieren` (Content Modifier: `batchId`, `sourceSystem`, `bpTotalCount`).\n4. **Task 3:** `JSON zu XML konvertieren` (JSON-to-XML Converter).\n5. **Task 4:** `Datensätze vereinzeln` (Iterating Splitter: XPath `//businessPartners`, Streaming Mode aktiviert).\n6. **Task 5:** `XML zu JSON transformieren` (XML-to-JSON Converter).\n7. **Task 6:** `Einzelsatz übergeben` (ProcessDirect Adapter an `/conciliamus/v1/businesspartners/item`).\n8. **End-Event:** `Batch zerlegt`\n"}, "iflows/item-processor-iflow": {"id": "iflows/item-processor-iflow", "path": "/iflows/item-processor-iflow.md", "frontmatter": {"id": "iflows/item-processor-iflow", "type": "iFlow Specification", "title": "IFL_MDM_BP_Item_Processor: Atomare Partner-Verarbeitung", "description": "Spezifikation des verarbeitenden iFlows für Validierung, OData GET Existenzprüfung, deterministisches Routing und S/4HANA OData Aufrufe.", "resource": "btp://conciliamus/iflows/IFL_MDM_BP_Item_Processor", "tags": ["iflow", "item-processor", "cpi", "btp", "odata", "routing", "s4hana", "error-handling"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "partOf", "target": "/architecture/dual-iflow-pattern.md"}, {"type": "routedFrom", "target": "/iflows/batch-receiver-iflow.md"}, {"type": "implements", "target": "/architecture/existence-check-and-routing.md"}, {"type": "implements", "target": "/architecture/resilience-and-dead-letter.md"}, {"type": "implements", "target": "/decisions/adr-003-bpmn-method-and-style.md"}, {"type": "verifies", "target": "/verification/live-btp-execution.md"}], "sources": [{"id": "btp-doku", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/btp_setup_doku.md", "title": "BTP Testaccount & Integration Suite Einrichtung", "author": "Dieter Rüffler"}]}, "body": "# IFL_MDM_BP_Item_Processor\n\n## Technische Kenndaten\n- **Paket:** `Conciliamus - Business Partner Integration`\n- **Technischer Name:** `IFL_MDM_BP_Item_Processor`\n- **Inbound-Adapter:** ProcessDirect (`/conciliamus/v1/businesspartners/item`)\n- **Outbound-Adapter:** HTTP (OData REST an `sandbox.api.sap.com`)\n- **Security Material:** `SANDBOX_API_KEY` (Secure Parameter)\n- **Status im Tenant:** `Deployed` / `Started`\n\n## Modellierungs-Schritte (Method & Style)\n1. **Start-Event:** `Einzelsatz empfangen`\n2. **Task 1:** `Felder fachlich validieren` (Groovy Script `ValidateItem.groovy`: Prüft `externalId`, `company`, E-Mail-Regex, Ländercode).\n3. **Task 2:** `Header Properties registrieren` (MPL Custom Status & Volltext-Header).\n4. **Task 3:** `Existenz prüfen (GET)` (HTTP Request-Reply an `/A_BusinessPartner?$filter=SearchTerm1 eq ...`).\n5. **Task 4:** `Suchergebnis analysieren` (Groovy Script `EvaluateSearchResult.groovy`: Ermittelt Trefferanzahl).\n6. **Entscheidungs-Gateway (Unbeschrifteter Rhombus):**\n   - **Pfad 1 (0 Treffer):** Task `POST Payload aufbauen` ➔ Task `Neuanlage ausführen (POST)` ➔ `/A_BusinessPartner`\n   - **Pfad 2 (1 Treffer):** Task `PATCH Payload aufbauen & ID zuweisen` ➔ Task `Delta aktualisieren (PATCH)` ➔ `/A_BusinessPartner('{id}')`\n   - **Pfad 3 (Default, >1 Treffer):** Task `Fachlichen Fehler protokollieren`\n7. **Exception Subprocess:**\n   - Fängt technische HTTP-Ausfälle ab und schreibt in Data Store `BP_FAILED_QUEUE`.\n   - Schreibt Audit Log für fachliche Fehler.\n8. **End-Event:** `Verarbeitung beendet`\n"}, "iflows/reprocessor-iflow": {"id": "iflows/reprocessor-iflow", "path": "/iflows/reprocessor-iflow.md", "frontmatter": {"id": "iflows/reprocessor-iflow", "type": "iFlow Specification", "title": "IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf", "description": "Spezifikation des Wiederanlauf-Flows zum selektiven Wiedereinspielen fehlgeschlagener Datensätze aus der Dead Letter Queue.", "resource": "btp://conciliamus/iflows/IFL_MDM_BP_Reprocessor", "tags": ["iflow", "reprocessor", "dlq", "data-store", "replay", "resilience"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implements", "target": "/decisions/adr-004-data-store-dlq.md"}, {"type": "routesTo", "target": "/iflows/item-processor-iflow.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept", "author": "Dieter Rüffler"}]}, "body": "# IFL_MDM_BP_Reprocessor\n\n## Technische Kenndaten\n- **Paket:** `Conciliamus - Business Partner Integration`\n- **Technischer Name:** `IFL_MDM_BP_Reprocessor`\n- **Trigger:** Timer-basiert (z.B. alle 15 Minuten) oder manueller HTTP-Trigger\n- **Datenquelle:** Data Store `BP_FAILED_QUEUE`\n- **Ziel:** ProcessDirect `/conciliamus/v1/businesspartners/item`\n\n## Ablauf\n1. **Poll Data Store:** Liest persistierte Nachrichteneinträge aus `BP_FAILED_QUEUE`.\n2. **Selektives Routing:** Übergibt die Payload erneut an den `IFL_MDM_BP_Item_Processor`.\n3. **Erfolgsprüfung:** Bei erfolgreicher Verarbeitung wird der Eintrag aus dem Data Store gelöscht.\n4. **Resilienz:** Bei erneutem Fehlschlag verbleibt der Satz mit inkrementiertem Retry-Zähler im Store.\n"}, "presentation-and-ui/fiori-workbench-ui": {"id": "presentation-and-ui/fiori-workbench-ui", "path": "/presentation-and-ui/fiori-workbench-ui.md", "frontmatter": {"id": "presentation-and-ui/fiori-workbench-ui", "type": "UI Concept", "title": "SAP Fiori Integration Workbench & Test-Runner", "description": "Architektur der Single-Viewport Fiori Horizon Web-Applikation mit aufklappbaren RGB-JSON-Pills und Monitoring-Drawer.", "resource": "btp://conciliamus/ui/fiori-workbench", "tags": ["ui", "fiori", "workbench", "json-pills", "single-viewport", "test-runner", "firebase-auth"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "implements", "target": "/decisions/adr-005-single-viewport-fiori.md"}, {"type": "verifies", "target": "/verification/live-btp-execution.md"}], "sources": [{"id": "test-runner-app", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/test_runner_app.html", "title": "SAP Fiori Integration Test Runner & Workbench", "author": "Dieter Rüffler"}]}, "body": "# SAP Fiori Integration Workbench & Test-Runner\n\n## Ergonomie: 100% Single-Viewport Design\n- **Keine äußere Fensterscrollbar:** `html, body { height: 100vh; overflow: hidden; }`\n- **Volle Bildschirmausnutzung:** Die Karte „INBOUND PAYLOAD“ nutzt flexibel (`flex-1 min-h-0 h-full`) den gesamten vertikalen Raum bis zum unteren Bildschirmrand.\n- **Innere Fiori-Scrollbars:** Nur die Payload-Container (`#jsonInput` bzw. `#pillsTreeRoot`) scrollen intern bei Bedarf.\n\n## Interaktiver JSON-Pills-Modus\nÜber einen Toggle-Switch kann zwischen **Rohem JSON-Code** und **Aufklappbaren JSON-Pills** umgeschaltet werden:\n1. **Level 1 (Batch-Pill):** Ovale blaue Pill mit Batch-ID, Erstellungsdatum und Quellsystem (`JSD-MDM`).\n2. **Level 2 (Partnerliste-Pill):** Grüne Pill mit Datensatzanzahl.\n3. **Level 3 (Partner-Pills):**\n   - 🟣 **POST:** Neuanlage\n   - 🟠 **PATCH:** Existierender Datensatz (`CUST15`, `BECHTLE AG`, `XYZ-PEPPOL`)\n   - 🔴 **FEHLER:** Validierungsfehler bei ungültigen Daten\n4. **Interaktion:** Klick auf eine Pill klappt die nächste Ebene ein oder aus. Buttons für „Alle aufklappen“ und „Alles zuklappen“.\n\n## Monitoring-Drawer (sap.m.SideSheet)\nEin aufklappbarer Seitendrawer bietet detaillierte Einsicht in:\n- Ausführungsprotokoll & Timing\n- HTTP Request & Response Headers\n- Direktlinks zu den deployed iFlow-Screenshots (Google Photos)\n- Literatur-Empfehlungen (Bruce Silver: *BPMN Method & Style*, Rheinwerk Verlag: *KI mit SAP*)\n"}, "presentation-and-ui/pecha-kucha-20x20": {"id": "presentation-and-ui/pecha-kucha-20x20", "path": "/presentation-and-ui/pecha-kucha-20x20.md", "frontmatter": {"id": "presentation-and-ui/pecha-kucha-20x20", "type": "Presentation Concept", "title": "Pecha Kucha 20x20 Präsentationsarchitektur", "description": "Konzeption, Sprechtexte, Zeitsteuerung und technische Umsetzung der interaktiven 20x20 Präsentation (6:40 Min.).", "resource": "btp://conciliamus/ui/pecha-kucha", "tags": ["ui", "pecha-kucha", "presentation", "timer", "audio", "firebase-auth"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "references", "target": "/decisions/adr-003-bpmn-method-and-style.md"}, {"type": "references", "target": "/verification/live-btp-execution.md"}], "sources": [{"id": "pecha-kucha-doc", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/pecha_kucha_konzept.md", "title": "Pecha-Kucha-Präsentationskonzept", "author": "Dieter Rüffler"}]}, "body": "# Pecha Kucha 20x20 Präsentationsarchitektur\n\n## Formatregeln & Parameter\n- **Folienanzahl:** Exakt 20 Folien.\n- **Redezeit:** Exakt 20 Sekunden pro Folie (automatischer Folienwechsel).\n- **Gesamtlaufzeit:** 6 Minuten 40 Sekunden (400 Sekunden).\n- **Zielgruppe:** Markus Engelmann & Team *Plattform & Integration*, Conciliamus GmbH.\n\n## Technische Implementierungsdetails\n1. **Single-File Standalone HTML:** Vollständig autarke Datei (`docs/pecha_kucha_presentation.html`) mit base64-eingebetteten Screenshots.\n2. **Audio Synthesizer:** Nutzung der browsernativen Web Audio API zur Erzeugung eines dezenten Chime-Signals (Gong) beim Folienübergang ohne externe Audio-Dateien.\n3. **SVG-Timer Ring:** Animierter kreisförmiger Countdown-Indikator mit Restsekundenanzeige.\n4. **Interaktives Folienraster:** Schnellübersicht aller 20 Folien per Tastendruck (`G`) mit Direktansprung.\n5. **ORCAI Google Firebase Login & Schutz:**\n   - Im ausgeloggten Zustand: Folien sind mit CSS-Filter `blur-md` unleserlich maskiert; Tastatur- und Klick-Events sind deaktiviert (`pointer-events: none`).\n   - Schirm (`#pechaAuthShield`) fordert zur Google-Anmeldung auf.\n"}, "qa/core-architecture-faq": {"id": "qa/core-architecture-faq", "path": "/qa/core-architecture-faq.md", "frontmatter": {"id": "qa/core-architecture-faq", "type": "Architecture FAQ", "title": "Zentrale Architekturfragen & Antworten", "description": "Kanonische Fragen und Antworten zur Architektur für den API-Architektur-Agenten.", "resource": "btp://conciliamus/qa/core-architecture", "tags": ["qa", "faq", "architecture", "agent", "reasoning"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "references", "target": "/architecture/dual-iflow-pattern.md"}, {"type": "references", "target": "/architecture/existence-check-and-routing.md"}, {"type": "references", "target": "/decisions/adr-001-dual-iflow-decoupling.md"}, {"type": "references", "target": "/decisions/adr-002-process-direct.md"}], "sources": [{"id": "conciliamus-repo", "resource": "https://github.com/gonzo42nixon/Conciliamus", "title": "Conciliamus Master Repository"}]}, "body": "# Zentrale Architekturfragen & Antworten\n\n### F: Warum wurde die Lösung in zwei getrennte iFlows aufgeteilt (Dual-iFlow)?\n**A:** Ein monolithischer iFlow würde beim Scheitern eines einzigen Geschäftspartners den gesamten Batch abbrechen. Das Dual-iFlow Entkopplungsmuster (`IFL_MDM_BP_Batch_Receiver` ➔ ProcessDirect ➔ `IFL_MDM_BP_Item_Processor`) trennt den Netzwerk-Ingest und das Streaming-Splitting von der fachlichen Einzelverarbeitung. Dies stellt vollständige Fehlerisolation sicher: 9 erfolgreiche Partner werden ins ERP eingespielt, selbst wenn 1 Partner wegen falscher Daten scheitert (siehe [ADR-001](/decisions/adr-001-dual-iflow-decoupling.md)).\n\n### F: Warum wird ProcessDirect statt JMS Message Queues verwendet?\n**A:** ProcessDirect verbindet iFlows innerhalb desselben Tenants rein speicherintern (In-Memory Java Call). Dies vermeidet Netzwerk- und Serialisierungskosten und benötigt keine kostenpflichtigen oder begrenzten JMS-Queue-Ressourcen auf SAP BTP (siehe [ADR-002](/decisions/adr-002-process-direct.md)).\n\n### F: Wie wird Idempotenz bei wiederholtem Senden sichergestellt?\n**A:** Vor jeder schreibenden Operation führt der `Item_Processor` eine OData-GET-Existenzprüfung gegen S/4HANA aus (`SearchTerm1 eq '${property.externalId}'`). Werden 0 Treffer gefunden, erfolgt ein `POST` (Neuanlage). Wird genau 1 Treffer gefunden, wird die ermittelte interne BusinessPartner-Nummer dynamisch in die URL übernommen und ein `PATCH` (Delta-Update) ausgeführt (siehe [Existenzprüfung & Router-Matrix](/architecture/existence-check-and-routing.md)).\n"}, "qa/error-handling-faq": {"id": "qa/error-handling-faq", "path": "/qa/error-handling-faq.md", "frontmatter": {"id": "qa/error-handling-faq", "type": "Architecture FAQ", "title": "Resilienz- und Troubleshooting-FAQ", "description": "Antworten auf Fragen zu Fehlerbehandlung, Dead Letter Queue und Wiederanlaufstrategien.", "resource": "btp://conciliamus/qa/error-handling", "tags": ["qa", "faq", "resilience", "dlq", "troubleshooting", "errors"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "references", "target": "/architecture/resilience-and-dead-letter.md"}, {"type": "references", "target": "/iflows/reprocessor-iflow.md"}, {"type": "references", "target": "/decisions/adr-004-data-store-dlq.md"}], "sources": [{"id": "conciliamus-arch", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md", "title": "Technische Architektur & Lösungskonzept"}]}, "body": "# Resilienz- und Troubleshooting-FAQ\n\n### F: Wie unterscheidet die Architektur zwischen fachlichen und technischen Fehlern?\n**A:** \n- **Fachliche Fehler (Business Errors):** Ungültige E-Mail-Adresse, Ländercode ungleich 2 Zeichen, fehlende Pflichtfelder oder mehr als 1 Treffer (Dublette). Sie erhalten den Status `FAILED_BUSINESS` und werden in den Message Attachments dokumentiert. Sie durchlaufen **keinen automatischen Wiederanlauf**, da identische Daten erneut scheitern würden.\n- **Technische Fehler (Technical Errors):** HTTP 500, Timeout gegen S/4HANA, Netzwerkverbindungsabbrüche. Sie erhalten den Status `FAILED_TECHNICAL` und werden im persistenten BTP Data Store `BP_FAILED_QUEUE` gesichert.\n\n### F: Wie funktioniert der Wiederanlauf (Replay) nach einer technischen Störung?\n**A:** Über den dedizierten Flow `IFL_MDM_BP_Reprocessor` werden die im Data Store abgelegten Einzelsätze erneut an den `IFL_MDM_BP_Item_Processor` übergeben. Dadurch müssen bereits erfolgreich verarbeitete Datensätze des ursprünglichen Batches nicht erneut angefasst werden.\n\n### F: Warum liefert die S/4HANA Sandbox HTTP 405 Method Not Allowed?\n**A:** Die SAP Business Accelerator Hub Sandbox unterstützt für die Entität `API_BUSINESS_PARTNER` aus Sicherheitsgründen ausschließlich GET-Operationen. Ein `HTTP 405 OPERATION_NOT_SUPPORTED` bestätigt, dass der Aufruf syntaktisch und autorisierungstechnisch korrekt am SAP-Zielsystem ankam (siehe [Sandbox Limitationen](/verification/sandbox-limitations-405.md)).\n"}, "verification/istqb-test-strategy": {"id": "verification/istqb-test-strategy", "path": "/verification/istqb-test-strategy.md", "frontmatter": {"id": "verification/istqb-test-strategy", "type": "Test Evidence", "title": "ISTQB Teststrategie & Testfallmatrix", "description": "Systematische Testabdeckung nach ISTQB CTFL Prinzipien (Äquivalenzklassen, Grenzwertanalyse, Fehlerfall-Prüfung).", "resource": "btp://conciliamus/evidence/istqb-strategy", "tags": ["evidence", "istqb", "testing", "test-matrix", "qa"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "verifies", "target": "/architecture/existence-check-and-routing.md"}, {"type": "verifies", "target": "/architecture/resilience-and-dead-letter.md"}], "sources": [{"id": "test-evidences", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/test_evidences.md", "title": "Prüfungs- & Testnachweise", "author": "Dieter Rüffler"}]}, "body": "# ISTQB Teststrategie & Testfallmatrix\n\n## Angewandte Testverfahren\n1. **Äquivalenzklassenbildung:**\n   - Klasse A: Existierender Partner im S/4HANA (Treffermenge = 1) ➔ Erwartung: PATCH\n   - Klasse B: Neuer Partner (Treffermenge = 0) ➔ Erwartung: POST\n   - Klasse C: Mehrdeutiger Partner (Treffermenge > 1) ➔ Erwartung: FAILED_BUSINESS\n2. **Grenzwertanalyse:**\n   - Maximale Feldlängen (`externalId` 20 Zeichen, `company` 40 Zeichen).\n   - ISO-2 Ländercodes (exakt 2 Zeichen, Validierung von `DE` vs. ungültigen Kürzeln).\n3. **Negative Testing:**\n   - Fehlende Pflichtfelder, Syntaxfehler in E-Mail-Adresse, abweichender Sandbox-Status.\n\n## Testfallmatrix\n\n| # | Testfall | Input-Daten | Erwartetes Ergebnis | Status |\n| :--- | :--- | :--- | :--- | :--- |\n| **TC-01** | Existierender Partner 1 | `CUST15` | GET Treffer: `1000015` ➔ PATCH | ✅ Pass |\n| **TC-02** | Existierender Partner 2 | `BECHTLE AG` | GET Treffer: `1000020` ➔ PATCH | ✅ Pass |\n| **TC-03** | Existierender Partner 3 | `XYZ-PEPPOL` | GET Treffer: `1000035` ➔ PATCH | ✅ Pass |\n| **TC-04** | Neuanlage Partner | `JSD-BP-100001` | GET 0 Treffer ➔ POST Deep Insert | ✅ Pass |\n| **TC-05** | Ungültige E-Mail | `invalid-mail` | `FAILED_BUSINESS`, kein Retry | ✅ Pass |\n| **TC-06** | Ungültiger Ländercode | `DEU` statt `DE` | `FAILED_BUSINESS`, kein Retry | ✅ Pass |\n| **TC-07** | Technischer Timeout | Mock HTTP 504 | `FAILED_TECHNICAL`, Data Store DLQ | ✅ Pass |\n"}, "verification/live-btp-execution": {"id": "verification/live-btp-execution", "path": "/verification/live-btp-execution.md", "frontmatter": {"id": "verification/live-btp-execution", "type": "Test Evidence", "title": "Live-End-to-End Testlauf auf SAP BTP", "description": "Vollständiger Nachweis des erfolgreichen Live-Durchlaufs auf dem SAP BTP Tenant am 04.09.2026 mit HTTP 200 OK.", "resource": "btp://conciliamus/evidence/live-run", "tags": ["evidence", "live-test", "btp", "http-200", "verification"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "verifies", "target": "/architecture/dual-iflow-pattern.md"}, {"type": "verifies", "target": "/iflows/batch-receiver-iflow.md"}, {"type": "verifies", "target": "/iflows/item-processor-iflow.md"}], "sources": [{"id": "test-evidences", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/test_evidences.md", "title": "Prüfungs- & Testnachweise", "author": "Dieter Rüffler"}]}, "body": "# Live-End-to-End Testlauf auf SAP BTP\n\n## Testzeitpunkt & Umgebung\n- **Ausführungsdatum:** 04. September 2026, 18:11:00 UTC+2\n- **Tenant:** `b9c123f3trial` (Region: `US East - AWS`)\n- **Endpunkt:** `/http/conciliamus/v1/businesspartners/batch`\n- **Authentifizierung:** OAuth 2.0 Client Credentials Grant (`it-rt`, `ESBMessaging.send`)\n- **Ergebnis:** **HTTP 200 OK** (Gesamtlaufzeit: 1.82s)\n\n## Ausführungsprotokoll\n```text\n=== LIVE-INTEGRATIONSTEST: BTP CLOUD INTEGRATION ===\n[*] Fordere OAuth2-Token an von: https://b9c123f3trial.authentication.us10.hana.ondemand.com/oauth/token\n[+] OAuth2-Token erfolgreich erhalten! (Typ: bearer, Gültig: 3599s, Scope: ESBMessaging.send)\n[*] Führe CSRF-Handshake durch an: https://b9c123f3trial.it-cpitrial06-rt.cfapps.us10-001.hana.ondemand.com/http/conciliamus/v1/businesspartners/batch\n[+] CSRF-Token erhalten: 3al-SeNapJWa2iq_k9qzw0XMI4yTLQRM\n[*] Lade Testdaten aus: testdata/Testdaten_prepared.json\n[*] Sende Batch an SAP Cloud Integration:\n    -> Endpunkt: /http/conciliamus/v1/businesspartners/batch\n[+++] TEST ERFOLGREICH! HTTP Status: 200 OK\n```\n\n## Verifizierte Metriken\n- 10 Business Partner im Batch empfangen\n- 3x PATCH Update (`CUST15`, `BECHTLE AG`, `XYZ-PEPPOL`) erfolgreich geroutet\n- 7x POST Neuanlage (`JSD-BP-100001` bis `100007`) erfolgreich vorbereitet\n- Volltextsuche im BTP Web-Monitor verifiziert\n"}, "verification/sandbox-limitations-405": {"id": "verification/sandbox-limitations-405", "path": "/verification/sandbox-limitations-405.md", "frontmatter": {"id": "verification/sandbox-limitations-405", "type": "Test Evidence", "title": "SAP Sandbox Limitationen & HTTP 405 Handling", "description": "Umgang mit der read-only Beschränkung der SAP Business Accelerator Hub Sandbox für schreibende OData-Aufrufe.", "resource": "btp://conciliamus/evidence/sandbox-405", "tags": ["evidence", "sandbox", "http-405", "limitation", "s4hana", "odata"], "status": "verified", "generated": {"by": "human:dieter-rueffler", "at": "2026-09-04T22:00:00Z"}, "relations": [{"type": "verifies", "target": "/iflows/item-processor-iflow.md"}], "sources": [{"id": "test-evidences", "resource": "https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/test_evidences.md", "title": "Prüfungs- & Testnachweise", "author": "Dieter Rüffler"}]}, "body": "# SAP Sandbox Limitationen & HTTP 405 Handling\n\n## Randbedingung der SAP API Sandbox\nDie öffentliche Sandbox auf `sandbox.api.sap.com` für die Entität `API_BUSINESS_PARTNER` gestattet aus Sicherheits- und Konsistenzgründen ausschließlich lesende Aufrufe (`GET`). Bei `POST`- und `PATCH`-Aufrufen antwortet die Sandbox deterministisch mit:\n\n```json\n{\n  \"httpStatus\": 405,\n  \"statusText\": \"Method Not Allowed\",\n  \"errorCode\": \"OPERATION_NOT_SUPPORTED\",\n  \"message\": \"The SAP Business Accelerator Hub Sandbox supports only GET operations for this API entity.\"\n}\n```\n\n## Nachweisführung in der Lösungsarchitektur\nIn SAP Cloud Integration wird diese Antwort wie folgt verarbeitet:\n1. **Target Call Verifikation:** Das Eintreffen von `HTTP 405 OPERATION_NOT_SUPPORTED` belegt, dass der Request syntaktisch korrekt aufgebaut, mit gültigem Sandbox API-Key autorisiert und an den korrekten URL-Pfad adressiert wurde.\n2. **Groovy Handler:** Das Skript fängt den 405-Code gezielt ab, protokolliert den erfolgreichen Request-Payload im Audit-Anhang und markiert den Schritt im Message Processing Log als erfolgreich verifiziert (`VERIFIED_POST` bzw. `VERIFIED_PATCH`).\n"}};
 
-    const typeColors = {
-      'Architecture Concept': { background: '#0070f2', border: '#60a5fa' },
-      'iFlow Specification': { background: '#107e3e', border: '#4ade80' },
-      'Decision Record': { background: '#df6e0c', border: '#fb923c' },
-      'Data Contract': { background: '#7c3aed', border: '#c084fc' },
-      'Test Evidence': { background: '#0284c7', border: '#38bdf8' },
-      'Presentation Concept': { background: '#d946ef', border: '#f0abfc' },
-      'UI Concept': { background: '#e11d48', border: '#fb7185' },
-      'Architecture FAQ': { background: '#475569', border: '#94a3b8' }
+    const typeTheme = {
+      'Architecture Concept': { bg: '#8b5cf6', border: '#a78bfa', glow: 'rgba(139, 92, 246, 0.4)', text: '#ddd6fe' },
+      'iFlow Specification': { bg: '#10b981', border: '#34d399', glow: 'rgba(16, 185, 129, 0.4)', text: '#a7f3d0' },
+      'Decision Record': { bg: '#f59e0b', border: '#fbbf24', glow: 'rgba(245, 158, 11, 0.4)', text: '#fde68a' },
+      'Data Contract': { bg: '#06b6d4', border: '#22d3ee', glow: 'rgba(6, 182, 212, 0.4)', text: '#a5f3fc' },
+      'Test Evidence': { bg: '#f43f5e', border: '#fb7185', glow: 'rgba(244, 63, 94, 0.4)', text: '#fecdd3' },
+      'Presentation Concept': { bg: '#d946ef', border: '#f0abfc', glow: 'rgba(217, 70, 239, 0.4)', text: '#f5d0fe' },
+      'UI Concept': { bg: '#e11d48', border: '#fb7185', glow: 'rgba(225, 29, 72, 0.4)', text: '#ffe4e6' },
+      'Architecture FAQ': { bg: '#64748b', border: '#94a3b8', glow: 'rgba(100, 116, 139, 0.4)', text: '#cbd5e1' }
     };
 
-    const visNodes = graphData.nodes.map(n => {
-      const colors = typeColors[n.type] || { background: '#3b82f6', border: '#93c5fd' };
-      return {
-        id: n.id,
-        label: n.label,
-        title: `${n.label} (${n.type})`,
-        shape: 'box',
-        margin: 8,
+    let network = null;
+    let nodesDataSet = null;
+    let edgesDataSet = null;
+    let activeNodeId = null;
+    let physicsActive = true;
+    let currentFilter = 'all';
+
+    function initGraph() {
+      const container = document.getElementById('network');
+
+      const visNodes = graphData.nodes.map(n => {
+        const theme = typeTheme[n.type] || { bg: '#6366f1', border: '#818cf8', text: '#e0e7ff' };
+        const degree = n.degree || 1;
+        const size = Math.max(10, Math.min(26, 8 + Math.sqrt(degree) * 4.5));
+
+        return {
+          id: n.id,
+          label: n.label,
+          shape: 'dot',
+          size: size,
+          color: {
+            background: theme.bg,
+            border: theme.border,
+            highlight: { background: '#f59e0b', border: '#fbbf24' },
+            hover: { background: theme.border, border: '#ffffff' }
+          },
+          borderWidth: 2,
+          font: {
+            color: '#cbd5e1',
+            size: 11,
+            face: 'Inter, sans-serif',
+            strokeWidth: 2,
+            strokeColor: '#0f1117',
+            vadjust: 3
+          },
+          raw: n
+        };
+      });
+
+      const visEdges = graphData.edges.map(e => ({
+        id: `${e.source}-->${e.target}`,
+        from: e.source,
+        to: e.target,
+        label: e.relation,
+        arrows: { to: { enabled: true, scaleFactor: 0.45 } },
         color: {
-          background: colors.background,
-          border: colors.border,
-          highlight: { background: '#f59e0b', border: '#fbbf24' }
+          color: 'rgba(148, 163, 184, 0.22)',
+          highlight: '#f59e0b',
+          hover: '#a78bfa'
         },
-        font: { color: '#ffffff', size: 11, face: 'Open Sans' },
-        borderWidth: 2,
-        raw: n
+        font: {
+          color: '#64748b',
+          size: 9,
+          face: 'JetBrains Mono',
+          background: '#111116',
+          strokeWidth: 0
+        },
+        smooth: { type: 'continuous', roundness: 0.2 }
+      }));
+
+      nodesDataSet = new vis.DataSet(visNodes);
+      edgesDataSet = new vis.DataSet(visEdges);
+
+      const options = {
+        nodes: {
+          scaling: { min: 10, max: 30 }
+        },
+        physics: {
+          solver: 'forceAtlas2Based',
+          forceAtlas2Based: {
+            gravitationalConstant: -75,
+            centralGravity: 0.012,
+            springLength: 135,
+            springConstant: 0.08,
+            damping: 0.45
+          },
+          stabilization: { iterations: 150 }
+        },
+        interaction: {
+          hover: true,
+          tooltipDelay: 150,
+          hoverConnectedEdges: true,
+          keyboard: false
+        }
       };
-    });
 
-    const visEdges = graphData.edges.map(e => ({
-      from: e.source,
-      to: e.target,
-      label: e.relation,
-      arrows: 'to',
-      font: { color: '#94a3b8', size: 9, align: 'middle', background: '#0f172a' },
-      color: { color: '#334155', highlight: '#f59e0b' },
-      smooth: { type: 'cubicBezier' }
-    }));
+      network = new vis.Network(container, { nodes: nodesDataSet, edges: edgesDataSet }, options);
 
-    const container = document.getElementById('network');
-    const data = { nodes: new vis.DataSet(visNodes), edges: new vis.DataSet(visEdges) };
-    const options = {
-      physics: {
-        solver: 'forceAtlas2Based',
-        forceAtlas2Based: {
-          gravitationalConstant: -70,
-          centralGravity: 0.015,
-          springLength: 130,
-          springConstant: 0.09
-        },
-        stabilization: { iterations: 120 }
-      },
-      interaction: { hover: true, tooltipDelay: 100 }
-    };
-
-    const network = new vis.Network(container, data, options);
-
-    network.on('click', function(params) {
-      if (params.nodes.length > 0) {
-        const nodeId = params.nodes[0];
-        const node = graphData.nodes.find(n => n.id === nodeId);
-        if (node) showDrawer(node);
-      } else {
-        closeDrawer();
-      }
-    });
-
-    function showDrawer(node) {
-      const drawer = document.getElementById('detailDrawer');
-      document.getElementById('detailType').innerText = node.type;
-      document.getElementById('detailTitle').innerText = node.label;
-      document.getElementById('detailId').innerText = node.id;
-      document.getElementById('detailDesc').innerText = (node.tags || []).join(', ') || 'OKF-Knoten';
-      
-      const tagsEl = document.getElementById('detailTags');
-      tagsEl.innerHTML = (node.tags || []).map(t => `<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[10px] border border-slate-700">#${t}</span>`).join('');
-
-      const outgoing = graphData.edges.filter(e => e.source === node.id);
-      const incoming = graphData.edges.filter(e => e.target === node.id);
-      document.getElementById('relCount').innerText = outgoing.length + incoming.length;
-
-      const relsEl = document.getElementById('detailRelations');
-      let relHtml = '';
-      outgoing.forEach(e => {
-        relHtml += `<div class="p-1.5 rounded bg-slate-900 border border-slate-800 flex items-center justify-between"><span class="text-emerald-400">[${e.relation}] ➔</span> <span class="text-slate-200 truncate">${e.target}</span></div>`;
+      network.on('click', function(params) {
+        if (params.nodes.length > 0) {
+          selectNode(params.nodes[0]);
+        } else {
+          clearDimming();
+        }
       });
-      incoming.forEach(e => {
-        relHtml += `<div class="p-1.5 rounded bg-slate-900 border border-slate-800 flex items-center justify-between"><span class="text-amber-400">⬅ [${e.relation}]</span> <span class="text-slate-200 truncate">${e.source}</span></div>`;
+
+      network.on('doubleClick', function(params) {
+        if (params.nodes.length > 0) {
+          network.focus(params.nodes[0], { scale: 1.4, animation: { duration: 600, easingFunction: 'easeInOutQuad' } });
+        }
       });
-      relsEl.innerHTML = relHtml || '<div class="text-slate-500 text-[11px]">Keine expliziten Relationen</div>';
 
-      const ghLink = document.getElementById('detailGithubLink');
-      ghLink.href = `https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/knowledge${node.path}`;
-
-      drawer.classList.remove('translate-x-full');
+      setTimeout(() => {
+        selectNode('architecture/dual-iflow-pattern');
+      }, 400);
     }
 
-    function closeDrawer() {
-      document.getElementById('detailDrawer').classList.add('translate-x-full');
+    function selectNode(nodeId) {
+      activeNodeId = nodeId;
+      const node = graphData.nodes.find(n => n.id === nodeId);
+      if (!node) return;
+
+      network.selectNodes([nodeId]);
+      dimUnconnected(nodeId);
+      renderNote(node);
+      expandNotePane();
+    }
+
+    function dimUnconnected(centerNodeId) {
+      const connectedNodeIds = new Set(network.getConnectedNodes(centerNodeId));
+      connectedNodeIds.add(centerNodeId);
+
+      const updates = [];
+      nodesDataSet.forEach(n => {
+        const isConnected = connectedNodeIds.has(n.id);
+        const theme = typeTheme[n.raw.type] || { bg: '#6366f1', border: '#818cf8' };
+
+        if (n.id === centerNodeId) {
+          updates.push({
+            id: n.id,
+            color: { background: '#f59e0b', border: '#fef08a' },
+            borderWidth: 4,
+            font: { color: '#ffffff', size: 12 }
+          });
+        } else if (isConnected) {
+          updates.push({
+            id: n.id,
+            color: { background: theme.bg, border: theme.border },
+            borderWidth: 2,
+            font: { color: '#f1f5f9', size: 11 }
+          });
+        } else {
+          updates.push({
+            id: n.id,
+            color: { background: '#242430', border: '#333342' },
+            borderWidth: 1,
+            font: { color: '#475569', size: 9 }
+          });
+        }
+      });
+      nodesDataSet.update(updates);
+
+      const edgeUpdates = [];
+      edgesDataSet.forEach(e => {
+        const isConn = (e.from === centerNodeId || e.to === centerNodeId);
+        edgeUpdates.push({
+          id: e.id,
+          color: { color: isConn ? '#f59e0b' : 'rgba(51, 65, 85, 0.15)' },
+          width: isConn ? 2 : 1
+        });
+      });
+      edgesDataSet.update(edgeUpdates);
+    }
+
+    function clearDimming() {
+      activeNodeId = null;
+      const updates = [];
+      nodesDataSet.forEach(n => {
+        const theme = typeTheme[n.raw.type] || { bg: '#6366f1', border: '#818cf8' };
+        updates.push({
+          id: n.id,
+          color: { background: theme.bg, border: theme.border },
+          borderWidth: 2,
+          font: { color: '#cbd5e1', size: 11 }
+        });
+      });
+      nodesDataSet.update(updates);
+
+      const edgeUpdates = [];
+      edgesDataSet.forEach(e => {
+        edgeUpdates.push({
+          id: e.id,
+          color: { color: 'rgba(148, 163, 184, 0.22)' },
+          width: 1
+        });
+      });
+      edgesDataSet.update(edgeUpdates);
+    }
+
+    async function renderNote(node) {
+      document.getElementById('noteBreadcrumb').innerText = 'knowledge' + node.path;
+      document.getElementById('noteTitle').innerText = node.label;
+      document.getElementById('noteId').innerText = node.id;
+      document.getElementById('noteDomain').innerText = node.domain || 'Architektur & Integration';
+      document.getElementById('noteDegreeText').innerText = '🔗 ' + (node.degree || 0) + ' verknüpfte Relationen im OKF-Graphen';
+      
+      const theme = typeTheme[node.type] || { bg: '#8b5cf6', text: '#ddd6fe' };
+      const typeBadge = document.getElementById('noteTypeBadge');
+      typeBadge.innerText = node.type;
+      typeBadge.style.background = theme.bg + '33';
+      typeBadge.style.color = theme.text;
+      typeBadge.style.borderColor = theme.bg;
+
+      document.getElementById('noteStatusText').innerText = node.status || 'VERIFIED';
+      document.getElementById('noteGithubLink').href = 'https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/knowledge' + node.path;
+
+      const tagsEl = document.getElementById('noteTags');
+      tagsEl.innerHTML = (node.tags || []).map(t => 
+        '<button onclick="searchByTag('' + t + '')" class="px-2 py-0.5 rounded-full bg-[#242436] hover:bg-purple-900/60 hover:text-purple-300 text-slate-300 text-[10px] border border-[#36364e] transition font-mono">#' + t + '</button>'
+      ).join('');
+
+      renderBacklinks(node.id);
+
+      let markdownBody = '';
+      try {
+        const resp = await fetch('/concepts/' + encodeURIComponent(node.id));
+        if (resp.ok) {
+          const json = await resp.json();
+          markdownBody = json.content;
+        }
+      } catch (err) {}
+
+      if (!markdownBody && embeddedNotes[node.id]) {
+        markdownBody = embeddedNotes[node.id].body;
+      }
+
+      if (!markdownBody) {
+        markdownBody = '### ' + node.label + '
+
+' + (node.description || 'Kein Markdown-Text verfügbar.') + '
+
+*Pfad: `knowledge' + node.path + '`*';
+      }
+
+      marked.setOptions({
+        gfm: true,
+        breaks: true,
+        highlight: function(code, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            try { return hljs.highlight(code, { language: lang }).value; } catch (e) {}
+          }
+          return hljs.highlightAuto(code).value;
+        }
+      });
+
+      const mdContainer = document.getElementById('noteMarkdown');
+      mdContainer.innerHTML = marked.parse(markdownBody);
+
+      mdContainer.querySelectorAll('a').forEach(a => {
+        const href = a.getAttribute('href') || '';
+        if (href.startsWith('/') || href.startsWith('../') || href.endsWith('.md')) {
+          a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const cleanTarget = href.replace(/^(\.\.\/|\/)/, '').replace(/\.md$/, '');
+            const targetNode = graphData.nodes.find(n => n.id.endsWith(cleanTarget) || n.path.endsWith(cleanTarget + '.md'));
+            if (targetNode) {
+              network.focus(targetNode.id, { scale: 1.2, animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
+              selectNode(targetNode.id);
+            }
+          });
+        }
+      });
+    }
+
+    function renderBacklinks(nodeId) {
+      const incoming = graphData.edges.filter(e => e.target === nodeId);
+      const outgoing = graphData.edges.filter(e => e.source === nodeId);
+
+      document.getElementById('inboundCount').innerText = incoming.length;
+      document.getElementById('outboundCount').innerText = outgoing.length;
+
+      const inEl = document.getElementById('inboundLinks');
+      if (incoming.length === 0) {
+        inEl.innerHTML = '<div class="text-slate-500 text-[11px] italic">Keine eingehenden Referenzen</div>';
+      } else {
+        inEl.innerHTML = incoming.map(e => {
+          const srcNode = graphData.nodes.find(n => n.id === e.source);
+          const title = srcNode ? srcNode.label : e.source;
+          return '<button onclick="jumpToNode('' + e.source + '')" class="w-full p-2 rounded-lg bg-[#1c1c28] hover:bg-[#262638] border border-[#2a2a3c] flex items-center justify-between text-left transition group">' +
+            '<div class="flex items-center gap-2 truncate">' +
+              '<span class="px-1.5 py-0.2 rounded text-[9px] font-mono uppercase bg-emerald-950/80 text-emerald-300 border border-emerald-800/60">[' + e.relation + ']</span>' +
+              '<span class="text-xs text-slate-200 group-hover:text-purple-300 truncate">' + title + '</span>' +
+            '</div>' +
+            '<i class="fa-solid fa-arrow-turn-down text-[10px] text-slate-500 group-hover:text-purple-400 rotate-90 shrink-0 ml-2"></i>' +
+          '</button>';
+        }).join('');
+      }
+
+      const outEl = document.getElementById('outboundLinks');
+      if (outgoing.length === 0) {
+        outEl.innerHTML = '<div class="text-slate-500 text-[11px] italic">Keine ausgehenden Links</div>';
+      } else {
+        outEl.innerHTML = outgoing.map(e => {
+          const tgtNode = graphData.nodes.find(n => n.id === e.target);
+          const title = tgtNode ? tgtNode.label : e.target;
+          return '<button onclick="jumpToNode('' + e.target + '')" class="w-full p-2 rounded-lg bg-[#1c1c28] hover:bg-[#262638] border border-[#2a2a3c] flex items-center justify-between text-left transition group">' +
+            '<div class="flex items-center gap-2 truncate">' +
+              '<span class="px-1.5 py-0.2 rounded text-[9px] font-mono uppercase bg-purple-950/80 text-purple-300 border border-purple-800/60">[' + e.relation + ']</span>' +
+              '<span class="text-xs text-slate-200 group-hover:text-purple-300 truncate">' + title + '</span>' +
+            '</div>' +
+            '<i class="fa-solid fa-arrow-turn-down text-[10px] text-slate-500 group-hover:text-purple-400 -rotate-90 shrink-0 ml-2"></i>' +
+          '</button>';
+        }).join('');
+      }
+    }
+
+    function jumpToNode(targetId) {
+      network.focus(targetId, { scale: 1.25, animation: { duration: 550, easingFunction: 'easeInOutQuad' } });
+      selectNode(targetId);
+    }
+
+    function onSearch(term) {
+      const clearBtn = document.getElementById('searchClear');
+      const dropdown = document.getElementById('searchDropdown');
+      const q = term.trim().toLowerCase();
+
+      if (!q) {
+        clearBtn.classList.add('hidden');
+        dropdown.classList.add('hidden');
+        return;
+      }
+
+      clearBtn.classList.remove('hidden');
+      const matches = graphData.nodes.filter(n => 
+        n.label.toLowerCase().includes(q) || 
+        n.id.toLowerCase().includes(q) || 
+        (n.tags || []).some(t => t.toLowerCase().includes(q))
+      );
+
+      if (matches.length > 0) {
+        dropdown.innerHTML = matches.slice(0, 7).map(m => 
+          '<div onclick="jumpToNode('' + m.id + ''); closeSearchDropdown();" class="p-2.5 hover:bg-[#252538] border-b border-[#2c2c3e] cursor-pointer flex items-center justify-between transition">' +
+            '<div>' +
+              '<div class="font-medium text-white">' + m.label + '</div>' +
+              '<div class="text-[10px] font-mono text-slate-400">' + m.id + '</div>' +
+            '</div>' +
+            '<span class="text-[9px] px-1.5 py-0.5 rounded font-mono uppercase bg-slate-800 text-slate-300 border border-slate-700">' + m.type + '</span>' +
+          '</div>'
+        ).join('');
+        dropdown.classList.remove('hidden');
+      } else {
+        dropdown.innerHTML = '<div class="p-3 text-slate-500 text-center">Keine Übereinstimmung im Vault</div>';
+        dropdown.classList.remove('hidden');
+      }
+    }
+
+    function onSearchKey(event) {
+      if (event.key === 'Enter') {
+        const q = event.target.value.trim().toLowerCase();
+        const match = graphData.nodes.find(n => n.label.toLowerCase().includes(q) || n.id.toLowerCase().includes(q));
+        if (match) {
+          jumpToNode(match.id);
+          closeSearchDropdown();
+        }
+      } else if (event.key === 'Escape') {
+        clearSearch();
+      }
+    }
+
+    function clearSearch() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('searchClear').classList.add('hidden');
+      closeSearchDropdown();
+      resetView();
+    }
+
+    function closeSearchDropdown() {
+      document.getElementById('searchDropdown').classList.add('hidden');
+    }
+
+    function searchByTag(tag) {
+      document.getElementById('searchInput').value = tag;
+      onSearch(tag);
+      const matches = graphData.nodes.filter(n => (n.tags || []).includes(tag));
+      if (matches.length > 0) {
+        jumpToNode(matches[0].id);
+      }
+    }
+
+    function filterCategory(type, btn) {
+      document.querySelectorAll('.filter-chip').forEach(b => {
+        b.classList.remove('active', 'bg-purple-900/50', 'text-purple-300', 'border-purple-600');
+        b.classList.add('bg-[#1a1a26]', 'text-slate-300', 'border-[#2e2e42]');
+      });
+      btn.classList.add('active', 'bg-purple-900/50', 'text-purple-300', 'border-purple-600');
+      btn.classList.remove('bg-[#1a1a26]', 'text-slate-300', 'border-[#2e2e42]');
+
+      currentFilter = type;
+      if (type === 'all') {
+        nodesDataSet.forEach(n => nodesDataSet.update({ id: n.id, hidden: false }));
+      } else {
+        nodesDataSet.forEach(n => {
+          const isMatch = n.raw.type === type;
+          nodesDataSet.update({ id: n.id, hidden: !isMatch });
+        });
+      }
+      resetView();
     }
 
     function resetView() {
       network.fit({ animation: { duration: 600, easingFunction: 'easeInOutQuad' } });
     }
 
-    function onSearch(term) {
-      if (!term.trim()) {
-        resetView();
-        return;
-      }
-      const match = graphData.nodes.find(n => n.label.toLowerCase().includes(term.toLowerCase()) || n.id.toLowerCase().includes(term.toLowerCase()));
-      if (match) {
-        network.focus(match.id, { scale: 1.2, animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
-        network.selectNodes([match.id]);
-        showDrawer(match);
+    function zoomIn() {
+      const scale = network.getScale();
+      network.moveTo({ scale: scale * 1.3, animation: { duration: 300 } });
+    }
+
+    function zoomOut() {
+      const scale = network.getScale();
+      network.moveTo({ scale: scale * 0.7, animation: { duration: 300 } });
+    }
+
+    function togglePhysics() {
+      physicsActive = !physicsActive;
+      network.setOptions({ physics: { enabled: physicsActive } });
+      const icon = document.getElementById('physicsIcon');
+      const text = document.getElementById('physicsText');
+      if (physicsActive) {
+        icon.className = 'fa-solid fa-pause text-amber-400';
+        if (text) text.innerText = 'Physik Stop';
+      } else {
+        icon.className = 'fa-solid fa-play text-emerald-400';
+        if (text) text.innerText = 'Physik Start';
       }
     }
 
-    function filterByType(type) {
-      if (type === 'all') {
-        data.nodes.forEach(n => data.nodes.update({ id: n.id, hidden: false }));
+    function toggleFrontmatter() {
+      const content = document.getElementById('fmContent');
+      const icon = document.getElementById('fmToggleIcon');
+      if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        icon.classList.remove('rotate-180');
       } else {
-        data.nodes.forEach(n => {
-          const raw = graphData.nodes.find(gn => gn.id === n.id);
-          const isMatch = raw && raw.type === type;
-          data.nodes.update({ id: n.id, hidden: !isMatch });
-        });
+        content.classList.add('hidden');
+        icon.classList.add('rotate-180');
       }
-      resetView();
     }
+
+    function collapseNotePane() {
+      document.getElementById('notePane').classList.add('hidden');
+      document.getElementById('expandPaneBtn').classList.remove('hidden');
+    }
+
+    function expandNotePane() {
+      document.getElementById('notePane').classList.remove('hidden');
+      document.getElementById('expandPaneBtn').classList.add('hidden');
+    }
+
+    function openObsidianModal() {
+      document.getElementById('obsidianModal').classList.remove('hidden');
+    }
+
+    function closeObsidianModal() {
+      document.getElementById('obsidianModal').classList.add('hidden');
+    }
+
+    function copyVaultPath() {
+      const input = document.getElementById('vaultPathInput');
+      input.select();
+      navigator.clipboard.writeText(input.value);
+      const btnText = document.getElementById('copyBtnText');
+      btnText.innerText = 'Kopiert!';
+      setTimeout(() => { btnText.innerText = 'Kopieren'; }, 2000);
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        const input = document.getElementById('searchInput');
+        input.focus();
+        input.select();
+      }
+      if (e.key === 'Escape') {
+        closeObsidianModal();
+        closeSearchDropdown();
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', initGraph);
   </script>
 </body>
 </html>

@@ -41,13 +41,19 @@ def build():
                 title = fm.get("title", file)
                 node_type = fm.get("type", "Concept")
                 tags = fm.get("tags", [])
+                description = fm.get("description", "")
+                status = fm.get("status", "VERIFIED")
+                domain = fm.get("domain", "General")
 
                 node = {
                     "id": node_id,
                     "label": title,
                     "type": node_type,
                     "path": rel_path,
-                    "tags": tags
+                    "tags": tags,
+                    "description": description,
+                    "status": status,
+                    "domain": domain
                 }
                 nodes.append(node)
                 node_map[rel_path] = node_id
@@ -78,6 +84,17 @@ def build():
                             "target": target_id,
                             "relation": rel.get("type", "references")
                         })
+
+    # Degree berechnen
+    degree_counts = {}
+    for edge in edges:
+        s = edge["source"]
+        t = edge["target"]
+        degree_counts[s] = degree_counts.get(s, 0) + 1
+        degree_counts[t] = degree_counts.get(t, 0) + 1
+
+    for node in nodes:
+        node["degree"] = degree_counts.get(node["id"], 0)
 
     # JSON export
     graph_data = {
