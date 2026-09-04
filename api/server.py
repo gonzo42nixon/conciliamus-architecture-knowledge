@@ -22,6 +22,9 @@ KNOWLEDGE_DIR = os.path.join(ROOT_DIR, "knowledge")
 GRAPH_PATH = os.path.join(ROOT_DIR, "graph", "knowledge-graph.json")
 SITE_DIR = os.path.join(ROOT_DIR, "site")
 INDEX_HTML_PATH = os.path.join(SITE_DIR, "index.html")
+API_DIR = os.path.join(ROOT_DIR, "api")
+RUNTIME_OPENAPI_PATH = os.path.join(API_DIR, "conciliamus-runtime-iflows.openapi.yaml")
+KNOWLEDGE_OPENAPI_PATH = os.path.join(API_DIR, "conciliamus-architecture.openapi.yaml")
 
 FRONTMATTER_REGEX = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
 
@@ -249,6 +252,46 @@ def serve_app_js():
     if os.path.exists(js_path):
         return FileResponse(js_path, media_type="application/javascript")
     raise HTTPException(status_code=404, detail="app.js nicht gefunden.")
+
+@app.get("/specs/runtime-iflows.yaml", tags=["Specifications"])
+def get_runtime_iflows_spec():
+    if os.path.exists(RUNTIME_OPENAPI_PATH):
+        return FileResponse(RUNTIME_OPENAPI_PATH, media_type="application/yaml", filename="conciliamus-runtime-iflows.openapi.yaml")
+    raise HTTPException(status_code=404, detail="conciliamus-runtime-iflows.openapi.yaml nicht gefunden.")
+
+@app.get("/specs/knowledge-api.yaml", tags=["Specifications"])
+def get_knowledge_api_spec():
+    if os.path.exists(KNOWLEDGE_OPENAPI_PATH):
+        return FileResponse(KNOWLEDGE_OPENAPI_PATH, media_type="application/yaml", filename="conciliamus-architecture.openapi.yaml")
+    raise HTTPException(status_code=404, detail="conciliamus-architecture.openapi.yaml nicht gefunden.")
+
+@app.get("/docs/iflows", response_class=HTMLResponse, tags=["Specifications"])
+def view_iflows_swagger():
+    return HTMLResponse(content="""<!DOCTYPE html>
+<html>
+<head>
+  <title>Conciliamus iFlow Runtime API - Swagger UI</title>
+  <link rel="stylesheet" type="text/css" href="https://unpkg.com/swagger-ui-dist@5/swagger-ui.css">
+  <link rel="icon" type="image/svg+xml" href="/favicon.ico">
+</head>
+<body style="margin:0; background:#fafafa;">
+  <div id="swagger-ui"></div>
+  <script src="https://unpkg.com/swagger-ui-dist@5/swagger-ui-bundle.js"></script>
+  <script>
+    window.onload = () => {
+      window.ui = SwaggerUIBundle({
+        url: '/specs/runtime-iflows.yaml',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIBundle.SwaggerUIStandalonePreset
+        ]
+      });
+    };
+  </script>
+</body>
+</html>""")
 
 @app.post("/rules/verify", response_model=VerifyRuleResponse, tags=["Architecture Rules"])
 def verify_architecture_rule(req: VerifyRuleRequest):
