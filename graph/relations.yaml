@@ -1,0 +1,26 @@
+version: "1.0"
+ontology:
+  name: ConciliamusArchitectureOntology
+  description: Typisierte Kantenarten für den traversierbaren Knowledge Graph der SAP BTP Integration Suite Lösung.
+relationTypes:
+  - name: contains
+    inverse: partOf
+    description: Hierarchische Einschließung (z.B. ein Architekturmuster enthält iFlow-Komponenten).
+  - name: implements
+    inverse: implementedBy
+    description: Realisierung einer Architekturentscheidung (ADR) oder Spezifikation durch eine Komponente.
+  - name: routesTo
+    inverse: routedFrom
+    description: Kontroll- oder Datenflussweiterleitung an einen Folgeknoten.
+  - name: verifies
+    inverse: verifiedBy
+    description: Nachweis der Korrektheit eines Konzepts durch Testfälle oder Live-Belege.
+  - name: dependsOn
+    inverse: requiredBy
+    description: Technische oder fachliche Abhängigkeit zwischen zwei Komponenten.
+  - name: handlesError
+    inverse: handledBy
+    description: Spezifische Behandlung von Ausfall- oder Fehlerszenarien.
+  - name: references
+    inverse: referencedBy
+    description: Kontextuelle Verweisung auf externe Standards, Fachliteratur oder Guidelines.

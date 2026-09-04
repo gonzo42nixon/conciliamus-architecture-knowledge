@@ -1,0 +1,239 @@
+openapi: 3.1.0
+info:
+  title: Conciliamus Architecture Knowledge API
+  version: 1.0.0
+  description: API-Schnittstelle zur programmatischen Abfrage von Architekturkonzepten, iFlow-Spezifikationen, ADRs und Testnachweisen im Google Open Knowledge Format (OKF v0.2).
+paths:
+  /concepts:
+    get:
+      operationId: searchConcepts
+      summary: Suche nach Architekturkonzepten im OKF-Bundle
+      parameters:
+        - name: q
+          in: query
+          required: true
+          description: Suchbegriff oder semantische Frage (z.B. "Dual-iFlow", "Idempotenz", "BPMN")
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          description: Filter nach OKF-Konzepttyp (z.B. "Architecture Concept", "iFlow Specification", "Decision Record")
+          schema:
+            type: string
+        - name: tag
+          in: query
+          required: false
+          description: Filter nach Schlagwort (z.B. "security", "resilience", "odata")
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste gefundener OKF-Konzepte mit Metadaten und Auszug
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ConceptSummary'
+
+  /concepts/{conceptId}:
+    get:
+      operationId: getConcept
+      summary: Vollständiges OKF-Konzept abrufen
+      parameters:
+        - name: conceptId
+          in: path
+          required: true
+          description: Eindeutige ID oder relativer Pfad des Konzepts (z.B. "architecture/dual-iflow-pattern")
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Vollständiges Dokument mit YAML-Frontmatter und Markdown-Text
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConceptDetail'
+        '404':
+          description: Konzept nicht gefunden
+
+  /decisions/{adrNumber}:
+    get:
+      operationId: getArchitectureDecision
+      summary: Gezielte Abfrage eines Architecture Decision Records (ADR)
+      parameters:
+        - name: adrNumber
+          in: path
+          required: true
+          description: Nummer des ADR (z.B. "ADR-001", "ADR-002")
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Details zum ADR inklusive Kontext, Entscheidung und Konsequenzen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionRecord'
+
+  /graph:
+    get:
+      operationId: getKnowledgeGraph
+      summary: Wissenstopologie und Kanten abrufen
+      parameters:
+        - name: focusNode
+          in: query
+          required: false
+          description: Optionaler Ausgangsknoten für Teilgraph-Extraktion
+          schema:
+            type: string
+        - name: depth
+          in: query
+          required: false
+          description: Traversierungstiefe (Standard 2)
+          schema:
+            type: integer
+            default: 2
+      responses:
+        '200':
+          description: Wissensgraph mit Knoten und typisierten Relationen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphTopology'
+
+  /rules/verify:
+    post:
+      operationId: verifyArchitectureRule
+      summary: Prüfe eine geplante Designänderung gegen die Architekturregeln
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [proposedDesign, context]
+              properties:
+                proposedDesign:
+                  type: string
+                  description: Beschreibung des vorgeschlagenen Entwurfs
+                context:
+                  type: string
+                  description: Relevanter Teilbereich (z.B. "iFlow Routing", "Error Handling", "Naming")
+      responses:
+        '200':
+          description: Bewertungsbericht mit Konformitätsstatus und Verweisen auf ADRs
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  compliant:
+                    type: boolean
+                  ruleViolations:
+                    type: array
+                    items:
+                      type: string
+                  applicableDecisions:
+                    type: array
+                    items:
+                      type: string
+                  recommendation:
+                    type: string
+
+components:
+  schemas:
+    ConceptSummary:
+      type: object
+      required: [id, title, type, path]
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        type:
+          type: string
+        path:
+          type: string
+        description:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    ConceptDetail:
+      type: object
+      required: [frontmatter, content]
+      properties:
+        frontmatter:
+          type: object
+          required: [type, title]
+          properties:
+            type:
+              type: string
+            title:
+              type: string
+            description:
+              type: string
+            resource:
+              type: string
+            tags:
+              type: array
+              items:
+                type: string
+            relations:
+              type: array
+              items:
+                type: object
+        content:
+          type: string
+
+    DecisionRecord:
+      type: object
+      required: [adrId, title, status, context, decision, consequences]
+      properties:
+        adrId:
+          type: string
+        title:
+          type: string
+        status:
+          type: string
+        context:
+          type: string
+        decision:
+          type: string
+        consequences:
+          type: string
+        alternativesConsidered:
+          type: array
+          items:
+            type: string
+
+    GraphTopology:
+      type: object
+      required: [nodes, edges]
+      properties:
+        nodes:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+              label:
+                type: string
+              type:
+                type: string
+        edges:
+          type: array
+          items:
+            type: object
+            properties:
+              source:
+                type: string
+              target:
+                type: string
+              relation:
+                type: string

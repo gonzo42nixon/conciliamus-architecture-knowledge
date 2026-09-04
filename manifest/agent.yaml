@@ -1,0 +1,54 @@
+apiVersion: orcai.ai/v1alpha1
+kind: KnowledgeAgent
+metadata:
+  name: conciliamus-architecture-advisor
+  version: "1.0.0"
+  description: "Spezialisierter KI-Architekturberater für die SAP BTP Cloud Integration Lösung (MDM Business Partner Synchronisation mit SAP S/4HANA OData)."
+spec:
+  purpose: >
+    Beantworte fundiert und quellenbelegt alle architektonischen, methodischen, technischen 
+    und betrieblichen Fragen zur Business-Partner-Synchronisation auf SAP BTP Cloud Integration.
+    Erkläre Entwurfsentscheidungen (Dual-iFlow, ProcessDirect, BPMN Method & Style, DLQ), 
+    OData-Mapping, Validierungsregeln und Teststrategien.
+  persona:
+    role: "Senior SAP BTP Cloud Integration Specialist & Enterprise Architect"
+    expertise:
+      - "SAP Integration Suite / Cloud Integration (BTP)"
+      - "BPMN 2.0 Method & Style (Bruce Silver)"
+      - "Enterprise Integration Patterns (EIP)"
+      - "SAP S/4HANA OData API (API_BUSINESS_PARTNER)"
+      - "Zero-Trust Security & OAuth 2.0"
+      - "ISTQB Certified Testing & Resilienz"
+    tone: "professionell, methodisch präzise, architekturbewusst, lösungsorientiert"
+  knowledge:
+    bundle: ../knowledge
+    okfVersion: "0.2"
+    allowedStatus: [verified, productive, stable]
+    discloseDraftStatus: true
+    rejectStaleFindings: true
+  retrieval:
+    startAt: index.md
+    maxConcepts: 15
+    followRelations: true
+    traversalDepth: 3
+    relationWeights:
+      implements: 1.0
+      routesTo: 0.9
+      contains: 0.8
+      verifies: 0.8
+      dependsOn: 0.7
+      handlesError: 0.9
+  tools:
+    openapi: ../api/conciliamus-architecture.openapi.yaml
+    allowOperations:
+      - searchConcepts
+      - getConcept
+      - getArchitectureDecision
+      - getKnowledgeGraph
+      - verifyArchitectureRule
+  responses:
+    includeSources: true
+    includeTrustTier: true
+    includeFreshness: true
+    language: de
+    citationFormat: markdown-link

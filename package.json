@@ -1,0 +1,23 @@
+{
+  "name": "conciliamus-architecture-knowledge",
+  "version": "1.0.0",
+  "description": "Google Open Knowledge Format (OKF v0.2) repository for Conciliamus SAP BTP Cloud Integration architecture",
+  "type": "module",
+  "scripts": {
+    "validate": "python tooling/validate_okf.py",
+    "build:graph": "python tooling/build_graph.py",
+    "query": "python tooling/query_agent_cli.py"
+  },
+  "author": "Dieter Rüffler <drueffler@gmail.com>",
+  "license": "Apache-2.0",
+  "keywords": [
+    "okf",
+    "open-knowledge-format",
+    "google-cloud",
+    "knowledge-agent",
+    "sap-btp",
+    "cloud-integration",
+    "architecture-knowledge-base",
+    "bpmn-method-and-style"
+  ]
+}

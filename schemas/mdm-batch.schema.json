@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MDMBusinessPartnerBatch",
+  "description": "JSON-Schema für den Inbound-Batch aus JSD-MDM",
+  "type": "object",
+  "required": ["batchId", "createdAt", "sourceSystem", "businessPartners"],
+  "properties": {
+    "batchId": { "type": "string", "pattern": "^BP-\\d{8}-\\d{3}$" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "sourceSystem": { "type": "string", "const": "JSD-MDM" },
+    "businessPartners": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["externalId", "company"],
+        "properties": {
+          "externalId": { "type": "string", "minLength": 1, "maxLength": 20 },
+          "company": { "type": "string", "minLength": 1, "maxLength": 40 },
+          "street": { "type": "string", "maxLength": 60 },
+          "houseNumber": { "type": "string", "maxLength": 10 },
+          "postalCode": { "type": "string", "maxLength": 10 },
+          "city": { "type": "string", "maxLength": 40 },
+          "country": { "type": "string", "pattern": "^[A-Z]{2}$" },
+          "email": { "type": "string", "format": "email" },
+          "phone": { "type": "string", "maxLength": 30 },
+          "vatId": { "type": "string", "maxLength": 20 }
+        }
+      }
+    }
+  }
+}

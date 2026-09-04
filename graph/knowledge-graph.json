@@ -1,0 +1,660 @@
+{
+  "okfVersion": "0.2",
+  "nodesCount": 24,
+  "edgesCount": 63,
+  "nodes": [
+    {
+      "id": "architecture/dual-iflow-pattern",
+      "label": "Dual-iFlow Entkopplungsmuster",
+      "type": "Architecture Concept",
+      "path": "/architecture/dual-iflow-pattern.md",
+      "tags": [
+        "architecture",
+        "pattern",
+        "dual-iflow",
+        "cpi",
+        "btp",
+        "decoupling",
+        "resilience"
+      ]
+    },
+    {
+      "id": "architecture/existence-check-and-routing",
+      "label": "Existenzprüfung & Deterministische Router-Matrix",
+      "type": "Architecture Concept",
+      "path": "/architecture/existence-check-and-routing.md",
+      "tags": [
+        "architecture",
+        "odata",
+        "routing",
+        "idempotency",
+        "s4hana",
+        "content-based-router"
+      ]
+    },
+    {
+      "id": "architecture/process-direct-interconnect",
+      "label": "ProcessDirect Interconnect",
+      "type": "Architecture Concept",
+      "path": "/architecture/process-direct-interconnect.md",
+      "tags": [
+        "architecture",
+        "process-direct",
+        "cpi",
+        "performance",
+        "in-memory",
+        "btp"
+      ]
+    },
+    {
+      "id": "architecture/resilience-and-dead-letter",
+      "label": "Resilienz & Dead-Letter-Behandlung",
+      "type": "Architecture Concept",
+      "path": "/architecture/resilience-and-dead-letter.md",
+      "tags": [
+        "architecture",
+        "resilience",
+        "error-handling",
+        "dlq",
+        "data-store",
+        "replay"
+      ]
+    },
+    {
+      "id": "architecture/session-and-csrf-handshake",
+      "label": "Session & CSRF Handshake",
+      "type": "Architecture Concept",
+      "path": "/architecture/session-and-csrf-handshake.md",
+      "tags": [
+        "architecture",
+        "csrf",
+        "security",
+        "odata",
+        "cookies",
+        "s4hana",
+        "http"
+      ]
+    },
+    {
+      "id": "architecture/streaming-iterating-splitter",
+      "label": "Streaming Iterating Splitter",
+      "type": "Architecture Concept",
+      "path": "/architecture/streaming-iterating-splitter.md",
+      "tags": [
+        "architecture",
+        "splitter",
+        "streaming",
+        "memory-management",
+        "cpi",
+        "json"
+      ]
+    },
+    {
+      "id": "data-contracts/custom-header-properties",
+      "label": "Custom Header Properties & Message Processing Log (MPL)",
+      "type": "Data Contract",
+      "path": "/data-contracts/custom-header-properties.md",
+      "tags": [
+        "contract",
+        "monitoring",
+        "mpl",
+        "custom-headers",
+        "audit",
+        "fulltext-search"
+      ]
+    },
+    {
+      "id": "data-contracts/mdm-inbound-contract",
+      "label": "MDM Inbound JSON Kontrakt",
+      "type": "Data Contract",
+      "path": "/data-contracts/mdm-inbound-contract.md",
+      "tags": [
+        "contract",
+        "mdm",
+        "json",
+        "schema",
+        "validation"
+      ]
+    },
+    {
+      "id": "data-contracts/s4-odata-mapping",
+      "label": "SAP S/4HANA OData Mapping",
+      "type": "Data Contract",
+      "path": "/data-contracts/s4-odata-mapping.md",
+      "tags": [
+        "contract",
+        "mapping",
+        "odata",
+        "s4hana",
+        "api-business-partner"
+      ]
+    },
+    {
+      "id": "decisions/adr-001-dual-iflow-decoupling",
+      "label": "ADR-001: Dual-iFlow Entkopplungsmuster",
+      "type": "Decision Record",
+      "path": "/decisions/adr-001-dual-iflow-decoupling.md",
+      "tags": [
+        "adr",
+        "architecture-decision",
+        "dual-iflow",
+        "decoupling",
+        "cpi"
+      ]
+    },
+    {
+      "id": "decisions/adr-002-process-direct",
+      "label": "ADR-002: ProcessDirect statt Message Queues für iFlow-Kopplung",
+      "type": "Decision Record",
+      "path": "/decisions/adr-002-process-direct.md",
+      "tags": [
+        "adr",
+        "architecture-decision",
+        "process-direct",
+        "jms",
+        "performance",
+        "cpi"
+      ]
+    },
+    {
+      "id": "decisions/adr-003-bpmn-method-and-style",
+      "label": "ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)",
+      "type": "Decision Record",
+      "path": "/decisions/adr-003-bpmn-method-and-style.md",
+      "tags": [
+        "adr",
+        "architecture-decision",
+        "bpmn",
+        "method-and-style",
+        "bruce-silver",
+        "governance"
+      ]
+    },
+    {
+      "id": "decisions/adr-004-data-store-dlq",
+      "label": "ADR-004: Data Store für Dead-Letter-Queue & Selektiven Replay",
+      "type": "Decision Record",
+      "path": "/decisions/adr-004-data-store-dlq.md",
+      "tags": [
+        "adr",
+        "architecture-decision",
+        "data-store",
+        "dlq",
+        "resilience",
+        "replay"
+      ]
+    },
+    {
+      "id": "decisions/adr-005-single-viewport-fiori",
+      "label": "ADR-005: Single-Viewport Ergonomie für die Fiori Workbench",
+      "type": "Decision Record",
+      "path": "/decisions/adr-005-single-viewport-fiori.md",
+      "tags": [
+        "adr",
+        "architecture-decision",
+        "fiori",
+        "ui-design",
+        "single-viewport",
+        "pills"
+      ]
+    },
+    {
+      "id": "iflows/batch-receiver-iflow",
+      "label": "IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher",
+      "type": "iFlow Specification",
+      "path": "/iflows/batch-receiver-iflow.md",
+      "tags": [
+        "iflow",
+        "batch-receiver",
+        "cpi",
+        "btp",
+        "bpmn",
+        "streaming",
+        "ingest"
+      ]
+    },
+    {
+      "id": "iflows/item-processor-iflow",
+      "label": "IFL_MDM_BP_Item_Processor: Atomare Partner-Verarbeitung",
+      "type": "iFlow Specification",
+      "path": "/iflows/item-processor-iflow.md",
+      "tags": [
+        "iflow",
+        "item-processor",
+        "cpi",
+        "btp",
+        "odata",
+        "routing",
+        "s4hana",
+        "error-handling"
+      ]
+    },
+    {
+      "id": "iflows/reprocessor-iflow",
+      "label": "IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf",
+      "type": "iFlow Specification",
+      "path": "/iflows/reprocessor-iflow.md",
+      "tags": [
+        "iflow",
+        "reprocessor",
+        "dlq",
+        "data-store",
+        "replay",
+        "resilience"
+      ]
+    },
+    {
+      "id": "presentation-and-ui/fiori-workbench-ui",
+      "label": "SAP Fiori Integration Workbench & Test-Runner",
+      "type": "UI Concept",
+      "path": "/presentation-and-ui/fiori-workbench-ui.md",
+      "tags": [
+        "ui",
+        "fiori",
+        "workbench",
+        "json-pills",
+        "single-viewport",
+        "test-runner",
+        "firebase-auth"
+      ]
+    },
+    {
+      "id": "presentation-and-ui/pecha-kucha-20x20",
+      "label": "Pecha Kucha 20x20 Präsentationsarchitektur",
+      "type": "Presentation Concept",
+      "path": "/presentation-and-ui/pecha-kucha-20x20.md",
+      "tags": [
+        "ui",
+        "pecha-kucha",
+        "presentation",
+        "timer",
+        "audio",
+        "firebase-auth"
+      ]
+    },
+    {
+      "id": "qa/core-architecture-faq",
+      "label": "Zentrale Architekturfragen & Antworten",
+      "type": "Architecture FAQ",
+      "path": "/qa/core-architecture-faq.md",
+      "tags": [
+        "qa",
+        "faq",
+        "architecture",
+        "agent",
+        "reasoning"
+      ]
+    },
+    {
+      "id": "qa/error-handling-faq",
+      "label": "Resilienz- und Troubleshooting-FAQ",
+      "type": "Architecture FAQ",
+      "path": "/qa/error-handling-faq.md",
+      "tags": [
+        "qa",
+        "faq",
+        "resilience",
+        "dlq",
+        "troubleshooting",
+        "errors"
+      ]
+    },
+    {
+      "id": "verification/istqb-test-strategy",
+      "label": "ISTQB Teststrategie & Testfallmatrix",
+      "type": "Test Evidence",
+      "path": "/verification/istqb-test-strategy.md",
+      "tags": [
+        "evidence",
+        "istqb",
+        "testing",
+        "test-matrix",
+        "qa"
+      ]
+    },
+    {
+      "id": "verification/live-btp-execution",
+      "label": "Live-End-to-End Testlauf auf SAP BTP",
+      "type": "Test Evidence",
+      "path": "/verification/live-btp-execution.md",
+      "tags": [
+        "evidence",
+        "live-test",
+        "btp",
+        "http-200",
+        "verification"
+      ]
+    },
+    {
+      "id": "verification/sandbox-limitations-405",
+      "label": "SAP Sandbox Limitationen & HTTP 405 Handling",
+      "type": "Test Evidence",
+      "path": "/verification/sandbox-limitations-405.md",
+      "tags": [
+        "evidence",
+        "sandbox",
+        "http-405",
+        "limitation",
+        "s4hana",
+        "odata"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "architecture/dual-iflow-pattern",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "contains"
+    },
+    {
+      "source": "architecture/dual-iflow-pattern",
+      "target": "iflows/item-processor-iflow",
+      "relation": "contains"
+    },
+    {
+      "source": "architecture/dual-iflow-pattern",
+      "target": "decisions/adr-001-dual-iflow-decoupling",
+      "relation": "implements"
+    },
+    {
+      "source": "architecture/dual-iflow-pattern",
+      "target": "architecture/process-direct-interconnect",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "architecture/dual-iflow-pattern",
+      "target": "verification/live-btp-execution",
+      "relation": "verifies"
+    },
+    {
+      "source": "architecture/existence-check-and-routing",
+      "target": "iflows/item-processor-iflow",
+      "relation": "contains"
+    },
+    {
+      "source": "architecture/existence-check-and-routing",
+      "target": "data-contracts/s4-odata-mapping",
+      "relation": "implements"
+    },
+    {
+      "source": "architecture/existence-check-and-routing",
+      "target": "verification/istqb-test-strategy",
+      "relation": "verifies"
+    },
+    {
+      "source": "architecture/process-direct-interconnect",
+      "target": "decisions/adr-002-process-direct",
+      "relation": "implements"
+    },
+    {
+      "source": "architecture/process-direct-interconnect",
+      "target": "architecture/dual-iflow-pattern",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "architecture/process-direct-interconnect",
+      "target": "iflows/item-processor-iflow",
+      "relation": "routesTo"
+    },
+    {
+      "source": "architecture/resilience-and-dead-letter",
+      "target": "decisions/adr-004-data-store-dlq",
+      "relation": "implements"
+    },
+    {
+      "source": "architecture/resilience-and-dead-letter",
+      "target": "iflows/reprocessor-iflow",
+      "relation": "contains"
+    },
+    {
+      "source": "architecture/resilience-and-dead-letter",
+      "target": "iflows/item-processor-iflow",
+      "relation": "handlesError"
+    },
+    {
+      "source": "architecture/session-and-csrf-handshake",
+      "target": "iflows/item-processor-iflow",
+      "relation": "contains"
+    },
+    {
+      "source": "architecture/session-and-csrf-handshake",
+      "target": "architecture/existence-check-and-routing",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "architecture/streaming-iterating-splitter",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "contains"
+    },
+    {
+      "source": "architecture/streaming-iterating-splitter",
+      "target": "architecture/process-direct-interconnect",
+      "relation": "routesTo"
+    },
+    {
+      "source": "data-contracts/custom-header-properties",
+      "target": "iflows/item-processor-iflow",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "data-contracts/custom-header-properties",
+      "target": "verification/live-btp-execution",
+      "relation": "verifies"
+    },
+    {
+      "source": "data-contracts/mdm-inbound-contract",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "implements"
+    },
+    {
+      "source": "data-contracts/mdm-inbound-contract",
+      "target": "data-contracts/s4-odata-mapping",
+      "relation": "routesTo"
+    },
+    {
+      "source": "data-contracts/s4-odata-mapping",
+      "target": "data-contracts/mdm-inbound-contract",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "data-contracts/s4-odata-mapping",
+      "target": "iflows/item-processor-iflow",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "decisions/adr-001-dual-iflow-decoupling",
+      "target": "architecture/dual-iflow-pattern",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "decisions/adr-001-dual-iflow-decoupling",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "decisions/adr-001-dual-iflow-decoupling",
+      "target": "iflows/item-processor-iflow",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "decisions/adr-002-process-direct",
+      "target": "architecture/process-direct-interconnect",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "decisions/adr-002-process-direct",
+      "target": "decisions/adr-001-dual-iflow-decoupling",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "decisions/adr-003-bpmn-method-and-style",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "decisions/adr-003-bpmn-method-and-style",
+      "target": "iflows/item-processor-iflow",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "decisions/adr-004-data-store-dlq",
+      "target": "architecture/resilience-and-dead-letter",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "decisions/adr-004-data-store-dlq",
+      "target": "iflows/reprocessor-iflow",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "decisions/adr-005-single-viewport-fiori",
+      "target": "presentation-and-ui/fiori-workbench-ui",
+      "relation": "implementedBy"
+    },
+    {
+      "source": "iflows/batch-receiver-iflow",
+      "target": "architecture/dual-iflow-pattern",
+      "relation": "partOf"
+    },
+    {
+      "source": "iflows/batch-receiver-iflow",
+      "target": "iflows/item-processor-iflow",
+      "relation": "routesTo"
+    },
+    {
+      "source": "iflows/batch-receiver-iflow",
+      "target": "decisions/adr-003-bpmn-method-and-style",
+      "relation": "implements"
+    },
+    {
+      "source": "iflows/batch-receiver-iflow",
+      "target": "verification/live-btp-execution",
+      "relation": "verifies"
+    },
+    {
+      "source": "iflows/item-processor-iflow",
+      "target": "architecture/dual-iflow-pattern",
+      "relation": "partOf"
+    },
+    {
+      "source": "iflows/item-processor-iflow",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "routedFrom"
+    },
+    {
+      "source": "iflows/item-processor-iflow",
+      "target": "architecture/existence-check-and-routing",
+      "relation": "implements"
+    },
+    {
+      "source": "iflows/item-processor-iflow",
+      "target": "architecture/resilience-and-dead-letter",
+      "relation": "implements"
+    },
+    {
+      "source": "iflows/item-processor-iflow",
+      "target": "decisions/adr-003-bpmn-method-and-style",
+      "relation": "implements"
+    },
+    {
+      "source": "iflows/item-processor-iflow",
+      "target": "verification/live-btp-execution",
+      "relation": "verifies"
+    },
+    {
+      "source": "iflows/reprocessor-iflow",
+      "target": "decisions/adr-004-data-store-dlq",
+      "relation": "implements"
+    },
+    {
+      "source": "iflows/reprocessor-iflow",
+      "target": "iflows/item-processor-iflow",
+      "relation": "routesTo"
+    },
+    {
+      "source": "presentation-and-ui/fiori-workbench-ui",
+      "target": "decisions/adr-005-single-viewport-fiori",
+      "relation": "implements"
+    },
+    {
+      "source": "presentation-and-ui/fiori-workbench-ui",
+      "target": "verification/live-btp-execution",
+      "relation": "verifies"
+    },
+    {
+      "source": "presentation-and-ui/pecha-kucha-20x20",
+      "target": "decisions/adr-003-bpmn-method-and-style",
+      "relation": "references"
+    },
+    {
+      "source": "presentation-and-ui/pecha-kucha-20x20",
+      "target": "verification/live-btp-execution",
+      "relation": "references"
+    },
+    {
+      "source": "qa/core-architecture-faq",
+      "target": "architecture/dual-iflow-pattern",
+      "relation": "references"
+    },
+    {
+      "source": "qa/core-architecture-faq",
+      "target": "architecture/existence-check-and-routing",
+      "relation": "references"
+    },
+    {
+      "source": "qa/core-architecture-faq",
+      "target": "decisions/adr-001-dual-iflow-decoupling",
+      "relation": "references"
+    },
+    {
+      "source": "qa/core-architecture-faq",
+      "target": "decisions/adr-002-process-direct",
+      "relation": "references"
+    },
+    {
+      "source": "qa/error-handling-faq",
+      "target": "architecture/resilience-and-dead-letter",
+      "relation": "references"
+    },
+    {
+      "source": "qa/error-handling-faq",
+      "target": "iflows/reprocessor-iflow",
+      "relation": "references"
+    },
+    {
+      "source": "qa/error-handling-faq",
+      "target": "decisions/adr-004-data-store-dlq",
+      "relation": "references"
+    },
+    {
+      "source": "verification/istqb-test-strategy",
+      "target": "architecture/existence-check-and-routing",
+      "relation": "verifies"
+    },
+    {
+      "source": "verification/istqb-test-strategy",
+      "target": "architecture/resilience-and-dead-letter",
+      "relation": "verifies"
+    },
+    {
+      "source": "verification/live-btp-execution",
+      "target": "architecture/dual-iflow-pattern",
+      "relation": "verifies"
+    },
+    {
+      "source": "verification/live-btp-execution",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "verifies"
+    },
+    {
+      "source": "verification/live-btp-execution",
+      "target": "iflows/item-processor-iflow",
+      "relation": "verifies"
+    },
+    {
+      "source": "verification/sandbox-limitations-405",
+      "target": "iflows/item-processor-iflow",
+      "relation": "verifies"
+    }
+  ]
+}

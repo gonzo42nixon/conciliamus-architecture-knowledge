@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "S4BusinessPartnerOData",
+  "description": "Schema für SAP S/4HANA OData A_BusinessPartner Payload",
+  "type": "object",
+  "required": ["SearchTerm1", "OrganizationBPName1", "BusinessPartnerCategory", "Language"],
+  "properties": {
+    "BusinessPartner": { "type": "string", "maxLength": 10 },
+    "SearchTerm1": { "type": "string", "maxLength": 20 },
+    "OrganizationBPName1": { "type": "string", "maxLength": 40 },
+    "BusinessPartnerCategory": { "type": "string", "const": "2" },
+    "BusinessPartnerGrouping": { "type": "string", "const": "BP02" },
+    "Language": { "type": "string", "const": "DE" },
+    "CorrespondenceLanguage": { "type": "string", "const": "DE" },
+    "to_BusinessPartnerAddress": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "Country": { "type": "string", "pattern": "^[A-Z]{2}$" },
+          "PostalCode": { "type": "string" },
+          "CityName": { "type": "string" },
+          "StreetName": { "type": "string" },
+          "HouseNumber": { "type": "string" },
+          "to_EmailAddress": { "type": "array" },
+          "to_PhoneNumber": { "type": "array" }
+        }
+      }
+    }
+  }
+}

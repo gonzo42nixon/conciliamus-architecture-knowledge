@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KnowledgeAgentManifest",
+  "description": "Schema für deklarative Agentenmanifeste zur Steuerung von KI-Architektur-Agenten",
+  "type": "object",
+  "required": ["apiVersion", "kind", "metadata", "spec"],
+  "properties": {
+    "apiVersion": { "type": "string" },
+    "kind": { "type": "string", "const": "KnowledgeAgent" },
+    "metadata": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "spec": {
+      "type": "object",
+      "required": ["purpose", "knowledge", "retrieval"],
+      "properties": {
+        "purpose": { "type": "string" },
+        "knowledge": {
+          "type": "object",
+          "required": ["bundle", "okfVersion"],
+          "properties": {
+            "bundle": { "type": "string" },
+            "okfVersion": { "type": "string" }
+          }
+        },
+        "retrieval": {
+          "type": "object",
+          "required": ["startAt"],
+          "properties": {
+            "startAt": { "type": "string" },
+            "maxConcepts": { "type": "integer" },
+            "followRelations": { "type": "boolean" }
+          }
+        }
+      }
+    }
+  }
+}
