@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="de" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conciliamus Architecture Knowledge Graph (OKF v0.2)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Roboto+Mono&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Open Sans', sans-serif; }
+    #network { width: 100%; height: 100%; }
+    .custom-scrollbar::-webkit-scrollbar { width: 5px; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+  </style>
+</head>
+<body class="h-full bg-slate-900 text-slate-100 flex flex-col overflow-hidden select-none">
+
+  <!-- Shell Header -->
+  <header class="h-12 bg-slate-950 border-b border-slate-800 px-4 flex items-center justify-between z-10 shrink-0">
+    <div class="flex items-center gap-3">
+      <div class="w-7 h-7 rounded bg-[#0070f2] text-white flex items-center justify-center font-black text-xs shadow-sm">
+        OKF
+      </div>
+      <div>
+        <h1 class="text-xs font-bold text-white tracking-wide">Conciliamus Architecture Knowledge Graph</h1>
+        <div class="text-[10px] text-slate-400 font-mono">Google Open Knowledge Format v0.2 • 24 Knoten • 63 Kanten</div>
+      </div>
+    </div>
+
+    <!-- Search & Filter Controls -->
+    <div class="flex items-center gap-2.5">
+      <div class="relative">
+        <i class="fa-solid fa-search absolute left-2.5 top-2.5 text-slate-500 text-xs"></i>
+        <input id="searchInput" type="text" placeholder="Knoten suchen..." oninput="onSearch(this.value)" class="pl-8 pr-3 py-1 bg-slate-900 border border-slate-700 rounded-lg text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#0070f2] w-48 transition">
+      </div>
+      <select id="typeFilter" onchange="filterByType(this.value)" class="bg-slate-900 border border-slate-700 rounded-lg text-xs text-slate-300 py-1 px-2 focus:outline-none focus:border-[#0070f2]">
+        <option value="all">Alle Typen</option>
+        <option value="Architecture Concept">Architecture Concept</option>
+        <option value="iFlow Specification">iFlow Specification</option>
+        <option value="Decision Record">Decision Record (ADR)</option>
+        <option value="Data Contract">Data Contract</option>
+        <option value="Test Evidence">Test Evidence</option>
+        <option value="Presentation Concept">Presentation</option>
+        <option value="UI Concept">UI Concept</option>
+        <option value="Architecture FAQ">Architecture FAQ</option>
+      </select>
+      <button onclick="resetView()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-xs text-slate-200 transition flex items-center gap-1.5" title="Ansicht zentrieren">
+        <i class="fa-solid fa-arrows-to-dot text-slate-400"></i>
+        <span class="hidden sm:inline">Zentrieren</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Viewport (Graph + Drawer) -->
+  <div class="flex-1 flex min-h-0 relative overflow-hidden">
+    
+    <!-- Graph Canvas -->
+    <div id="network" class="flex-1 bg-[#0f172a]"></div>
+
+    <!-- Node Detail Drawer -->
+    <aside id="detailDrawer" class="w-96 bg-slate-950 border-l border-slate-800 flex flex-col p-4 space-y-4 overflow-y-auto custom-scrollbar transition-all duration-300 transform translate-x-full absolute right-0 inset-y-0 z-20 shadow-2xl">
+      <div class="flex items-start justify-between border-b border-slate-800 pb-3">
+        <div>
+          <span id="detailType" class="text-[10px] font-mono uppercase font-bold px-2 py-0.5 rounded bg-blue-900/60 text-blue-300 border border-blue-700"></span>
+          <h2 id="detailTitle" class="text-sm font-bold text-white mt-1.5"></h2>
+          <div id="detailId" class="text-[11px] font-mono text-slate-400 mt-0.5"></div>
+        </div>
+        <button onclick="closeDrawer()" class="w-6 h-6 rounded hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div class="space-y-1.5">
+        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Beschreibung</div>
+        <p id="detailDesc" class="text-xs text-slate-300 leading-relaxed"></p>
+      </div>
+
+      <div class="space-y-1.5">
+        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Schlagworte (Tags)</div>
+        <div id="detailTags" class="flex flex-wrap gap-1.5"></div>
+      </div>
+
+      <div class="space-y-2 border-t border-slate-800 pt-3">
+        <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Verknüpfte Relationen (<span id="relCount">0</span>)</div>
+        <div id="detailRelations" class="space-y-1.5 text-xs font-mono"></div>
+      </div>
+
+      <div class="pt-3 border-t border-slate-800">
+        <a id="detailGithubLink" href="#" target="_blank" class="w-full py-2 px-3 bg-[#0070f2] hover:bg-[#0056bd] text-white rounded-lg text-xs font-semibold flex items-center justify-center gap-2 transition shadow">
+          <i class="fa-brands fa-github"></i>
+          <span>Markdown-Quelle in GitHub ansehen</span>
+        </a>
+      </div>
+    </aside>
+
+  </div>
+
+  <script>
+    const graphData = {"okfVersion": "0.2", "nodesCount": 24, "edgesCount": 63, "nodes": [{"id": "architecture/dual-iflow-pattern", "label": "Dual-iFlow Entkopplungsmuster", "type": "Architecture Concept", "path": "/architecture/dual-iflow-pattern.md", "tags": ["architecture", "pattern", "dual-iflow", "cpi", "btp", "decoupling", "resilience"]}, {"id": "architecture/existence-check-and-routing", "label": "Existenzpr\u00fcfung & Deterministische Router-Matrix", "type": "Architecture Concept", "path": "/architecture/existence-check-and-routing.md", "tags": ["architecture", "odata", "routing", "idempotency", "s4hana", "content-based-router"]}, {"id": "architecture/process-direct-interconnect", "label": "ProcessDirect Interconnect", "type": "Architecture Concept", "path": "/architecture/process-direct-interconnect.md", "tags": ["architecture", "process-direct", "cpi", "performance", "in-memory", "btp"]}, {"id": "architecture/resilience-and-dead-letter", "label": "Resilienz & Dead-Letter-Behandlung", "type": "Architecture Concept", "path": "/architecture/resilience-and-dead-letter.md", "tags": ["architecture", "resilience", "error-handling", "dlq", "data-store", "replay"]}, {"id": "architecture/session-and-csrf-handshake", "label": "Session & CSRF Handshake", "type": "Architecture Concept", "path": "/architecture/session-and-csrf-handshake.md", "tags": ["architecture", "csrf", "security", "odata", "cookies", "s4hana", "http"]}, {"id": "architecture/streaming-iterating-splitter", "label": "Streaming Iterating Splitter", "type": "Architecture Concept", "path": "/architecture/streaming-iterating-splitter.md", "tags": ["architecture", "splitter", "streaming", "memory-management", "cpi", "json"]}, {"id": "data-contracts/custom-header-properties", "label": "Custom Header Properties & Message Processing Log (MPL)", "type": "Data Contract", "path": "/data-contracts/custom-header-properties.md", "tags": ["contract", "monitoring", "mpl", "custom-headers", "audit", "fulltext-search"]}, {"id": "data-contracts/mdm-inbound-contract", "label": "MDM Inbound JSON Kontrakt", "type": "Data Contract", "path": "/data-contracts/mdm-inbound-contract.md", "tags": ["contract", "mdm", "json", "schema", "validation"]}, {"id": "data-contracts/s4-odata-mapping", "label": "SAP S/4HANA OData Mapping", "type": "Data Contract", "path": "/data-contracts/s4-odata-mapping.md", "tags": ["contract", "mapping", "odata", "s4hana", "api-business-partner"]}, {"id": "decisions/adr-001-dual-iflow-decoupling", "label": "ADR-001: Dual-iFlow Entkopplungsmuster", "type": "Decision Record", "path": "/decisions/adr-001-dual-iflow-decoupling.md", "tags": ["adr", "architecture-decision", "dual-iflow", "decoupling", "cpi"]}, {"id": "decisions/adr-002-process-direct", "label": "ADR-002: ProcessDirect statt Message Queues f\u00fcr iFlow-Kopplung", "type": "Decision Record", "path": "/decisions/adr-002-process-direct.md", "tags": ["adr", "architecture-decision", "process-direct", "jms", "performance", "cpi"]}, {"id": "decisions/adr-003-bpmn-method-and-style", "label": "ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)", "type": "Decision Record", "path": "/decisions/adr-003-bpmn-method-and-style.md", "tags": ["adr", "architecture-decision", "bpmn", "method-and-style", "bruce-silver", "governance"]}, {"id": "decisions/adr-004-data-store-dlq", "label": "ADR-004: Data Store f\u00fcr Dead-Letter-Queue & Selektiven Replay", "type": "Decision Record", "path": "/decisions/adr-004-data-store-dlq.md", "tags": ["adr", "architecture-decision", "data-store", "dlq", "resilience", "replay"]}, {"id": "decisions/adr-005-single-viewport-fiori", "label": "ADR-005: Single-Viewport Ergonomie f\u00fcr die Fiori Workbench", "type": "Decision Record", "path": "/decisions/adr-005-single-viewport-fiori.md", "tags": ["adr", "architecture-decision", "fiori", "ui-design", "single-viewport", "pills"]}, {"id": "iflows/batch-receiver-iflow", "label": "IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher", "type": "iFlow Specification", "path": "/iflows/batch-receiver-iflow.md", "tags": ["iflow", "batch-receiver", "cpi", "btp", "bpmn", "streaming", "ingest"]}, {"id": "iflows/item-processor-iflow", "label": "IFL_MDM_BP_Item_Processor: Atomare Partner-Verarbeitung", "type": "iFlow Specification", "path": "/iflows/item-processor-iflow.md", "tags": ["iflow", "item-processor", "cpi", "btp", "odata", "routing", "s4hana", "error-handling"]}, {"id": "iflows/reprocessor-iflow", "label": "IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf", "type": "iFlow Specification", "path": "/iflows/reprocessor-iflow.md", "tags": ["iflow", "reprocessor", "dlq", "data-store", "replay", "resilience"]}, {"id": "presentation-and-ui/fiori-workbench-ui", "label": "SAP Fiori Integration Workbench & Test-Runner", "type": "UI Concept", "path": "/presentation-and-ui/fiori-workbench-ui.md", "tags": ["ui", "fiori", "workbench", "json-pills", "single-viewport", "test-runner", "firebase-auth"]}, {"id": "presentation-and-ui/pecha-kucha-20x20", "label": "Pecha Kucha 20x20 Pr\u00e4sentationsarchitektur", "type": "Presentation Concept", "path": "/presentation-and-ui/pecha-kucha-20x20.md", "tags": ["ui", "pecha-kucha", "presentation", "timer", "audio", "firebase-auth"]}, {"id": "qa/core-architecture-faq", "label": "Zentrale Architekturfragen & Antworten", "type": "Architecture FAQ", "path": "/qa/core-architecture-faq.md", "tags": ["qa", "faq", "architecture", "agent", "reasoning"]}, {"id": "qa/error-handling-faq", "label": "Resilienz- und Troubleshooting-FAQ", "type": "Architecture FAQ", "path": "/qa/error-handling-faq.md", "tags": ["qa", "faq", "resilience", "dlq", "troubleshooting", "errors"]}, {"id": "verification/istqb-test-strategy", "label": "ISTQB Teststrategie & Testfallmatrix", "type": "Test Evidence", "path": "/verification/istqb-test-strategy.md", "tags": ["evidence", "istqb", "testing", "test-matrix", "qa"]}, {"id": "verification/live-btp-execution", "label": "Live-End-to-End Testlauf auf SAP BTP", "type": "Test Evidence", "path": "/verification/live-btp-execution.md", "tags": ["evidence", "live-test", "btp", "http-200", "verification"]}, {"id": "verification/sandbox-limitations-405", "label": "SAP Sandbox Limitationen & HTTP 405 Handling", "type": "Test Evidence", "path": "/verification/sandbox-limitations-405.md", "tags": ["evidence", "sandbox", "http-405", "limitation", "s4hana", "odata"]}], "edges": [{"source": "architecture/dual-iflow-pattern", "target": "iflows/batch-receiver-iflow", "relation": "contains"}, {"source": "architecture/dual-iflow-pattern", "target": "iflows/item-processor-iflow", "relation": "contains"}, {"source": "architecture/dual-iflow-pattern", "target": "decisions/adr-001-dual-iflow-decoupling", "relation": "implements"}, {"source": "architecture/dual-iflow-pattern", "target": "architecture/process-direct-interconnect", "relation": "dependsOn"}, {"source": "architecture/dual-iflow-pattern", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "architecture/existence-check-and-routing", "target": "iflows/item-processor-iflow", "relation": "contains"}, {"source": "architecture/existence-check-and-routing", "target": "data-contracts/s4-odata-mapping", "relation": "implements"}, {"source": "architecture/existence-check-and-routing", "target": "verification/istqb-test-strategy", "relation": "verifies"}, {"source": "architecture/process-direct-interconnect", "target": "decisions/adr-002-process-direct", "relation": "implements"}, {"source": "architecture/process-direct-interconnect", "target": "architecture/dual-iflow-pattern", "relation": "dependsOn"}, {"source": "architecture/process-direct-interconnect", "target": "iflows/item-processor-iflow", "relation": "routesTo"}, {"source": "architecture/resilience-and-dead-letter", "target": "decisions/adr-004-data-store-dlq", "relation": "implements"}, {"source": "architecture/resilience-and-dead-letter", "target": "iflows/reprocessor-iflow", "relation": "contains"}, {"source": "architecture/resilience-and-dead-letter", "target": "iflows/item-processor-iflow", "relation": "handlesError"}, {"source": "architecture/session-and-csrf-handshake", "target": "iflows/item-processor-iflow", "relation": "contains"}, {"source": "architecture/session-and-csrf-handshake", "target": "architecture/existence-check-and-routing", "relation": "dependsOn"}, {"source": "architecture/streaming-iterating-splitter", "target": "iflows/batch-receiver-iflow", "relation": "contains"}, {"source": "architecture/streaming-iterating-splitter", "target": "architecture/process-direct-interconnect", "relation": "routesTo"}, {"source": "data-contracts/custom-header-properties", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "data-contracts/custom-header-properties", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "data-contracts/mdm-inbound-contract", "target": "iflows/batch-receiver-iflow", "relation": "implements"}, {"source": "data-contracts/mdm-inbound-contract", "target": "data-contracts/s4-odata-mapping", "relation": "routesTo"}, {"source": "data-contracts/s4-odata-mapping", "target": "data-contracts/mdm-inbound-contract", "relation": "dependsOn"}, {"source": "data-contracts/s4-odata-mapping", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-001-dual-iflow-decoupling", "target": "architecture/dual-iflow-pattern", "relation": "implementedBy"}, {"source": "decisions/adr-001-dual-iflow-decoupling", "target": "iflows/batch-receiver-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-001-dual-iflow-decoupling", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-002-process-direct", "target": "architecture/process-direct-interconnect", "relation": "implementedBy"}, {"source": "decisions/adr-002-process-direct", "target": "decisions/adr-001-dual-iflow-decoupling", "relation": "dependsOn"}, {"source": "decisions/adr-003-bpmn-method-and-style", "target": "iflows/batch-receiver-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-003-bpmn-method-and-style", "target": "iflows/item-processor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-004-data-store-dlq", "target": "architecture/resilience-and-dead-letter", "relation": "implementedBy"}, {"source": "decisions/adr-004-data-store-dlq", "target": "iflows/reprocessor-iflow", "relation": "implementedBy"}, {"source": "decisions/adr-005-single-viewport-fiori", "target": "presentation-and-ui/fiori-workbench-ui", "relation": "implementedBy"}, {"source": "iflows/batch-receiver-iflow", "target": "architecture/dual-iflow-pattern", "relation": "partOf"}, {"source": "iflows/batch-receiver-iflow", "target": "iflows/item-processor-iflow", "relation": "routesTo"}, {"source": "iflows/batch-receiver-iflow", "target": "decisions/adr-003-bpmn-method-and-style", "relation": "implements"}, {"source": "iflows/batch-receiver-iflow", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "iflows/item-processor-iflow", "target": "architecture/dual-iflow-pattern", "relation": "partOf"}, {"source": "iflows/item-processor-iflow", "target": "iflows/batch-receiver-iflow", "relation": "routedFrom"}, {"source": "iflows/item-processor-iflow", "target": "architecture/existence-check-and-routing", "relation": "implements"}, {"source": "iflows/item-processor-iflow", "target": "architecture/resilience-and-dead-letter", "relation": "implements"}, {"source": "iflows/item-processor-iflow", "target": "decisions/adr-003-bpmn-method-and-style", "relation": "implements"}, {"source": "iflows/item-processor-iflow", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "iflows/reprocessor-iflow", "target": "decisions/adr-004-data-store-dlq", "relation": "implements"}, {"source": "iflows/reprocessor-iflow", "target": "iflows/item-processor-iflow", "relation": "routesTo"}, {"source": "presentation-and-ui/fiori-workbench-ui", "target": "decisions/adr-005-single-viewport-fiori", "relation": "implements"}, {"source": "presentation-and-ui/fiori-workbench-ui", "target": "verification/live-btp-execution", "relation": "verifies"}, {"source": "presentation-and-ui/pecha-kucha-20x20", "target": "decisions/adr-003-bpmn-method-and-style", "relation": "references"}, {"source": "presentation-and-ui/pecha-kucha-20x20", "target": "verification/live-btp-execution", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "architecture/dual-iflow-pattern", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "architecture/existence-check-and-routing", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "decisions/adr-001-dual-iflow-decoupling", "relation": "references"}, {"source": "qa/core-architecture-faq", "target": "decisions/adr-002-process-direct", "relation": "references"}, {"source": "qa/error-handling-faq", "target": "architecture/resilience-and-dead-letter", "relation": "references"}, {"source": "qa/error-handling-faq", "target": "iflows/reprocessor-iflow", "relation": "references"}, {"source": "qa/error-handling-faq", "target": "decisions/adr-004-data-store-dlq", "relation": "references"}, {"source": "verification/istqb-test-strategy", "target": "architecture/existence-check-and-routing", "relation": "verifies"}, {"source": "verification/istqb-test-strategy", "target": "architecture/resilience-and-dead-letter", "relation": "verifies"}, {"source": "verification/live-btp-execution", "target": "architecture/dual-iflow-pattern", "relation": "verifies"}, {"source": "verification/live-btp-execution", "target": "iflows/batch-receiver-iflow", "relation": "verifies"}, {"source": "verification/live-btp-execution", "target": "iflows/item-processor-iflow", "relation": "verifies"}, {"source": "verification/sandbox-limitations-405", "target": "iflows/item-processor-iflow", "relation": "verifies"}]};
+
+    const typeColors = {
+      'Architecture Concept': { background: '#0070f2', border: '#60a5fa' },
+      'iFlow Specification': { background: '#107e3e', border: '#4ade80' },
+      'Decision Record': { background: '#df6e0c', border: '#fb923c' },
+      'Data Contract': { background: '#7c3aed', border: '#c084fc' },
+      'Test Evidence': { background: '#0284c7', border: '#38bdf8' },
+      'Presentation Concept': { background: '#d946ef', border: '#f0abfc' },
+      'UI Concept': { background: '#e11d48', border: '#fb7185' },
+      'Architecture FAQ': { background: '#475569', border: '#94a3b8' }
+    };
+
+    const visNodes = graphData.nodes.map(n => {
+      const colors = typeColors[n.type] || { background: '#3b82f6', border: '#93c5fd' };
+      return {
+        id: n.id,
+        label: n.label,
+        title: `${n.label} (${n.type})`,
+        shape: 'box',
+        margin: 8,
+        color: {
+          background: colors.background,
+          border: colors.border,
+          highlight: { background: '#f59e0b', border: '#fbbf24' }
+        },
+        font: { color: '#ffffff', size: 11, face: 'Open Sans' },
+        borderWidth: 2,
+        raw: n
+      };
+    });
+
+    const visEdges = graphData.edges.map(e => ({
+      from: e.source,
+      to: e.target,
+      label: e.relation,
+      arrows: 'to',
+      font: { color: '#94a3b8', size: 9, align: 'middle', background: '#0f172a' },
+      color: { color: '#334155', highlight: '#f59e0b' },
+      smooth: { type: 'cubicBezier' }
+    }));
+
+    const container = document.getElementById('network');
+    const data = { nodes: new vis.DataSet(visNodes), edges: new vis.DataSet(visEdges) };
+    const options = {
+      physics: {
+        solver: 'forceAtlas2Based',
+        forceAtlas2Based: {
+          gravitationalConstant: -70,
+          centralGravity: 0.015,
+          springLength: 130,
+          springConstant: 0.09
+        },
+        stabilization: { iterations: 120 }
+      },
+      interaction: { hover: true, tooltipDelay: 100 }
+    };
+
+    const network = new vis.Network(container, data, options);
+
+    network.on('click', function(params) {
+      if (params.nodes.length > 0) {
+        const nodeId = params.nodes[0];
+        const node = graphData.nodes.find(n => n.id === nodeId);
+        if (node) showDrawer(node);
+      } else {
+        closeDrawer();
+      }
+    });
+
+    function showDrawer(node) {
+      const drawer = document.getElementById('detailDrawer');
+      document.getElementById('detailType').innerText = node.type;
+      document.getElementById('detailTitle').innerText = node.label;
+      document.getElementById('detailId').innerText = node.id;
+      document.getElementById('detailDesc').innerText = (node.tags || []).join(', ') || 'OKF-Knoten';
+      
+      const tagsEl = document.getElementById('detailTags');
+      tagsEl.innerHTML = (node.tags || []).map(t => `<span class="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-[10px] border border-slate-700">#${t}</span>`).join('');
+
+      const outgoing = graphData.edges.filter(e => e.source === node.id);
+      const incoming = graphData.edges.filter(e => e.target === node.id);
+      document.getElementById('relCount').innerText = outgoing.length + incoming.length;
+
+      const relsEl = document.getElementById('detailRelations');
+      let relHtml = '';
+      outgoing.forEach(e => {
+        relHtml += `<div class="p-1.5 rounded bg-slate-900 border border-slate-800 flex items-center justify-between"><span class="text-emerald-400">[${e.relation}] ➔</span> <span class="text-slate-200 truncate">${e.target}</span></div>`;
+      });
+      incoming.forEach(e => {
+        relHtml += `<div class="p-1.5 rounded bg-slate-900 border border-slate-800 flex items-center justify-between"><span class="text-amber-400">⬅ [${e.relation}]</span> <span class="text-slate-200 truncate">${e.source}</span></div>`;
+      });
+      relsEl.innerHTML = relHtml || '<div class="text-slate-500 text-[11px]">Keine expliziten Relationen</div>';
+
+      const ghLink = document.getElementById('detailGithubLink');
+      ghLink.href = `https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/knowledge${node.path}`;
+
+      drawer.classList.remove('translate-x-full');
+    }
+
+    function closeDrawer() {
+      document.getElementById('detailDrawer').classList.add('translate-x-full');
+    }
+
+    function resetView() {
+      network.fit({ animation: { duration: 600, easingFunction: 'easeInOutQuad' } });
+    }
+
+    function onSearch(term) {
+      if (!term.trim()) {
+        resetView();
+        return;
+      }
+      const match = graphData.nodes.find(n => n.label.toLowerCase().includes(term.toLowerCase()) || n.id.toLowerCase().includes(term.toLowerCase()));
+      if (match) {
+        network.focus(match.id, { scale: 1.2, animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
+        network.selectNodes([match.id]);
+        showDrawer(match);
+      }
+    }
+
+    function filterByType(type) {
+      if (type === 'all') {
+        data.nodes.forEach(n => data.nodes.update({ id: n.id, hidden: false }));
+      } else {
+        data.nodes.forEach(n => {
+          const raw = graphData.nodes.find(gn => gn.id === n.id);
+          const isMatch = raw && raw.type === type;
+          data.nodes.update({ id: n.id, hidden: !isMatch });
+        });
+      }
+      resetView();
+    }
+  </script>
+</body>
+</html>
