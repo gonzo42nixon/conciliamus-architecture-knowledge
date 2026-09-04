@@ -10,7 +10,7 @@ import json
 from typing import Optional, List, Dict, Any
 import yaml
 from fastapi import FastAPI, HTTPException, Query, Path, Request
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, Response, FileResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 
@@ -236,6 +236,19 @@ def view_obsidian_workspace():
         raise HTTPException(status_code=404, detail="site/index.html nicht gefunden.")
     with open(INDEX_HTML_PATH, "r", encoding="utf-8") as f:
         return HTMLResponse(content=f.read())
+
+@app.get("/favicon.ico", include_in_schema=False)
+def get_favicon():
+    svg_icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">💎</text></svg>'
+    return Response(content=svg_icon, media_type="image/svg+xml")
+
+@app.get("/app.js", include_in_schema=False)
+@app.get("/site/app.js", include_in_schema=False)
+def serve_app_js():
+    js_path = os.path.join(SITE_DIR, "app.js")
+    if os.path.exists(js_path):
+        return FileResponse(js_path, media_type="application/javascript")
+    raise HTTPException(status_code=404, detail="app.js nicht gefunden.")
 
 @app.post("/rules/verify", response_model=VerifyRuleResponse, tags=["Architecture Rules"])
 def verify_architecture_rule(req: VerifyRuleRequest):
