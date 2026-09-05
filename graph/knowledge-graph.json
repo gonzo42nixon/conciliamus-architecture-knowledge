@@ -1,8 +1,29 @@
 {
   "okfVersion": "0.2",
-  "nodesCount": 25,
-  "edgesCount": 65,
+  "nodesCount": 28,
+  "edgesCount": 72,
   "nodes": [
+    {
+      "id": "architecture/agent-deployment-and-gitops",
+      "label": "KI-Agenten-Bereitstellung & GitOps-Architektur",
+      "type": "Architecture Concept",
+      "path": "/architecture/agent-deployment-and-gitops.md",
+      "tags": [
+        "architecture",
+        "deployment",
+        "gitops",
+        "streamlit",
+        "serverless",
+        "cors",
+        "security",
+        "gemini",
+        "btp"
+      ],
+      "description": "Architekturkonzept für die serverlose Bereitstellung des Conciliamus AI Architecture Advisor via Streamlit Community Cloud, GitHub GitOps und hybrider BTP-Ausführung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 4
+    },
     {
       "id": "architecture/dual-iflow-pattern",
       "label": "Dual-iFlow Entkopplungsmuster",
@@ -255,6 +276,27 @@
       "degree": 2
     },
     {
+      "id": "decisions/adr-006-streamlit-cloud-agent-deployment",
+      "label": "ADR-006: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps",
+      "type": "Decision Record",
+      "path": "/decisions/adr-006-streamlit-cloud-agent-deployment.md",
+      "tags": [
+        "adr",
+        "architecture-decision",
+        "streamlit",
+        "serverless",
+        "gitops",
+        "zero-docker",
+        "gemini",
+        "btp-cors",
+        "secrets-management"
+      ],
+      "description": "Bereitstellung des Conciliamus AI Architecture Advisor als Zero-Docker, Zero-Cost Serverless Web-App direkt aus GitHub mit nativer SAP BTP CORS-Bypass-Architektur.",
+      "status": "accepted",
+      "domain": "General",
+      "degree": 4
+    },
+    {
       "id": "iflows/batch-receiver-iflow",
       "label": "IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher",
       "type": "iFlow Specification",
@@ -346,7 +388,25 @@
       "description": "Konzeption, Sprechtexte, Zeitsteuerung und technische Umsetzung der interaktiven 20x20 Präsentation (6:40 Min.).",
       "status": "verified",
       "domain": "General",
-      "degree": 2
+      "degree": 3
+    },
+    {
+      "id": "presentation-and-ui/pecha_kucha_konzept",
+      "label": "Pecha Kucha 20x20 Konzept & Foliensprechertexte",
+      "type": "Presentation Concept",
+      "path": "/presentation-and-ui/pecha_kucha_konzept.md",
+      "tags": [
+        "presentation",
+        "pecha-kucha",
+        "20x20",
+        "concept",
+        "script",
+        "speech"
+      ],
+      "description": "Vollständiges Drehbuch, Struktur und 20-Sekunden-Sprechertexte der 20 Folien umfassenden Pecha Kucha Architekturpräsentation.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 1
     },
     {
       "id": "presentation-and-ui/streamlit-chat-advisor",
@@ -366,7 +426,7 @@
       "description": "Weltweit verfuegbare Serverless Webanwendung auf Basis von Streamlit Community Cloud und Google AI Studio (Gemini 3.6 Flash) mit dynamischem Grounding auf das OKF-Wissensbuendel.",
       "status": "productive",
       "domain": "General",
-      "degree": 2
+      "degree": 6
     },
     {
       "id": "qa/core-architecture-faq",
@@ -457,6 +517,16 @@
     }
   ],
   "edges": [
+    {
+      "source": "architecture/agent-deployment-and-gitops",
+      "target": "decisions/adr-006-streamlit-cloud-agent-deployment",
+      "relation": "implements"
+    },
+    {
+      "source": "architecture/agent-deployment-and-gitops",
+      "target": "presentation-and-ui/streamlit-chat-advisor",
+      "relation": "contains"
+    },
     {
       "source": "architecture/dual-iflow-pattern",
       "target": "iflows/batch-receiver-iflow",
@@ -628,6 +698,16 @@
       "relation": "implementedBy"
     },
     {
+      "source": "decisions/adr-006-streamlit-cloud-agent-deployment",
+      "target": "presentation-and-ui/streamlit-chat-advisor",
+      "relation": "implements"
+    },
+    {
+      "source": "decisions/adr-006-streamlit-cloud-agent-deployment",
+      "target": "architecture/agent-deployment-and-gitops",
+      "relation": "dependsOn"
+    },
+    {
       "source": "iflows/batch-receiver-iflow",
       "target": "architecture/dual-iflow-pattern",
       "relation": "partOf"
@@ -708,9 +788,24 @@
       "relation": "references"
     },
     {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "presentation-and-ui/pecha-kucha-20x20",
+      "relation": "implementedBy"
+    },
+    {
       "source": "presentation-and-ui/streamlit-chat-advisor",
       "target": "decisions/adr-001-dual-iflow-decoupling",
       "relation": "implements"
+    },
+    {
+      "source": "presentation-and-ui/streamlit-chat-advisor",
+      "target": "decisions/adr-006-streamlit-cloud-agent-deployment",
+      "relation": "implements"
+    },
+    {
+      "source": "presentation-and-ui/streamlit-chat-advisor",
+      "target": "architecture/agent-deployment-and-gitops",
+      "relation": "dependsOn"
     },
     {
       "source": "presentation-and-ui/streamlit-chat-advisor",

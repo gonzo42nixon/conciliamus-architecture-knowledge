@@ -18,10 +18,12 @@ Der **Conciliamus Architecture Advisor** ist als serverlose, weltweit erreichbar
 👉 **[https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app](https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app)**
 
 ### Highlights der Webanwendung
-- **Gegroundetes KI-Consulting:** Angetrieben von **Google Gemini 3.6 Flash** (via `google-genai` SDK) unter Verwendung der 25 verifizierten OKF-Architekturdokumente und 5 ADRs als kanonische Faktenquelle.
+- **Gegroundetes KI-Consulting:** Angetrieben von **Google Gemini 3.6 Flash** (via `google-genai` SDK) unter Verwendung der verifizierten OKF-Architekturdokumente und 6 ADRs als kanonische Faktenquelle.
+- **Zero-Docker & GitOps CI/CD:** Vollautomatische Bereitstellung direkt aus GitHub auf Streamlit Community Cloud ([ADR-006](knowledge/decisions/adr-006-streamlit-cloud-agent-deployment.md)) mit nativer BTP CORS-Bypass-Architektur.
 - **Multimodale Antworten:** Antwortet mit dynamisch generierten **Mermaid-Sequenzdiagrammen**, exakten Quellenverlinkungen und BPMN 2.0 Method & Style Nomenklatur.
+- **Live BTP Test-Runner & Workbench:** Operative Ausführung von Test-Batches gegen SAP Cloud Integration inklusive automatischem OAuth2- & CSRF-Handshake.
 - **Resilienz & Model Failover:** Fängt temporäre Lastspitzen (HTTP 503) automatisch über Failover-Modelle (`gemini-2.0-flash`, `gemini-1.5-flash`) und Offline-Grounding ab.
-- **Integrierter ADR- & API-Explorer:** Ermöglicht das direkte Durchblättern aller Architecture Decision Records und OpenAPI 3.1.0 Spezifikationen.
+- **Integrierter ADR- & API-Explorer:** Ermöglicht das direkte Durchblättern aller Architecture Decision Records (ADR-001 bis ADR-006) und OpenAPI 3.1.0 Spezifikationen.
 - **Lokaler Start:**
   ```bash
   pip install -r requirements.txt
@@ -96,7 +98,8 @@ conciliamus-architecture-knowledge/
 │   │   ├── streaming-iterating-splitter.md    # Speicherschonende Batch-Vereinzelung
 │   │   ├── existence-check-and-routing.md     # OData GET Existenzprüfung & Router-Matrix
 │   │   ├── session-and-csrf-handshake.md      # Two-Legged Handshake & Cookie-Handling
-│   │   └── resilience-and-dead-letter.md      # Dual-Channel Fehlerbehandlung & DLQ
+│   │   ├── resilience-and-dead-letter.md      # Dual-Channel Fehlerbehandlung & DLQ
+│   │   └── agent-deployment-and-gitops.md     # Serverless GitOps & BTP CORS-Bypass
 │   ├── iflows/                                # Spezifikationen der Integration Flows
 │   │   ├── batch-receiver-iflow.md            # IFL_MDM_BP_Batch_Receiver Detail-Spezifikation
 │   │   ├── item-processor-iflow.md            # IFL_MDM_BP_Item_Processor Detail-Spezifikation
@@ -106,7 +109,8 @@ conciliamus-architecture-knowledge/
 │   │   ├── adr-002-process-direct.md          # ADR-002: ProcessDirect statt JMS Queues
 │   │   ├── adr-003-bpmn-method-and-style.md   # ADR-003: Bruce Silver Namenskonventionen
 │   │   ├── adr-004-data-store-dlq.md          # ADR-004: Data Store für selektiven Replay
-│   │   └── adr-005-single-viewport-fiori.md   # ADR-005: Single-Viewport Fiori Workbench
+│   │   ├── adr-005-single-viewport-fiori.md   # ADR-005: Single-Viewport Fiori Workbench
+│   │   └── adr-006-streamlit-cloud-agent-deployment.md # ADR-006: Serverless Streamlit Cloud & GitOps
 │   ├── data-contracts/                        # Schnittstellenkontrakte & Datenmodelle
 │   │   ├── mdm-inbound-contract.md            # JSD-MDM JSON Schema & Felddefinitionen
 │   │   ├── s4-odata-mapping.md                # Feldmapping zu SAP S/4HANA OData

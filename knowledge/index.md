@@ -17,6 +17,7 @@ Willkommen im **Google Open Knowledge Format (OKF v0.2)** Bundle der Conciliamus
 * [Existenzprüfung & Router-Matrix](/architecture/existence-check-and-routing.md) – Idempotente OData GET Suche und deterministisches POST/PATCH Routing.
 * [Session & CSRF Handshake](/architecture/session-and-csrf-handshake.md) – Two-Legged Handshake, X-CSRF-Token und Cookie-Handling für schreibende OData-Operationen.
 * [Resilienz & Dead-Letter-Behandlung](/architecture/resilience-and-dead-letter.md) – Strikte Differenzierung von Business Errors und Technical Errors mit Data Store DLQ.
+* [KI-Agenten-Bereitstellung & GitOps-Architektur](/architecture/agent-deployment-and-gitops.md) – Zero-Docker Serverless Hosting, GitOps Continuous Deployment und nativer SAP BTP CORS-Bypass.
 
 ---
 
@@ -33,6 +34,7 @@ Willkommen im **Google Open Knowledge Format (OKF v0.2)** Bundle der Conciliamus
 * [ADR-003: BPMN 2.0 Method & Style (Bruce Silver)](/decisions/adr-003-bpmn-method-and-style.md) – Selbstdokumentierende Nomenklatur `[Aktiv-Verb] + [Objekt]`.
 * [ADR-004: Data Store für Dead-Letter-Queue & Selektiver Replay](/decisions/adr-004-data-store-dlq.md) – Granularer Wiederanlauf fehlerhafter Datensätze.
 * [ADR-005: Single-Viewport Ergonomie für die Fiori Workbench](/decisions/adr-005-single-viewport-fiori.md) – 100% no-outer-scroll Layout-Architektur.
+* [ADR-006: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps](/decisions/adr-006-streamlit-cloud-agent-deployment.md) – Zero-Docker, Zero-Cost und Umgehung der BTP CORS-Hürde.
 
 ---
 

@@ -11,6 +11,8 @@ generated:
   at: "2026-09-05T09:20:00Z"
 relations:
   - { type: implements, target: /decisions/adr-001-dual-iflow-decoupling.md }
+  - { type: implements, target: /decisions/adr-006-streamlit-cloud-agent-deployment.md }
+  - { type: dependsOn, target: /architecture/agent-deployment-and-gitops.md }
   - { type: references, target: /presentation-and-ui/fiori-workbench-ui.md }
 sources:
   - id: streamlit-app
@@ -48,6 +50,8 @@ Die Webanwendung fungiert als interaktiver, menschenzentrierter KI-Berater fuer 
 
 ## Anwendungsreiter
 
-- **💬 Architektur-Chat:** Dialogfuehrung mit Historie, Schnellanfragen und klickbaren Quellen-Expandern.
-- **📜 Architecture Decisions (ADRs):** Direkte Einsicht in alle verifizierten Architecture Decision Records (ADR-001 bis ADR-005).
-- **📐 OpenAPI & Schemas:** Verlinkung auf die Laufzeit-Schnittstellenspezifikationen (`api/conciliamus-runtime-iflows.openapi.yaml`).
+- **💬 Architektur-Chat:** Dialogführung mit Historie, Schnellanfragen und klickbaren Quellen-Expandern.
+- **📜 Architecture Decisions (ADRs):** Direkte Einsicht in alle verifizierten Architecture Decision Records ([ADR-001](/decisions/adr-001-dual-iflow-decoupling.md) bis [ADR-006](/decisions/adr-006-streamlit-cloud-agent-deployment.md)).
+- **🎤 Pecha Kucha (20x20):** Interaktive 20-Folien-Präsentation mit automatischem 20s-Timer und Sprechertexten.
+- **🧪 Test-Runner (Workbench):** Operative Testausführung von Batch-Payloads direkt gegen SAP CPI mit automatischer OAuth2- und CSRF-Handshake-Verarbeitung ohne CORS-Blockaden.
+- **📐 OpenAPI & Schemas:** Direkte Einsicht und Verlinkung auf die Laufzeit-Schnittstellenspezifikationen (`api/conciliamus-runtime-iflows.openapi.yaml`).

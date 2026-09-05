@@ -1,3 +1,18 @@
+---
+id: presentation-and-ui/pecha_kucha_konzept
+type: Presentation Concept
+title: "Pecha Kucha 20x20 Konzept & Foliensprechertexte"
+description: "Vollständiges Drehbuch, Struktur und 20-Sekunden-Sprechertexte der 20 Folien umfassenden Pecha Kucha Architekturpräsentation."
+resource: btp://conciliamus/presentation/pecha-kucha-script
+tags: [presentation, pecha-kucha, 20x20, concept, script, speech]
+status: verified
+generated:
+  by: "human:dieter-rueffler"
+  at: "2026-09-04T22:00:00Z"
+relations:
+  - { type: implementedBy, target: /presentation-and-ui/pecha-kucha-20x20.md }
+---
+
 # Pecha-Kucha-Präsentation: MDM Business Partner Synchronisation
 ## SAP Cloud Integration • Dual-iFlow Architektur • BPMN 2.0 Method & Style
 **Referent:** Dieter Rüffler (Dipl.-Inform. TU Berlin, ISTQB CTFL, ITIL V2)  
