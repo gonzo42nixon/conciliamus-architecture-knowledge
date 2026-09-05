@@ -19,6 +19,7 @@ graph TD
   iflows_reprocessor_iflow["IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf<br/><i>iFlow Specification</i>"]
   presentation_and_ui_fiori_workbench_ui["SAP Fiori Integration Workbench & Test-Runner<br/><i>UI Concept</i>"]
   presentation_and_ui_pecha_kucha_20x20["Pecha Kucha 20x20 Präsentationsarchitektur<br/><i>Presentation Concept</i>"]
+  presentation_and_ui_streamlit_chat_advisor["Conciliamus Architecture Advisor (Streamlit Web App)<br/><i>UI Component</i>"]
   qa_core_architecture_faq["Zentrale Architekturfragen & Antworten<br/><i>Architecture FAQ</i>"]
   qa_error_handling_faq["Resilienz- und Troubleshooting-FAQ<br/><i>Architecture FAQ</i>"]
   verification_istqb_test_strategy["ISTQB Teststrategie & Testfallmatrix<br/><i>Test Evidence</i>"]
@@ -74,6 +75,8 @@ graph TD
   presentation_and_ui_fiori_workbench_ui -->|verifies| verification_live_btp_execution
   presentation_and_ui_pecha_kucha_20x20 -->|references| decisions_adr_003_bpmn_method_and_style
   presentation_and_ui_pecha_kucha_20x20 -->|references| verification_live_btp_execution
+  presentation_and_ui_streamlit_chat_advisor -->|implements| decisions_adr_001_dual_iflow_decoupling
+  presentation_and_ui_streamlit_chat_advisor -->|references| presentation_and_ui_fiori_workbench_ui
   qa_core_architecture_faq -->|references| architecture_dual_iflow_pattern
   qa_core_architecture_faq -->|references| architecture_existence_check_and_routing
   qa_core_architecture_faq -->|references| decisions_adr_001_dual_iflow_decoupling

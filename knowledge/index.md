@@ -53,6 +53,7 @@ Willkommen im **Google Open Knowledge Format (OKF v0.2)** Bundle der Conciliamus
 ## 🖥️ 6. Präsentation & Interaktive Werkzeuge (`presentation-and-ui/`)
 * [Pecha Kucha 20x20 Präsentation](/presentation-and-ui/pecha-kucha-20x20.md) – 20 Folien à 20s (6:40 Min.), Sprechtexte, Timer & Firebase-Login.
 * [SAP Fiori Workbench UI](/presentation-and-ui/fiori-workbench-ui.md) – Single-Viewport, interaktive aufklappbare JSON-Pills & Monitoring-Drawer.
+* [Conciliamus Architecture Advisor (Streamlit)](/presentation-and-ui/streamlit-chat-advisor.md) – Weltweit verfügbare KI-Chat-App auf Basis von Google AI Studio & Gemini 3.6 Flash.
 
 ---
 

@@ -1,7 +1,7 @@
 {
   "okfVersion": "0.2",
-  "nodesCount": 24,
-  "edgesCount": 63,
+  "nodesCount": 25,
+  "edgesCount": 65,
   "nodes": [
     {
       "id": "architecture/dual-iflow-pattern",
@@ -180,7 +180,7 @@
       "description": "Aufteilung der Integrationslogik in zwei separate iFlows zur Gewährleistung von Fehlerisolation und Ressourcenschonung.",
       "status": "accepted",
       "domain": "General",
-      "degree": 6
+      "degree": 7
     },
     {
       "id": "decisions/adr-002-process-direct",
@@ -328,7 +328,7 @@
       "description": "Architektur der Single-Viewport Fiori Horizon Web-Applikation mit aufklappbaren RGB-JSON-Pills und Monitoring-Drawer.",
       "status": "verified",
       "domain": "General",
-      "degree": 3
+      "degree": 4
     },
     {
       "id": "presentation-and-ui/pecha-kucha-20x20",
@@ -345,6 +345,26 @@
       ],
       "description": "Konzeption, Sprechtexte, Zeitsteuerung und technische Umsetzung der interaktiven 20x20 Präsentation (6:40 Min.).",
       "status": "verified",
+      "domain": "General",
+      "degree": 2
+    },
+    {
+      "id": "presentation-and-ui/streamlit-chat-advisor",
+      "label": "Conciliamus Architecture Advisor (Streamlit Web App)",
+      "type": "UI Component",
+      "path": "/presentation-and-ui/streamlit-chat-advisor.md",
+      "tags": [
+        "streamlit",
+        "ui",
+        "gemini",
+        "google-ai-studio",
+        "cloud",
+        "chat",
+        "grounding",
+        "serverless"
+      ],
+      "description": "Weltweit verfuegbare Serverless Webanwendung auf Basis von Streamlit Community Cloud und Google AI Studio (Gemini 3.6 Flash) mit dynamischem Grounding auf das OKF-Wissensbuendel.",
+      "status": "productive",
       "domain": "General",
       "degree": 2
     },
@@ -685,6 +705,16 @@
     {
       "source": "presentation-and-ui/pecha-kucha-20x20",
       "target": "verification/live-btp-execution",
+      "relation": "references"
+    },
+    {
+      "source": "presentation-and-ui/streamlit-chat-advisor",
+      "target": "decisions/adr-001-dual-iflow-decoupling",
+      "relation": "implements"
+    },
+    {
+      "source": "presentation-and-ui/streamlit-chat-advisor",
+      "target": "presentation-and-ui/fiori-workbench-ui",
       "relation": "references"
     },
     {

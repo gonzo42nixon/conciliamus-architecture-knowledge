@@ -2,7 +2,31 @@
 
 > **Google Open Knowledge Format (OKF)** Repository für die Enterprise-Architektur der **SAP BTP Cloud Integration Business Partner Synchronisation** der Conciliamus GmbH.
 
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app)
+[![OpenAPI 3.1](https://img.shields.io/badge/OpenAPI-3.1.0-green.svg)](api/conciliamus-runtime-iflows.openapi.yaml)
+[![OKF Version](https://img.shields.io/badge/OKF-v0.2-blue.svg)](knowledge/index.md)
+[![Gemini](https://img.shields.io/badge/LLM-Gemini%203.6%20Flash-orange.svg)](https://aistudio.google.com)
+
 Dieses Repository sammelt das vollständige architektonische, methodische, technische und betriebliche Wissen aus dem Referenz-Repository [gonzo42nixon/Conciliamus](https://github.com/gonzo42nixon/Conciliamus) und überführt es in den herstellerneutralen, agenten-optimierten Standard **Google Open Knowledge Format (OKF v0.2)**.
+
+---
+
+## 🌐 Weltweiter Live-KI-Architekturberater (Streamlit Cloud)
+
+Der **Conciliamus Architecture Advisor** ist als serverlose, weltweit erreichbare Chat-Webanwendung live geschaltet:
+
+👉 **[https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app](https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app)**
+
+### Highlights der Webanwendung
+- **Gegroundetes KI-Consulting:** Angetrieben von **Google Gemini 3.6 Flash** (via `google-genai` SDK) unter Verwendung der 25 verifizierten OKF-Architekturdokumente und 5 ADRs als kanonische Faktenquelle.
+- **Multimodale Antworten:** Antwortet mit dynamisch generierten **Mermaid-Sequenzdiagrammen**, exakten Quellenverlinkungen und BPMN 2.0 Method & Style Nomenklatur.
+- **Resilienz & Model Failover:** Fängt temporäre Lastspitzen (HTTP 503) automatisch über Failover-Modelle (`gemini-2.0-flash`, `gemini-1.5-flash`) und Offline-Grounding ab.
+- **Integrierter ADR- & API-Explorer:** Ermöglicht das direkte Durchblättern aller Architecture Decision Records und OpenAPI 3.1.0 Spezifikationen.
+- **Lokaler Start:**
+  ```bash
+  pip install -r requirements.txt
+  streamlit run app.py
+  ```
 
 ---
 
