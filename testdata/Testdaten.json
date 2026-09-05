@@ -1,0 +1,127 @@
+{
+  "batchId": "BP-20260714-001",
+  "createdAt": "2026-07-14T09:00:00Z",
+  "sourceSystem": "JSD-MDM",
+  "businessPartners": [
+    {
+      "externalId": "<VORHANDENER_SEARCHTERM_1>",
+      "company": "Musterfirma Berlin GmbH",
+      "street": "Musterstraße",
+      "houseNumber": "10",
+      "postalCode": "10115",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "kontakt1@example.de",
+      "phone": "+49 30 10000001",
+      "vatId": "DE100000001"
+    },
+    {
+      "externalId": "<VORHANDENER_SEARCHTERM_2>",
+      "company": "Beispiel AG",
+      "street": "Hauptstraße",
+      "houseNumber": "5",
+      "postalCode": "10117",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "kontakt2@example.de",
+      "phone": "+49 30 10000002",
+      "vatId": "DE100000002"
+    },
+    {
+      "externalId": "<VORHANDENER_SEARCHTERM_3>",
+      "company": "Demo Services GmbH",
+      "street": "Industriestraße",
+      "houseNumber": "8",
+      "postalCode": "10119",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "kontakt3@example.de",
+      "phone": "+49 30 10000003",
+      "vatId": "DE100000003"
+    },
+    {
+      "externalId": "JSD-BP-100001",
+      "company": "MedTech Solutions GmbH",
+      "street": "Technologiepark",
+      "houseNumber": "21",
+      "postalCode": "12489",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "info@medtech-solutions.de",
+      "phone": "+49 30 55550001",
+      "vatId": "DE200000001"
+    },
+    {
+      "externalId": "JSD-BP-100002",
+      "company": "Medical Supply Berlin GmbH",
+      "street": "Gewerbering",
+      "houseNumber": "15",
+      "postalCode": "12681",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "vertrieb@medical-supply.de",
+      "phone": "+49 30 55550002",
+      "vatId": "DE200000002"
+    },
+    {
+      "externalId": "JSD-BP-100003",
+      "company": "HealthCare Equipment AG",
+      "street": "Medizinweg",
+      "houseNumber": "3",
+      "postalCode": "13125",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "sales@healthcare-equipment.de",
+      "phone": "+49 30 55550003",
+      "vatId": "DE200000003"
+    },
+    {
+      "externalId": "JSD-BP-100004",
+      "company": "Diagnostic Systems GmbH",
+      "street": "Laborstraße",
+      "houseNumber": "18",
+      "postalCode": "13589",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "info@diagnostic-systems.de",
+      "phone": "+49 30 55550004",
+      "vatId": "DE200000004"
+    },
+    {
+      "externalId": "JSD-BP-100005",
+      "company": "Surgical Instruments GmbH",
+      "street": "OP-Allee",
+      "houseNumber": "7",
+      "postalCode": "14129",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "kontakt@surgical.de",
+      "phone": "+49 30 55550005",
+      "vatId": "DE200000005"
+    },
+    {
+      "externalId": "JSD-BP-100006",
+      "company": "Care Solutions Europe GmbH",
+      "street": "Pflegeweg",
+      "houseNumber": "11",
+      "postalCode": "14193",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "office@care-solutions.de",
+      "phone": "+49 30 55550006",
+      "vatId": "DE200000006"
+    },
+    {
+      "externalId": "JSD-BP-100007",
+      "company": "MedLab Devices GmbH",
+      "street": "Campusstraße",
+      "houseNumber": "44",
+      "postalCode": "13347",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "info@medlab-devices.de",
+      "phone": "+49 30 55550007",
+      "vatId": "DE200000007"
+    }
+  ]
+}

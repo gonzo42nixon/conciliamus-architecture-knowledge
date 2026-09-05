@@ -772,6 +772,20 @@
     <!-- Drawer Scrollable Content Area -->
     <div class="flex-1 overflow-y-auto p-5 space-y-4 fiori-scrollbar bg-[#f5f6f7]">
       
+      <!-- Simulation Notice Banner -->
+      <div id="drawerSimNotice" class="p-3 rounded-lg bg-amber-50 border border-amber-300 text-amber-900 text-xs">
+        <div class="flex items-center gap-2 font-bold mb-1">
+          <i class="fa-solid fa-circle-info text-amber-600"></i>
+          <span>Autarker Browser-Simulationsmodus (Mock)</span>
+        </div>
+        <p class="leading-relaxed">
+          Dieser Lauf wurde <strong>autark im Browser simuliert</strong>. Weil Browser aus Sicherheitsgründen (CORS) keine unauthentifizierten OPTIONS-Preflights an den SAP CPI Inbound-Adapter senden dürfen, wurde kein Netzwerk-Paket an SAP BTP übertragen.
+        </p>
+        <p class="mt-1.5 font-semibold text-[#0070f2]">
+          👉 Für einen <strong>echten Live-Durchlauf mit Trace im SAP CPI Monitoring</strong>: Nutzen Sie den Live-Batch-Sender im Streamlit Architecture Advisor!
+        </p>
+      </div>
+      
       <!-- Tab 1: Partner Positionen (sap.m.List) -->
       <div id="tabContent_partners" class="space-y-3">
         <div class="flex items-center justify-between text-[11px] text-slate-500 px-1">
@@ -1336,7 +1350,7 @@
         // Localhost nicht erreichbar -> Wechsel zu autarkem Web-Runner
       }
       runnerMode = 'standalone';
-      if (badge) badge.innerHTML = '<span class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span>BTP Cloud Integration: Bereit (Autarker Web-Runner)';
+      if (badge) badge.innerHTML = '<span class="inline-block w-2 h-2 rounded-full bg-amber-400 mr-1.5"></span>BTP Cloud Integration: Autarke UI-Simulation (Mock)';
       if (banner) banner.classList.add('hidden');
     }
 

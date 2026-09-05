@@ -1,0 +1,51 @@
+{
+  "batchId": "BP-20260714-ERR-001",
+  "createdAt": "2026-07-14T10:00:00Z",
+  "sourceSystem": "JSD-MDM",
+  "businessPartners": [
+    {
+      "comment": "Fachlicher Fehler 1: ExternalId fehlt",
+      "externalId": "",
+      "company": "Missing ExternalId GmbH",
+      "street": "Fehlerstraße",
+      "houseNumber": "1",
+      "postalCode": "10115",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "err1@example.de"
+    },
+    {
+      "comment": "Fachlicher Fehler 2: Unternehmensname fehlt",
+      "externalId": "ERR-BP-002",
+      "company": "",
+      "street": "Fehlerstraße",
+      "houseNumber": "2",
+      "postalCode": "10115",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "err2@example.de"
+    },
+    {
+      "comment": "Fachlicher Fehler 3: Ungültige Email",
+      "externalId": "ERR-BP-003",
+      "company": "Invalid Email Corp",
+      "street": "Fehlerstraße",
+      "houseNumber": "3",
+      "postalCode": "10115",
+      "city": "Berlin",
+      "country": "DE",
+      "email": "invalid-email-format"
+    },
+    {
+      "comment": "Fachlicher Fehler 4: Ungültiges Land (ISO-2 erforderlich)",
+      "externalId": "ERR-BP-004",
+      "company": "Invalid Country Corp",
+      "street": "Fehlerstraße",
+      "houseNumber": "4",
+      "postalCode": "10115",
+      "city": "Berlin",
+      "country": "GERMANY",
+      "email": "err4@example.de"
+    }
+  ]
+}

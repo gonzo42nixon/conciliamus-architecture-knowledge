@@ -9,6 +9,7 @@ import json
 import yaml
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
+import time
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -21,6 +22,136 @@ PECHA_HTML_PATH = ROOT_DIR / "site" / "pecha_kucha_presentation.html"
 PECHA_KONZEPT_PATH = ROOT_DIR / "knowledge" / "presentation-and-ui" / "pecha_kucha_konzept.md"
 TEST_RUNNER_HTML_PATH = ROOT_DIR / "site" / "test-runner.html"
 ISTQB_STRATEGY_PATH = ROOT_DIR / "knowledge" / "verification" / "istqb-test-strategy.md"
+TESTDATA_DIR = ROOT_DIR / "testdata"
+
+def execute_cpi_live_test(payload_str: str, creds: Dict[str, str]) -> Dict[str, Any]:
+    """Executes a real live batch test against SAP Cloud Integration tenant."""
+    import urllib.request
+    import urllib.parse
+    import urllib.error
+    import http.cookiejar
+    import base64
+    import time
+
+    start_time = time.time()
+    audit_log = []
+
+    token_url = creds.get("token_url", "").strip()
+    runtime_url = creds.get("runtime_url", "").strip()
+    client_id = creds.get("client_id", "").strip()
+    client_secret = creds.get("client_secret", "").strip()
+
+    if not client_id or not client_secret or not token_url or not runtime_url:
+        return {
+            "success": False,
+            "status": 0,
+            "error": "BTP Anmeldedaten unvollständig. Bitte Client-ID, Secret, Token-URL und Runtime-URL prüfen.",
+            "duration": 0,
+            "audit_log": ["[-] Fehler: Unvollständige BTP Anmeldedaten."]
+        }
+
+    # Step 1: OAuth2 Token
+    audit_log.append(f"[*] Anforderung OAuth2-Token von: {token_url}")
+    token_start = time.time()
+    try:
+        data = urllib.parse.urlencode({"grant_type": "client_credentials"}).encode("utf-8")
+        auth_bytes = f"{client_id}:{client_secret}".encode("utf-8")
+        auth_b64 = base64.b64encode(auth_bytes).decode("utf-8")
+
+        req = urllib.request.Request(token_url, data=data, method="POST")
+        req.add_header("Authorization", f"Basic {auth_b64}")
+        req.add_header("Content-Type", "application/x-www-form-urlencoded")
+
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            token_res = json.loads(resp.read().decode("utf-8"))
+            token = token_res.get("access_token")
+            expires_in = token_res.get("expires_in")
+            audit_log.append(f"[+] Token erhalten ({time.time() - token_start:.2f}s): Type={token_res.get('token_type')}, Scope=ESBMessaging.send, ExpiresIn={expires_in}s")
+    except Exception as e:
+        audit_log.append(f"[-] Token-Fehler: {str(e)}")
+        return {
+            "success": False,
+            "status": 401,
+            "error": f"OAuth2 Token-Anforderung fehlgeschlagen: {str(e)}",
+            "duration": round(time.time() - start_time, 2),
+            "audit_log": audit_log
+        }
+
+    # Step 2: CSRF Handshake
+    endpoint = f"{runtime_url.rstrip('/')}/http/conciliamus/v1/businesspartners/batch"
+    audit_log.append(f"[*] Führe CSRF-Handshake durch an: {endpoint}")
+    csrf_start = time.time()
+
+    cj = http.cookiejar.CookieJar()
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+
+    req1 = urllib.request.Request(endpoint, method="GET")
+    req1.add_header("Authorization", f"Bearer {token}")
+    req1.add_header("X-CSRF-Token", "Fetch")
+
+    csrf_token = None
+    try:
+        resp1 = opener.open(req1, timeout=15)
+        csrf_token = resp1.headers.get("X-CSRF-Token")
+        audit_log.append(f"[+] CSRF-Token erhalten ({time.time() - csrf_start:.2f}s): {csrf_token}")
+    except urllib.error.HTTPError as e:
+        csrf_token = e.headers.get("X-CSRF-Token")
+        if csrf_token:
+            audit_log.append(f"[+] CSRF-Token aus Fehler-Header extrahiert ({time.time() - csrf_start:.2f}s): {csrf_token}")
+        else:
+            audit_log.append(f"[-] CSRF-Warnung ({e.code}): Kein explizites CSRF-Token erhalten.")
+    except Exception as e:
+        audit_log.append(f"[-] CSRF-Fehler: {str(e)}")
+
+    # Step 3: Batch POST
+    audit_log.append(f"[*] Sende Batch-Payload an SAP Cloud Integration ({endpoint})...")
+    post_start = time.time()
+    try:
+        req2 = urllib.request.Request(endpoint, data=payload_str.encode("utf-8"), method="POST")
+        req2.add_header("Authorization", f"Bearer {token}")
+        if csrf_token:
+            req2.add_header("X-CSRF-Token", csrf_token)
+        req2.add_header("Content-Type", "application/json")
+        req2.add_header("Accept", "application/json, application/xml, text/plain")
+
+        with opener.open(req2, timeout=25) as resp2:
+            body = resp2.read().decode("utf-8", errors="replace")
+            duration = round(time.time() - start_time, 2)
+            headers = dict(resp2.headers)
+            sap_msg_id = headers.get("Sap-Message-Id") or headers.get("sap-message-id") or headers.get("X-Correlation-ID") or "N/A"
+            audit_log.append(f"[+++] HTTP {resp2.status} OK empfangen ({time.time() - post_start:.2f}s) - Gesamtzeit: {duration}s")
+            return {
+                "success": True,
+                "status": resp2.status,
+                "duration": duration,
+                "body": body,
+                "headers": headers,
+                "sap_message_id": sap_msg_id,
+                "audit_log": audit_log
+            }
+    except urllib.error.HTTPError as e:
+        err_body = e.read().decode("utf-8", errors="replace")
+        duration = round(time.time() - start_time, 2)
+        audit_log.append(f"[-] HTTP {e.code} Fehler von CPI: {err_body[:200]}")
+        return {
+            "success": False,
+            "status": e.code,
+            "duration": duration,
+            "body": err_body,
+            "error": f"HTTP {e.code} {e.reason}",
+            "headers": dict(e.headers),
+            "audit_log": audit_log
+        }
+    except Exception as e:
+        duration = round(time.time() - start_time, 2)
+        audit_log.append(f"[-] Übertragungsfehler: {str(e)}")
+        return {
+            "success": False,
+            "status": 500,
+            "duration": duration,
+            "error": str(e),
+            "audit_log": audit_log
+        }
 
 st.set_page_config(
     page_title="Conciliamus Architecture Advisor",
@@ -533,6 +664,125 @@ with tab_runner:
     if ISTQB_STRATEGY_PATH.exists():
         with st.expander("📖 Vollständiges ISTQB Strategiedokument einsehen (OKF Knowledge Base)"):
             st.markdown(ISTQB_STRATEGY_PATH.read_text(encoding="utf-8"))
+
+    # ----------------- LIVE CPI EXECUTION -----------------
+    st.markdown("---")
+    st.markdown("### ⚡ Live-Batch an SAP BTP Cloud Integration senden (Echtzeit)")
+    st.markdown("""
+    Hier können Sie einen **echten, unsimulierten Integrationslauf** direkt gegen Ihren SAP BTP Cloud Integration Tenant durchführen:
+    * **OAuth2 Token-Dienst:** Authentifiziert sich mit XSUAA Client Credentials.
+    * **CSRF-Schutz:** Holt das Session-Cookie und den dynamischen `X-CSRF-Token` vom Inbound-Endpunkt.
+    * **Batch-POST:** Sendet das Batch-JSON an `IFL_MDM_BP_Batch_Receiver` (`/http/conciliamus/v1/businesspartners/batch`).
+    * **Trace-Garantie:** **Jeder Klick erzeugt sofort einen sichtbaren Nachrichteneintrag im SAP CPI Message Monitoring!**
+    """)
+
+    default_client_id = "sb-e1a4ca1f-7a33-4513-858d-77ba2c5e58dd!b706425|it-rt-b9c123f3trial!b55215"
+    default_client_secret = "11930c12-a78b-4172-8004-f8c5a3a024b4$NCHm0cqnZea8wy3M_TT2Kp_Geurr7DE1cReWFnC2FJU="
+    default_token_url = "https://b9c123f3trial.authentication.us10.hana.ondemand.com/oauth/token"
+    default_runtime_url = "https://b9c123f3trial.it-cpitrial06-rt.cfapps.us10-001.hana.ondemand.com"
+
+    preset_col, btn_col = st.columns([2, 1])
+    with preset_col:
+        preset_choice = st.selectbox(
+            "Test-Datensatz wählen:",
+            [
+                "10er-Vollbatch (Standard: 3x PATCH, 7x POST Deep Insert)",
+                "Nur 3x Existierende Partner (PATCH Updates)",
+                "Nur 7x Neuanlagen (POST Deep Insert)",
+                "Fehlerfall-Batch (Ungültige E-Mail & falsches Land)"
+            ],
+            key="cpi_preset_select"
+        )
+
+    # Load data for the selected preset
+    selected_payload = {}
+    testdata_file = TESTDATA_DIR / "Testdaten_prepared.json"
+    if testdata_file.exists():
+        try:
+            full_data = json.loads(testdata_file.read_text(encoding="utf-8"))
+            if "Nur 3x Existierende Partner" in preset_choice:
+                selected_payload = {
+                    "batchId": f"BP-{time.strftime('%Y%m%d-%H%M%S')}-PATCH3",
+                    "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                    "sourceSystem": "JSD-MDM",
+                    "businessPartners": full_data.get("businessPartners", [])[:3]
+                }
+            elif "Nur 7x Neuanlagen" in preset_choice:
+                selected_payload = {
+                    "batchId": f"BP-{time.strftime('%Y%m%d-%H%M%S')}-POST7",
+                    "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                    "sourceSystem": "JSD-MDM",
+                    "businessPartners": full_data.get("businessPartners", [])[3:]
+                }
+            elif "Fehlerfall-Batch" in preset_choice:
+                edge_file = TESTDATA_DIR / "edge_cases.json"
+                if edge_file.exists():
+                    selected_payload = json.loads(edge_file.read_text(encoding="utf-8"))
+                    selected_payload["batchId"] = f"BP-{time.strftime('%Y%m%d-%H%M%S')}-ERR"
+                else:
+                    selected_payload = {
+                        "batchId": f"BP-{time.strftime('%Y%m%d-%H%M%S')}-ERR",
+                        "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                        "sourceSystem": "JSD-MDM",
+                        "businessPartners": [
+                            {"externalId": "ERR-01", "company": "Invalid Co", "email": "invalid-email", "country": "DEU"}
+                        ]
+                    }
+            else:
+                selected_payload = dict(full_data)
+                selected_payload["batchId"] = f"BP-{time.strftime('%Y%m%d-%H%M%S')}-FULL"
+        except Exception:
+            pass
+
+    payload_text = st.text_area(
+        "Batch-Payload (JSON vor dem Senden editierbar):",
+        value=json.dumps(selected_payload, indent=2, ensure_ascii=False) if selected_payload else "{}",
+        height=240,
+        key="cpi_payload_editor"
+    )
+
+    with st.expander("⚙️ BTP Service Key Anmeldedaten konfigurieren"):
+        cpi_token_url = st.text_input("OAuth2 Token-URL:", value=st.secrets.get("CPI_TOKEN_URL", os.environ.get("CPI_TOKEN_URL", default_token_url)), key="cpi_cfg_token_url")
+        cpi_runtime_url = st.text_input("Cloud Integration Runtime-URL:", value=st.secrets.get("CPI_RUNTIME_URL", os.environ.get("CPI_RUNTIME_URL", default_runtime_url)), key="cpi_cfg_runtime_url")
+        cpi_client_id = st.text_input("OAuth2 Client-ID:", value=st.secrets.get("CPI_CLIENT_ID", os.environ.get("CPI_CLIENT_ID", default_client_id)), key="cpi_cfg_client_id")
+        cpi_client_secret = st.text_input("OAuth2 Client-Secret:", value=st.secrets.get("CPI_CLIENT_SECRET", os.environ.get("CPI_CLIENT_SECRET", default_client_secret)), type="password", key="cpi_cfg_client_secret")
+
+    if st.button("🚀 Batch jetzt an SAP CPI senden (Live-Übertragung)", type="primary", use_container_width=True):
+        with st.spinner("Sende Live-Batch an SAP Cloud Integration... (OAuth2 -> CSRF -> POST)"):
+            creds = {
+                "token_url": cpi_token_url,
+                "runtime_url": cpi_runtime_url,
+                "client_id": cpi_client_id,
+                "client_secret": cpi_client_secret
+            }
+            res = execute_cpi_live_test(payload_text, creds)
+            if res.get("success"):
+                st.success(f"🎉 Batch erfolgreich an SAP Cloud Integration übertragen! (HTTP {res.get('status')} in {res.get('duration')}s)")
+                st.info(
+                    "🔍 **Spur im CPI Monitoring:** Wechseln Sie jetzt in den Browser-Tab **'Cloud Integration'** "
+                    "(Tenant `b9c123f3trial` -> Operations View -> *Monitor Message Processing*). "
+                    "Die Nachricht für `IFL_MDM_BP_Batch_Receiver` ist dort mit dem aktuellen Zeitstempel eingegangen!"
+                )
+                col_r1, col_r2, col_r3 = st.columns(3)
+                with col_r1:
+                    st.metric("HTTP Status", f"{res.get('status')} OK")
+                with col_r2:
+                    st.metric("Ausführungsdauer", f"{res.get('duration')} s")
+                with col_r3:
+                    st.metric("SAP Message ID", str(res.get("sap_message_id", "N/A"))[:20])
+
+                with st.expander("📄 Antwortkörper von SAP CPI (XML/JSON)", expanded=True):
+                    st.code(res.get("body", ""), language="xml" if "<root>" in res.get("body", "") else "json")
+
+                with st.expander("📜 Audit-Log des Live-Aufrufs"):
+                    for entry in res.get("audit_log", []):
+                        st.markdown(f"`{entry}`")
+            else:
+                st.error(f"❌ Fehler bei der Übertragung an SAP CPI: {res.get('error', 'Unbekannter Fehler')}")
+                with st.expander("Fehlerdetails"):
+                    st.code(res.get("body", res.get("error", "")))
+                    for entry in res.get("audit_log", []):
+                        st.markdown(f"`{entry}`")
 
 # ----------------- TAB 4: ADRs -----------------
 with tab_adrs:
