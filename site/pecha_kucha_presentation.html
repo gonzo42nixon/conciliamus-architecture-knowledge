@@ -327,12 +327,11 @@
   <div id="kiAdvisorFloatingWidget"
        style="display: none; position: fixed; bottom: 85px; right: 35px; z-index: 45; touch-action: none;"
        class="select-none transition-transform duration-200 hover:scale-105 cursor-grab">
-    <a id="kiAdvisorLink"
-       href="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/"
-       target="_blank"
-       rel="noopener noreferrer"
+    <button id="kiAdvisorLink"
+       type="button"
+       aria-label="KI-Advisor öffnen"
        title="KI-Advisor • Klicken zum Öffnen • Ziehen zum Verschieben"
-       class="block relative group">
+       class="block relative group bg-transparent border-0 p-0 cursor-pointer">
       
       <!-- Icon Image (Raw cut-out, no grey circle, large & crisp with drop-shadow) -->
       <img id="kiAdvisorImg"
@@ -349,8 +348,28 @@
         <span class="text-[10px] text-slate-400 font-normal ml-0.5">(ziehen)</span>
         <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-sky-300 ml-0.5"></i>
       </span>
-    </a>
+    </button>
   </div>
+
+  <!-- KI-Advisor Drawer -->
+  <div id="kiAdvisorBackdrop" class="fixed inset-0 bg-slate-950/50 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-200"></div>
+  <aside id="kiAdvisorDrawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-[760px] bg-slate-950 border-l border-slate-800 shadow-2xl transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
+    <div class="flex items-center justify-between px-4 py-3 border-b border-slate-800 bg-slate-900/95 shrink-0">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-300 flex items-center justify-center shadow-inner text-slate-950 font-bold text-sm">AI</div>
+        <div>
+          <div class="text-sm font-bold text-white">KI-Advisor</div>
+          <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400">same-tab assistant</div>
+        </div>
+      </div>
+      <button id="closeKiAdvisorDrawer" type="button" aria-label="KI-Advisor schließen" class="w-9 h-9 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+    <div class="flex-1 min-h-0 bg-slate-950">
+      <iframe id="kiAdvisorFrame" title="KI-Advisor" src="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/" class="w-full h-full border-0 bg-slate-950"></iframe>
+    </div>
+  </aside>
 
 </div><!-- /pechaProtectedContent -->
 
@@ -4958,12 +4977,38 @@ function updateDigestInspector(termKey) {
     // KI-ADVISOR FLOATING & DRAGGABLE WIDGET (Slides 17-20)
     // ========================================================
     const kiWidget = document.getElementById('kiAdvisorFloatingWidget');
+    const kiAdvisorDrawer = document.getElementById('kiAdvisorDrawer');
+    const kiAdvisorBackdrop = document.getElementById('kiAdvisorBackdrop');
+    const kiAdvisorFrame = document.getElementById('kiAdvisorFrame');
+    const closeKiAdvisorDrawerBtn = document.getElementById('closeKiAdvisorDrawer');
     let isWidgetDragging = false;
     let widgetDragStartX = 0;
     let widgetDragStartY = 0;
     let widgetInitialLeft = 0;
     let widgetInitialTop = 0;
     let hasMovedSignificantly = false;
+
+    function openKiAdvisorDrawer() {
+      if (!kiAdvisorDrawer || !kiAdvisorBackdrop) return;
+      if (kiAdvisorFrame) {
+        const src = kiAdvisorFrame.getAttribute('src');
+        if (src) {
+          kiAdvisorFrame.setAttribute('src', src);
+        }
+      }
+      kiAdvisorBackdrop.classList.remove('opacity-0', 'pointer-events-none');
+      kiAdvisorBackdrop.classList.add('opacity-100');
+      kiAdvisorDrawer.classList.remove('translate-x-full');
+      kiAdvisorDrawer.classList.add('translate-x-0');
+    }
+
+    function closeKiAdvisorDrawer() {
+      if (!kiAdvisorDrawer || !kiAdvisorBackdrop) return;
+      kiAdvisorDrawer.classList.remove('translate-x-0');
+      kiAdvisorDrawer.classList.add('translate-x-full');
+      kiAdvisorBackdrop.classList.add('opacity-0', 'pointer-events-none');
+      kiAdvisorBackdrop.classList.remove('opacity-100');
+    }
 
     function initKiAdvisorDraggable() {
       if (!kiWidget) return;
@@ -5092,9 +5137,26 @@ function updateDigestInspector(termKey) {
             e.preventDefault();
             e.stopPropagation();
             hasMovedSignificantly = false;
+            return;
           }
+          e.preventDefault();
+          openKiAdvisorDrawer();
         });
       }
+
+      if (kiAdvisorBackdrop) {
+        kiAdvisorBackdrop.addEventListener('click', closeKiAdvisorDrawer);
+      }
+
+      if (closeKiAdvisorDrawerBtn) {
+        closeKiAdvisorDrawerBtn.addEventListener('click', closeKiAdvisorDrawer);
+      }
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && kiAdvisorDrawer && kiAdvisorDrawer.classList.contains('translate-x-0')) {
+          closeKiAdvisorDrawer();
+        }
+      });
     }
 
     function updateKiAdvisorVisibility(index) {
