@@ -44,7 +44,7 @@ relations:
 | **16** | Tooling | **Der Fiori-Lookalike Test-Runner** | Single-Viewport Web-App im authentischen SAP Fiori Horizon Look |
 | **17** | Innovation | **Generative AI im SAP-Ökosystem** | Google OKF v0.2 & Gemini 3.6 Flash: Das Digital Brain des Architekten |
 | **18** | Fit | **Mehrwert für Conciliamus & Dieter Rüffler** | Drei Säulen für den Teamerfolg: Architektur-Exzellenz, Methodenkompetenz, Innovationskraft |
-| **19** | Glossar | **Das Enterprise Acronym Digest (147 Begriffe)** | Vom SAP-Sprech zu solider Informatik: 147 Schlüsselbegriffe (48 SAP-Module & Transaktionen, 24 HTTP Statuscodes & Verben, XML-Standards, Web-APIs und Frontier AI) von 200 bis YAML alphabetisch entschlüsselt mit interaktivem Inspector & Orange-Highlighter |
+| **19** | Glossar | **Das Enterprise Acronym Digest (166 Begriffe)** | Vom SAP-Sprech zu solider Informatik: 166 Schlüsselbegriffe (19 historische SAP- & KI-Meilensteine von 1950 bis 2026, 55 SAP-Module & Transaktionen, 24 HTTP-Codes, XML- & Webstandards) alphabetisch entschlüsselt mit interaktivem Inspector & Orange-Highlighter |
 | **20** | Finale | **Überleitung in die Live-Demo** | Fragen, Fachgespräch & Live-Ausführung auf der BTP Cloud Integration |
 
 ---
@@ -195,11 +195,11 @@ relations:
 
 ---
 
-### Folie 19: Das Enterprise Acronym Digest (147 Begriffe)
-* **Visuelles Motiv:** Großzügig dimensioniertes Acronym-Tableau: Fester 128px Live-Inspector (`#digestInspector`, garantiert 0px Layout-Jumping) oben mit Gegenüberstellung *„SAP-Sprech vs. Informatik-Realität“* (z.B. `XSUAA` ➔ Extended OAuth 2.0 Auth Server mit signierten JWT-Claims, `SM59` ➔ RFC & HTTP Destinationen, `SICF` ➔ HTTP Service Tree, `IDoc`/`BAPI`/`ALE` ➔ Klassische SAP-Integrationsbausteine, `201`/`404`/`502` ➔ RFC 9110 HTTP Statuscodes, `Claude`/`Gemini`/`Grok` ➔ Frontier AI) und alphabetisch sortiertem 13-Spalten-Grid aus 147 interaktiven Pills mit Mouse-Hover/Click-Inspektion (aktive Pill in markantem Orange `#f97316` mit schwarzer Schrift) und Kategorie-Filtertabs (`[Alle (147)]`, `[SAP & Module (48)]`, `[HTTP (24)]`, `[AI & Frontier (24)]`, `[XML & Schemas (14)]`, `[Web & Cloud (58)]`, `[Architektur & QS (20)]`).
-* **Kernbotschaft:** Vom Marketing- und SAP-Sprech zu solider, transparenter Informatik – 147 Schlüsselbegriffe der Enterprise-Architektur (inklusive 48 SAP-Modulen, BAPIs und Transaktionen, 24 HTTP Statuscodes und Verben, Kern-XML-Technologien, moderner Webstandards und führender Frontier-KIs) entschlüsselt.
+### Folie 19: Das Enterprise Acronym Digest (166 Begriffe & Meilensteine)
+* **Visuelles Motiv:** Großzügig dimensioniertes Acronym-Tableau: Fester 128px Live-Inspector (`#digestInspector`, garantiert 0px Layout-Jumping) oben mit Gegenüberstellung *„SAP-Sprech vs. Informatik-Realität“* (z.B. `XSUAA` ➔ Extended OAuth 2.0 Auth Server mit signierten JWT-Claims, `1972 SAP R/1` bis `2020 SAP BTP` ➔ SAP-Evolutionsstufen, `1950 Turing Test` bis `2017 Attention is all you need` ➔ KI-Durchbrüche, `SM59` ➔ RFC/HTTP Destinationen, `Claude`/`Gemini`/`Grok` ➔ Frontier AI) und geräumigem, vertikal unbegrenztem Grid aus 166 interaktiven Pills mit ergonomischer Mindesthöhe (34px) und Mouse-Hover/Click-Inspektion (aktive Pill in markantem Orange `#f97316` mit schwarzer Schrift) und Kategorie-Filtertabs (`[Alle (166)]`, `[Meilensteine (19)]`, `[SAP & Module (55)]`, `[HTTP (24)]`, `[AI & Frontier (36)]`, `[XML & Schemas (16)]`, `[Web & Cloud (58)]`).
+* **Kernbotschaft:** Vom Marketing- und SAP-Sprech zu solider, transparenter Informatik – 166 Schlüsselbegriffe der Enterprise-Architektur (inklusive 19 historischer Meilensteine von Turing 1950 über SAP R/1 bis zu Transformers und modernem Agentic Coding) entschlüsselt.
 * **Sprechertext (20 Sek. / 53 Wörter):**
-> „In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist ein erweiterter JWT-Server, SE16N ein SQL-Viewer, und BAPIs sind RFC-Funktionsaufrufe. Dieses Digest entschlüsselt einhundertsiebenundvierzig Kernbegriffe – von klassischen Transaktionen und XML-Schemas über HTTP-Statuscodes bis hin zur generativen KI. Fahren oder filtern Sie einfach mit der Maus!“
+> „In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist ein erweiterter JWT-Server, SE16N ein SQL-Viewer, und BAPIs sind RFC-Funktionsaufrufe. Dieses Digest entschlüsselt einhundertsechsundsechzig Kernbegriffe – von Alan Turings Test über SAP R/1 bis zu ‚Attention is all you need‘. Fahren oder filtern Sie einfach mit der Maus!“
 
 ---
 
