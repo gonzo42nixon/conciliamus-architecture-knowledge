@@ -30,7 +30,7 @@ relations:
 | **02** | Intro | **Profil & Werte** | TU Berlin, ISTQB CTFL, ITIL V2 – Solide Ingenieurskunst & Cloud-Agilität |
 | **03** | Kontext | **Conciliamus & Johannesstift Diakonie** | Resiliente Stammdaten für das Rückgrat der Gesundheitswirtschaft |
 | **04** | Challenge | **Die Integrationsaufgabe** | MDM-Massenbatch trifft auf transaktionales S/4HANA OData |
-| **05** | Methodik | **BPMN 2.0 Method & Style** | Bruce Silver Standard: Selbstdokumentierend [Aktiv-Verb] + [Objekt] |
+| **05** | GitOps | **Serverless GitOps & BTP CORS-Bypass (ADR-006)** | Zero-Docker & Zero-Cost via GitHub & Streamlit Community Cloud |
 | **06** | Architektur | **Das Dual-iFlow-Paradigma** | Strikte Trennung von Ingest/Transport und fachlicher Verarbeitung |
 | **07** | Security | **Zero-Trust & BTP Cloud Security** | OAuth2 Client Credentials, HTTPS TLS 1.3, BTP Secure Store |
 | **08** | Governance | **End-to-End Nachvollziehbarkeit** | Durchgängige Correlation-ID vom Inbound-Header bis zum Audit-Log |
@@ -83,11 +83,11 @@ relations:
 
 ---
 
-### Folie 05: Methodik – Bruce Silver „BPMN Method & Style“
-* **Visuelles Motiv:** Buchcover Bruce Silver 2nd Edition, Schema: *[Aktiv-Verb] + [Objekt]* für Tasks, *[Zustand]* für Events, schraffierte Default-Gateways.
-* **Kernbotschaft:** Lesbare, selbstdokumentierende Integrationsflüsse statt unübersichtlicher Spaghetti-Modelle.
-* **Sprechertext (20 Sek. / 51 Wörter):**
-> „Gute Architektur beginnt bei der Notation. Ich modelliere konsequent nach Bruce Silvers BPMN 2.0 Method & Style. Jeder Schritt folgt der Sprachform ‚Aktiv-Verb plus Objekt‘ – etwa ‚Existenz prüfen‘ oder ‚Delta patchen‘. Das schafft absolute Klarheit: Entwickler, Administratoren und der Fachbereich verstehen den iFlow sofort auf den ersten Blick, ohne Handbücher wälzen zu müssen.“
+### Folie 05: Serverless GitOps & BTP CORS-Bypass (ADR-006)
+* **Visuelles Motiv:** Zweiteiliges Lösungs-Tableau: Links die automatisierte GitOps-Pipeline (`git push origin main` ➔ GitHub Webhook ➔ Streamlit Community Cloud in 20s, Zero-Docker, Zero-Cost) mit Direktverlinkung auf [ADR-006](https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/knowledge/decisions/adr-006-streamlit-cloud-agent-deployment.md); rechts die SAP BTP CORS-Bypass-Architektur (Browser-Preflight-Blockade HTTP 401 ❌ vs. serverseitige Python-Runtime HTTP 200/202 ✅).
+* **Kernbotschaft:** Zero-Docker, Zero-Cost und Lösung des BTP-CORS-Dilemmas: Architekturwissen, KI-Agent und Testwerkzeuge kontinuierlich und sicher bereitstellen.
+* **Sprechertext (20 Sek. / 52 Wörter):**
+> „Mit ADR-006 lösen wir zwei zentrale Herausforderungen: Bereitstellungsaufwand und das berüchtigte SAP BTP CORS-Dilemma. Statt teurer Kubernetes-Cluster betreiben wir unseren Architecture Advisor serverlos via Streamlit Community Cloud direkt aus GitHub. Jeder Git-Push ist in zwanzig Sekunden weltweit live – und serverseitige Python-Calls umgehen die Browser-CORS-Blockade bei BTP-Aufrufen elegant und sicher.“
 
 ---
 
