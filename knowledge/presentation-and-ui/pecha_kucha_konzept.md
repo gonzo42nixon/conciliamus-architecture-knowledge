@@ -232,11 +232,18 @@ Die Web-Präsentation (`pecha-kucha.html`) bietet eine professionelle Bühnen- u
 * **Folienübersicht (`G`):** Modaler 20-Karten-Überblick zum direkten Anspringen beliebiger Folien.
 * **Navigation:** `Space` (Pause/Fortsetzen), `←` / `→` (Vor/Zurück), `R` (Restart von Folie 01).
 * **Geschwindigkeitskontrolle:** 20 Sekunden (Standard), 15s (Schnelllauf), 30s (Übung), Manuell.
-* **KI-Advisor Draggable Widget (Folie 17–20):**
+* **KI-Advisor Same-Tab Sidecar & Draggable FAB (Folie 17–20):**
   * Großes, transparent freigestelltes Agenten-Icon (ohne graue Einfassung) am unteren rechten Rand außerhalb der Folienkarte.
   * **Frei verschiebbar (Drag & Drop):** Mit Maus oder Touchscreen beliebig über die gesamte Präsentation bewegbar (mit Viewport-Begrenzung & Doppel-Klick-Reset).
-  * Unterscheidung zwischen Verschieben und Klick: Klick öffnet direkt die Live-App des KI-Advisors (`Streamlit Cloud`), Ziehen verschiebt das Icon ohne den Link zu triggern.
-  * Hover-Tooltip mit Badge *„KI-Advisor“*.
+  * **Same-Tab Drawer Integration:** Klick öffnet den KI-Advisor direkt im rechten Bildbereich als nahtloses Sidecar-Panel (`iframe` mit Streamlit Cloud), ohne einen neuen Browser-Tab öffnen zu müssen.
+  * **100% Blickkontakt ohne Blur:** Keinerlei störende Unschärfefilter (`backdrop-blur` vollständig entfernt, transparente Projektionsebene). Die Folien, BPMN-Diagramme, Architekturtabellen und Sprechernotizen bleiben während des Chats mit dem KI-Berater absolut gestochen scharf und voll lesbar.
+  * **Frei in der Breite anpassbar (Drag-to-Resize):**
+    * Interaktiver Anfasser an der linken Kante (`cursor: ew-resize`, zentrierte Griffleiste mit Hover-/Active-Highlight) zum stufenlosen Ziehen der Breite zwischen 360px und Vollbild.
+    * Iframe Pointer-Events Sperre während des Drag-Vorgangs für verzögerungsfreies 60fps-Resizing ohne Cursor-Abreißen.
+    * Drei Ein-Klick-Schnellwahl-Presets im Header: **Kompakt (480px)**, **Standard (720px)** und **Breit (1050px)**.
+    * Lokale Speicherung der Wunschbreite im `localStorage` für konsistente Ansichten.
+    * Pin-/Fixier-Modus für paralleles, simultanes Interagieren mit Folien und KI-Berater (Schließen via `Esc`, `[X]`-Button oder FAB-Klick).
+  * Hover-Tooltip mit Badge *„KI-Advisor“* und direkter Absprung-Option in separaten Tab (`↗`).
 
 ---
 

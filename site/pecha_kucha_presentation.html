@@ -352,20 +352,47 @@
   </div>
 
   <!-- KI-Advisor Drawer -->
-  <div id="kiAdvisorBackdrop" class="fixed inset-0 bg-slate-950/50 backdrop-blur-sm z-40 opacity-0 pointer-events-none transition-opacity duration-200"></div>
-  <aside id="kiAdvisorDrawer" class="fixed inset-y-0 right-0 z-50 w-full max-w-[760px] bg-slate-950 border-l border-slate-800 shadow-2xl transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
+  <!-- Non-blur transparent backdrop (preserves 100% visual contact to slides) -->
+  <div id="kiAdvisorBackdrop" class="fixed inset-0 bg-transparent z-40 hidden pointer-events-none transition-none"></div>
+  <aside id="kiAdvisorDrawer" style="width: 720px; max-width: 95vw;" class="fixed inset-y-0 right-0 z-50 bg-slate-950 border-l border-slate-700/80 shadow-[-15px_0_35px_rgba(0,0,0,0.6)] transform translate-x-full transition-transform duration-300 ease-out flex flex-col">
+    <!-- Drag-to-Resize Handle on Left Border (↔ Cursor, Grip Pill, Smooth Width Adjustment) -->
+    <div id="kiAdvisorResizeHandle"
+         title="Breite anpassen: Klicken und nach links/rechts ziehen"
+         class="absolute left-0 top-0 bottom-0 w-3 -translate-x-1/2 cursor-ew-resize hover:w-4 z-50 group flex items-center justify-center select-none">
+      <div class="w-1.5 h-16 rounded-full bg-slate-500 group-hover:bg-sky-400 group-active:bg-sky-300 transition-colors shadow-lg border border-slate-700"></div>
+    </div>
+
     <div class="flex items-center justify-between px-4 py-3 border-b border-slate-800 bg-slate-900/95 shrink-0">
       <div class="flex items-center gap-3">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-sky-500 to-cyan-300 flex items-center justify-center shadow-inner text-slate-950 font-bold text-sm">AI</div>
+        <div class="relative">
+          <img src="./ki_advisor_icon.png" onerror="this.src='https://lh3.googleusercontent.com/pw/AP1GczNopyl_jUGFG9Gii9MaQ1JyjPm72_iN1oLV9XlPyzkwW8HYB_Oj_hSb3D1AgGWh0bVPsTetLYwQjXvaL1I4yMyL1F06XymmtBnWpoX8SzW8eqshuNnD=s0'" alt="KI-Advisor" class="w-9 h-6 object-contain drop-shadow" />
+          <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-slate-950 animate-pulse"></span>
+        </div>
         <div>
-          <div class="text-sm font-bold text-white">KI-Advisor</div>
-          <div class="text-[10px] uppercase tracking-[0.2em] text-slate-400">same-tab assistant</div>
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-white">KI-Advisor</span>
+            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-900/60 text-purple-300 border border-purple-700/60">ADR-011</span>
+          </div>
+          <div class="text-[10px] text-slate-400">Grounded Consulting • Gemini 3.6 Flash • OKF v0.2</div>
         </div>
       </div>
-      <a href="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/" target="_blank" rel="noopener noreferrer" title="In neuem Tab öffnen ↗" class="w-9 h-9 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition mr-1"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
-      <button id="closeKiAdvisorDrawer" type="button" aria-label="KI-Advisor schließen" class="w-9 h-9 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+      <div class="flex items-center">
+        <!-- Quick width presets & Pin mode -->
+        <div class="hidden sm:flex items-center bg-slate-800/80 rounded-lg p-0.5 border border-slate-700 mr-2 text-[11px] font-medium text-slate-400">
+          <button id="kiAdvisorPinBtn" onclick="toggleKiAdvisorPin()" title="Pin-Modus: Folien bleiben interaktiv neben dem Advisor" class="px-2 py-1 rounded bg-sky-500/20 text-sky-300 hover:bg-sky-500/30 transition flex items-center gap-1">
+            <i class="fa-solid fa-thumbtack text-[10px]"></i>
+            <span id="kiAdvisorPinLabel" class="hidden md:inline">Fixiert</span>
+          </button>
+          <div class="w-px h-3 bg-slate-700 mx-1"></div>
+          <button onclick="setKiAdvisorDrawerWidth(480)" title="Schmale Ansicht (480px)" class="px-2 py-1 rounded hover:text-white hover:bg-slate-700 transition">Kompakt</button>
+          <button onclick="setKiAdvisorDrawerWidth(720)" title="Standard-Breite (720px)" class="px-2 py-1 rounded hover:text-white hover:bg-slate-700 transition">Standard</button>
+          <button onclick="setKiAdvisorDrawerWidth(1050)" title="Breite Ansicht (1050px)" class="px-2 py-1 rounded hover:text-white hover:bg-slate-700 transition">Breit</button>
+        </div>
+        <a href="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/" target="_blank" rel="noopener noreferrer" title="In neuem Tab öffnen ↗" class="w-9 h-9 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition mr-1"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+        <button id="closeKiAdvisorDrawer" type="button" aria-label="KI-Advisor schließen" class="w-9 h-9 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
     </div>
     <div class="flex-1 min-h-0 bg-slate-950">
       <iframe id="kiAdvisorFrame" title="KI-Advisor" src="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/?embed=true" class="w-full h-full border-0 bg-slate-950"></iframe>
@@ -827,6 +854,7 @@
       renderSlide(0);
       updateTotalTimeDisplay();
       initKiAdvisorDraggable();
+      initKiAdvisorDrawerResize();
 
       // Keyboard listener
       window.addEventListener('keydown', (e) => {
@@ -4829,6 +4857,7 @@ function updateDigestInspector(termKey) {
         totalElapsedTime++;
         updateTotalTimeDisplay();
       initKiAdvisorDraggable();
+      initKiAdvisorDrawerResize();
 
         if (remainingTime <= 0) {
           if (currentSlideIndex < SLIDES.length - 1) {
@@ -4873,6 +4902,7 @@ function updateDigestInspector(termKey) {
       totalElapsedTime = 0;
       updateTotalTimeDisplay();
       initKiAdvisorDraggable();
+      initKiAdvisorDrawerResize();
       renderSlide(0);
     }
 
@@ -4989,26 +5019,146 @@ function updateDigestInspector(termKey) {
     let widgetInitialTop = 0;
     let hasMovedSignificantly = false;
 
-    function openKiAdvisorDrawer() {
-      if (!kiAdvisorDrawer || !kiAdvisorBackdrop) return;
-      if (kiAdvisorFrame) {
-        const src = kiAdvisorFrame.getAttribute('src');
-        if (src) {
-          kiAdvisorFrame.setAttribute('src', src);
+    let isKiAdvisorPinned = true; // Pin mode: slides remain 100% interactive alongside drawer
+
+    function toggleKiAdvisorPin() {
+      isKiAdvisorPinned = !isKiAdvisorPinned;
+      updateKiAdvisorPinState();
+    }
+
+    function updateKiAdvisorPinState() {
+      const pinBtn = document.getElementById('kiAdvisorPinBtn');
+      const pinLabel = document.getElementById('kiAdvisorPinLabel');
+      const backdrop = document.getElementById('kiAdvisorBackdrop');
+      if (isKiAdvisorPinned) {
+        if (pinBtn) pinBtn.className = 'px-2 py-1 rounded bg-sky-500/20 text-sky-300 hover:bg-sky-500/30 transition flex items-center gap-1';
+        if (pinLabel) pinLabel.textContent = 'Fixiert';
+        if (backdrop) {
+          backdrop.classList.add('pointer-events-none');
+          backdrop.classList.remove('pointer-events-auto');
+        }
+      } else {
+        if (pinBtn) pinBtn.className = 'px-2 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-700 transition flex items-center gap-1';
+        if (pinLabel) pinLabel.textContent = 'Auto-Close';
+        if (backdrop) {
+          backdrop.classList.remove('pointer-events-none');
+          backdrop.classList.add('pointer-events-auto');
         }
       }
-      kiAdvisorBackdrop.classList.remove('opacity-0', 'pointer-events-none');
-      kiAdvisorBackdrop.classList.add('opacity-100');
+    }
+
+    function openKiAdvisorDrawer() {
+      if (!kiAdvisorDrawer) return;
+      if (kiAdvisorFrame) {
+        const src = kiAdvisorFrame.getAttribute('src');
+        if (src && !src.includes('embed=true')) {
+          kiAdvisorFrame.setAttribute('src', 'https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/?embed=true');
+        }
+      }
+      if (kiAdvisorBackdrop) {
+        kiAdvisorBackdrop.classList.remove('hidden');
+        updateKiAdvisorPinState();
+      }
       kiAdvisorDrawer.classList.remove('translate-x-full');
       kiAdvisorDrawer.classList.add('translate-x-0');
     }
 
     function closeKiAdvisorDrawer() {
-      if (!kiAdvisorDrawer || !kiAdvisorBackdrop) return;
+      if (!kiAdvisorDrawer) return;
       kiAdvisorDrawer.classList.remove('translate-x-0');
       kiAdvisorDrawer.classList.add('translate-x-full');
-      kiAdvisorBackdrop.classList.add('opacity-0', 'pointer-events-none');
-      kiAdvisorBackdrop.classList.remove('opacity-100');
+      if (kiAdvisorBackdrop) {
+        kiAdvisorBackdrop.classList.add('hidden');
+      }
+    }
+
+    // ========================================================
+    // KI-ADVISOR DRAWER RESIZE ENGINE (Drag handle & Presets)
+    // ========================================================
+    let isResizingDrawer = false;
+    let drawerResizeStartX = 0;
+    let drawerResizeStartWidth = 0;
+
+    function setKiAdvisorDrawerWidth(widthPx) {
+      const drawer = document.getElementById('kiAdvisorDrawer');
+      if (!drawer) return;
+      const clamped = Math.max(360, Math.min(window.innerWidth - 50, widthPx));
+      drawer.style.width = `${clamped}px`;
+      localStorage.setItem('kiAdvisorDrawerWidth', clamped);
+    }
+
+    function initKiAdvisorDrawerResize() {
+      const handle = document.getElementById('kiAdvisorResizeHandle');
+      const drawer = document.getElementById('kiAdvisorDrawer');
+      const iframe = document.getElementById('kiAdvisorFrame');
+      if (!handle || !drawer) return;
+
+      // Restore saved width if available
+      const savedWidth = localStorage.getItem('kiAdvisorDrawerWidth');
+      if (savedWidth) {
+        setKiAdvisorDrawerWidth(parseInt(savedWidth, 10));
+      }
+
+      const startResize = (clientX) => {
+        isResizingDrawer = true;
+        drawerResizeStartX = clientX;
+        drawerResizeStartWidth = drawer.offsetWidth;
+
+        // Prevent iframe and body from stealing mouse events during fast dragging
+        if (iframe) iframe.style.pointerEvents = 'none';
+        document.body.style.userSelect = 'none';
+        document.body.style.cursor = 'ew-resize';
+        drawer.classList.remove('transition-transform');
+      };
+
+      const doResize = (clientX) => {
+        if (!isResizingDrawer) return;
+        // Dragging to the left (decreasing X) increases drawer width
+        const deltaX = drawerResizeStartX - clientX;
+        const newWidth = drawerResizeStartWidth + deltaX;
+        setKiAdvisorDrawerWidth(newWidth);
+      };
+
+      const stopResize = () => {
+        if (!isResizingDrawer) return;
+        isResizingDrawer = false;
+        if (iframe) iframe.style.pointerEvents = 'auto';
+        document.body.style.userSelect = '';
+        document.body.style.cursor = '';
+        drawer.classList.add('transition-transform');
+      };
+
+      // Mouse events
+      handle.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return;
+        startResize(e.clientX);
+        e.preventDefault();
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (isResizingDrawer) {
+          doResize(e.clientX);
+          e.preventDefault();
+        }
+      });
+
+      window.addEventListener('mouseup', stopResize);
+
+      // Touch events
+      handle.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          startResize(e.touches[0].clientX);
+        }
+      }, { passive: false });
+
+      window.addEventListener('touchmove', (e) => {
+        if (isResizingDrawer && e.touches.length === 1) {
+          doResize(e.touches[0].clientX);
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      window.addEventListener('touchend', stopResize);
     }
 
     function initKiAdvisorDraggable() {
