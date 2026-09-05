@@ -10,12 +10,15 @@ import yaml
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
 import streamlit as st
+import streamlit.components.v1 as components
 
 # Setup paths
 ROOT_DIR = Path(__file__).parent.resolve()
 KNOWLEDGE_DIR = ROOT_DIR / "knowledge"
 GRAPH_PATH = ROOT_DIR / "graph" / "knowledge-graph.json"
 MANIFEST_PATH = ROOT_DIR / "manifest" / "agent.yaml"
+PECHA_HTML_PATH = ROOT_DIR / "site" / "pecha_kucha_presentation.html"
+PECHA_KONZEPT_PATH = ROOT_DIR / "knowledge" / "presentation-and-ui" / "pecha_kucha_konzept.md"
 
 st.set_page_config(
     page_title="Conciliamus Architecture Advisor",
@@ -337,7 +340,12 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-tab_chat, tab_adrs, tab_specs = st.tabs(["💬 Architektur-Chat", "📜 Architecture Decisions (ADRs)", "📐 OpenAPI & Schemas"])
+tab_chat, tab_pecha, tab_adrs, tab_specs = st.tabs([
+    "💬 Architektur-Chat", 
+    "⏱️ Pecha Kucha (20x20)", 
+    "📜 Architecture Decisions (ADRs)", 
+    "📐 OpenAPI & Schemas"
+])
 
 # ----------------- TAB 1: CHAT -----------------
 with tab_chat:
@@ -394,7 +402,58 @@ with tab_chat:
             
             st.session_state.messages.append({"role": "assistant", "content": answer})
 
-# ----------------- TAB 2: ADRs -----------------
+# ----------------- TAB 2: PECHA KUCHA -----------------
+with tab_pecha:
+    st.markdown("### ⏱️ Pecha Kucha: MDM Business Partner Synchronisation")
+    st.markdown("""
+    **SAP Cloud Integration • Dual-iFlow Architektur • BPMN 2.0 Method & Style**  
+    * **Format:** Exakt 20 Folien × 20 Sekunden = 6 Minuten 40 Sekunden (automatischer Folienwechsel & Audio-Chime)  
+    * **Referent:** Dieter Rüffler (Dipl.-Inform. TU Berlin, ISTQB CTFL, ITIL V2)  
+    * **Zielgruppe:** Markus Engelmann & Team *Plattform & Integration*, Conciliamus GmbH (Johannesstift Diakonie gAG)
+    """)
+
+    col_btn1, col_btn2 = st.columns([1, 1])
+    pecha_html = ""
+    if PECHA_HTML_PATH.exists():
+        pecha_html = PECHA_HTML_PATH.read_text(encoding="utf-8")
+        with col_btn1:
+            st.download_button(
+                "💾 Präsentation herunterladen (HTML)",
+                pecha_html,
+                file_name="pecha_kucha_presentation.html",
+                mime="text/html",
+                use_container_width=True
+            )
+    with col_btn2:
+        st.link_button(
+            "📂 Quellcode auf GitHub ansehen",
+            "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/site/pecha_kucha_presentation.html",
+            use_container_width=True
+        )
+
+    # Embedded Interactive Presentation Player
+    if pecha_html:
+        st.markdown("#### 🎬 Interaktiver Präsentationsplayer")
+        st.caption("Tipp: Nutzen Sie im Player die Leertaste zum Starten/Pausieren, Pfeiltasten zum Navigieren und 'G' für das Folienraster.")
+        components.html(pecha_html, height=820, scrolling=True)
+
+    # 20 Slides Transcript & Concept
+    st.markdown("---")
+    st.markdown("#### 📖 Ablauf & 20-Sekunden-Sprechertexte aller 20 Folien")
+    if PECHA_KONZEPT_PATH.exists():
+        konzept_text = PECHA_KONZEPT_PATH.read_text(encoding="utf-8")
+        slides = re.split(r"### Folie\s+(\d+):\s+(.*?)\n", konzept_text)
+        if len(slides) > 1:
+            for i in range(1, len(slides), 3):
+                num = slides[i]
+                title = slides[i+1].strip()
+                body = slides[i+2].strip()
+                with st.expander(f"Folie {num}: {title}"):
+                    st.markdown(body)
+        else:
+            st.markdown(konzept_text)
+
+# ----------------- TAB 3: ADRs -----------------
 with tab_adrs:
     st.markdown("### 🏛️ Verifizierte Architecture Decision Records (ADRs)")
     adr_docs = [c for c in concepts if c.get("type") == "Decision Record" or "adr-" in c["id"]]
