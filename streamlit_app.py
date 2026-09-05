@@ -195,14 +195,22 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# ----------------- SECRETS HELPER -----------------
+def get_secret(key: str, default: str = "") -> str:
+    """Safely retrieves a secret from st.secrets, environment, or default."""
+    try:
+        if hasattr(st, "secrets"):
+            val = st.secrets.get(key)
+            if val is not None:
+                return str(val)
+    except Exception:
+        pass
+    return os.environ.get(key, default)
+
 # ----------------- ACCESS PROTECTION GATE -----------------
 def check_password() -> bool:
     """Simple password protection gate using Streamlit secrets, env or default."""
-    configured_pwd = "conciliamus2026"
-    try:
-        configured_pwd = st.secrets.get("APP_PASSWORD", os.environ.get("APP_PASSWORD", "conciliamus2026"))
-    except Exception:
-        configured_pwd = os.environ.get("APP_PASSWORD", "conciliamus2026")
+    configured_pwd = get_secret("APP_PASSWORD", "conciliamus2026")
 
     def password_entered():
         if st.session_state.get("password_input") == configured_pwd:
@@ -242,8 +250,23 @@ if not check_password():
     st.stop()
 
 # Load Knowledge Base
+def get_knowledge_mtime() -> float:
+    mtime = 0.0
+    if KNOWLEDGE_DIR.exists():
+        for file_path in KNOWLEDGE_DIR.rglob("*.md"):
+            try:
+                mtime = max(mtime, file_path.stat().st_mtime)
+            except Exception:
+                pass
+    if GRAPH_PATH.exists():
+        try:
+            mtime = max(mtime, GRAPH_PATH.stat().st_mtime)
+        except Exception:
+            pass
+    return mtime
+
 @st.cache_resource
-def load_knowledge_base() -> Tuple[List[Dict[str, Any]], Dict[str, Any], Dict[str, Any]]:
+def load_knowledge_base(mtime_key: float) -> Tuple[List[Dict[str, Any]], Dict[str, Any], Dict[str, Any]]:
     concepts = []
     frontmatter_re = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
     
@@ -288,7 +311,7 @@ def load_knowledge_base() -> Tuple[List[Dict[str, Any]], Dict[str, Any], Dict[st
 
     return concepts, graph, manifest
 
-concepts, graph, manifest = load_knowledge_base()
+concepts, graph, manifest = load_knowledge_base(get_knowledge_mtime())
 
 # Retrieve top relevant context documents
 def retrieve_relevant_docs(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
@@ -327,7 +350,7 @@ Aufgabe: {purpose}
 
 Verbindliche Richtlinien:
 1. Beantworte alle Fragen strikt auf Basis der beigefügten Dokumente aus dem Google Open Knowledge Format (OKF v0.2) Wissensbündel.
-2. Zitiere konkrete Architecture Decision Records (z.B. [ADR-001], [ADR-002], [ADR-003], [ADR-004], [ADR-005]) und Konzeptdateien.
+2. Zitiere konkrete Architecture Decision Records (z.B. [ADR-001] bis [ADR-006]) und Konzeptdateien.
 3. Wenn Diagramme den Sachverhalt verdeutlichen, formatiere sie als Mermaid-Codeblöcke (`mermaid`).
 4. Betone stets Idempotenz, Entkopplung (Dual-iFlow), Bruce Silver BPMN 2.0 Method & Style Nomenklatur und Resilienz.
 5. Wenn eine Information im Wissensbündel nicht enthalten ist, weise transparent darauf hin, statt zu spekulieren.
@@ -411,14 +434,7 @@ BENUTZERFRAGE:
 with st.sidebar:
     st.markdown("### 🔑 Google AI Studio")
     
-    default_key = ""
-    try:
-        default_key = st.secrets.get("GEMINI_API_KEY", "")
-    except Exception:
-        pass
-    if not default_key:
-        default_key = os.environ.get("GEMINI_API_KEY", "")
-
+    default_key = get_secret("GEMINI_API_KEY", "")
     api_key = st.text_input(
         "Gemini API-Key:",
         type="password",
@@ -451,13 +467,18 @@ with st.sidebar:
         "Warum ProcessDirect statt Message Queues (ADR-002)?",
         "Wie ist die OData-Existenzprüfung und das Routing aufgebaut?",
         "Welche Resilienz-Strategie gilt für HTTP 405 Sandbox-Fehler?",
-        "Was definiert ADR-005 für die Single-Viewport Fiori UI?"
+        "Was definiert ADR-005 für die Single-Viewport Fiori UI?",
+        "Was besagt ADR-006 zum serverlosen Streamlit- & GitOps-Deployment?"
     ]
     for sq in sample_queries:
         if st.button(sq, use_container_width=True):
             st.session_state.current_prompt = sq
 
     st.markdown("---")
+    if st.button("🔄 Wissensbasis neu laden", use_container_width=True):
+        st.cache_resource.clear()
+        st.rerun()
+
     if st.button("🚪 Abmelden", use_container_width=True):
         st.session_state["password_correct"] = False
         st.rerun()
@@ -742,10 +763,10 @@ with tab_runner:
     )
 
     with st.expander("⚙️ BTP Service Key Anmeldedaten konfigurieren"):
-        cpi_token_url = st.text_input("OAuth2 Token-URL:", value=st.secrets.get("CPI_TOKEN_URL", os.environ.get("CPI_TOKEN_URL", default_token_url)), key="cpi_cfg_token_url")
-        cpi_runtime_url = st.text_input("Cloud Integration Runtime-URL:", value=st.secrets.get("CPI_RUNTIME_URL", os.environ.get("CPI_RUNTIME_URL", default_runtime_url)), key="cpi_cfg_runtime_url")
-        cpi_client_id = st.text_input("OAuth2 Client-ID:", value=st.secrets.get("CPI_CLIENT_ID", os.environ.get("CPI_CLIENT_ID", default_client_id)), key="cpi_cfg_client_id")
-        cpi_client_secret = st.text_input("OAuth2 Client-Secret:", value=st.secrets.get("CPI_CLIENT_SECRET", os.environ.get("CPI_CLIENT_SECRET", default_client_secret)), type="password", key="cpi_cfg_client_secret")
+        cpi_token_url = st.text_input("OAuth2 Token-URL:", value=get_secret("CPI_TOKEN_URL", default_token_url), key="cpi_cfg_token_url")
+        cpi_runtime_url = st.text_input("Cloud Integration Runtime-URL:", value=get_secret("CPI_RUNTIME_URL", default_runtime_url), key="cpi_cfg_runtime_url")
+        cpi_client_id = st.text_input("OAuth2 Client-ID:", value=get_secret("CPI_CLIENT_ID", default_client_id), key="cpi_cfg_client_id")
+        cpi_client_secret = st.text_input("OAuth2 Client-Secret:", value=get_secret("CPI_CLIENT_SECRET", default_client_secret), type="password", key="cpi_cfg_client_secret")
 
     if st.button("🚀 Batch jetzt an SAP CPI senden (Live-Übertragung)", type="primary", use_container_width=True):
         with st.spinner("Sende Live-Batch an SAP Cloud Integration... (OAuth2 -> CSRF -> POST)"):
@@ -786,7 +807,14 @@ with tab_runner:
 
 # ----------------- TAB 4: ADRs -----------------
 with tab_adrs:
-    st.markdown("### 🏛️ Verifizierte Architecture Decision Records (ADRs)")
+    col_adr_title, col_adr_btn = st.columns([5, 1])
+    with col_adr_title:
+        st.markdown("### 🏛️ Verifizierte Architecture Decision Records (ADRs)")
+    with col_adr_btn:
+        if st.button("🔄 Aktualisieren", key="btn_refresh_adrs", use_container_width=True):
+            st.cache_resource.clear()
+            st.rerun()
+
     adr_docs = [c for c in concepts if c.get("type") == "Decision Record" or "adr-" in c["id"]]
     adr_docs.sort(key=lambda x: x["id"])
 
