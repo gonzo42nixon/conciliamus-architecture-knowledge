@@ -126,7 +126,7 @@ relations:
 ---
 
 ### Folie 09: ADR-005: iFlow 2 – Item Processor & ProcessDirect
-* **Visuelles Motiv:** `IFL_MDM_BP_Item_Processor` angebunden über ProcessDirect In-Memory Bus. Latenzfreier Datenaustausch ohne Message Queue Lizenzkosten nach ADR-005.
+* **Visuelles Motiv:** Reales iFlow-Diagramm (`IFL_MDM_BP_Item_Processor`, 3070x1200) angebunden über ProcessDirect In-Memory Bus. Latenzfreier Datenaustausch ohne Message Queue Lizenzkosten nach ADR-005.
 * **Kernbotschaft:** Kosteneffizienz und maximale Geschwindigkeit durch native In-Memory Adapter.
 * **Sprechertext (20 Sek. / 40 Wörter):**
 > „Der zweite iFlow, IFL_MDM_BP_Item_Processor, steuert die Interaktion mit SAP S/4HANA. Er empfängt die vereinzelten Nachrichten über den ProcessDirect-Adapter – latenzfrei im Speicher, ohne teure JMS-Queue-Lizenzen nach ADR-005. Jeder Datensatz wird isoliert transformiert, sodass ein fehlerhafter Partner niemals gesunde Datensätze beeinträchtigt.“
