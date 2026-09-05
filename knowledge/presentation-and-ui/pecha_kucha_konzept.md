@@ -59,11 +59,11 @@ relations:
 
 ---
 
-### Folie 02: Profil & Ingenieurskunst
-* **Visuelles Motiv:** Zeitstrahl TU Berlin Diplom-Informatik, 20+ Jahre SAP PI/PO & BTP, Badges: *ISTQB Certified Tester*, *ITIL V2 Service Manager*.
-* **Kernbotschaft:** Solide theoretische Informatik-Grundlagen gepaart mit kompromisslosem Qualitätsbewusstsein im Betrieb.
-* **Sprechertext (20 Sek. / 52 Wörter):**
-> „Als Diplom-Informatiker der TU Berlin habe ich Schnittstellen von den ersten EDIFACT- und XI-Tagen bis zur heutigen Cloud Integration begleitet. Mit meinen Zertifizierungen in ISTQB und ITIL lege ich höchsten Wert auf strukturierte Testbarkeit und betriebliche Stabilität. Eine Schnittstelle ist erst dann fertig, wenn sie auch im Fehlerfall vollkommen transparent und selbsterklärend reagiert.“
+### Folie 02: Profil, Ingenieurskunst & Zertifizierungen
+* **Visuelles Motiv:** 4-teiliges Wappen- & Badge-Tableau: TU Berlin Diplom-Informatiker (2005), originale Credly-Badges für *SAP Certified Application Associate - Cloud Platform Integration*, *SAP Certified Technology Associate - Process Orchestration 7.50* und *AWS Certified Cloud Practitioner*, flankiert von ISTQB CTFL & ITIL V2 sowie offiziellem Credly-Verifikationslink ([credly.com/users/dieter-ruffler](https://www.credly.com/users/dieter-ruffler)).
+* **Kernbotschaft:** Solide theoretische Informatik-Grundlagen gepaart mit offiziell verifizierten Zertifizierungen in Cloud Integration, Process Orchestration und Qualitätsmanagement.
+* **Sprechertext (20 Sek. / 53 Wörter):**
+> „Als Diplom-Informatiker der TU Berlin und zertifizierter SAP Cloud Platform Integration sowie Process Orchestration Specialist verbinde ich fundierte theoretische Grundlagen mit moderner Cloud-Praxis. Zusammen mit meinen Zertifizierungen in ISTQB CTFL, ITIL V2 und AWS bürge ich für kompromisslose Testdisziplin und betriebliche Stabilität – alles transparent auf Credly verifiziert.“
 
 ---
 
