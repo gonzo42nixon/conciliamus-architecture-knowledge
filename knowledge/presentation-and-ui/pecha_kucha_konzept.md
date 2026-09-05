@@ -118,7 +118,7 @@ relations:
 ---
 
 ### Folie 08: ADR-004: iFlow 1 – Ingest & Streaming Splitter
-* **Visuelles Motiv:** BPMN 2.0 Inbound-Pipeline (`IFL_MDM_BP_Batch_Receiver`) mit selbstdokumentierender Bruce Silver Nomenklatur. Sofortiges HTTP 202 Accepted, Iterating Streaming Splitter mit flachem Speicherprofil nach ADR-004.
+* **Visuelles Motiv:** Reales iFlow-Diagramm (`IFL_MDM_BP_Batch_Receiver`, 1535x807) mit BPMN 2.0 Ingest, selbstdokumentierender Bruce Silver Nomenklatur, sofortigem HTTP 202 Quittieren und Iterating Streaming Splitter mit flachem Speicherprofil nach ADR-004.
 * **Kernbotschaft:** Schonen der BTP-Ressourcen: Konstante Speichernutzung auch bei sehr großen Inbound-Payloads.
 * **Sprechertext (20 Sek. / 48 Wörter):**
 > „Hier seht ihr unseren Ingest-Flow nach ADR-004 mit selbstdokumentierender Bruce Silver Nomenklatur. Er nimmt den JSON-Batch entgegen, validiert den Header und quittiert sofort mit HTTP 202 Accepted. Anschließend zerlegt ein Streaming Iterating Splitter den Batch speicherschonend – so bleibt der RAM-Verbrauch des BTP-Tenants selbst bei Lastspitzen völlig flach.“
