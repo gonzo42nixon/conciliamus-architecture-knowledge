@@ -59,6 +59,52 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# ----------------- ACCESS PROTECTION GATE -----------------
+def check_password() -> bool:
+    """Simple password protection gate using Streamlit secrets, env or default."""
+    configured_pwd = "conciliamus2026"
+    try:
+        configured_pwd = st.secrets.get("APP_PASSWORD", os.environ.get("APP_PASSWORD", "conciliamus2026"))
+    except Exception:
+        configured_pwd = os.environ.get("APP_PASSWORD", "conciliamus2026")
+
+    def password_entered():
+        if st.session_state.get("password_input") == configured_pwd:
+            st.session_state["password_correct"] = True
+            if "password_input" in st.session_state:
+                del st.session_state["password_input"]
+        else:
+            st.session_state["password_correct"] = False
+
+    if st.session_state.get("password_correct", False):
+        return True
+
+    # Show login screen
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown('<div class="main-header" style="text-align:center; margin-top: 3rem;">🔒 Geschützter Bereich</div>', unsafe_allow_html=True)
+        st.markdown('<div class="sub-header" style="text-align:center;">Conciliamus Architecture Advisor</div>', unsafe_allow_html=True)
+        st.info("Bitte geben Sie das Zugangspasswort ein, um den Berater zu entsperren.")
+        
+        st.text_input(
+            "Passwort:",
+            type="password",
+            on_change=password_entered,
+            key="password_input",
+            placeholder="Zugangspasswort eingeben..."
+        )
+        if st.button("Anmelden", use_container_width=True):
+            password_entered()
+            st.rerun()
+
+        if "password_correct" in st.session_state and not st.session_state["password_correct"]:
+            st.error("❌ Falsches Passwort. Bitte überprüfen Sie Ihre Eingabe.")
+
+    return False
+
+if not check_password():
+    st.stop()
+
 # Load Knowledge Base
 @st.cache_resource
 def load_knowledge_base() -> Tuple[List[Dict[str, Any]], Dict[str, Any], Dict[str, Any]]:
@@ -274,6 +320,11 @@ with st.sidebar:
     for sq in sample_queries:
         if st.button(sq, use_container_width=True):
             st.session_state.current_prompt = sq
+
+    st.markdown("---")
+    if st.button("🚪 Abmelden", use_container_width=True):
+        st.session_state["password_correct"] = False
+        st.rerun()
 
 # ----------------- MAIN VIEW -----------------
 st.markdown('<div class="main-header">🏛️ Conciliamus Architecture Advisor</div>', unsafe_allow_html=True)
