@@ -191,6 +191,7 @@ relations:
 
 ### Folie 17: ADR-011: Generative AI & Knowledge Graph
 * **Visuelles Motiv:** Google Open Knowledge Format v0.2 Knowledge Graph (33 Konzepte, 82 Kanten), gekoppelt an Gemini 3.6 Flash. Quellenbasierte Architekturberatung ohne Halluzinationen nach ADR-011.
+* **Interaktives Feature (FAB):** Einführung des **KI-Advisor Floating Action Buttons (FAB)** am unteren rechten Rand (aktiv ab Folie 17 bis Folie 20). Beim Überfahren mit der Maus (Hover) gleitet der Tooltip *„KI-Advisor“* sanft ein; ein Klick öffnet die Live-App der Architektur-Wissensbasis.
 * **Kernbotschaft:** Zukunftsfähiges Architektur-Knowledge-Management durch kanonische Wissensgraphen und Grounded Generative AI.
 * **Sprechertext (20 Sek. / 48 Wörter):**
 > „Als zertifizierter AI Engineer denke ich Integration mit euch weiter. In ADR-011 definieren wir das Google Open Knowledge Format als kanonischen Standard: 33 Konzepte und 82 Kanten verknüpfen Architektur, Tests und ADRs. Unser KI-Advisor auf Basis von Gemini 3.6 Flash beantwortet jede eurer Fragen quellenbasiert und ohne Halluzinationen.“
@@ -198,7 +199,7 @@ relations:
 ---
 
 ### Folie 18: Mehrwert für Conciliamus & Dieter Rüffler
-* **Visuelles Motiv:** Drei Säulen des Mehrwerts: 1. Sofortige Entlastung bei der BTP- & S/4-Migration durch 20 Jahre Integrationserfahrung; 2. Höchste Qualität durch ISTQB- & ITIL-Methodik; 3. Innovationsschub durch pragmatischen GenAI-Einsatz.
+* **Visuelles Motiv:** Drei Säulen des Mehrwerts: 1. Sofortige Entlastung bei der BTP- & S/4-Migration durch 20 Jahre Integrationserfahrung; 2. Höchste Qualität durch ISTQB- & ITIL-Methodik; 3. Innovationsschub durch pragmatischen GenAI-Einsatz. *(KI-Advisor FAB weiterhin präsent)*
 * **Kernbotschaft:** Ganzheitliche Verstärkung für das Plattform- und Integrationsteam der Conciliamus GmbH.
 * **Sprechertext (20 Sek. / 46 Wörter):**
 > „Was bringe ich für Conciliamus mit? Erstens: Sofortige Entlastung bei der BTP- und S/4HANA-Migration durch zwanzig Jahre Schnittstellenerfahrung. Zweitens: Höchste Qualität durch ISTQB- und ITIL-Methodik. Und drittens: Einen Innovationsschub durch den gezielten Einsatz von generativer KI. Ich freue mich darauf, dieses Wissen in euer Team einzubringen.“
@@ -206,7 +207,7 @@ relations:
 ---
 
 ### Folie 19: Das Enterprise Acronym Digest (200 Meilensteine, Frameworks & Standards)
-* **Visuelles Motiv:** Symmetrisches 20×10-Tableau (20 Zeilen à 10 Spalten = exakt 200 Pills, passend zur Pecha-Kucha-Dramaturgie aus 20 Folien, vollständig scrollbar-frei mit 0px Layout-Jumping): Fester 128px Live-Inspector oben mit Gegenüberstellung *„SAP-Sprech vs. Informatik-Realität“*, dynamischer Impact-Badge und Architektur-Layer-Badge. 4-Wege-Steuerung (Chronologisch, Alphabetisch, Weltweiter Impact, 7 Architektur-Layer).
+* **Visuelles Motiv:** Symmetrisches 20×10-Tableau (20 Zeilen à 10 Spalten = exakt 200 Pills, passend zur Pecha-Kucha-Dramaturgie aus 20 Folien, vollständig scrollbar-frei mit 0px Layout-Jumping): Fester 128px Live-Inspector oben mit Gegenüberstellung *„SAP-Sprech vs. Informatik-Realität“*, dynamischer Impact-Badge und Architektur-Layer-Badge. 4-Wege-Steuerung (Chronologisch, Alphabetisch, Weltweiter Impact, 7 Architektur-Layer). *(KI-Advisor FAB weiterhin präsent)*
 * **Kernbotschaft:** Tiefes technologisches Verständnis und historische Einordnung aller relevanten Enterprise- und KI-Standards.
 * **Sprechertext (20 Sek. / 50 Wörter):**
 > „In zwanzig Jahren SAP-Integration habe ich gelernt: SAP benennt fundamentale Informatik gern mit eigenen Akronymen um. Dieses Digest entschlüsselt zweihundert Meilensteine – von der Industrialisierung über Bletchley Park und Ethernet bis zu NIS-2 und AGI 2030. Sortiert nach Zeitstrahl, Alphabet, weltweitem Impact oder Architektur-Stack. Fahrt einfach mit der Maus darüber!“
@@ -214,7 +215,7 @@ relations:
 ---
 
 ### Folie 20: Diskussion & Live-Demo
-* **Visuelles Motiv:** Grand Finale Cockpit (06:40 Punktlandung): Klickbare Buttons zum Fiori Test-Runner und den Sprechertexten, Einladung an Markus Engelmann & Team Conciliamus zum Fachgespräch.
+* **Visuelles Motiv:** Grand Finale Cockpit (06:40 Punktlandung): Klickbare Buttons zum Fiori Test-Runner und den Sprechertexten, Einladung an Markus Engelmann & Team Conciliamus zum Fachgespräch. *(KI-Advisor FAB als direkter Sprungpunkt zur Wissensgraph-Demo)*
 * **Kernbotschaft:** Punktgenaue Landung nach exakt 6 Minuten 40 Sekunden – nahtloser Übergang in Fragen und Live-Demo.
 * **Sprechertext (20 Sek. / 45 Wörter):**
 > „Genau sechs Minuten und vierzig Sekunden: Punktlandung! Vielen Dank für eure Aufmerksamkeit. Lasst uns jetzt keine weiteren Folien ansehen, sondern direkt live in die BTP-Integration Suite und unsere Fiori-Test-App springen. Markus, liebes Team: Die Bühne gehört euren Fragen – und ich drücke auf ‚Testsuite starten‘!“
@@ -231,12 +232,16 @@ Die Web-Präsentation (`pecha-kucha.html`) bietet eine professionelle Bühnen- u
 * **Folienübersicht (`G`):** Modaler 20-Karten-Überblick zum direkten Anspringen beliebiger Folien.
 * **Navigation:** `Space` (Pause/Fortsetzen), `←` / `→` (Vor/Zurück), `R` (Restart von Folie 01).
 * **Geschwindigkeitskontrolle:** 20 Sekunden (Standard), 15s (Schnelllauf), 30s (Übung), Manuell.
+* **KI-Advisor Floating Action Button (FAB) (Folie 17–20):**
+  * Subtiler, pulsierender Floating Action Button am unteren rechten Rand der Folienkarte.
+  * Hover-Tooltip mit Badge *„KI-Advisor“* und Verlinkung auf die interaktive Streamlit-App.
 
 ---
 
 ## Technische Referenzen & Begleitdokumente
 * **Live-App Testrunner:** [https://orcai-54321.web.app/test-runner.html](https://orcai-54321.web.app/test-runner.html)
 * **Live Pecha Kucha URL:** [https://orcai-54321.web.app/pecha-kucha.html](https://orcai-54321.web.app/pecha-kucha.html)
+* **Live KI-Advisor Streamlit App:** [https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/](https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/)
 * **SAP BTP Cockpit:** [Trial Global Account & Subaccount Section](https://account.hanatrial.ondemand.com/trial/#/globalaccount/34eec884-0c14-4a9d-a509-55a912f83aee/accountModel&//?section=SubaccountsSection&view=TilesView)
 * **SAP Integration Suite Tenant:** [Tenant b9c123f3trial Shell Home](https://b9c123f3trial.integrationsuite-trial01.cfapps.us10-001.hana.ondemand.com/shell/home)
 * **GitHub Repository:** [gonzo42nixon/Conciliamus](https://github.com/gonzo42nixon/Conciliamus)

@@ -241,10 +241,27 @@
           <!-- 20 mini dots generated via JS -->
         </div>
         <div class="font-medium text-slate-400">
-          Dieter Rüffler • 09.09.2026
+          <span id="slideAuthorFooter" class="transition-all duration-200">Dieter Rüffler • 09.09.2026</span>
         </div>
       </div>
 
+          <!-- KI-Advisor Floating Action Button (FAB) (Slides 17-20) -->
+      <div id="kiAdvisorFabContainer" class="absolute bottom-2 right-4 z-40 transition-all duration-300" style="display: none;">
+        <a id="kiAdvisorFab" href="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/" target="_blank" rel="noopener noreferrer" title="KI-Advisor" aria-label="KI-Advisor" class="group relative flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-slate-900 via-[#1d2d3e] to-purple-950 border-2 border-purple-400 hover:border-emerald-400 shadow-xl hover:shadow-purple-500/50 transition-all duration-200 hover:scale-110 active:scale-95">
+          <!-- Pulse effect -->
+          <span class="absolute -inset-0.5 rounded-full bg-gradient-to-r from-purple-500 to-emerald-500 opacity-40 group-hover:opacity-75 blur-sm transition duration-200 animate-pulse pointer-events-none"></span>
+          
+          <!-- Icon Image -->
+          <img src="https://lh3.googleusercontent.com/pw/AP1GczNopyl_jUGFG9Gii9MaQ1JyjPm72_iN1oLV9XlPyzkwW8HYB_Oj_hSb3D1AgGWh0bVPsTetLYwQjXvaL1I4yMyL1F06XymmtBnWpoX8SzW8eqshuNnD=s0" onerror="this.src='./ki_advisor_icon.png'" alt="KI-Advisor" class="w-9 h-6 object-contain drop-shadow relative z-10 transition-transform duration-200 group-hover:scale-110" />
+          
+          <!-- Hover Tooltip / Badge (Slides in on hover) -->
+          <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded-xl border border-purple-400 shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none flex items-center gap-1.5 z-50">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>KI-Advisor</span>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-purple-300 ml-0.5"></i>
+          </span>
+        </a>
+      </div>
     </div>
 
     <!-- Floating / Docked Speaker Notes Pane -->
@@ -4682,6 +4699,19 @@ function updateDigestInspector(termKey) {
 
       // Reset Slide Timer
       resetSlideTimer();
+      // KI-Advisor Floating Action Button (FAB) (Slides 17-20: index >= 16)
+      const kiFab = document.getElementById('kiAdvisorFabContainer');
+      const authorFooter = document.getElementById('slideAuthorFooter');
+      if (kiFab) {
+        if (index >= 16) {
+          kiFab.style.display = 'block';
+          if (authorFooter) authorFooter.style.marginRight = '52px';
+        } else {
+          kiFab.style.display = 'none';
+          if (authorFooter) authorFooter.style.marginRight = '0px';
+        }
+      }
+
     }
 
     function buildDots() {
