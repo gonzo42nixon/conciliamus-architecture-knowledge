@@ -412,13 +412,30 @@ with tab_pecha:
     * **Zielgruppe:** Markus Engelmann & Team *Plattform & Integration*, Conciliamus GmbH (Johannesstift Diakonie gAG)
     """)
 
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 1.8rem; border-radius: 12px; border: 1px solid #334155; margin: 1.2rem 0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem;">
+            <span style="background: #0070f2; color: white; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.85rem;">STAND-ALONE VOLLBILD</span>
+            <span style="color: #cbd5e1; font-size: 0.9rem;">Web Audio Chime • SVG Countdown-Ring • Google Auth</span>
+        </div>
+        <h2 style="color: #ffffff; margin: 0 0 0.8rem 0; font-size: 1.5rem;">🎬 Pecha Kucha 20×20 Live-Präsentation</h2>
+        <p style="color: #94a3b8; margin: 0 0 1.2rem 0; line-height: 1.5;">
+            Öffnen Sie die Präsentation direkt als eigenständige Web-Anwendung im Vollbild.
+            Dort funktioniert die <strong>Google Firebase Authentifizierung nativ und ohne iFrame-Sicherheitssperren</strong> moderner Browser.
+        </p>
+        <a href="https://orcai-54321.web.app/pecha-kucha.html" target="_blank" style="display: inline-block; background: #0070f2; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 1rem; box-shadow: 0 4px 14px rgba(0,112,242,0.4);">
+            🚀 Pecha Kucha Stand-Alone starten (Neuer Tab) ↗
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+
     col_btn1, col_btn2 = st.columns([1, 1])
     pecha_html = ""
     if PECHA_HTML_PATH.exists():
         pecha_html = PECHA_HTML_PATH.read_text(encoding="utf-8")
         with col_btn1:
             st.download_button(
-                "💾 Präsentation herunterladen (HTML)",
+                "💾 Präsentation als HTML herunterladen",
                 pecha_html,
                 file_name="pecha_kucha_presentation.html",
                 mime="text/html",
@@ -430,12 +447,6 @@ with tab_pecha:
             "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/site/pecha_kucha_presentation.html",
             use_container_width=True
         )
-
-    # Embedded Interactive Presentation Player
-    if pecha_html:
-        st.markdown("#### 🎬 Interaktiver Präsentationsplayer")
-        st.caption("Tipp: Nutzen Sie im Player die Leertaste zum Starten/Pausieren, Pfeiltasten zum Navigieren und 'G' für das Folienraster.")
-        components.html(pecha_html, height=820, scrolling=True)
 
     # 20 Slides Transcript & Concept
     st.markdown("---")
