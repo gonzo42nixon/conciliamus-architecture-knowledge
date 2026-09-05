@@ -52,7 +52,7 @@ relations:
 ## Detaillierter Ablauf & 20-Sekunden-Sprechertexte
 
 ### Folie 01: Start & Willkommen
-* **Visuelles Motiv:** Großes SAP BTP Logo, Porträt Dieter Rüffler, Titel: *„Resiliente Business Partner Synchronisation auf SAP BTP“*.
+* **Visuelles Motiv:** Hero-Card Dieter Rüffler mit verlinktem offiziellen LinkedIn-Badge ([linkedin.com/in/dieter-rueffler-05981623b](https://www.linkedin.com/in/dieter-rueffler-05981623b/)), BTP Cloud Integration Visual Node (`b9c123f3trial`), Titel: *„Resiliente Business Partner Synchronisation auf SAP BTP“*.
 * **Kernbotschaft:** Moderne Enterprise-Integration erfordert mehr als Code – sie braucht Erfahrung, Methodik und Ausfallsicherheit.
 * **Sprechertext (20 Sek. / 48 Wörter):**
 > „Guten Tag Herr Engelmann, hallo Team Conciliamus! Mein Name ist Dieter Rüffler. Ich verbinde über zwanzig Jahre gewachsene SAP-Integrationserfahrung mit den modernen Möglichkeiten der SAP Business Technology Platform. In den nächsten sechs Minuten und vierzig Sekunden zeige ich Ihnen, wie wir Stammdaten hochverfügbar, idempotent und methodisch sauber nach S/4HANA synchronisieren.“
