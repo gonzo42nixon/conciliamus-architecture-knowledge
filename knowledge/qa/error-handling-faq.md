@@ -12,7 +12,7 @@ generated:
 relations:
   - { type: references, target: /architecture/resilience-and-dead-letter.md }
   - { type: references, target: /iflows/reprocessor-iflow.md }
-  - { type: references, target: /decisions/adr-004-data-store-dlq.md }
+  - { type: references, target: /decisions/adr-008-data-store-dlq.md }
 sources:
   - id: conciliamus-arch
     resource: https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/architektur.md

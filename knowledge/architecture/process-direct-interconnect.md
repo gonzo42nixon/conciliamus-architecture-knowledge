@@ -10,7 +10,7 @@ generated:
   by: "human:dieter-rueffler"
   at: "2026-09-04T22:00:00Z"
 relations:
-  - { type: implements, target: /decisions/adr-002-process-direct.md }
+  - { type: implements, target: /decisions/adr-005-process-direct.md }
   - { type: dependsOn, target: /architecture/dual-iflow-pattern.md }
   - { type: routesTo, target: /iflows/item-processor-iflow.md }
 sources:

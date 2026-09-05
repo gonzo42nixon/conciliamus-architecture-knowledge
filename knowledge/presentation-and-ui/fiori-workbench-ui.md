@@ -10,7 +10,7 @@ generated:
   by: "human:dieter-rueffler"
   at: "2026-09-04T22:00:00Z"
 relations:
-  - { type: implements, target: /decisions/adr-005-single-viewport-fiori.md }
+  - { type: implements, target: /decisions/adr-009-single-viewport-fiori.md }
   - { type: verifies, target: /verification/live-btp-execution.md }
 sources:
   - id: test-runner-app

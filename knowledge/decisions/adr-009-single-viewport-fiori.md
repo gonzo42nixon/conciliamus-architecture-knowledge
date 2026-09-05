@@ -1,9 +1,9 @@
 ---
-id: decisions/adr-005-single-viewport-fiori
+id: decisions/adr-009-single-viewport-fiori
 type: Decision Record
-title: "ADR-005: Single-Viewport Ergonomie für die Fiori-Lookalike Workbench"
+title: "ADR-009: Single-Viewport Ergonomie für die Fiori-Lookalike Workbench"
 description: Entwicklung einer schlanken Single-Page Web-App im SAP Fiori Horizon Lookalike-Design (ohne UI5-Framework-Overhead) mit striktem 100% no-outer-scroll Layout und interaktiven aufklappbaren JSON-Pills.
-resource: btp://conciliamus/decisions/ADR-005
+resource: btp://conciliamus/decisions/ADR-009
 tags: [adr, architecture-decision, fiori-lookalike, ui-design, single-viewport, pills]
 status: accepted
 generated:
@@ -18,7 +18,7 @@ sources:
     author: "Dieter Rüffler"
 ---
 
-# ADR-005: Single-Viewport Ergonomie für die Fiori-Lookalike Workbench
+# ADR-009: Single-Viewport Ergonomie für die Fiori-Lookalike Workbench
 
 ## Status
 Akzeptiert (Accepted)

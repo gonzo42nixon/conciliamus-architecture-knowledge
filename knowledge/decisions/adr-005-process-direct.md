@@ -1,9 +1,9 @@
 ---
-id: decisions/adr-002-process-direct
+id: decisions/adr-005-process-direct
 type: Decision Record
-title: "ADR-002: ProcessDirect statt Message Queues für iFlow-Kopplung"
+title: "ADR-005: ProcessDirect statt Message Queues für iFlow-Kopplung"
 description: Nutzung des ProcessDirect-Adapters zur latenzfreien internen Kopplung ohne JMS-Ressourcenbindung.
-resource: btp://conciliamus/decisions/ADR-002
+resource: btp://conciliamus/decisions/ADR-005
 tags: [adr, architecture-decision, process-direct, jms, performance, cpi]
 status: accepted
 generated:
@@ -19,7 +19,7 @@ sources:
     author: "Dieter Rüffler"
 ---
 
-# ADR-002: ProcessDirect statt Message Queues für iFlow-Kopplung
+# ADR-005: ProcessDirect statt Message Queues für iFlow-Kopplung
 
 ## Status
 Akzeptiert (Accepted)

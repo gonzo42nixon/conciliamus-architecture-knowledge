@@ -1,9 +1,9 @@
 ---
-id: decisions/adr-006-streamlit-cloud-agent-deployment
+id: decisions/adr-010-streamlit-cloud-agent-deployment
 type: Decision Record
-title: "ADR-006: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps"
+title: "ADR-010: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps"
 description: Bereitstellung des Conciliamus AI Architecture Advisor als Zero-Docker, Zero-Cost Serverless Web-App direkt aus GitHub mit nativer SAP BTP CORS-Bypass-Architektur.
-resource: btp://conciliamus/decisions/ADR-006
+resource: btp://conciliamus/decisions/ADR-010
 tags: [adr, architecture-decision, streamlit, serverless, gitops, zero-docker, gemini, btp-cors, secrets-management]
 status: accepted
 generated:
@@ -19,7 +19,7 @@ sources:
     author: "Dieter Rüffler"
 ---
 
-# ADR-006: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps
+# ADR-010: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps
 
 ## Status
 Akzeptiert (Accepted)

@@ -30,12 +30,16 @@ Willkommen im **Google Open Knowledge Format (OKF v0.2)** Bundle der Conciliamus
 
 ## ⚖️ 3. Architecture Decision Records (`decisions/`)
 * [ADR-001: Dual-iFlow Entkopplungsmuster](/decisions/adr-001-dual-iflow-decoupling.md) – Warum kein monolithischer iFlow?
-* [ADR-002: ProcessDirect statt Message Queues](/decisions/adr-002-process-direct.md) – Latenzfreie Kopplung vs. JMS-Kosten.
-* [ADR-003: BPMN 2.0 Method & Style (Bruce Silver)](/decisions/adr-003-bpmn-method-and-style.md) – Selbstdokumentierende Nomenklatur `[Aktiv-Verb] + [Objekt]`.
-* [ADR-004: Data Store für Dead-Letter-Queue & Selektiver Replay](/decisions/adr-004-data-store-dlq.md) – Granularer Wiederanlauf fehlerhafter Datensätze.
-* [ADR-005: Single-Viewport Ergonomie für die Fiori Workbench](/decisions/adr-005-single-viewport-fiori.md) – 100% no-outer-scroll Layout-Architektur.
-* [ADR-006: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps](/decisions/adr-006-streamlit-cloud-agent-deployment.md) – Zero-Docker, Zero-Cost und Umgehung der BTP CORS-Hürde.
-* [ADR-007: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor](/decisions/adr-007-google-okf-knowledge-graph.md) – Maschinenlesbarer Wissensgraph & Zero-Hallucination Consulting mit Google Gemini.
+* [ADR-002: Zero-Trust & BTP PaaS Security Architecture](/decisions/adr-002-zero-trust-btp-security.md) – BTP als Managed PaaS, OAuth2 Client Credentials & Vault ab Sekunde Null.
+* [ADR-003: End-to-End Correlation & MPL Governance](/decisions/adr-003-end-to-end-correlation-mpl.md) – Globale Correlation-ID & Custom Header Properties im Message Processing Log.
+* [ADR-004: BPMN 2.0 Method & Style (Bruce Silver)](/decisions/adr-004-bpmn-method-and-style.md) – Selbstdokumentierende Nomenklatur `[Aktiv-Verb] + [Objekt]`.
+* [ADR-005: ProcessDirect statt Message Queues](/decisions/adr-005-process-direct.md) – Latenzfreie In-Memory Kopplung vs. JMS-Queue-Lizenzkosten.
+* [ADR-006: Idempotente Existenzprüfung & Router-Matrix](/decisions/adr-006-idempotent-existence-check.md) – OData GET SearchTerm1 vor Schreibzugriff: POST vs. PATCH Matrix.
+* [ADR-007: Two-Legged CSRF- & Cookie-Handshake](/decisions/adr-007-two-legged-csrf-handshake.md) – Zweistufiges Token- & Session-Handling für schreibende OData V2 Calls.
+* [ADR-008: Data Store für Dead-Letter-Queue & Selektiver Replay](/decisions/adr-008-data-store-dlq.md) – Granularer Wiederanlauf fehlerhafter Datensätze ohne Batch-Neustart.
+* [ADR-009: Single-Viewport Ergonomie für die Fiori Workbench](/decisions/adr-009-single-viewport-fiori.md) – 100% no-outer-scroll Layout-Architektur im Fiori Horizon Look.
+* [ADR-010: Serverless KI-Agenten-Bereitstellung via Streamlit Cloud & GitOps](/decisions/adr-010-streamlit-cloud-agent-deployment.md) – Zero-Docker, Zero-Cost und BTP CORS-Bypass.
+* [ADR-011: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor](/decisions/adr-011-google-okf-knowledge-graph.md) – Maschinenlesbarer Wissensgraph & Zero-Hallucination Consulting.
 
 ---
 

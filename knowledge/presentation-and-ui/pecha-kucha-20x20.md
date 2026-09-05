@@ -10,7 +10,7 @@ generated:
   by: "human:dieter-rueffler"
   at: "2026-09-04T22:00:00Z"
 relations:
-  - { type: references, target: /decisions/adr-003-bpmn-method-and-style.md }
+  - { type: references, target: /decisions/adr-004-bpmn-method-and-style.md }
   - { type: references, target: /verification/live-btp-execution.md }
 sources:
   - id: pecha-kucha-doc

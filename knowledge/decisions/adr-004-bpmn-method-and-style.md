@@ -1,9 +1,9 @@
 ---
-id: decisions/adr-003-bpmn-method-and-style
+id: decisions/adr-004-bpmn-method-and-style
 type: Decision Record
-title: "ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)"
+title: "ADR-004: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)"
 description: Durchgängige Anwendung der Nomenklatur- und Modellierungsstandards von Bruce Silver für selbstdokumentierende Enterprise-iFlows.
-resource: btp://conciliamus/decisions/ADR-003
+resource: btp://conciliamus/decisions/ADR-004
 tags: [adr, architecture-decision, bpmn, method-and-style, bruce-silver, governance]
 status: accepted
 generated:
@@ -19,7 +19,7 @@ sources:
     author: "Bruce Silver"
 ---
 
-# ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)
+# ADR-004: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)
 
 ## Status
 Akzeptiert (Accepted)

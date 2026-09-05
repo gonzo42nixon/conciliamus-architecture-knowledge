@@ -10,7 +10,7 @@ generated:
   by: "human:dieter-rueffler"
   at: "2026-09-04T22:00:00Z"
 relations:
-  - { type: implements, target: /decisions/adr-004-data-store-dlq.md }
+  - { type: implements, target: /decisions/adr-008-data-store-dlq.md }
   - { type: contains, target: /iflows/reprocessor-iflow.md }
   - { type: handlesError, target: /iflows/item-processor-iflow.md }
 sources:

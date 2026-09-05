@@ -14,7 +14,7 @@ relations:
   - { type: routedFrom, target: /iflows/batch-receiver-iflow.md }
   - { type: implements, target: /architecture/existence-check-and-routing.md }
   - { type: implements, target: /architecture/resilience-and-dead-letter.md }
-  - { type: implements, target: /decisions/adr-003-bpmn-method-and-style.md }
+  - { type: implements, target: /decisions/adr-004-bpmn-method-and-style.md }
   - { type: verifies, target: /verification/live-btp-execution.md }
 sources:
   - id: btp-doku

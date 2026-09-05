@@ -1,9 +1,9 @@
 ---
-id: decisions/adr-004-data-store-dlq
+id: decisions/adr-008-data-store-dlq
 type: Decision Record
-title: "ADR-004: Data Store für Dead-Letter-Queue & Selektiven Replay"
+title: "ADR-008: Data Store für Dead-Letter-Queue & Selektiven Replay"
 description: Einsatz eines persistenten BTP Data Stores für fehlgeschlagene Einzelnachrichten zur Ermöglichung eines punktuellen Wiederanlaufs.
-resource: btp://conciliamus/decisions/ADR-004
+resource: btp://conciliamus/decisions/ADR-008
 tags: [adr, architecture-decision, data-store, dlq, resilience, replay]
 status: accepted
 generated:
@@ -19,7 +19,7 @@ sources:
     author: "Dieter Rüffler"
 ---
 
-# ADR-004: Data Store für Dead-Letter-Queue & Selektiven Replay
+# ADR-008: Data Store für Dead-Letter-Queue & Selektiven Replay
 
 ## Status
 Akzeptiert (Accepted)

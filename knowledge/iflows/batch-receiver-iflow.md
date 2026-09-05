@@ -12,7 +12,7 @@ generated:
 relations:
   - { type: partOf, target: /architecture/dual-iflow-pattern.md }
   - { type: routesTo, target: /iflows/item-processor-iflow.md }
-  - { type: implements, target: /decisions/adr-003-bpmn-method-and-style.md }
+  - { type: implements, target: /decisions/adr-004-bpmn-method-and-style.md }
   - { type: verifies, target: /verification/live-btp-execution.md }
 sources:
   - id: btp-doku

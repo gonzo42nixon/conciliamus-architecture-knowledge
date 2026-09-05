@@ -1,9 +1,9 @@
 ---
-id: decisions/adr-007-google-okf-knowledge-graph
+id: decisions/adr-011-google-okf-knowledge-graph
 type: Decision Record
-title: "ADR-007: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor"
+title: "ADR-011: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor"
 description: Einführung des Google Open Knowledge Format (OKF v0.2) als maschinenlesbarer, graphbasierter Architektur-Standard für quellenbasierte KI-Architekturberatung mit Google Gemini.
-resource: btp://conciliamus/decisions/ADR-007
+resource: btp://conciliamus/decisions/ADR-011
 tags: [adr, architecture-decision, google-okf, open-knowledge-format, knowledge-graph, gemini, ai-advisor, grounding, zero-hallucination]
 status: accepted
 generated:
@@ -19,7 +19,7 @@ sources:
     author: "Dieter Rüffler"
 ---
 
-# ADR-007: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor
+# ADR-011: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor
 
 ## Status
 Akzeptiert (Accepted)

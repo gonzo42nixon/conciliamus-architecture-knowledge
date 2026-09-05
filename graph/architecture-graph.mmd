@@ -11,12 +11,16 @@ graph TD
   data_contracts_mdm_inbound_contract["MDM Inbound JSON Kontrakt<br/><i>Data Contract</i>"]
   data_contracts_s4_odata_mapping["SAP S/4HANA OData Mapping<br/><i>Data Contract</i>"]
   decisions_adr_001_dual_iflow_decoupling["ADR-001: Dual-iFlow Entkopplungsmuster<br/><i>Decision Record</i>"]
-  decisions_adr_002_process_direct["ADR-002: ProcessDirect statt Message Queues für iFlow-Kopplung<br/><i>Decision Record</i>"]
-  decisions_adr_003_bpmn_method_and_style["ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)<br/><i>Decision Record</i>"]
-  decisions_adr_004_data_store_dlq["ADR-004: Data Store für Dead-Letter-Queue & Selektiven Replay<br/><i>Decision Record</i>"]
-  decisions_adr_005_single_viewport_fiori["ADR-005: Single-Viewport Ergonomie für die Fiori-Lookalike Workbench<br/><i>Decision Record</i>"]
-  decisions_adr_006_streamlit_cloud_agent_deployment["ADR-006: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps<br/><i>Decision Record</i>"]
-  decisions_adr_007_google_okf_knowledge_graph["ADR-007: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor<br/><i>Decision Record</i>"]
+  decisions_adr_002_zero_trust_btp_security["ADR-002: Zero-Trust & BTP PaaS Security Architecture<br/><i>Decision Record</i>"]
+  decisions_adr_003_end_to_end_correlation_mpl["ADR-003: End-to-End Correlation & MPL Governance<br/><i>Decision Record</i>"]
+  decisions_adr_004_bpmn_method_and_style["ADR-004: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)<br/><i>Decision Record</i>"]
+  decisions_adr_005_process_direct["ADR-005: ProcessDirect statt Message Queues für iFlow-Kopplung<br/><i>Decision Record</i>"]
+  decisions_adr_006_idempotent_existence_check["ADR-006: Idempotente Existenzprüfung & Router-Matrix<br/><i>Decision Record</i>"]
+  decisions_adr_007_two_legged_csrf_handshake["ADR-007: Two-Legged CSRF- & Cookie-Handshake<br/><i>Decision Record</i>"]
+  decisions_adr_008_data_store_dlq["ADR-008: Data Store für Dead-Letter-Queue & Selektiven Replay<br/><i>Decision Record</i>"]
+  decisions_adr_009_single_viewport_fiori["ADR-009: Single-Viewport Ergonomie für die Fiori-Lookalike Workbench<br/><i>Decision Record</i>"]
+  decisions_adr_010_streamlit_cloud_agent_deployment["ADR-010: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps<br/><i>Decision Record</i>"]
+  decisions_adr_011_google_okf_knowledge_graph["ADR-011: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor<br/><i>Decision Record</i>"]
   iflows_batch_receiver_iflow["IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher<br/><i>iFlow Specification</i>"]
   iflows_item_processor_iflow["IFL_MDM_BP_Item_Processor: Atomare Partner-Verarbeitung<br/><i>iFlow Specification</i>"]
   iflows_reprocessor_iflow["IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf<br/><i>iFlow Specification</i>"]
@@ -29,7 +33,7 @@ graph TD
   verification_istqb_test_strategy["ISTQB Teststrategie & Testfallmatrix<br/><i>Test Evidence</i>"]
   verification_live_btp_execution["Live-End-to-End Testlauf auf SAP BTP<br/><i>Test Evidence</i>"]
   verification_sandbox_limitations_405["SAP Sandbox Limitationen & HTTP 405 Handling<br/><i>Test Evidence</i>"]
-  architecture_agent_deployment_and_gitops -->|implements| decisions_adr_006_streamlit_cloud_agent_deployment
+  architecture_agent_deployment_and_gitops -->|implements| decisions_adr_010_streamlit_cloud_agent_deployment
   architecture_agent_deployment_and_gitops -->|contains| presentation_and_ui_streamlit_chat_advisor
   architecture_dual_iflow_pattern -->|contains| iflows_batch_receiver_iflow
   architecture_dual_iflow_pattern -->|contains| iflows_item_processor_iflow
@@ -39,10 +43,10 @@ graph TD
   architecture_existence_check_and_routing -->|contains| iflows_item_processor_iflow
   architecture_existence_check_and_routing -->|implements| data_contracts_s4_odata_mapping
   architecture_existence_check_and_routing -->|verifies| verification_istqb_test_strategy
-  architecture_process_direct_interconnect -->|implements| decisions_adr_002_process_direct
+  architecture_process_direct_interconnect -->|implements| decisions_adr_005_process_direct
   architecture_process_direct_interconnect -->|dependsOn| architecture_dual_iflow_pattern
   architecture_process_direct_interconnect -->|routesTo| iflows_item_processor_iflow
-  architecture_resilience_and_dead_letter -->|implements| decisions_adr_004_data_store_dlq
+  architecture_resilience_and_dead_letter -->|implements| decisions_adr_008_data_store_dlq
   architecture_resilience_and_dead_letter -->|contains| iflows_reprocessor_iflow
   architecture_resilience_and_dead_letter -->|handlesError| iflows_item_processor_iflow
   architecture_session_and_csrf_handshake -->|contains| iflows_item_processor_iflow
@@ -58,45 +62,53 @@ graph TD
   decisions_adr_001_dual_iflow_decoupling -->|implementedBy| architecture_dual_iflow_pattern
   decisions_adr_001_dual_iflow_decoupling -->|implementedBy| iflows_batch_receiver_iflow
   decisions_adr_001_dual_iflow_decoupling -->|implementedBy| iflows_item_processor_iflow
-  decisions_adr_002_process_direct -->|implementedBy| architecture_process_direct_interconnect
-  decisions_adr_002_process_direct -->|dependsOn| decisions_adr_001_dual_iflow_decoupling
-  decisions_adr_003_bpmn_method_and_style -->|implementedBy| iflows_batch_receiver_iflow
-  decisions_adr_003_bpmn_method_and_style -->|implementedBy| iflows_item_processor_iflow
-  decisions_adr_004_data_store_dlq -->|implementedBy| architecture_resilience_and_dead_letter
-  decisions_adr_004_data_store_dlq -->|implementedBy| iflows_reprocessor_iflow
-  decisions_adr_005_single_viewport_fiori -->|implementedBy| presentation_and_ui_fiori_workbench_ui
-  decisions_adr_006_streamlit_cloud_agent_deployment -->|implements| presentation_and_ui_streamlit_chat_advisor
-  decisions_adr_006_streamlit_cloud_agent_deployment -->|dependsOn| architecture_agent_deployment_and_gitops
-  decisions_adr_007_google_okf_knowledge_graph -->|implements| presentation_and_ui_streamlit_chat_advisor
-  decisions_adr_007_google_okf_knowledge_graph -->|dependsOn| architecture_agent_deployment_and_gitops
+  decisions_adr_002_zero_trust_btp_security -->|implements| architecture_dual_iflow_pattern
+  decisions_adr_002_zero_trust_btp_security -->|dependsOn| iflows_batch_receiver_iflow
+  decisions_adr_003_end_to_end_correlation_mpl -->|implements| data_contracts_custom_header_properties
+  decisions_adr_003_end_to_end_correlation_mpl -->|dependsOn| iflows_item_processor_iflow
+  decisions_adr_004_bpmn_method_and_style -->|implementedBy| iflows_batch_receiver_iflow
+  decisions_adr_004_bpmn_method_and_style -->|implementedBy| iflows_item_processor_iflow
+  decisions_adr_005_process_direct -->|implementedBy| architecture_process_direct_interconnect
+  decisions_adr_005_process_direct -->|dependsOn| decisions_adr_001_dual_iflow_decoupling
+  decisions_adr_006_idempotent_existence_check -->|implements| architecture_existence_check_and_routing
+  decisions_adr_006_idempotent_existence_check -->|dependsOn| data_contracts_s4_odata_mapping
+  decisions_adr_007_two_legged_csrf_handshake -->|implements| architecture_session_and_csrf_handshake
+  decisions_adr_007_two_legged_csrf_handshake -->|dependsOn| iflows_item_processor_iflow
+  decisions_adr_008_data_store_dlq -->|implementedBy| architecture_resilience_and_dead_letter
+  decisions_adr_008_data_store_dlq -->|implementedBy| iflows_reprocessor_iflow
+  decisions_adr_009_single_viewport_fiori -->|implementedBy| presentation_and_ui_fiori_workbench_ui
+  decisions_adr_010_streamlit_cloud_agent_deployment -->|implements| presentation_and_ui_streamlit_chat_advisor
+  decisions_adr_010_streamlit_cloud_agent_deployment -->|dependsOn| architecture_agent_deployment_and_gitops
+  decisions_adr_011_google_okf_knowledge_graph -->|implements| presentation_and_ui_streamlit_chat_advisor
+  decisions_adr_011_google_okf_knowledge_graph -->|dependsOn| architecture_agent_deployment_and_gitops
   iflows_batch_receiver_iflow -->|partOf| architecture_dual_iflow_pattern
   iflows_batch_receiver_iflow -->|routesTo| iflows_item_processor_iflow
-  iflows_batch_receiver_iflow -->|implements| decisions_adr_003_bpmn_method_and_style
+  iflows_batch_receiver_iflow -->|implements| decisions_adr_004_bpmn_method_and_style
   iflows_batch_receiver_iflow -->|verifies| verification_live_btp_execution
   iflows_item_processor_iflow -->|partOf| architecture_dual_iflow_pattern
   iflows_item_processor_iflow -->|routedFrom| iflows_batch_receiver_iflow
   iflows_item_processor_iflow -->|implements| architecture_existence_check_and_routing
   iflows_item_processor_iflow -->|implements| architecture_resilience_and_dead_letter
-  iflows_item_processor_iflow -->|implements| decisions_adr_003_bpmn_method_and_style
+  iflows_item_processor_iflow -->|implements| decisions_adr_004_bpmn_method_and_style
   iflows_item_processor_iflow -->|verifies| verification_live_btp_execution
-  iflows_reprocessor_iflow -->|implements| decisions_adr_004_data_store_dlq
+  iflows_reprocessor_iflow -->|implements| decisions_adr_008_data_store_dlq
   iflows_reprocessor_iflow -->|routesTo| iflows_item_processor_iflow
-  presentation_and_ui_fiori_workbench_ui -->|implements| decisions_adr_005_single_viewport_fiori
+  presentation_and_ui_fiori_workbench_ui -->|implements| decisions_adr_009_single_viewport_fiori
   presentation_and_ui_fiori_workbench_ui -->|verifies| verification_live_btp_execution
-  presentation_and_ui_pecha_kucha_20x20 -->|references| decisions_adr_003_bpmn_method_and_style
+  presentation_and_ui_pecha_kucha_20x20 -->|references| decisions_adr_004_bpmn_method_and_style
   presentation_and_ui_pecha_kucha_20x20 -->|references| verification_live_btp_execution
   presentation_and_ui_pecha_kucha_konzept -->|implementedBy| presentation_and_ui_pecha_kucha_20x20
   presentation_and_ui_streamlit_chat_advisor -->|implements| decisions_adr_001_dual_iflow_decoupling
-  presentation_and_ui_streamlit_chat_advisor -->|implements| decisions_adr_006_streamlit_cloud_agent_deployment
+  presentation_and_ui_streamlit_chat_advisor -->|implements| decisions_adr_010_streamlit_cloud_agent_deployment
   presentation_and_ui_streamlit_chat_advisor -->|dependsOn| architecture_agent_deployment_and_gitops
   presentation_and_ui_streamlit_chat_advisor -->|references| presentation_and_ui_fiori_workbench_ui
   qa_core_architecture_faq -->|references| architecture_dual_iflow_pattern
   qa_core_architecture_faq -->|references| architecture_existence_check_and_routing
   qa_core_architecture_faq -->|references| decisions_adr_001_dual_iflow_decoupling
-  qa_core_architecture_faq -->|references| decisions_adr_002_process_direct
+  qa_core_architecture_faq -->|references| decisions_adr_005_process_direct
   qa_error_handling_faq -->|references| architecture_resilience_and_dead_letter
   qa_error_handling_faq -->|references| iflows_reprocessor_iflow
-  qa_error_handling_faq -->|references| decisions_adr_004_data_store_dlq
+  qa_error_handling_faq -->|references| decisions_adr_008_data_store_dlq
   verification_istqb_test_strategy -->|verifies| architecture_existence_check_and_routing
   verification_istqb_test_strategy -->|verifies| architecture_resilience_and_dead_letter
   verification_live_btp_execution -->|verifies| architecture_dual_iflow_pattern

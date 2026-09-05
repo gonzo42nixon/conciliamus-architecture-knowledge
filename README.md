@@ -106,12 +106,16 @@ conciliamus-architecture-knowledge/
 │   │   └── reprocessor-iflow.md               # IFL_MDM_BP_Reprocessor (Selektiver Replay)
 │   ├── decisions/                             # Architecture Decision Records (ADRs)
 │   │   ├── adr-001-dual-iflow-decoupling.md   # ADR-001: Dual-iFlow Entkopplungsmuster
-│   │   ├── adr-002-process-direct.md          # ADR-002: ProcessDirect statt JMS Queues
-│   │   ├── adr-003-bpmn-method-and-style.md   # ADR-003: Bruce Silver Namenskonventionen
-│   │   ├── adr-004-data-store-dlq.md          # ADR-004: Data Store für selektiven Replay
-│   │   ├── adr-005-single-viewport-fiori.md   # ADR-005: Single-Viewport Fiori Workbench
-│   │   ├── adr-006-streamlit-cloud-agent-deployment.md # ADR-006: Serverless Streamlit Cloud & GitOps
-│   │   └── adr-007-google-okf-knowledge-graph.md      # ADR-007: Google OKF v0.2 & Grounded Gemini AI
+│   │   ├── adr-002-zero-trust-btp-security.md # ADR-002: Zero-Trust & BTP PaaS Security
+│   │   ├── adr-003-end-to-end-correlation-mpl.md # ADR-003: End-to-End Correlation & MPL
+│   │   ├── adr-004-bpmn-method-and-style.md   # ADR-004: Bruce Silver Namenskonventionen
+│   │   ├── adr-005-process-direct.md          # ADR-005: ProcessDirect statt JMS Queues
+│   │   ├── adr-006-idempotent-existence-check.md # ADR-006: Idempotente Existenzprüfung
+│   │   ├── adr-007-two-legged-csrf-handshake.md # ADR-007: Two-Legged CSRF-Handshake
+│   │   ├── adr-008-data-store-dlq.md          # ADR-008: Data Store für selektiven Replay
+│   │   ├── adr-009-single-viewport-fiori.md   # ADR-009: Single-Viewport Fiori Workbench
+│   │   ├── adr-010-streamlit-cloud-agent-deployment.md # ADR-010: Serverless Streamlit & CORS
+│   │   └── adr-011-google-okf-knowledge-graph.md      # ADR-011: Google OKF v0.2 Knowledge Graph
 │   ├── data-contracts/                        # Schnittstellenkontrakte & Datenmodelle
 │   │   ├── mdm-inbound-contract.md            # JSD-MDM JSON Schema & Felddefinitionen
 │   │   ├── s4-odata-mapping.md                # Feldmapping zu SAP S/4HANA OData

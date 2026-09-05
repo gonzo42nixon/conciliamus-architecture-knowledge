@@ -30,20 +30,7 @@ relations:
 | **02** | Intro | **Profil & Werte** | TU Berlin, ISTQB CTFL, ITIL V2 – Solide Ingenieurskunst & Cloud-Agilität |
 | **03** | Kontext | **Conciliamus & Johannesstift Diakonie** | Resiliente Stammdaten für das Rückgrat der Gesundheitswirtschaft |
 | **04** | Challenge | **Die Integrationsaufgabe** | MDM-Massenbatch trifft auf transaktionales S/4HANA OData |
-| **05** | Architektur | **ADR-001: Das Dual-iFlow-Paradigma** | Architektur-Governance nach Michael Nygard (Docs-as-Code); strikte Trennung von Ingest & Fachlogik |\n| **06** | Security | **Zero-Trust & BTP Cloud Security** | OAuth2 Client Credentials, HTTPS TLS 1.3, BTP Security-Härtung ab Sekunde Null |\n| **07** | Governance | **End-to-End Nachvollziehbarkeit** | Durchgängige Correlation-ID vom Inbound-Header bis zum Message Processing Log (MPL) |\n| **08** | Deep Dive | **iFlow 1: Ingest & Streaming Splitter (ADR-003)** | BPMN 2.0 Inbound-Pipeline & Streaming Splitter: 202 Quittierung, flaches RAM-Profil |\n| **09** | Deep Dive | **iFlow 2: Item Processor & ProcessDirect (ADR-002)** | IFL_MDM_BP_Item_Processor via ProcessDirect: Latenzfreier Bus ohne JMS-Lizenzkosten |\n| **10** | Logik | **Idempotenz & Existenzprüfung** | OData GET A_BusinessPartner: Duplikatschutz durch semantische Schlüsselprüfung (POST vs. PATCH) |\n| **11** | Protokoll | **Der CSRF- & Session-Handshake** | Two-Legged OData Call: Token & Cookie-Handling für schreibende Operationen ohne Session-Abbrüche |\n| **12** | Resilienz | **Dual-Channel Fehlerbehandlung (ADR-004)** | Fachlicher Fehler (Audit Log) vs. Technischer Ausfall (Data Store BP_FAILED_QUEUE Replay) |\n| **13** | Qualität | **ISTQB-getriebenes Testing** | Systematischer 10er-Batch: 3x PATCH, 7x POST, Grenzwertanalyse & Äquivalenzklassen |\n| **14** | Beweis | **Live auf SAP BTP verifiziert** | Erfolgreicher End-to-End Durchlauf mit HTTP 200 OK am 04.09.2026 auf dem produktiven BTP-Tenant |\n| **15** | Tooling | **Der Fiori Horizon Test-Runner (ADR-005)** | Single-Viewport Web-App im authentischen SAP Fiori Horizon Look ohne äußeres Scrollen |\n| **16** | GitOps | **Serverless GitOps & BTP CORS-Bypass (ADR-006)** | Zero-Docker & Zero-Cost via GitHub & Streamlit Community Cloud (20s CI/CD) |\n| **17** | Innovation | **Generative AI & Knowledge Graph (ADR-007)** | Google OKF v0.2 (29 Knoten, 74 Kanten) & Gemini 3.6 Flash: Das Digital Brain des Architekten |\n| **18** | Fit | **Mehrwert für Conciliamus & Dieter Rüffler** | Drei Säulen für den Teamerfolg: Architektur-Exzellenz, Methodenkompetenz, Innovationskraft |
-| **19** | Glossar | **Das Enterprise Acronym Digest (150 Meilensteine, Frameworks & Standards)** | Vom SAP-Sprech zu solider Informatik: 150 Begriffe in 15×10-Matrix (inkl. Schickard 1623, Zuse Z1, ENIAC, Moore's Law, NeXT, Fiori/HTML5 & Walgesang-KI/Neurallingo), zweizeiligem Label-Layout (Jahr/Name), Toggleswitch (Chronologisch vs. A–Z), 32px-Festhöhe ohne Scrollbalken, Ausbleich-Filterung & Orange-Highlighter |
-| **20** | Finale | **Überleitung in die Live-Demo** | Fragen, Fachgespräch & Live-Ausführung auf der BTP Cloud Integration |
-
----
-
-## Detaillierter Ablauf & 20-Sekunden-Sprechertexte
-
-### Folie 01: Start & Willkommen
-* **Visuelles Motiv:** 8-teiliges Zertifikate-Tableau in 2×4-Matrix: Zeile 1 mit TU Berlin Diplom-Urkunde ([PDF](https://firebasestorage.googleapis.com/v0/b/orcai-54321.firebasestorage.app/o/clients%2FACME%2Frecords%2FORCAI-260905-20H00-FILE-N75WG%2FDieter-Rueffler-1991-Diplom-Informatiker-TU-Berlin.pdf?alt=media&token=675e2af4-6394-4e92-872b-1fc4c82ef0fc)), SAP Cloud Platform Integration ([Credly](https://www.credly.com/badges/a5553b7e-8a58-4f09-b524-94f0befc2155)), SAP Process Orchestration 7.50 ([Credly](https://www.credly.com/badges/47280824-4ed5-4618-a502-e0f9de8c4696)) und AWS Cloud Practitioner ([Credly](https://www.credly.com/badges/191c892d-9a22-43dc-886a-d4761c136e26)); Zeile 2 mit ISTQB Certified Tester ([Zertifikat](https://lh3.googleusercontent.com/pw/AP1GczMc9jfPHauoNi5Q2WlREuJ_Yq9Vw7sYRqupaPoPTl-OXJmd85_FQtrACv2dhVsUjZd2JbwQxNqglhZa4DR3AsI3rSkUZXNWJGAtlphxH_44i32KoN05jjjpm6GQ961fvQE2LOsv9kbwmYQR3IgFctWTig=w1188-h1630-s-no-gm?authuser=0)), ITIL V2 Service Delivery ([TÜV SÜD](https://lh3.googleusercontent.com/pw/AP1GczN4G0hL7BgnXyNBpFcOvKHhFsDc11aRQOm001BDnPKdP-gN6cbRaQlNThcEt84aVhWUb9UAmRqd-xPa6Cotvy9uH8e9z8Ulr2FpGsrJvajP5trjUJNehYsQybLfFxF7kCE8_dhjN-tAOIoitvRKQ6CvQQ=w984-h1428-s-no-gm?authuser=0)), Make.com Automation ([Make](https://www.credly.com/badges/a1de62d4-281d-499d-81d1-0854b34a7243)) und Certified AI Engineer ([Zertifikat](https://firebasestorage.googleapis.com/v0/b/orcai-54321.firebasestorage.app/o/clients%2FACME%2Frecords%2FORCAI-260905-21H27-FILE-CK67M%2FCert_Dieter_Rueffler_TC2608179854_AI_Engineer.pdf?alt=media&token=a326ea93-95c6-4b6d-90b9-001b408303dc) & [Skills](https://firebasestorage.googleapis.com/v0/b/orcai-54321.firebasestorage.app/o/clients%2FACME%2Frecords%2FORCAI-260905-21H32-FILE-F8JYN%2FDieter%20Rueffler%20-%20AI%20Engineering.pdf?alt=media&token=e09fa1aa-2d4b-4a6f-abe6-555127ab7e11)), flankiert vom offiziellen Credly-Verifikationslink ([credly.com/users/dieter-ruffler](https://www.credly.com/users/dieter-ruffler)).
-* **Kernbotschaft:** Breit gefächertes, hochgradig verifiziertes Profil von akademischer Softwaretechnik über Enterprise-Integration bis hin zu modernstem AI Engineering.
-* **Sprechertext (20 Sek. / 50 Wörter):**
-> „Als Diplom-Informatiker der TU Berlin verbinde ich fundierte theoretische Grundlagen mit moderner Cloud-Praxis. Mein Profil umfasst offizielle Zertifizierungen in SAP Cloud Integration, Process Orchestration, AWS und ISTQB, ergänzt durch ITIL-Servicemanagement, Make.com-Automatisierung und modernste Qualifikation als AI Engineer – höchste Qualität und technologische Zukunftssicherheit auf einen Blick.“
-
+| **05** | Architektur | **ADR-001: Das Dual-iFlow-Paradigma** | Architektur-Governance nach Michael Nygard (Docs-as-Code); strikte Trennung von Ingest & Fachlogik |\n| **06** | Security | **ADR-002: Zero-Trust & BTP Cloud Security** | BTP als Managed PaaS, OAuth2 Client Credentials, TLS 1.3, Vault statt Basic Auth |\n| **07** | Governance | **ADR-003: End-to-End Nachvollziehbarkeit** | Globale Correlation-ID & Custom Header Properties im Message Processing Log (MPL) |\n| **08** | Deep Dive | **ADR-004: iFlow 1 – Ingest & Streaming Splitter** | BPMN 2.0 Inbound-Pipeline & Streaming Splitter (Bruce Silver): Sofortiges HTTP 202, flaches RAM-Profil |\n| **09** | Deep Dive | **ADR-005: iFlow 2 – Item Processor & ProcessDirect** | `IFL_MDM_BP_Item_Processor` via ProcessDirect: Latenzfreier Bus ohne JMS-Lizenzkosten |\n| **10** | Logik | **ADR-006: Idempotenz & Existenzprüfung** | OData GET `A_BusinessPartner`: Duplikatschutz durch semantische Schlüsselprüfung (POST vs. PATCH) |\n| **11** | Protokoll | **ADR-007: Der CSRF- & Session-Handshake** | Two-Legged OData Call: Token & Cookie-Handling für schreibende Operationen ohne Session-Abbrüche |\n| **12** | Resilienz | **ADR-008: Dual-Channel Fehlerbehandlung & DLQ** | Fachlicher Fehler (Audit Log) vs. Technischer Ausfall (Data Store `BP_FAILED_QUEUE` Replay) |\n| **13** | Qualität | **ISTQB-getriebenes Testing** | Systematischer 10er-Batch: 3x PATCH, 7x POST, Grenzwertanalyse & Äquivalenzklassen |\n| **14** | Beweis | **Live auf SAP BTP verifiziert** | Erfolgreicher End-to-End Durchlauf mit HTTP 200 OK am 04.09.2026 auf dem produktiven BTP-Tenant |\n| **15** | Tooling | **ADR-009: Der Fiori Horizon Test-Runner** | Single-Viewport Web-App im authentischen SAP Fiori Horizon Look ohne äußeres Scrollen |\n| **16** | GitOps | **ADR-010: Serverless GitOps & BTP CORS-Bypass** | Zero-Docker & Zero-Cost via GitHub & Streamlit Community Cloud (20s CI/CD) |\n| **17** | Innovation | **ADR-011: Generative AI & Knowledge Graph** | Google OKF v0.2 (33 Knoten, 82 Kanten) & Gemini 3.6 Flash: Das Digital Brain des Architekten |\n
 ---
 
 ### Folie 02: Profil, Ingenieurskunst & Zertifizierungen
@@ -78,7 +65,7 @@ relations:
 
 ---
 
-### Folie 06: Zero-Trust & BTP Cloud Security
+### Folie 06: ADR-002: Zero-Trust & BTP Cloud Security
 * **Visuelles Motiv:** BTP Shield-Icon & Security Dashboard Screenshot (vergrößerbar in Lightbox), darunter die 3 Sicherheits-Säulen: 1. OAuth2 Client Credentials (keine Basic Auth), 2. Zero-Trust Netzwerkisolation (TLS 1.3, XSUAA Rollenbindung), 3. Secrets Vault im Credential Store.
 * **Kernbotschaft:** Enterprise Security ab Sekunde Null – keine Klartext-Passwörter im Code, transparente Audit-Trails.
 * **Sprechertext (20 Sek. / 46 Wörter):**
@@ -86,7 +73,7 @@ relations:
 
 ---
 
-### Folie 07: End-to-End Nachvollziehbarkeit & Governance
+### Folie 07: ADR-003: End-to-End Nachvollziehbarkeit & Governance
 * **Visuelles Motiv:** Correlation-ID Header `SAP-CorrelationID`, Flow-Tracking vom HTTPS-Request über beide iFlows bis zum OData-Backend, Screenshot des Message Processing Log (MPL) mit den Custom Header Properties `MDM_Batch_ID` und `BusinessPartner_ID`.
 * **Kernbotschaft:** Lückenlose Rückverfolgbarkeit jedes einzelnen Datensatzes über Systemgrenzen hinweg.
 * **Sprechertext (20 Sek. / 48 Wörter):**
@@ -94,7 +81,7 @@ relations:
 
 ---
 
-### Folie 08: iFlow 1 – Ingest & Iterating Splitter (ADR-003)
+### Folie 08: ADR-004: iFlow 1 – Ingest & Streaming Splitter
 * **Visuelles Motiv:** Zweiteiliges Tableau: Links der Screenshot des deployed iFlows `IFL_MDM_BP_Batch_Receiver` in der BTP Integration Suite; rechts Detail-Callout des Streaming Iterating Splitters mit XML/JSON Streaming Engine (kein OOM bei großen Batches). Namensgebung nach Bruce Silver (ADR-003).
 * **Kernbotschaft:** Schnelle Entlastung des Aufrufers durch HTTP 202 und garantierter Out-of-Memory-Schutz.
 * **Sprechertext (20 Sek. / 52 Wörter):**
@@ -102,7 +89,7 @@ relations:
 
 ---
 
-### Folie 09: iFlow 2 – Item Processor & ProcessDirect (ADR-002)
+### Folie 09: ADR-005: iFlow 2 – Item Processor & ProcessDirect
 * **Visuelles Motiv:** Screenshot des deployed iFlows `IFL_MDM_BP_Item_Processor` (ProcessDirect Inbound, Routing-Zweige, OData Adapter) mit Status `STARTED`. Visuelle Kennzeichnung des ProcessDirect-Adapters (In-Memory, latenzfrei, keine JMS-Queues).
 * **Kernbotschaft:** Der Business-Motor: Präzise OData-Synchronisation mit S/4HANA via ProcessDirect nach ADR-002.
 * **Sprechertext (20 Sek. / 48 Wörter):**
@@ -110,7 +97,7 @@ relations:
 
 ---
 
-### Folie 10: Idempotenz & Existenzprüfung
+### Folie 10: ADR-006: Idempotenz & Existenzprüfung
 * **Visuelles Motiv:** OData GET `A_BusinessPartner?$filter=SearchTerm1 eq '...'`, Entscheidungsknoten: 0 Treffer ➔ POST Neuanlage; 1 Treffer ➔ PATCH Aktualisierung; >1 Treffer ➔ Fachlicher Fehler (Duplikat-Warnung).
 * **Kernbotschaft:** Verlässlicher Duplikatschutz durch semantische Schlüsselprüfung vor jeder Schreiboperation.
 * **Sprechertext (20 Sek. / 50 Wörter):**
@@ -118,7 +105,7 @@ relations:
 
 ---
 
-### Folie 11: Der CSRF- & Session-Handshake
+### Folie 11: ADR-007: Der Two-Legged CSRF- & Cookie-Handshake
 * **Visuelles Motiv:** Two-Legged Call Sequenzdiagramm: 1. `GET` mit `x-csrf-token: fetch` + `Set-Cookie`, 2. Extrahieren des Tokens in Exchange Property, 3. `POST/PATCH` mit Token + Cookie Header.
 * **Kernbotschaft:** Sichere OData V2/V4 Schreibzugriffe ohne Token-Verlust oder Session-Timeouts.
 * **Sprechertext (20 Sek. / 52 Wörter):**
@@ -126,7 +113,7 @@ relations:
 
 ---
 
-### Folie 12: Dual-Channel Resilienz & Fehlerbehandlung (ADR-004)
+### Folie 12: ADR-008: Dual-Channel Fehlerbehandlung & DLQ
 * **Visuelles Motiv:** Split in zwei Pfade: Roter Pfad (Fachlicher Fehler ➔ Audit-Log & MPL Error) vs. Gelber Pfad (Technischer Fehler / S/4HANA down ➔ Data Store `BP_FAILED_QUEUE` nach ADR-004 für automatischen Replay).
 * **Kernbotschaft:** Klare Unterscheidung zwischen ungültigen Geschäftsdaten und vorübergehenden Netzwerkausfällen.
 * **Sprechertext (20 Sek. / 51 Wörter):**
@@ -150,7 +137,7 @@ relations:
 
 ---
 
-### Folie 15: Der Fiori Horizon Test-Runner (ADR-005)
+### Folie 15: ADR-009: Der Fiori Horizon Test-Runner
 * **Visuelles Motiv:** Mockup der erstellten Single-Viewport Web-App im SAP Fiori Horizon Lookalike-Design (Tailwind CSS, Inter Font, 730px Höhe, no-scroll) nach ADR-005. 10 interaktive Geschäftspartner-Kacheln mit JSON-Pills & Live-Log-Terminal.
 * **Kernbotschaft:** Leichtgewichtige Web-App im vertrauten Fiori-Design ohne Framework-Overhead – 100% responsive und scrollfrei.
 * **Sprechertext (20 Sek. / 50 Wörter):**
@@ -158,7 +145,7 @@ relations:
 
 ---
 
-### Folie 16: Serverless GitOps & BTP CORS-Bypass (ADR-006)
+### Folie 16: ADR-010: Serverless GitOps & BTP CORS-Bypass
 * **Visuelles Motiv:** Zweiteiliges Lösungs-Tableau: Links die automatisierte GitOps-Pipeline (`git push origin main` ➔ GitHub Webhook ➔ Streamlit Community Cloud in 20s, Zero-Docker, Zero-Cost) mit Direktverlinkung auf ADR-006; rechts die SAP BTP CORS-Bypass-Architektur (Browser-Preflight-Blockade HTTP 401 ❌ vs. serverseitige Python-Runtime HTTP 200/202 ✅).
 * **Kernbotschaft:** Zero-Docker, Zero-Cost und Lösung des BTP-CORS-Dilemmas: Architekturwissen, KI-Agent und Testwerkzeuge kontinuierlich und sicher bereitstellen.
 * **Sprechertext (20 Sek. / 52 Wörter):**
@@ -166,7 +153,7 @@ relations:
 
 ---
 
-### Folie 17: Generative AI & Knowledge Graph (ADR-007)
+### Folie 17: ADR-011: Generative AI & Knowledge Graph
 * **Visuelles Motiv:** Google Open Knowledge Format v0.2 Graph (29 Knoten, 74 Kanten), gekoppelt an Google Gemini 3.6 Flash. Interaktiver Chatbot, der iFlow-Architektur und ADRs quellenbasiert zitiert (ADR-007).
 * **Kernbotschaft:** Digital Brain des Architekten: Zero-Hallucination Architekturberatung quellenbasiert nach ADR-007.
 * **Sprechertext (20 Sek. / 53 Wörter):**

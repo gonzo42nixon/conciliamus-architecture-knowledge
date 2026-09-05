@@ -10,7 +10,7 @@ generated:
   by: "human:dieter-rueffler"
   at: "2026-09-05T10:00:00Z"
 relations:
-  - { type: implements, target: /decisions/adr-006-streamlit-cloud-agent-deployment.md }
+  - { type: implements, target: /decisions/adr-010-streamlit-cloud-agent-deployment.md }
   - { type: contains, target: /presentation-and-ui/streamlit-chat-advisor.md }
 sources:
   - id: conciliamus-repo
@@ -63,7 +63,7 @@ flowchart TD
 Das gesamte Projekt folgt dem deklarativen **GitOps-Paradigma**:
 
 1. **Zentrales Wissens- und Code-Repository:**
-   - Alle Architekturentscheidungen (ADR-001 bis ADR-006), Schnittstellenverträge, BPMN-Dokumentationen und UI-Komponenten sind als versionierte Markdown-Dokumente im Ordner `knowledge/` abgelegt.
+   - Alle Architekturentscheidungen (ADR-001 bis ADR-010), Schnittstellenverträge, BPMN-Dokumentationen und UI-Komponenten sind als versionierte Markdown-Dokumente im Ordner `knowledge/` abgelegt.
    - Code, Abhängigkeiten (`requirements.txt`) und Agenten-Manifeste (`manifest/agent.yaml`) befinden sich im selben Repository.
 2. **Zero-Touch Continuous Deployment:**
    - Sobald ein Commit auf den Branch `main` gepusht wird, erkennt die Streamlit Community Cloud über einen Webhook die Änderung.
