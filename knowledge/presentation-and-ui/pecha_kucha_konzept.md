@@ -34,17 +34,17 @@ relations:
 | **06** | Architektur | **Das Dual-iFlow-Paradigma** | Strikte Trennung von Ingest/Transport und fachlicher Verarbeitung |
 | **07** | Security | **Zero-Trust & BTP Cloud Security** | OAuth2 Client Credentials, HTTPS TLS 1.3, BTP Secure Store |
 | **08** | Governance | **End-to-End Nachvollziehbarkeit** | Durchgängige Correlation-ID vom Inbound-Header bis zum Audit-Log |
-| **09** | Deep Dive | **iFlow 1: Ingest & Entkopplung** | `IFL_MDM_BP_Batch_Receiver`: Schneller Handshake & Validierung |
-| **10** | Deep Dive | **Der Iterating Splitter** | Schonende Entpackung von 10 Partnern ohne Speicherüberlastung |
-| **11** | Deep Dive | **iFlow 2: Item Processor** | `IFL_MDM_BP_Item_Processor`: Der atomare Einzelverarbeiter |
-| **12** | Logik | **Idempotenz & Existenzprüfung** | OData GET `A_BusinessPartner`: Duplikatschutz durch semantische Keys |
-| **13** | Protokoll | **Der CSRF- & Session-Handshake** | Two-Legged OData Call: Token & Cookie-Handling für POST & PATCH |
-| **14** | Resilienz | **Dual-Channel Fehlerbehandlung** | Fachlicher Fehler (Audit Log) vs. Technischer Ausfall (Dead Letter Queue) |
-| **15** | Qualität | **ISTQB-getriebenes Testing** | Systematischer 10er-Batch: 3x PATCH, 7x POST, Grenzwertanalyse |
-| **16** | Beweis | **Live auf SAP BTP verifiziert** | Erfolgreicher End-to-End Durchlauf mit HTTP 200 OK am 04.09.2026 |
-| **17** | Tooling | **Der Fiori-Lookalike Test-Runner** | Single-Viewport Web-App im authentischen SAP Fiori Horizon Look |
-| **18** | Innovation | **Generative AI im SAP-Ökosystem** | Rheinwerk „KI mit SAP“: Schnittstellen-Auditing mit SAP Joule & LLMs |
-| **19** | Fit | **Mehrwert für Conciliamus** | PI/PO-Migration beschleunigen, Plattform-Stabilität sichern, Team coachen |
+| **09** | Deep Dive | **iFlow 1: Ingest & Iterating Splitter** | BPMN 2.0 Inbound-Pipeline & Streaming Splitter: 202 Quittierung und flaches RAM-Profil |
+| **10** | Deep Dive | **iFlow 2: Item Processor** | `IFL_MDM_BP_Item_Processor`: Der atomare Einzelverarbeiter |
+| **11** | Logik | **Idempotenz & Existenzprüfung** | OData GET `A_BusinessPartner`: Duplikatschutz durch semantische Keys |
+| **12** | Protokoll | **Der CSRF- & Session-Handshake** | Two-Legged OData Call: Token & Cookie-Handling für POST & PATCH |
+| **13** | Resilienz | **Dual-Channel Fehlerbehandlung** | Fachlicher Fehler (Audit Log) vs. Technischer Ausfall (Dead Letter Queue) |
+| **14** | Qualität | **ISTQB-getriebenes Testing** | Systematischer 10er-Batch: 3x PATCH, 7x POST, Grenzwertanalyse |
+| **15** | Beweis | **Live auf SAP BTP verifiziert** | Erfolgreicher End-to-End Durchlauf mit HTTP 200 OK am 04.09.2026 |
+| **16** | Tooling | **Der Fiori-Lookalike Test-Runner** | Single-Viewport Web-App im authentischen SAP Fiori Horizon Look |
+| **17** | Innovation | **Generative AI im SAP-Ökosystem** | Google OKF v0.2 & Gemini 3.6 Flash: Das Digital Brain des Architekten |
+| **18** | Fit | **Mehrwert für Conciliamus & Dieter Rüffler** | Drei Säulen für den Teamerfolg: Architektur-Exzellenz, Methodenkompetenz, Innovationskraft |
+| **19** | Glossar | **Das Enterprise Acronym Digest (45 Begriffe)** | Vom SAP-Sprech zu solider Informatik: Alle 45 Architektur-Konzepte alphabetisch entschlüsselt mit interaktiven Tooltips |
 | **20** | Finale | **Überleitung in die Live-Demo** | Fragen, Fachgespräch & Live-Ausführung auf der BTP Cloud Integration |
 
 ---
@@ -115,23 +115,15 @@ relations:
 
 ---
 
-### Folie 09: iFlow 1 – Ingest & Entkopplung
-* **Visuelles Motiv:** Screenshot des deployed iFlows `IFL_MDM_BP_Batch_Receiver` (HTTPS Inbound, Groovy Validator, Splitter).
-* **Kernbotschaft:** Schnelle Entlastung des Aufrufers und syntaktische Vorprüfung der Nutzlast.
-* **Sprechertext (20 Sek. / 48 Wörter):**
-> „Hier sehen Sie den ersten iFlow: IFL_MDM_BP_Batch_Receiver, deployed auf unserem BTP-Tenant. Er empfängt den JSON-Batch über HTTPS, prüft die Header-Struktur und validiert das JSON-Schema. Entspricht der Payload nicht der Spezifikation, wird der Aufruf sofort mit einem klaren HTTP 400 abgewiesen, bevor interne Ressourcen beansprucht werden.“
+### Folie 09: iFlow 1 – Ingest & Iterating Splitter
+* **Visuelles Motiv:** Zweiteiliges Tableau: Links der Screenshot des deployed iFlows `IFL_MDM_BP_Batch_Receiver` (HTTPS Inbound, JSON-to-XML Validierung, 202 Quittierung); rechts das Streaming-Speicherprofil (Monolith-Crash vs. stabile flache Streaming-Kurve &lt; 150 MB RAM).
+* **Kernbotschaft:** Schnelle Entlastung des Aufrufers durch HTTP 202 und garantierter Out-of-Memory-Schutz durch streaming-orientierte Einzelverarbeitung.
+* **Sprechertext (20 Sek. / 52 Wörter):**
+> „Hier sehen Sie unseren Ingest-Flow IFL_MDM_BP_Batch_Receiver. Er nimmt den JSON-Batch entgegen, validiert das Schema und quittiert sofort mit HTTP 202 Accepted. Der integrierte Iterating Splitter streamt die Datensätze einzeln per In-Memory ProcessDirect an Flow 2 weiter – der Garbage Collector räumt sofort ab und der Speicherverbrauch bleibt dauerhaft unter 150 Megabyte.“
 
 ---
 
-### Folie 10: Der Iterating Splitter
-* **Visuelles Motiv:** Splitter-Icon, Visualisierung eines Arrays von 10 JSON-Objekten, die sequenziell an ProcessDirect übergeben werden.
-* **Kernbotschaft:** Schutz vor Out-of-Memory Fehlern durch kontrollierte Einzelstrom-Verarbeitung.
-* **Sprechertext (20 Sek. / 49 Wörter):**
-> „Das Herzstück des ersten Flows ist der Iterating Splitter. Er zerlegt das JSON-Array in zehn eigenständige Datensätze. Dadurch bleibt der Speicherbedarf auf der Worker-Node minimal – selbst bei Tausenden von Partnern. Jeder Partner wird einzeln isoliert und deterministisch an den Item-Processor übergeben. Fehler schlagen so niemals auf Nachbardatensätze durch.“
-
----
-
-### Folie 11: iFlow 2 – Single Item Processor
+### Folie 10: iFlow 2 – Single Item Processor
 * **Visuelles Motiv:** Screenshot des deployed iFlows `IFL_MDM_BP_Item_Processor` (ProcessDirect Inbound, Router, OData GET/POST/PATCH).
 * **Kernbotschaft:** Der Business-Motor: Präzise OData-Synchronisation mit S/4HANA.
 * **Sprechertext (20 Sek. / 48 Wörter):**
@@ -139,7 +131,7 @@ relations:
 
 ---
 
-### Folie 12: Idempotenz & Existenzprüfung
+### Folie 11: Idempotenz & Existenzprüfung
 * **Visuelles Motiv:** OData GET `A_BusinessPartner?$filter=SearchTerm1 eq '...'`, Entscheidungsknoten: Partner existiert? (Ja/Nein).
 * **Kernbotschaft:** Verlässlicher Duplikatschutz durch semantische Schlüsselprüfung vor jeder Schreiboperation.
 * **Sprechertext (20 Sek. / 50 Wörter):**
@@ -147,7 +139,7 @@ relations:
 
 ---
 
-### Folie 13: Der CSRF- & Session-Handshake
+### Folie 12: Der CSRF- & Session-Handshake
 * **Visuelles Motiv:** Two-Legged Call Sequenzdiagramm: 1. `GET` mit `x-csrf-token: fetch` + `Set-Cookie` ➔ 2. `POST/PATCH` mit Token + Cookie.
 * **Kernbotschaft:** Sichere OData V2/V4 Schreibzugriffe ohne Token-Verlust oder Session-Timeouts.
 * **Sprechertext (20 Sek. / 52 Wörter):**
@@ -155,15 +147,15 @@ relations:
 
 ---
 
-### Folie 14: Dual-Channel Resilienz & Fehlerbehandlung
+### Folie 13: Dual-Channel Resilienz & Fehlerbehandlung
 * **Visuelles Motiv:** Split in zwei Pfade: Roter Pfad (Fachlicher Fehler ➔ Audit-Log) vs. Gelber Pfad (Technischer Fehler ➔ Data Store DLQ).
-* **Kernbotschaft:** Klare Unterscheidung zwischen ungültigen Geschäftsdaten und vorübergehenden Netzwerkausfällen.
+* **Kernbotschaft:** Klare Unterscheidung zwischen ungültigen Geschäftsdaten und vorübergehenden Netzwerkausfällen (ADR-004).
 * **Sprechertext (20 Sek. / 51 Wörter):**
 > „Resilienz bedeutet Differenzierung: Ein fachlicher Fehler – etwa eine ungültige PLZ – darf nicht in einer Endlos-Wiederholschleife landen. Er wandert direkt ins Audit-Log für die Fachabteilung. Ein technischer Fehler hingegen – etwa ein OData-Timeout – landet in einer Data Store Dead Letter Queue, wo er automatisiert oder manuell wiedereingesteuert werden kann.“
 
 ---
 
-### Folie 15: ISTQB-getriebenes Testing
+### Folie 14: ISTQB-getriebenes Testing
 * **Visuelles Motiv:** ISTQB Logo, Matrix der 10 Testdatensätze: 3x PATCH (Bestandskunden), 7x POST (Neuanlagen), Grenzwert-Checks.
 * **Kernbotschaft:** Systematisches Testen aller Äste vor dem ersten Go-Live.
 * **Sprechertext (20 Sek. / 49 Wörter):**
@@ -171,7 +163,7 @@ relations:
 
 ---
 
-### Folie 16: Live auf SAP BTP verifiziert (HTTP 200)
+### Folie 15: Live auf SAP BTP verifiziert (HTTP 200)
 * **Visuelles Motiv:** BTP Monitoring Screenshot: Status `COMPLETED`, HTTP 200 OK, Verarbeitungszeit 1.2s, 10 von 10 erfolgreich.
 * **Kernbotschaft:** Theorie ist gut – funktionierender Live-Betrieb auf dem echten Tenant ist der Beweis.
 * **Sprechertext (20 Sek. / 47 Wörter):**
@@ -179,7 +171,7 @@ relations:
 
 ---
 
-### Folie 17: Der Fiori-Lookalike Test-Runner
+### Folie 16: Der Fiori-Lookalike Test-Runner
 * **Visuelles Motiv:** Mockup der erstellten Single-Viewport Web-App im SAP Fiori Horizon Lookalike-Design mit Fiori ShellBar, KPI-Kacheln, aufklappbaren RGB-JSON-Pills und aufgleitendem Monitoring-Drawer.
 * **Kernbotschaft:** Leichtgewichtige Web-App im vertrauten Fiori-Design ohne Framework-Overhead – 100% Single-Viewport Ergonomie nach ADR-005.
 * **Sprechertext (20 Sek. / 50 Wörter):**
@@ -187,24 +179,32 @@ relations:
 
 ---
 
-### Folie 18: Generative AI & Moderne Integration
-* **Visuelles Motiv:** Rheinwerk-Buch „KI mit SAP“, SAP Joule Icon, Schnittstellen-Dokumentation & Code-Generierung.
-* **Kernbotschaft:** Traditionelle Integrationserfahrung multipliziert sich durch den gezielten Einsatz von Generativer KI.
+### Folie 17: Generative AI im SAP-Ökosystem
+* **Visuelles Motiv:** Google Open Knowledge Format v0.2 Graph (28 Knoten, 72 Kanten), gekoppelt an Gemini 3.6 Flash & Streamlit Cloud.
+* **Kernbotschaft:** Digital Brain des Architekten: Zero-Hallucination Architekturberatung quellenbasiert aus dem Projekt-Repository.
 * **Sprechertext (20 Sek. / 53 Wörter):**
-> „Enterprise-Integration steht vor dem nächsten großen Evolutionssprung. Durch Generative AI, SAP Joule und LLM-gestützte Entwicklungs-Agenten können wir Groovy-Mappings beschleunigen, Testdaten synthetisieren und Schnittstellendokumentationen automatisiert pflegen. Wie Rheinwerks Fachbuchreihe ‚KI mit SAP‘ betont, geht es darum, fundiertes Architekturwissen durch KI als Produktivitäts-Multiplikator zu verstärken – genau das habe ich in diesem Projekt demonstriert.“
+> „Als Autor des Kapitels ‚KI mit SAP‘ im Rheinwerk-Verlag denke ich Integration weiter. Das gesamte Architekturwissen dieser Lösung liegt im Google Open Knowledge Format v0.2 vor. Gekoppelt an Gemini 3.6 Flash und serverlos auf Streamlit Cloud bereitgestellt nach ADR-006, fungiert ein KI-Agent als ständiger Berater für mein Team – vollkommen faktenfest und quellenbasiert.“
 
 ---
 
-### Folie 19: Warum Conciliamus & Dieter Rüffler?
-* **Visuelles Motiv:** Drei Säulen: 1. Plattform-Stabilität, 2. PI/PO-Migrationserfahrung, 3. Team-Coaching & Kultur.
-* **Kernbotschaft:** Sofortige Entlastung im Tagesgeschäft und strategischer Weitblick für die BTP-Roadmap.
+### Folie 18: Mehrwert für Conciliamus & Dieter Rüffler
+* **Visuelles Motiv:** Drei Säulen: 1. Architektur-Exzellenz (BTP & S/4HANA), 2. Methodenkompetenz (ISTQB, ITIL, Bruce Silver), 3. Innovationskraft (GenAI & Digital Brain).
+* **Kernbotschaft:** Sofortige Entlastung im Tagesgeschäft, PI/PO-Migrationssicherheit und zukunftssichere Cloud-Architektur.
 * **Sprechertext (20 Sek. / 51 Wörter):**
-> „Warum passe ich zu Conciliamus? Ich kenne die realen Herausforderungen gewachsener SAP PI/PO-Landschaften und weiß genau, wie man sie schrittweise und ohne Betriebsunterbrechung auf die BTP migriert. Ich bringe Ruhe und Verlässlichkeit in komplexe Schnittstellenprojekte und freue mich darauf, mein Wissen im Team von Herrn Engelmann kollegial weiterzugeben.“
+> „Was bringe ich für Conciliamus mit? Erstens: Sofortige Entlastung bei der BTP- und S/4HANA-Migration durch zwanzig Jahre Schnittstellenerfahrung. Zweitens: Höchste Qualität durch ISTQB- und ITIL-Methodik. Und drittens: Einen Innovationsschub durch den gezielten Einsatz von generativer KI. Ich freue mich darauf, dieses Wissen in Ihr Team einzubringen.“
+
+---
+
+### Folie 19: Das Enterprise Acronym Digest (45 Begriffe)
+* **Visuelles Motiv:** Interaktives Acronym-Tableau: Dynamischer Live-Inspector (`#digestInspector`) oben mit Gegenüberstellung *„SAP-Sprech vs. Informatik-Realität“* (z.B. `XSUAA` ➔ Extended OAuth 2.0 Auth Server mit signierten JWT-Claims, `iFlow` ➔ Apache Camel Route in OSGi-Runtime, `ProcessDirect` ➔ Direct-VM In-Memory Bus) und alphabetisch sortiertem 9×5-Grid aus 45 interaktiven Pills mit Mouse-Hover-Tooltips.
+* **Kernbotschaft:** Vom Marketing- und SAP-Sprech zu solider, transparenter Informatik – alle 45 Schlüsselbegriffe der Enterprise-Architektur entschlüsselt.
+* **Sprechertext (20 Sek. / 52 Wörter):**
+> „In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist im Grunde ein erweiterter JWT-Server, ein iFlow eine Camel-Route, und ProcessDirect ein latenzfreier In-Memory-Bus. Dieses Digest entschlüsselt 45 Kernbegriffe für unser Team – fahren Sie einfach mit der Maus über die Begriffe!“
 
 ---
 
 ### Folie 20: Diskussion & Live-Demo
-* **Visuelles Motiv:** Einladung zur Live-Demo: Klick auf „Fiori-Lookalike Test-Runner starten“, QR-Code / Links zu GitHub, BTP & Fiori-Lookalike App.
+* **Visuelles Motiv:** Grand Finale Cockpit (06:40 Punktlandung): Klickbare Buttons zu Fiori-Lookalike Test-Runner und Sprechertexten, Einladung an Markus Engelmann & Team zum Fachgespräch.
 * **Kernbotschaft:** Nahtloser Übergang in das Fachgespräch und die Live-Ausführung.
 * **Sprechertext (20 Sek. / 46 Wörter):**
 > „Genau sechs Minuten und vierzig Sekunden. Ich bedanke mich herzlich für Ihre Aufmerksamkeit! Lassen Sie uns jetzt keine weiteren Folien ansehen, sondern live in die BTP-Integration Suite und unsere Fiori-Lookalike-Test-App springen. Herr Engelmann, die Bühne gehört Ihren Fragen – und ich drücke auf ‚Testsuite starten‘!“
