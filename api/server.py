@@ -370,7 +370,7 @@ def agent_chat_query(req: ChatQueryRequest):
             context_text = "\n\n---\n\n".join([f"### {d['title']}\n{d['content']}" for d in top_docs])
             prompt = f"Architektur-Kontext:\n{context_text}\n\nFrage: {req.question}\n\nBeantworte fundiert als Conciliamus Architecture Advisor mit Quellenangaben (ADRs)."
             resp = client.models.generate_content(
-                model="gemini-2.5-flash",
+                model="gemini-3.6-flash",
                 contents=prompt,
                 config=types.GenerateContentConfig(temperature=0.2)
             )

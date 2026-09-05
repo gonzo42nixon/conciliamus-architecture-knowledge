@@ -179,12 +179,30 @@ BENUTZERFRAGE:
             temperature=0.2
         )
 
-        response = client.models.generate_content(
-            model=model_name,
-            contents=user_content,
-            config=config
-        )
-        return response.text
+        # Try requested model, with automatic fallback if deprecated/404
+        models_to_try = [model_name]
+        for fallback in ["gemini-3.6-flash", "gemini-2.0-flash", "gemini-1.5-flash"]:
+            if fallback not in models_to_try:
+                models_to_try.append(fallback)
+
+        last_err = None
+        for m in models_to_try:
+            try:
+                response = client.models.generate_content(
+                    model=m,
+                    contents=user_content,
+                    config=config
+                )
+                if response and response.text:
+                    return response.text
+            except Exception as e:
+                last_err = e
+                if "404" in str(e) or "NOT_FOUND" in str(e) or "no longer available" in str(e):
+                    continue
+                else:
+                    raise e
+                    
+        return f"❌ Fehler beim Aufruf der Gemini API: {str(last_err)}"
     except Exception as e:
         return f"❌ Fehler beim Aufruf der Gemini API: {str(e)}"
 
@@ -215,7 +233,7 @@ with st.sidebar:
 
     model_choice = st.selectbox(
         "Gemini Modell:",
-        ["gemini-2.5-flash", "gemini-1.5-pro", "gemini-1.5-flash"],
+        ["gemini-3.6-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"],
         index=0
     )
 
