@@ -19,6 +19,8 @@ GRAPH_PATH = ROOT_DIR / "graph" / "knowledge-graph.json"
 MANIFEST_PATH = ROOT_DIR / "manifest" / "agent.yaml"
 PECHA_HTML_PATH = ROOT_DIR / "site" / "pecha_kucha_presentation.html"
 PECHA_KONZEPT_PATH = ROOT_DIR / "knowledge" / "presentation-and-ui" / "pecha_kucha_konzept.md"
+TEST_RUNNER_HTML_PATH = ROOT_DIR / "site" / "test-runner.html"
+ISTQB_STRATEGY_PATH = ROOT_DIR / "knowledge" / "verification" / "istqb-test-strategy.md"
 
 st.set_page_config(
     page_title="Conciliamus Architecture Advisor",
@@ -340,9 +342,10 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-tab_chat, tab_pecha, tab_adrs, tab_specs = st.tabs([
+tab_chat, tab_pecha, tab_runner, tab_adrs, tab_specs = st.tabs([
     "💬 Architektur-Chat", 
     "⏱️ Pecha Kucha (20x20)", 
+    "🧪 Test-Runner (Workbench)",
     "📜 Architecture Decisions (ADRs)", 
     "📐 OpenAPI & Schemas"
 ])
@@ -464,7 +467,74 @@ with tab_pecha:
         else:
             st.markdown(konzept_text)
 
-# ----------------- TAB 3: ADRs -----------------
+# ----------------- TAB 3: TEST-RUNNER WORKBENCH -----------------
+with tab_runner:
+    st.markdown("### 🧪 SAP Fiori Integration Workbench & Test-Runner")
+    st.markdown("""
+    **SAP Fiori Horizon Design System • Single-Viewport Workbench (ADR-005) • ISTQB CTFL Testsuite**  
+    * **Technologie:** TailwindCSS, FontAwesome 6, Google Firebase Auth (Compat v12.2.1), SAP Horizon Design Tokens  
+    * **Testsuite:** 10 automatisierte Testfälle (3× PATCH Existenz-Update, 7× POST Neuanlage & Boundary-Validierung)  
+    * **Funktionen:** Echtzeit-Payload-Inspektor, Mock & Live-Runtime Modus, OData Response-Analyse, Log-Export  
+    """)
+
+    st.markdown("""
+    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 1.8rem; border-radius: 12px; border: 1px solid #334155; margin: 1.2rem 0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);">
+        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem;">
+            <span style="background: #107e3e; color: white; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.85rem;">STAND-ALONE VOLLBILD</span>
+            <span style="color: #cbd5e1; font-size: 0.9rem;">SAP Fiori Horizon • OData v2 Payloads • Native Google Auth</span>
+        </div>
+        <h2 style="color: #ffffff; margin: 0 0 0.8rem 0; font-size: 1.5rem;">🧪 SAP Fiori Test-Runner Workbench Live</h2>
+        <p style="color: #94a3b8; margin: 0 0 1.2rem 0; line-height: 1.5;">
+            Öffnen Sie die Test-Runner Workbench direkt als eigenständige Web-Anwendung im Vollbild.
+            Dort funktioniert die <strong>Google Firebase Authentifizierung nativ und ohne iFrame-Sicherheitssperren</strong> moderner Browser (Third-Party Cookies / Cross-Origin Popup-Blocker).
+        </p>
+        <a href="https://orcai-54321.web.app/test-runner.html" target="_blank" style="display: inline-block; background: #0070f2; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 1rem; box-shadow: 0 4px 14px rgba(0,112,242,0.4);">
+            🚀 Test-Runner Workbench Stand-Alone starten (Neuer Tab) ↗
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+
+    col_btn_r1, col_btn_r2 = st.columns([1, 1])
+    runner_html = ""
+    if TEST_RUNNER_HTML_PATH.exists():
+        runner_html = TEST_RUNNER_HTML_PATH.read_text(encoding="utf-8")
+        with col_btn_r1:
+            st.download_button(
+                "💾 Test-Runner als HTML herunterladen",
+                runner_html,
+                file_name="sap_fiori_test_runner.html",
+                mime="text/html",
+                use_container_width=True
+            )
+    with col_btn_r2:
+        st.link_button(
+            "📂 Quellcode auf GitHub ansehen",
+            "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/site/test-runner.html",
+            use_container_width=True
+        )
+
+    st.markdown("---")
+    st.markdown("#### 📋 ISTQB Testfallmatrix (10 Testfälle: 3× PATCH, 7× POST)")
+    st.markdown("""
+| # | Testfall-ID | Kategorie & Beschreibung | HTTP Methode | Erwarteter Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **01** | `TC-01` | Existierender Partner 1 (Organisation) | **PATCH** | `204 No Content` |
+| **02** | `TC-02` | Existierender Partner 2 (`BECHTLE AG`) | **PATCH** | `204 No Content` |
+| **03** | `TC-03` | Existierender Partner 3 (`XYZ-PEPPOL`) | **PATCH** | `204 No Content` |
+| **04** | `TC-04` | Neuanlage Partner (`JSD-BP-100001` Organisation) | **POST** | `201 Created` |
+| **05** | `TC-05` | Neuanlage Natürliche Person mit Rollen `FLCU01`/`FLVN01` | **POST** | `201 Created` |
+| **06** | `TC-06` | Duplikaterkennung & Abweisung (Mehrdeutiger Treffer) | **POST** | `422 FAILED_BUSINESS` |
+| **07** | `TC-07` | Validierungsfehler: Fehlende Pflichtfelder | **POST** | `400 FAILED_VALIDATION` |
+| **08** | `TC-08` | Schemavalidierung: Ungültige Partner-Kategorie | **POST** | `400 Bad Request` |
+| **09** | `TC-09` | Grenzwertanalyse: Maximale Feldlängen & Sonderzeichen | **POST** | `200 / 201 OK` |
+| **10** | `TC-10` | In-Memory ProcessDirect Routing zum Sub-iFlow | **POST** | `200 OK` |
+    """)
+
+    if ISTQB_STRATEGY_PATH.exists():
+        with st.expander("📖 Vollständiges ISTQB Strategiedokument einsehen (OKF Knowledge Base)"):
+            st.markdown(ISTQB_STRATEGY_PATH.read_text(encoding="utf-8"))
+
+# ----------------- TAB 4: ADRs -----------------
 with tab_adrs:
     st.markdown("### 🏛️ Verifizierte Architecture Decision Records (ADRs)")
     adr_docs = [c for c in concepts if c.get("type") == "Decision Record" or "adr-" in c["id"]]
@@ -478,7 +548,7 @@ with tab_adrs:
             st.markdown("---")
             st.markdown(adr["content"])
 
-# ----------------- TAB 3: SPECS -----------------
+# ----------------- TAB 5: SPECS -----------------
 with tab_specs:
     st.markdown("### 📐 OpenAPI Spezifikationen & Integrationsschemata")
     col1, col2 = st.columns(2)
