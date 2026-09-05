@@ -98,6 +98,17 @@ graph TD
   presentation_and_ui_pecha_kucha_20x20 -->|references| decisions_adr_004_bpmn_method_and_style
   presentation_and_ui_pecha_kucha_20x20 -->|references| verification_live_btp_execution
   presentation_and_ui_pecha_kucha_konzept -->|implementedBy| presentation_and_ui_pecha_kucha_20x20
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_001_dual_iflow_decoupling
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_002_zero_trust_btp_security
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_003_end_to_end_correlation_mpl
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_004_bpmn_method_and_style
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_005_process_direct
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_006_idempotent_existence_check
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_007_two_legged_csrf_handshake
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_008_data_store_dlq
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_009_single_viewport_fiori
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_010_streamlit_cloud_agent_deployment
+  presentation_and_ui_pecha_kucha_konzept -->|refersTo| decisions_adr_011_google_okf_knowledge_graph
   presentation_and_ui_streamlit_chat_advisor -->|implements| decisions_adr_001_dual_iflow_decoupling
   presentation_and_ui_streamlit_chat_advisor -->|implements| decisions_adr_010_streamlit_cloud_agent_deployment
   presentation_and_ui_streamlit_chat_advisor -->|dependsOn| architecture_agent_deployment_and_gitops

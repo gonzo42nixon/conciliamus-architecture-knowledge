@@ -1,7 +1,7 @@
 {
   "okfVersion": "0.2",
   "nodesCount": 33,
-  "edgesCount": 82,
+  "edgesCount": 93,
   "nodes": [
     {
       "id": "architecture/agent-deployment-and-gitops",
@@ -201,7 +201,7 @@
       "description": "Aufteilung der Integrationslogik in zwei separate iFlows zur Gewährleistung von Fehlerisolation und Ressourcenschonung.",
       "status": "accepted",
       "domain": "General",
-      "degree": 7
+      "degree": 8
     },
     {
       "id": "decisions/adr-002-zero-trust-btp-security",
@@ -222,7 +222,7 @@
       "description": "Einsatz der SAP BTP Integration Suite als Managed PaaS und Etablierung einer strikten Zero-Trust-Sicherheitsarchitektur ab Sekunde Null (OAuth2, XSUAA, TLS 1.3, Vault).",
       "status": "accepted",
       "domain": "General",
-      "degree": 2
+      "degree": 3
     },
     {
       "id": "decisions/adr-003-end-to-end-correlation-mpl",
@@ -242,7 +242,7 @@
       "description": "Durchgängige Rückverfolgbarkeit von Massen-Batches und Einzelnachrichten mittels globaler Correlation-ID und Custom Header Properties im SAP Message Processing Log.",
       "status": "accepted",
       "domain": "General",
-      "degree": 2
+      "degree": 3
     },
     {
       "id": "decisions/adr-004-bpmn-method-and-style",
@@ -260,7 +260,7 @@
       "description": "Durchgängige Anwendung der Nomenklatur- und Modellierungsstandards von Bruce Silver für selbstdokumentierende Enterprise-iFlows.",
       "status": "accepted",
       "domain": "General",
-      "degree": 5
+      "degree": 6
     },
     {
       "id": "decisions/adr-005-process-direct",
@@ -278,7 +278,7 @@
       "description": "Nutzung des ProcessDirect-Adapters zur latenzfreien internen Kopplung ohne JMS-Ressourcenbindung.",
       "status": "accepted",
       "domain": "General",
-      "degree": 4
+      "degree": 5
     },
     {
       "id": "decisions/adr-006-idempotent-existence-check",
@@ -298,7 +298,7 @@
       "description": "Absicherung der Schnittstelle gegen Duplikate und Fehlversuche durch vorgeschalteten OData GET Existenzcheck und deterministische 3-Wege-Routing-Matrix (POST vs. PATCH).",
       "status": "accepted",
       "domain": "General",
-      "degree": 2
+      "degree": 3
     },
     {
       "id": "decisions/adr-007-two-legged-csrf-handshake",
@@ -318,7 +318,7 @@
       "description": "Zweistufiges Kommunikationsmuster zur zuverlässigen Aushandlung und Persistierung von X-CSRF-Tokens und Session-Cookies für schreibende SAP S/4HANA OData V2 Calls.",
       "status": "accepted",
       "domain": "General",
-      "degree": 2
+      "degree": 3
     },
     {
       "id": "decisions/adr-008-data-store-dlq",
@@ -336,7 +336,7 @@
       "description": "Einsatz eines persistenten BTP Data Stores für fehlgeschlagene Einzelnachrichten zur Ermöglichung eines punktuellen Wiederanlaufs.",
       "status": "accepted",
       "domain": "General",
-      "degree": 5
+      "degree": 6
     },
     {
       "id": "decisions/adr-009-single-viewport-fiori",
@@ -354,7 +354,7 @@
       "description": "Entwicklung einer schlanken Single-Page Web-App im SAP Fiori Horizon Lookalike-Design (ohne UI5-Framework-Overhead) mit striktem 100% no-outer-scroll Layout und interaktiven aufklappbaren JSON-Pills.",
       "status": "accepted",
       "domain": "General",
-      "degree": 2
+      "degree": 3
     },
     {
       "id": "decisions/adr-010-streamlit-cloud-agent-deployment",
@@ -375,7 +375,7 @@
       "description": "Bereitstellung des Conciliamus AI Architecture Advisor als Zero-Docker, Zero-Cost Serverless Web-App direkt aus GitHub mit nativer SAP BTP CORS-Bypass-Architektur.",
       "status": "accepted",
       "domain": "General",
-      "degree": 4
+      "degree": 5
     },
     {
       "id": "decisions/adr-011-google-okf-knowledge-graph",
@@ -396,7 +396,7 @@
       "description": "Einführung des Google Open Knowledge Format (OKF v0.2) als maschinenlesbarer, graphbasierter Architektur-Standard für quellenbasierte KI-Architekturberatung mit Google Gemini.",
       "status": "accepted",
       "domain": "General",
-      "degree": 2
+      "degree": 3
     },
     {
       "id": "iflows/batch-receiver-iflow",
@@ -508,7 +508,7 @@
       "description": "Vollständiges Drehbuch, Struktur und 20-Sekunden-Sprechertexte der 20 Folien umfassenden Pecha Kucha Architekturpräsentation.",
       "status": "verified",
       "domain": "General",
-      "degree": 1
+      "degree": 12
     },
     {
       "id": "presentation-and-ui/streamlit-chat-advisor",
@@ -943,6 +943,61 @@
       "source": "presentation-and-ui/pecha_kucha_konzept",
       "target": "presentation-and-ui/pecha-kucha-20x20",
       "relation": "implementedBy"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-001-dual-iflow-decoupling",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-002-zero-trust-btp-security",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-003-end-to-end-correlation-mpl",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-004-bpmn-method-and-style",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-005-process-direct",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-006-idempotent-existence-check",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-007-two-legged-csrf-handshake",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-008-data-store-dlq",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-009-single-viewport-fiori",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-010-streamlit-cloud-agent-deployment",
+      "relation": "refersTo"
+    },
+    {
+      "source": "presentation-and-ui/pecha_kucha_konzept",
+      "target": "decisions/adr-011-google-okf-knowledge-graph",
+      "relation": "refersTo"
     },
     {
       "source": "presentation-and-ui/streamlit-chat-advisor",
