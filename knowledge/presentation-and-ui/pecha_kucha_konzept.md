@@ -42,7 +42,7 @@ relations:
 | **14** | Resilienz | **Dual-Channel Fehlerbehandlung** | Fachlicher Fehler (Audit Log) vs. Technischer Ausfall (Dead Letter Queue) |
 | **15** | Qualität | **ISTQB-getriebenes Testing** | Systematischer 10er-Batch: 3x PATCH, 7x POST, Grenzwertanalyse |
 | **16** | Beweis | **Live auf SAP BTP verifiziert** | Erfolgreicher End-to-End Durchlauf mit HTTP 200 OK am 04.09.2026 |
-| **17** | Tooling | **Fiori Horizon Test-Runner** | Single-Page Web-App mit Monitoring-Drawer für Fachbereich & Devs |
+| **17** | Tooling | **Der Fiori-Lookalike Test-Runner** | Single-Viewport Web-App im authentischen SAP Fiori Horizon Look |
 | **18** | Innovation | **Generative AI im SAP-Ökosystem** | Rheinwerk „KI mit SAP“: Schnittstellen-Auditing mit SAP Joule & LLMs |
 | **19** | Fit | **Mehrwert für Conciliamus** | PI/PO-Migration beschleunigen, Plattform-Stabilität sichern, Team coachen |
 | **20** | Finale | **Überleitung in die Live-Demo** | Fragen, Fachgespräch & Live-Ausführung auf der BTP Cloud Integration |
@@ -179,11 +179,11 @@ relations:
 
 ---
 
-### Folie 17: Der SAP Fiori Horizon Test-Runner
-* **Visuelles Motiv:** Screenshot der erstellten Web-App mit Fiori ShellBar, KPI-Kacheln und aufgleitendem Monitoring-Drawer.
-* **Kernbotschaft:** Entwickler-Werkzeuge dürfen modern, zugänglich und intuitiv sein.
+### Folie 17: Der Fiori-Lookalike Test-Runner
+* **Visuelles Motiv:** Mockup der erstellten Single-Viewport Web-App im SAP Fiori Horizon Lookalike-Design mit Fiori ShellBar, KPI-Kacheln, aufklappbaren RGB-JSON-Pills und aufgleitendem Monitoring-Drawer.
+* **Kernbotschaft:** Leichtgewichtige Web-App im vertrauten Fiori-Design ohne Framework-Overhead – 100% Single-Viewport Ergonomie nach ADR-005.
 * **Sprechertext (20 Sek. / 50 Wörter):**
-> „Um diesen Test jederzeit transparent wiederholbar zu machen, habe ich eine Single-Page Web-App im modernen SAP Fiori Horizon Design gebaut. Mit einem Klick triggert sie den OAuth2-Handshake, feuert den Batch und zeigt die Antwortkarten, Handshake-Logs und Rohdaten in einem eleganten Fiori-Side-Drawer an – ganz ohne Konsolen-Chaos.“
+> „Um Integration für alle Beteiligten greifbar zu machen, habe ich eine eigenständige Test-Runner Web-App im SAP Fiori Horizon Lookalike-Design entwickelt. Nach ADR-005 im strikten Single-Viewport-Layout: Keine störende Fensterscrollbar, interaktive farbige JSON-Pills für jeden Geschäftspartner und ein ausklappbarer Monitoring-Drawer. So können auch Fachbereichskollegen Testläufe eigenständig verifizieren.“
 
 ---
 
@@ -204,10 +204,10 @@ relations:
 ---
 
 ### Folie 20: Diskussion & Live-Demo
-* **Visuelles Motiv:** Einladung zur Live-Demo: Klick auf „Testsuite starten“, QR-Code / Links zu GitHub, BTP & Fiori App.
+* **Visuelles Motiv:** Einladung zur Live-Demo: Klick auf „Fiori-Lookalike Test-Runner starten“, QR-Code / Links zu GitHub, BTP & Fiori-Lookalike App.
 * **Kernbotschaft:** Nahtloser Übergang in das Fachgespräch und die Live-Ausführung.
 * **Sprechertext (20 Sek. / 46 Wörter):**
-> „Genau sechs Minuten und vierzig Sekunden. Ich bedanke mich herzlich für Ihre Aufmerksamkeit! Lassen Sie uns jetzt keine weiteren Folien ansehen, sondern live in die BTP-Integration Suite und unsere Fiori-Test-App springen. Herr Engelmann, die Bühne gehört Ihren Fragen – und ich drücke auf ‚Testsuite starten‘!“
+> „Genau sechs Minuten und vierzig Sekunden. Ich bedanke mich herzlich für Ihre Aufmerksamkeit! Lassen Sie uns jetzt keine weiteren Folien ansehen, sondern live in die BTP-Integration Suite und unsere Fiori-Lookalike-Test-App springen. Herr Engelmann, die Bühne gehört Ihren Fragen – und ich drücke auf ‚Testsuite starten‘!“
 
 ---
 

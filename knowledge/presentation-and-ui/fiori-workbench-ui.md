@@ -1,10 +1,10 @@
 ---
 id: presentation-and-ui/fiori-workbench-ui
 type: UI Concept
-title: SAP Fiori Integration Workbench & Test-Runner
-description: Architektur der Single-Viewport Fiori Horizon Web-Applikation mit aufklappbaren RGB-JSON-Pills und Monitoring-Drawer.
+title: SAP Fiori Horizon Lookalike Workbench & Test-Runner
+description: Architektur der Single-Viewport Fiori Horizon Lookalike Web-Applikation (Tailwind CSS, SAP 72 Font) mit aufklappbaren RGB-JSON-Pills und Monitoring-Drawer.
 resource: btp://conciliamus/ui/fiori-workbench
-tags: [ui, fiori, workbench, json-pills, single-viewport, test-runner, firebase-auth]
+tags: [ui, fiori-lookalike, workbench, json-pills, single-viewport, test-runner, firebase-auth]
 status: verified
 generated:
   by: "human:dieter-rueffler"
@@ -15,11 +15,17 @@ relations:
 sources:
   - id: test-runner-app
     resource: https://github.com/gonzo42nixon/Conciliamus/blob/main/docs/test_runner_app.html
-    title: SAP Fiori Integration Test Runner & Workbench
+    title: SAP Fiori Lookalike Integration Test Runner & Workbench
     author: "Dieter Rüffler"
 ---
 
-# SAP Fiori Integration Workbench & Test-Runner
+# SAP Fiori Horizon Lookalike Workbench & Test-Runner
+
+## Fiori Horizon Lookalike-Architektur
+Die Test-Runner Workbench wurde bewusst als **SAP Fiori Look-alike Web-Applikation** umgesetzt:
+- **Design-Authentizität:** SAP 72 Font, Fiori ShellBar, Fiori Horizon Farbschema (`#0070f2`, `#1d2d3e`) und Fiori Cards.
+- **Zero-Bloat & Performance:** Implementiert mit modernem Tailwind CSS und modularem JavaScript – ganz ohne 15 MB UI5-Framework-Overhead.
+- **Vorteil:** Subsekundäre Ladezeiten, uneingeschränkte Portabilität und verlässliche Single-Viewport-Ergonomie.
 
 ## Ergonomie: 100% Single-Viewport Design
 - **Keine äußere Fensterscrollbar:** `html, body { height: 100vh; overflow: hidden; }`
