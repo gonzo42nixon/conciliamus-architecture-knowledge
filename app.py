@@ -457,8 +457,8 @@ with st.sidebar:
         "Wie löst ADR-010 das BTP CORS-Problem und das serverlose GitOps-Deployment?",
         "Wie stellt ADR-011 mit OKF v0.2 und Gemini 3.6 quellenbasierte Beratung sicher?"
     ]
-    for sq in sample_queries:
-        if st.button(sq, key=f"sb_chip_{sq[:10]}", use_container_width=True):
+    for idx, sq in enumerate(sample_queries):
+        if st.button(sq, key=f"sb_chip_{idx}", use_container_width=True):
             st.session_state.current_prompt = sq
             st.rerun()
 
