@@ -174,7 +174,7 @@ relations:
 ---
 
 ### Folie 15: ADR-009: Der Fiori Horizon Test-Runner
-* **Visuelles Motiv:** Single-Viewport Web-App im authentischen SAP Fiori Horizon Look nach ADR-009: 10 interaktive Geschäftspartner-Kacheln mit JSON-Payload-Vorschau, Direkt-Triggern gegen BTP und Live-Log-Terminal ohne äußeres Scrollen.
+* **Visuelles Motiv:** Reale Web-App im authentischen SAP Fiori Horizon Look nach ADR-009: Großflächiger Screenshot der Testrunner-Workbench (`orcai-54321.web.app/test-runner.html`) mit Direkt-Link zur Live-App, 10 differenzierten Testfällen (3x PATCH, 7x POST), aufklappbaren JSON-Payload-Pills und Live BTP-Dispatch ohne äußeres Scrollen.
 * **Kernbotschaft:** Transparenz und Bedienbarkeit für Entwickler und Fachbereich durch eine leichtgewichtige Test-App.
 * **Sprechertext (20 Sek. / 48 Wörter):**
 > „Um Integration für alle Beteiligten greifbar zu machen, habe ich eine eigenständige Test-Runner Web-App im SAP Fiori Horizon Look nach ADR-009 gebaut. Ohne schwere Framework-Altlasten, komplett responsiv und auf einen einzigen Bildschirm optimiert. Jeder Datensatz lässt sich per Klick live gegen die BTP feuern – inklusive vollständiger JSON-Payload-Transparenz.“
