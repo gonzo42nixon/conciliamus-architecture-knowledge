@@ -35,6 +35,7 @@ Willkommen im **Google Open Knowledge Format (OKF v0.2)** Bundle der Conciliamus
 * [ADR-004: Data Store für Dead-Letter-Queue & Selektiver Replay](/decisions/adr-004-data-store-dlq.md) – Granularer Wiederanlauf fehlerhafter Datensätze.
 * [ADR-005: Single-Viewport Ergonomie für die Fiori Workbench](/decisions/adr-005-single-viewport-fiori.md) – 100% no-outer-scroll Layout-Architektur.
 * [ADR-006: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps](/decisions/adr-006-streamlit-cloud-agent-deployment.md) – Zero-Docker, Zero-Cost und Umgehung der BTP CORS-Hürde.
+* [ADR-007: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor](/decisions/adr-007-google-okf-knowledge-graph.md) – Maschinenlesbarer Wissensgraph & Zero-Hallucination Consulting mit Google Gemini.
 
 ---
 

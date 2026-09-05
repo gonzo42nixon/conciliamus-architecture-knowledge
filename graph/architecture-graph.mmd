@@ -14,12 +14,13 @@ graph TD
   decisions_adr_002_process_direct["ADR-002: ProcessDirect statt Message Queues für iFlow-Kopplung<br/><i>Decision Record</i>"]
   decisions_adr_003_bpmn_method_and_style["ADR-003: Modellierung nach Bruce Silver (BPMN 2.0 Method & Style)<br/><i>Decision Record</i>"]
   decisions_adr_004_data_store_dlq["ADR-004: Data Store für Dead-Letter-Queue & Selektiven Replay<br/><i>Decision Record</i>"]
-  decisions_adr_005_single_viewport_fiori["ADR-005: Single-Viewport Ergonomie für die Fiori Workbench<br/><i>Decision Record</i>"]
+  decisions_adr_005_single_viewport_fiori["ADR-005: Single-Viewport Ergonomie für die Fiori-Lookalike Workbench<br/><i>Decision Record</i>"]
   decisions_adr_006_streamlit_cloud_agent_deployment["ADR-006: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps<br/><i>Decision Record</i>"]
+  decisions_adr_007_google_okf_knowledge_graph["ADR-007: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor<br/><i>Decision Record</i>"]
   iflows_batch_receiver_iflow["IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher<br/><i>iFlow Specification</i>"]
   iflows_item_processor_iflow["IFL_MDM_BP_Item_Processor: Atomare Partner-Verarbeitung<br/><i>iFlow Specification</i>"]
   iflows_reprocessor_iflow["IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf<br/><i>iFlow Specification</i>"]
-  presentation_and_ui_fiori_workbench_ui["SAP Fiori Integration Workbench & Test-Runner<br/><i>UI Concept</i>"]
+  presentation_and_ui_fiori_workbench_ui["SAP Fiori Horizon Lookalike Workbench & Test-Runner<br/><i>UI Concept</i>"]
   presentation_and_ui_pecha_kucha_20x20["Pecha Kucha 20x20 Präsentationsarchitektur<br/><i>Presentation Concept</i>"]
   presentation_and_ui_pecha_kucha_konzept["Pecha Kucha 20x20 Konzept & Foliensprechertexte<br/><i>Presentation Concept</i>"]
   presentation_and_ui_streamlit_chat_advisor["Conciliamus Architecture Advisor (Streamlit Web App)<br/><i>UI Component</i>"]
@@ -66,6 +67,8 @@ graph TD
   decisions_adr_005_single_viewport_fiori -->|implementedBy| presentation_and_ui_fiori_workbench_ui
   decisions_adr_006_streamlit_cloud_agent_deployment -->|implements| presentation_and_ui_streamlit_chat_advisor
   decisions_adr_006_streamlit_cloud_agent_deployment -->|dependsOn| architecture_agent_deployment_and_gitops
+  decisions_adr_007_google_okf_knowledge_graph -->|implements| presentation_and_ui_streamlit_chat_advisor
+  decisions_adr_007_google_okf_knowledge_graph -->|dependsOn| architecture_agent_deployment_and_gitops
   iflows_batch_receiver_iflow -->|partOf| architecture_dual_iflow_pattern
   iflows_batch_receiver_iflow -->|routesTo| iflows_item_processor_iflow
   iflows_batch_receiver_iflow -->|implements| decisions_adr_003_bpmn_method_and_style

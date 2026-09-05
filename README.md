@@ -110,7 +110,8 @@ conciliamus-architecture-knowledge/
 │   │   ├── adr-003-bpmn-method-and-style.md   # ADR-003: Bruce Silver Namenskonventionen
 │   │   ├── adr-004-data-store-dlq.md          # ADR-004: Data Store für selektiven Replay
 │   │   ├── adr-005-single-viewport-fiori.md   # ADR-005: Single-Viewport Fiori Workbench
-│   │   └── adr-006-streamlit-cloud-agent-deployment.md # ADR-006: Serverless Streamlit Cloud & GitOps
+│   │   ├── adr-006-streamlit-cloud-agent-deployment.md # ADR-006: Serverless Streamlit Cloud & GitOps
+│   │   └── adr-007-google-okf-knowledge-graph.md      # ADR-007: Google OKF v0.2 & Grounded Gemini AI
 │   ├── data-contracts/                        # Schnittstellenkontrakte & Datenmodelle
 │   │   ├── mdm-inbound-contract.md            # JSD-MDM JSON Schema & Felddefinitionen
 │   │   ├── s4-odata-mapping.md                # Feldmapping zu SAP S/4HANA OData

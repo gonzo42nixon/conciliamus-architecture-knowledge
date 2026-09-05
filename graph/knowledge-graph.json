@@ -1,7 +1,7 @@
 {
   "okfVersion": "0.2",
-  "nodesCount": 28,
-  "edgesCount": 72,
+  "nodesCount": 29,
+  "edgesCount": 74,
   "nodes": [
     {
       "id": "architecture/agent-deployment-and-gitops",
@@ -22,7 +22,7 @@
       "description": "Architekturkonzept für die serverlose Bereitstellung des Conciliamus AI Architecture Advisor via Streamlit Community Cloud, GitHub GitOps und hybrider BTP-Ausführung.",
       "status": "verified",
       "domain": "General",
-      "degree": 4
+      "degree": 5
     },
     {
       "id": "architecture/dual-iflow-pattern",
@@ -259,18 +259,18 @@
     },
     {
       "id": "decisions/adr-005-single-viewport-fiori",
-      "label": "ADR-005: Single-Viewport Ergonomie für die Fiori Workbench",
+      "label": "ADR-005: Single-Viewport Ergonomie für die Fiori-Lookalike Workbench",
       "type": "Decision Record",
       "path": "/decisions/adr-005-single-viewport-fiori.md",
       "tags": [
         "adr",
         "architecture-decision",
-        "fiori",
+        "fiori-lookalike",
         "ui-design",
         "single-viewport",
         "pills"
       ],
-      "description": "Umstellung der Test-Runner Web-App auf ein striktes 100% no-outer-scroll Layout mit interaktiven aufklappbaren JSON-Pills.",
+      "description": "Entwicklung einer schlanken Single-Page Web-App im SAP Fiori Horizon Lookalike-Design (ohne UI5-Framework-Overhead) mit striktem 100% no-outer-scroll Layout und interaktiven aufklappbaren JSON-Pills.",
       "status": "accepted",
       "domain": "General",
       "degree": 2
@@ -295,6 +295,27 @@
       "status": "accepted",
       "domain": "General",
       "degree": 4
+    },
+    {
+      "id": "decisions/adr-007-google-okf-knowledge-graph",
+      "label": "ADR-007: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor",
+      "type": "Decision Record",
+      "path": "/decisions/adr-007-google-okf-knowledge-graph.md",
+      "tags": [
+        "adr",
+        "architecture-decision",
+        "google-okf",
+        "open-knowledge-format",
+        "knowledge-graph",
+        "gemini",
+        "ai-advisor",
+        "grounding",
+        "zero-hallucination"
+      ],
+      "description": "Einführung des Google Open Knowledge Format (OKF v0.2) als maschinenlesbarer, graphbasierter Architektur-Standard für quellenbasierte KI-Architekturberatung mit Google Gemini.",
+      "status": "accepted",
+      "domain": "General",
+      "degree": 2
     },
     {
       "id": "iflows/batch-receiver-iflow",
@@ -355,19 +376,19 @@
     },
     {
       "id": "presentation-and-ui/fiori-workbench-ui",
-      "label": "SAP Fiori Integration Workbench & Test-Runner",
+      "label": "SAP Fiori Horizon Lookalike Workbench & Test-Runner",
       "type": "UI Concept",
       "path": "/presentation-and-ui/fiori-workbench-ui.md",
       "tags": [
         "ui",
-        "fiori",
+        "fiori-lookalike",
         "workbench",
         "json-pills",
         "single-viewport",
         "test-runner",
         "firebase-auth"
       ],
-      "description": "Architektur der Single-Viewport Fiori Horizon Web-Applikation mit aufklappbaren RGB-JSON-Pills und Monitoring-Drawer.",
+      "description": "Architektur der Single-Viewport Fiori Horizon Lookalike Web-Applikation (Tailwind CSS, SAP 72 Font) mit aufklappbaren RGB-JSON-Pills und Monitoring-Drawer.",
       "status": "verified",
       "domain": "General",
       "degree": 4
@@ -426,7 +447,7 @@
       "description": "Weltweit verfuegbare Serverless Webanwendung auf Basis von Streamlit Community Cloud und Google AI Studio (Gemini 3.6 Flash) mit dynamischem Grounding auf das OKF-Wissensbuendel.",
       "status": "productive",
       "domain": "General",
-      "degree": 6
+      "degree": 7
     },
     {
       "id": "qa/core-architecture-faq",
@@ -704,6 +725,16 @@
     },
     {
       "source": "decisions/adr-006-streamlit-cloud-agent-deployment",
+      "target": "architecture/agent-deployment-and-gitops",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "decisions/adr-007-google-okf-knowledge-graph",
+      "target": "presentation-and-ui/streamlit-chat-advisor",
+      "relation": "implements"
+    },
+    {
+      "source": "decisions/adr-007-google-okf-knowledge-graph",
       "target": "architecture/agent-deployment-and-gitops",
       "relation": "dependsOn"
     },
