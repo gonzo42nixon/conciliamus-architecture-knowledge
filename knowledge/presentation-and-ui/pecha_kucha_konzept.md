@@ -44,7 +44,7 @@ relations:
 | **16** | Tooling | **Der Fiori-Lookalike Test-Runner** | Single-Viewport Web-App im authentischen SAP Fiori Horizon Look |
 | **17** | Innovation | **Generative AI im SAP-Ökosystem** | Google OKF v0.2 & Gemini 3.6 Flash: Das Digital Brain des Architekten |
 | **18** | Fit | **Mehrwert für Conciliamus & Dieter Rüffler** | Drei Säulen für den Teamerfolg: Architektur-Exzellenz, Methodenkompetenz, Innovationskraft |
-| **19** | Glossar | **Das Enterprise Acronym Digest (88 Begriffe)** | Vom SAP-Sprech zu solider Informatik: 88 Schlüsselbegriffe (inkl. aller 9 HTTP-Verben, CODEX, Antigravity, Agentic Coding) von 200 bis YAML alphabetisch entschlüsselt mit interaktivem Inspector & Orange-Highlighter |
+| **19** | Glossar | **Das Enterprise Acronym Digest (103 Begriffe)** | Vom SAP-Sprech zu solider Informatik: 103 Schlüsselbegriffe (inkl. 9 HTTP-Verben, Frontier AI wie Claude, Gemini, Grok sowie OpenAPI & Webstandards) von 200 bis YAML alphabetisch entschlüsselt mit interaktivem Inspector & Orange-Highlighter |
 | **20** | Finale | **Überleitung in die Live-Demo** | Fragen, Fachgespräch & Live-Ausführung auf der BTP Cloud Integration |
 
 ---
@@ -195,11 +195,11 @@ relations:
 
 ---
 
-### Folie 19: Das Enterprise Acronym Digest (88 Begriffe)
-* **Visuelles Motiv:** Großzügig dimensioniertes Acronym-Tableau: Fester 128px Live-Inspector (`#digestInspector`, garantiert 0px Layout-Jumping) oben mit Gegenüberstellung *„SAP-Sprech vs. Informatik-Realität“* (z.B. `XSUAA` ➔ Extended OAuth 2.0 Auth Server mit signierten JWT-Claims, `SE16N` ➔ SQL-Tabellenbrowser, `VA01` ➔ SD Kundenauftragsanlage, `Joule` ➔ RAG Enterprise LLM Copilot, `ProcessDirect` ➔ Direct-VM In-Memory Bus) und alphabetisch sortiertem Grid aus 88 interaktiven Pills mit Mouse-Hover/Click-Inspektion (aktive Pill in markantem Orange `#f97316` mit schwarzer Schrift) und Kategorie-Filtertabs (`[Alle (88)]`, `[HTTP-Verben (10)]`, `[SAP & Transaktionen (24)]`, `[AI & GenAI (13)]`, `[Architektur & QS (12)]`, `[Web & Cloud (25)]`).
-* **Kernbotschaft:** Vom Marketing- und SAP-Sprech zu solider, transparenter Informatik – 88 Schlüsselbegriffe der Enterprise-Architektur (inklusive aller neun HTTP-Methoden nach RFC 9110, CODEX, Antigravity und Agentic Coding) entschlüsselt.
-* **Sprechertext (20 Sek. / 52 Wörter):**
-> „In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist ein erweiterter JWT-Server, SE16N ein SQL-Viewer, und Joule ein RAG-Interface. Dieses Digest entschlüsselt achtundachtzig Kernbegriffe – von allen neun HTTP-Verben bis zum Agentic Coding. Fahren oder filtern Sie einfach mit der Maus!“
+### Folie 19: Das Enterprise Acronym Digest (103 Begriffe)
+* **Visuelles Motiv:** Großzügig dimensioniertes Acronym-Tableau: Fester 128px Live-Inspector (`#digestInspector`, garantiert 0px Layout-Jumping) oben mit Gegenüberstellung *„SAP-Sprech vs. Informatik-Realität“* (z.B. `XSUAA` ➔ Extended OAuth 2.0 Auth Server mit signierten JWT-Claims, `SE16N` ➔ SQL-Tabellenbrowser, `VA01` ➔ SD Kundenauftragsanlage, `Joule` ➔ RAG Enterprise LLM Copilot, `ProcessDirect` ➔ Direct-VM In-Memory Bus, `Claude`/`Gemini`/`Grok` ➔ Frontier AI Ökosystem) und alphabetisch sortiertem Grid aus 103 interaktiven Pills mit Mouse-Hover/Click-Inspektion (aktive Pill in markantem Orange `#f97316` mit schwarzer Schrift) und Kategorie-Filtertabs (`[Alle (103)]`, `[SAP & Transaktionen (24)]`, `[HTTP-Verben (10)]`, `[AI & Frontier (24)]`, `[Architektur & QS (20)]`, `[Web, API & Security (48)]`).
+* **Kernbotschaft:** Vom Marketing- und SAP-Sprech zu solider, transparenter Informatik – 103 Schlüsselbegriffe der Enterprise-Architektur (inklusive aller neun HTTP-Methoden nach RFC 9110, Frontier-LLMs wie Claude, Gemini und Grok, OpenAPI, Swagger, Postman, SOA, SOAP und XSLT/XSD) entschlüsselt.
+* **Sprechertext (20 Sek. / 53 Wörter):**
+> „In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist ein erweiterter JWT-Server, SE16N ein SQL-Viewer, und Joule ein RAG-Interface. Dieses Digest entschlüsselt einhundertdrei Kernbegriffe – von SOAP und OpenAPI über alle neun HTTP-Verben bis hin zu Claude, Gemini und Grok. Fahren oder filtern Sie einfach mit der Maus!“
 
 ---
 
