@@ -26,7 +26,7 @@ relations:
 
 | # | Phase | Folientitel | Kernbotschaft / Visual |
 |---|---|---|---|
-| **01** | Intro | **Start & Willkommen** | Dieter Rüffler: 20 Jahre Integrationsexpertise trifft moderne SAP BTP |
+| **01** | Intro | **Start & Willkommen** | Praxisaufgabe Conciliamus GmbH: Dieter Rüffler löst Business Partner Synchronisation mit SAP BTP Integration Suite |
 | **02** | Intro | **Profil & Werte** | TU Berlin, ISTQB CTFL, ITIL V2 – Solide Ingenieurskunst & Cloud-Agilität |
 | **03** | Kontext | **Conciliamus & Johannesstift Diakonie** | Resiliente Stammdaten für das Rückgrat der Gesundheitswirtschaft |
 | **04** | Challenge | **Die Integrationsaufgabe** | MDM-Massenbatch trifft auf transaktionales S/4HANA OData |
@@ -52,10 +52,10 @@ relations:
 ## Detaillierter Ablauf & 20-Sekunden-Sprechertexte
 
 ### Folie 01: Start & Willkommen
-* **Visuelles Motiv:** Hero-Card Dieter Rüffler mit verlinktem offiziellen LinkedIn-Badge ([linkedin.com/in/dieter-rueffler-05981623b](https://www.linkedin.com/in/dieter-rueffler-05981623b/)), BTP Cloud Integration Visual Node (`b9c123f3trial`), Titel: *„Resiliente Business Partner Synchronisation auf SAP BTP“*.
-* **Kernbotschaft:** Moderne Enterprise-Integration erfordert mehr als Code – sie braucht Erfahrung, Methodik und Ausfallsicherheit.
-* **Sprechertext (20 Sek. / 48 Wörter):**
-> „Guten Tag Herr Engelmann, hallo Team Conciliamus! Mein Name ist Dieter Rüffler. Ich verbinde über zwanzig Jahre gewachsene SAP-Integrationserfahrung mit den modernen Möglichkeiten der SAP Business Technology Platform. In den nächsten sechs Minuten und vierzig Sekunden zeige ich Ihnen, wie wir Stammdaten hochverfügbar, idempotent und methodisch sauber nach S/4HANA synchronisieren.“
+* **Visuelles Motiv:** Hero-Card Dieter Rüffler mit verlinktem LinkedIn-Profil sowie anklickbare Showcase-Card zur Conciliamus-Praxisaufgabe mit originalem Deckblatt-Scan ([ORCAI-260905-17H10-FILE-HSWWD](https://orcai-54321.web.app/?view=pdf&key=ORCAI-260905-17H10-FILE-HSWWD)), Titel: *„Resiliente Business Partner Synchronisation“*, Untertitel: *„Lösungsarchitektur zur Praxisaufgabe der Conciliamus GmbH • Dieter Rüffler (SAP BTP & Integration Suite)“*.
+* **Kernbotschaft:** Dieter Rüffler dokumentiert die fundierte Bearbeitung der Praxisaufgabe des potenziellen Arbeitgebers Conciliamus GmbH mit den Werkzeugen der SAP BTP & Integration Suite.
+* **Sprechertext (20 Sek. / 55 Wörter):**
+> „Guten Tag Herr Engelmann, hallo Team Conciliamus! Mein Name ist Dieter Rüffler. Diese Präsentation dokumentiert meine Lösungsarchitektur zu Ihrer Praxisaufgabe: die synchrone und asynchrone Anbindung von Business Partnern an SAP S/4HANA mit der SAP Integration Suite auf der BTP. In sechs Minuten und vierzig Sekunden zeige ich Ihnen Architektur, Mapping und Ausfallsicherheit – fundiert und praxiserprobt.“
 
 ---
 
