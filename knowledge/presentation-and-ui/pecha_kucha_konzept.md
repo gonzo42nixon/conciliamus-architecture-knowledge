@@ -100,8 +100,8 @@ relations:
 ---
 
 ### Folie 07: Zero-Trust & BTP Cloud Security
-* **Visuelles Motiv:** BTP Shield-Icon, OAuth2 Client Credentials Flow, Secure Parameter `SANDBOX_API_KEY` im BTP Keystore.
-* **Kernbotschaft:** Enterprise Security ab Sekunde Null – keine Klartext-Passwörter im Code.
+* **Visuelles Motiv:** BTP Shield-Icon & Security Dashboard Screenshot (vergrößerbar in Lightbox), direkte Verlinkung zum [BTP Cockpit Global Account](https://account.hanatrial.ondemand.com/trial/#/globalaccount/34eec884-0c14-4a9d-a509-55a912f83aee/accountModel&//?section=SubaccountsSection&view=TilesView) und dem [SAP Integration Suite Tenant](https://b9c123f3trial.integrationsuite-trial01.cfapps.us10-001.hana.ondemand.com/shell/home) (`b9c123f3trial`), flankiert von Security-Badges (OAuth2, TLS 1.3, XSUAA Service Keys).
+* **Kernbotschaft:** Enterprise Security ab Sekunde Null – keine Klartext-Passwörter im Code, transparente Live-Tenant-Verifikation.
 * **Sprechertext (20 Sek. / 46 Wörter):**
 > „Sicherheit ist kein nachträgliches Feature. Der Inbound-Kanal ist über OAuth2 Client Credentials mit der BTP Service-Instanz abgesichert. Sensible Zielsystem-Schlüssel wie der Sandbox-API-Key liegen verschlüsselt im BTP Security Material Store. Selbst bei voller Einsicht in die iFlow-Artefakte verlassen vertrauliche Zugangsdaten zu keinem Zeitpunkt den gesicherten Tenant.“
 
@@ -229,6 +229,8 @@ Die Web-Präsentation (`pecha-kucha.html`) bietet eine professionelle Bühnen- u
 ## Technische Referenzen & Begleitdokumente
 * **Live-App Testrunner:** `http://localhost:8080` (oder `docs/test_runner_app.html`)
 * **Live Pecha Kucha URL:** [https://orcai-54321.web.app/pecha-kucha.html](https://orcai-54321.web.app/pecha-kucha.html)
+* **SAP BTP Cockpit:** [Trial Global Account & Subaccount Section](https://account.hanatrial.ondemand.com/trial/#/globalaccount/34eec884-0c14-4a9d-a509-55a912f83aee/accountModel&//?section=SubaccountsSection&view=TilesView)
+* **SAP Integration Suite Tenant:** [Tenant b9c123f3trial Shell Home](https://b9c123f3trial.integrationsuite-trial01.cfapps.us10-001.hana.ondemand.com/shell/home)
 * **GitHub Repository:** [gonzo42nixon/Conciliamus](https://github.com/gonzo42nixon/Conciliamus)
 * **Live iFlow Batch Receiver:** [Google Photos Screenshot](https://photos.app.goo.gl/mfS9oN94KfUXJK6bA)
 * **Live iFlow Item Processor:** [Google Photos Screenshot](https://photos.app.goo.gl/y8m8vH3BDCQG7whU8)
