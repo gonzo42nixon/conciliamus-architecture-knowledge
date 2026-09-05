@@ -273,21 +273,42 @@ concepts, graph, manifest = load_knowledge_base(get_knowledge_mtime())
 
 # Retrieve top relevant context documents
 def retrieve_relevant_docs(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
-    keywords = [w.lower() for w in re.findall(r"\w+", query) if len(w) > 2]
-    if not keywords:
+    stop_words = {
+        "wie", "was", "warum", "welche", "welcher", "welches", "und", "oder", 
+        "der", "die", "das", "dem", "den", "des", "ein", "eine", "einer", "eines", 
+        "einem", "einen", "nach", "für", "fuer", "mit", "von", "aus", "bei", 
+        "zum", "zur", "ist", "sind", "wird", "werden", "hat", "haben", "kann", "können"
+    }
+    explicit_adrs = [m.lower() for m in re.findall(r"adr-\d{3}", query, re.IGNORECASE)]
+    keywords = [w.lower() for w in re.findall(r"\w+", query) if len(w) > 2 and w.lower() not in stop_words]
+    if not keywords and not explicit_adrs:
         return concepts[:top_k]
     
     scored = []
     for c in concepts:
         score = 0
+        cid_lower = c["id"].lower()
+        cpath_lower = c["path"].lower()
+        ctitle_lower = c["title"].lower()
+        
+        # Priority boost for matching ADRs
+        for eadr in explicit_adrs:
+            if eadr in cid_lower or eadr in cpath_lower:
+                score += 120
+            elif eadr in ctitle_lower:
+                score += 60
+
         for kw in keywords:
-            score += c["fullText"].count(kw)
-            if kw in c["title"].lower():
-                score += 6
+            cnt = min(c["fullText"].count(kw), 8)
+            score += cnt
+            if kw in cid_lower:
+                score += 15
+            if kw in ctitle_lower:
+                score += 12
             if any(kw in t.lower() for t in c["tags"]):
-                score += 4
+                score += 8
             if kw in c["frontmatter"].get("description", "").lower():
-                score += 3
+                score += 5
         if score > 0:
             scored.append((score, c))
             
@@ -308,7 +329,7 @@ Aufgabe: {purpose}
 
 Verbindliche Richtlinien:
 1. Beantworte alle Fragen strikt auf Basis der beigefügten Dokumente aus dem Google Open Knowledge Format (OKF v0.2) Wissensbündel.
-2. Zitiere konkrete Architecture Decision Records (z.B. [ADR-001] bis [ADR-006]) und Konzeptdateien.
+2. Zitiere konkrete Architecture Decision Records (z.B. [ADR-001] bis [ADR-011]) und Konzeptdateien.
 3. Wenn Diagramme den Sachverhalt verdeutlichen, formatiere sie als Mermaid-Codeblöcke (`mermaid`).
 4. Betone stets Idempotenz, Entkopplung (Dual-iFlow), Bruce Silver BPMN 2.0 Method & Style Nomenklatur und Resilienz.
 5. Wenn eine Information im Wissensbündel nicht enthalten ist, weise transparent darauf hin, statt zu spekulieren.
@@ -414,23 +435,32 @@ with st.sidebar:
 
     st.markdown("---")
     st.markdown("### 📊 Wissensbasis Metriken")
+    nodes_count = len(graph.get("nodes", [])) if "nodes" in graph else graph.get("nodesCount", 33)
+    edges_count = len(graph.get("edges", [])) if "edges" in graph else graph.get("edgesCount", 93)
     st.markdown(f"- **OKF Dokumente:** `{len(concepts)}`")
-    st.markdown(f"- **Wissensgraph:** `{graph.get('nodesCount', 24)} Knoten / {graph.get('edgesCount', 63)} Kanten`")
+    st.markdown(f"- **Wissensgraph:** `{nodes_count} Knoten / {edges_count} Kanten`")
+    st.markdown(f"- **Architektur-Entscheidungen:** `11 ADRs (ADR-001 bis ADR-011)`")
     st.markdown(f"- **OKF Version:** `v0.2`")
 
     st.markdown("---")
-    st.markdown("### 🚀 Schnellanfragen")
+    st.markdown("### 🚀 Schnellanfragen (ADR-001 bis ADR-011)")
     sample_queries = [
-        "Wie funktioniert das Dual-iFlow Muster nach ADR-001?",
-        "Warum ProcessDirect statt Message Queues (ADR-002)?",
-        "Wie ist die OData-Existenzprüfung und das Routing aufgebaut?",
-        "Welche Resilienz-Strategie gilt für HTTP 405 Sandbox-Fehler?",
-        "Was definiert ADR-005 für die Single-Viewport Fiori UI?",
-        "Was besagt ADR-006 zum serverlosen Streamlit- & GitOps-Deployment?"
+        "Wie funktioniert das Dual-iFlow Entkopplungsmuster nach ADR-001?",
+        "Wie setzt ADR-002 die Zero-Trust & BTP PaaS Security (OAuth2/XSUAA) um?",
+        "Wie gewährleistet ADR-003 die End-to-End Traceability im SAP MPL-Log?",
+        "Welche BPMN 2.0 Regeln nach Bruce Silver definiert ADR-004 für den Ingest-Flow?",
+        "Warum nutzt die Architektur ProcessDirect statt Message Queues (ADR-005)?",
+        "Wie funktioniert die idempotente Existenzprüfung (POST vs. PATCH) nach ADR-006?",
+        "Wie läuft der Two-Legged CSRF- und Cookie-Handshake nach ADR-007 ab?",
+        "Wie unterscheidet ADR-008 zwischen fachlichen Fehlern und technischem DLQ-Replay?",
+        "Welche Ergonomie-Prinzipien definiert ADR-009 für die Fiori Horizon Workbench?",
+        "Wie löst ADR-010 das BTP CORS-Problem und das serverlose GitOps-Deployment?",
+        "Wie stellt ADR-011 mit OKF v0.2 und Gemini 3.6 quellenbasierte Beratung sicher?"
     ]
     for sq in sample_queries:
-        if st.button(sq, use_container_width=True):
+        if st.button(sq, key=f"sb_chip_{sq[:10]}", use_container_width=True):
             st.session_state.current_prompt = sq
+            st.rerun()
 
     st.markdown("---")
     if st.button("🔄 Wissensbasis neu laden", use_container_width=True):
@@ -468,9 +498,9 @@ with tab_chat:
                 "role": "assistant",
                 "content": (
                     "Hallo! Ich bin der **Conciliamus Architecture Advisor** (Senior SAP BTP Cloud Integration Specialist & Enterprise Architect).\n\n"
-                    "Ich beantworte alle Fragen zur MDM-zu-S/4HANA Geschäftspartner-Synchronisation auf Basis der 25 kuratierten "
-                    "OKF-Architekturdokumente und 5 Architecture Decision Records.\n\n"
-                    "**Stellen Sie mir eine Frage oder wählen Sie links eine Schnellanfrage!**"
+                    "Ich beantworte alle Fragen zur MDM-zu-S/4HANA Geschäftspartner-Synchronisation auf Basis der 34 kuratierten "
+                    "OKF-Architekturdokumente und 11 verifizierten Architecture Decision Records (ADR-001 bis ADR-011).\n\n"
+                    "**Wählen Sie unten eine Schnellanfrage zu den ADRs oder tippen Sie Ihre Frage in das Chatfeld!**"
                 )
             }
         ]
@@ -478,6 +508,20 @@ with tab_chat:
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
+
+    # Schnellanfragen direkt im Chat-Viewport (ideal für die Drawer-Ansicht)
+    if len(st.session_state.messages) <= 1:
+        st.markdown("---")
+        st.markdown("##### 💡 Schnellanfragen zu den Architektur-Entscheidungen (ADR-001 bis ADR-011):")
+        cols = st.columns(2)
+        for idx, sq in enumerate(sample_queries):
+            with cols[idx % 2]:
+                adr_badge = sq.split("ADR-")[1][:3] if "ADR-" in sq else ""
+                label = f"📌 [ADR-{adr_badge}] {sq}" if adr_badge else sq
+                if st.button(label, key=f"chat_chip_{idx}", use_container_width=True):
+                    st.session_state.current_prompt = sq
+                    st.rerun()
+        st.markdown("---")
 
     user_input = st.chat_input("Ihre Frage zur Conciliamus-Architektur...")
     if "current_prompt" in st.session_state and st.session_state.current_prompt:
@@ -581,7 +625,7 @@ with tab_pecha:
 with tab_runner:
     st.markdown("### 🧪 SAP Fiori Integration Workbench & Test-Runner")
     st.markdown("""
-    **SAP Fiori Horizon Design System • Single-Viewport Workbench (ADR-005) • ISTQB CTFL Testsuite**  
+    **SAP Fiori Horizon Design System • Single-Viewport Workbench (ADR-009) • ISTQB CTFL Testsuite**  
     * **Technologie:** TailwindCSS, FontAwesome 6, Google Firebase Auth (Compat v12.2.1), SAP Horizon Design Tokens  
     * **Testsuite:** 10 automatisierte Testfälle (3× PATCH Existenz-Update, 7× POST Neuanlage & Boundary-Validierung)  
     * **Funktionen:** Echtzeit-Payload-Inspektor, Mock & Live-Runtime Modus, OData Response-Analyse, Log-Export  

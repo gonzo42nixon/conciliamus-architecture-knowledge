@@ -304,8 +304,8 @@ def verify_architecture_rule(req: VerifyRuleRequest):
         adrs.append("ADR-001: Dual-iFlow Entkopplungsmuster")
 
     if "jms" in p_lower or "queue" in p_lower:
-        violations.append("Hinweis: Nach ADR-002 ist für tenant-interne Kopplung ProcessDirect zu bevorzugen, um Latenz und Kosten zu minimieren.")
-        adrs.append("ADR-002: ProcessDirect statt Message Queues")
+        violations.append("Hinweis: Nach ADR-005 ist für tenant-interne Kopplung ProcessDirect zu bevorzugen, um Latenz und Kosten zu minimieren.")
+        adrs.append("ADR-005: ProcessDirect statt Message Queues")
 
     if "statisch" in p_lower and "id" in p_lower:
         violations.append("Verstoß gegen dynamische OData-Adressierung: BusinessPartner-ID muss dynamisch aus dem OData GET ermittelt werden.")
@@ -323,17 +323,22 @@ def verify_architecture_rule(req: VerifyRuleRequest):
 @app.post("/chat", response_model=ChatQueryResponse, tags=["Agent Chat"])
 def agent_chat_query(req: ChatQueryRequest):
     concepts = load_all_concepts_data()
-    keywords = [w.lower() for w in re.findall(r"\w+", req.question) if len(w) > 2]
+    stop_words = {"warum", "wurde", "ein", "eine", "einer", "eines", "wie", "was", "das", "der", "die", "und", "oder", "nach", "fuer", "mit", "von", "aus", "ist", "sind"}
+    keywords = [w.lower() for w in re.findall(r"\w+", req.question) if len(w) > 2 and w.lower() not in stop_words]
 
     scored = []
     for c in concepts:
         score = 0
+        cid_lower = c["id"].lower()
+        title_lower = c["frontmatter"].get("title", "").lower()
         for kw in keywords:
-            score += c["fullText"].count(kw)
-            if kw in c["frontmatter"].get("title", "").lower():
-                score += 5
+            score += min(c["fullText"].count(kw), 8)
+            if kw in cid_lower:
+                score += 15
+            if kw in title_lower:
+                score += 12
             if kw in [t.lower() for t in c["frontmatter"].get("tags", [])]:
-                score += 3
+                score += 8
         if score > 0:
             scored.append((score, c))
 

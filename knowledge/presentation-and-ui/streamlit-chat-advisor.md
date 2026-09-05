@@ -36,9 +36,9 @@ sources:
 Die Webanwendung fungiert als interaktiver, menschenzentrierter KI-Berater fuer das gesamte Architekturensemble der Conciliamus SAP BTP Loesung:
 
 1. **In-Memory Wissensindex:**
-   Beim Starten der App werden alle 25 Markdown-Dokumente aus `knowledge/` sowie der Wissensgraph (`graph/knowledge-graph.json`) und das Agenten-Manifest (`manifest/agent.yaml`) ueber `@st.cache_resource` in den Hauptspeicher geladen.
+   Beim Starten der App werden alle 34 Markdown-Dokumente aus `knowledge/` sowie der Wissensgraph (`graph/knowledge-graph.json`) und das Agenten-Manifest (`manifest/agent.yaml`) ueber `@st.cache_resource` in den Hauptspeicher geladen.
 2. **Semantischer Retriever:**
-   Eingehende Benutzerfragen werden analysiert; die relevantesten Konzepte und ADRs werden automatisch priorisiert und formatiert.
+   Eingehende Benutzerfragen werden analysiert; die relevantesten Konzepte und ADRs werden automatisch priorisiert und formatiert (inklusive Prioritäts-Boosting für explizite ADR-Referenzen von ADR-001 bis ADR-011).
 3. **Kontext-Grounding & System Prompt:**
    Das offizielle Agenten-Profil (*Senior SAP BTP Cloud Integration Specialist & Enterprise Architect*) wird zusammen mit den extrahierten Originaldokumenten an Gemini uebergeben.
 4. **Resilienz & Model Failover:**
@@ -50,8 +50,8 @@ Die Webanwendung fungiert als interaktiver, menschenzentrierter KI-Berater fuer 
 
 ## Anwendungsreiter
 
-- **💬 Architektur-Chat:** Dialogführung mit Historie, Schnellanfragen und klickbaren Quellen-Expandern.
-- **📜 Architecture Decisions (ADRs):** Direkte Einsicht in alle verifizierten Architecture Decision Records ([ADR-001](/decisions/adr-001-dual-iflow-decoupling.md) bis [ADR-010](/decisions/adr-010-streamlit-cloud-agent-deployment.md)).
+- **💬 Architektur-Chat:** Dialogführung mit Historie, Schnellanfragen (ADR-001 bis ADR-011) direkt im Drawer-Viewport und klickbaren Quellen-Expandern.
+- **📜 Architecture Decisions (ADRs):** Direkte Einsicht in alle verifizierten Architecture Decision Records ([ADR-001](/decisions/adr-001-dual-iflow-decoupling.md) bis [ADR-011](/decisions/adr-011-google-okf-knowledge-graph.md)).
 - **🎤 Pecha Kucha (20x20):** Interaktive 20-Folien-Präsentation mit automatischem 20s-Timer und Sprechertexten.
 - **🧪 Test-Runner (Workbench):** Operative Testausführung von Batch-Payloads direkt gegen SAP CPI mit automatischer OAuth2- und CSRF-Handshake-Verarbeitung ohne CORS-Blockaden.
 - **📐 OpenAPI & Schemas:** Direkte Einsicht und Verlinkung auf die Laufzeit-Schnittstellenspezifikationen (`api/conciliamus-runtime-iflows.openapi.yaml`).
