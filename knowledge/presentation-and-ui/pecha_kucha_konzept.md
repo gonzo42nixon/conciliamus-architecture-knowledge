@@ -76,7 +76,7 @@ relations:
 ---
 
 ### Folie 04: Die Integrationsaufgabe
-* **Visuelles Motiv:** Quellsystem MDM (JSON-Batch mit 10 Geschäftspartnern) ➔ Pfeil mit Barriere ➔ Zielsystem SAP S/4HANA OData API.
+* **Visuelles Motiv:** Quellsystem JSD-MDM ([Mitarbeitenden-Login](https://www.johannesstift-diakonie.de/mitarbeitenden-login), JSON-Batch mit 10 Geschäftspartnern) ➔ Pfeil mit Barriere ➔ Zielsystem SAP S/4HANA OData API.
 * **Kernbotschaft:** Massen-Batches dürfen das transaktionale ERP-System niemals überlasten oder blockieren.
 * **Sprechertext (20 Sek. / 50 Wörter):**
 > „Die Aufgabenstellung: Ein zentrales MDM-System liefert Geschäftspartner als Batch-JSON an. Das Zielsystem, ein SAP S/4HANA Cloud, verlangt jedoch granulare OData-Aufrufe. Wie verhindern wir, dass ein einziger fehlerhafter Datensatz den gesamten Batch abbricht? Und wie schützen wir das ERP vor Lastspitzen? Die Antwort liegt in einer entkoppelten Integrationsarchitektur.“
