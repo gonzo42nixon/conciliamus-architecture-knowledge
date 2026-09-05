@@ -102,7 +102,7 @@ relations:
 ---
 
 ### Folie 06: ADR-002: Zero-Trust & BTP Cloud Security
-* **Visuelles Motiv:** BTP als Managed PaaS, TLS 1.3 Transportverschlüsselung, OAuth2 Client Credentials Flow, Security Material Vault und strikt deaktivierte Basic Authentication nach ADR-002.
+* **Visuelles Motiv:** Großflächiger Screenshot des realen SAP BTP Cockpits (Unterkonto *trial*: Instanzen und Abonnements für *Integration Suite* und *SAP Process Integration*), ergänzt durch die Sicherheitsmerkmale nach ADR-002 (BTP als Managed PaaS, OAuth2 Client Credentials, TLS 1.3, XSUAA Service Keys, Security Material Vault statt Basic Auth).
 * **Kernbotschaft:** Sicherheit ist kein nachträgliches Feature, sondern integraler Bestandteil der Plattformarchitektur.
 * **Sprechertext (20 Sek. / 42 Wörter):**
 > „Nach ADR-002 ist Sicherheit kein nachträgliches Feature. Die BTP fungiert als Managed PaaS, und der Inbound-Kanal ist über OAuth2 Client Credentials geschützt – Basic Authentication ist strikt deaktiviert. Alle Tokens und Passwörter liegen verschlüsselt im Security Material Vault, transportiert über TLS 1.3.“
