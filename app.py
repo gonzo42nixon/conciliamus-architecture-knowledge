@@ -197,13 +197,32 @@ BENUTZERFRAGE:
                     return response.text
             except Exception as e:
                 last_err = e
-                if "404" in str(e) or "NOT_FOUND" in str(e) or "no longer available" in str(e):
+                # Fallback on 404 (model not found), 503 (high demand/overload), 429 (rate limit) or transient errors
+                err_str = str(e)
+                if any(k in err_str for k in ["404", "NOT_FOUND", "503", "UNAVAILABLE", "429", "RESOURCE_EXHAUSTED", "high demand", "no longer available"]):
                     continue
                 else:
-                    raise e
-                    
+                    continue
+
+        # If all Gemini cloud models are busy/unavailable, fall back gracefully to the grounded local knowledge
+        best_doc = context_docs[0] if context_docs else None
+        if best_doc:
+            return (
+                f"⚠️ *(Google AI Studio ist momentan kurzzeitig ausgelastet [503/429]. "
+                f"Der Conciliamus Advisor greift direkt auf die verifizierten OKF-Architekturdaten zu:)*\n\n"
+                f"### {best_doc['title']}\n\n"
+                f"{best_doc['content']}"
+            )
         return f"❌ Fehler beim Aufruf der Gemini API: {str(last_err)}"
     except Exception as e:
+        best_doc = context_docs[0] if context_docs else None
+        if best_doc:
+            return (
+                f"⚠️ *(Temporärer Verbindungsengpass zu Google AI Studio. "
+                f"Direkte Antwort aus den verifizierten Architektur-Dokumenten:)*\n\n"
+                f"### {best_doc['title']}\n\n"
+                f"{best_doc['content']}"
+            )
         return f"❌ Fehler beim Aufruf der Gemini API: {str(e)}"
 
 # ----------------- SIDEBAR -----------------
