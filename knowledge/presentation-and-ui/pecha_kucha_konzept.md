@@ -211,8 +211,24 @@ relations:
 
 ---
 
+---
+
+## Präsentationssteuerung & Full-Screen Modus
+Die Web-Präsentation (`pecha-kucha.html`) bietet eine professionelle Bühnen- und Referentensteuerung:
+* **Full-Screen Modus (Vollbild):**
+  * Umschalten über den **Vollbild-Button** in der Fiori-Header-Leiste oder der Fußleiste.
+  * Tastatur-Shortcut: **`F`** für Vollbild aktivieren/deaktivieren (oder **`Esc`** zum Verlassen).
+  * Optimierte Bühnen-Skalierung (`#slideCard` nutzt die volle Bildschirmbreite, saubere 16:9 Adaption).
+* **Referenten-Notizen (`N`):** Ein- und Ausblenden des Sprechertext-Panels mit 20-Sekunden-Wortzählung.
+* **Folienübersicht (`G`):** Modaler 20-Karten-Überblick zum direkten Anspringen beliebiger Folien.
+* **Navigation:** `Space` (Pause/Fortsetzen), `←` / `→` (Vor/Zurück), `R` (Restart von Folie 01).
+* **Geschwindigkeitskontrolle:** 20 Sekunden (Standard), 15s (Schnelllauf), 30s (Übung), Manuell.
+
+---
+
 ## Technische Referenzen & Begleitdokumente
 * **Live-App Testrunner:** `http://localhost:8080` (oder `docs/test_runner_app.html`)
+* **Live Pecha Kucha URL:** [https://orcai-54321.web.app/pecha-kucha.html](https://orcai-54321.web.app/pecha-kucha.html)
 * **GitHub Repository:** [gonzo42nixon/Conciliamus](https://github.com/gonzo42nixon/Conciliamus)
 * **Live iFlow Batch Receiver:** [Google Photos Screenshot](https://photos.app.goo.gl/mfS9oN94KfUXJK6bA)
 * **Live iFlow Item Processor:** [Google Photos Screenshot](https://photos.app.goo.gl/y8m8vH3BDCQG7whU8)

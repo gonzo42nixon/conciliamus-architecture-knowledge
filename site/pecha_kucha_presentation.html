@@ -64,6 +64,14 @@
     .custom-scrollbar::-webkit-scrollbar-thumb:hover {
       background: #94a3b8;
     }
+    /* Fullscreen Mode Optimization */
+    body.is-fullscreen main {
+      padding: 0.75rem 1.5rem;
+      gap: 1.25rem;
+    }
+    body.is-fullscreen #slideCard {
+      max-width: 100%;
+    }
   </style>
 </head>
 <body class="h-full flex flex-col select-none overflow-hidden bg-slate-900 text-slate-100">
@@ -107,6 +115,11 @@
       <button onclick="toggleGrid()" title="Folienübersicht (Taste: G)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded text-xs font-semibold border border-slate-600 flex items-center gap-1.5 transition">
         <i class="fa-solid fa-grip text-[#0070f2]"></i>
         <span class="hidden md:inline">Übersicht</span>
+      </button>
+
+      <button onclick="toggleFullscreen()" id="btnFullscreenHeader" title="Vollbildmodus (Taste: F)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded text-xs font-semibold border border-slate-600 flex items-center gap-1.5 transition">
+        <i id="fullscreenIconHeader" class="fa-solid fa-expand text-emerald-400"></i>
+        <span class="hidden md:inline" id="fullscreenTextHeader">Vollbild</span>
       </button>
 
       <a href="./test-runner.html" target="_blank" title="BTP Integration Test-Runner öffnen" class="px-3 py-1.5 bg-[#0070f2] hover:bg-[#0056bd] text-white rounded text-xs font-semibold flex items-center gap-1.5 transition shadow">
@@ -163,7 +176,7 @@
   <main class="flex-1 flex flex-col md:flex-row overflow-hidden relative p-4 sm:p-6 lg:p-8 gap-6 justify-center items-center">
     
     <!-- Active Slide Card (Authentic 16:9 Presentation Stage) -->
-    <div class="w-full max-w-5xl h-full flex flex-col bg-white text-slate-800 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative">
+    <div id="slideCard" class="w-full max-w-5xl h-full flex flex-col bg-white text-slate-800 rounded-2xl shadow-2xl border border-slate-200 overflow-hidden relative transition-all duration-200">
       
       <!-- Slide Top Banner -->
       <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50 shrink-0">
@@ -247,9 +260,10 @@
       <span class="flex items-center gap-1"><kbd class="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 text-slate-300">←</kbd> <kbd class="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 text-slate-300">→</kbd> Navigieren</span>
       <span class="flex items-center gap-1"><kbd class="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 text-slate-300">N</kbd> Notizen</span>
       <span class="flex items-center gap-1"><kbd class="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 text-slate-300">G</kbd> Übersicht</span>
+      <span class="flex items-center gap-1"><kbd class="bg-slate-800 px-1.5 py-0.5 rounded border border-slate-700 text-slate-300">F</kbd> Vollbild</span>
     </div>
 
-    <!-- Right Status & Speed -->
+    <!-- Right Status & Speed & Fullscreen -->
     <div class="flex items-center gap-3">
       <div class="flex items-center gap-2">
         <span class="text-xs text-slate-400">Timer:</span>
@@ -260,6 +274,10 @@
           <option value="0">Manuell (Kein Autoplay)</option>
         </select>
       </div>
+
+      <button onclick="toggleFullscreen()" id="btnFullscreenFooter" title="Vollbildmodus (Taste: F)" class="w-10 h-10 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition active:scale-95 border border-slate-700" aria-label="Vollbildmodus">
+        <i id="fullscreenIconFooter" class="fa-solid fa-expand text-sm"></i>
+      </button>
     </div>
   </footer>
   </div><!-- /pechaProtectedContent -->
@@ -733,6 +751,9 @@
           toggleGrid();
         } else if (e.key === 'r' || e.key === 'R') {
           restartPresentation();
+        } else if (e.key === 'f' || e.key === 'F') {
+          e.preventDefault();
+          toggleFullscreen();
         }
       });
     }
@@ -927,6 +948,51 @@
       const m = document.getElementById('gridModal');
       m.classList.toggle('hidden');
     }
+
+    function toggleFullscreen() {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        const el = document.documentElement;
+        if (el.requestFullscreen) {
+          el.requestFullscreen().catch(err => console.warn('Fullscreen request failed:', err));
+        } else if (el.webkitRequestFullscreen) {
+          el.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(err => console.warn('Exit fullscreen failed:', err));
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    }
+
+    function updateFullscreenUI() {
+      const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement);
+      document.body.classList.toggle('is-fullscreen', isFs);
+
+      const iconHeader = document.getElementById('fullscreenIconHeader');
+      const textHeader = document.getElementById('fullscreenTextHeader');
+      const btnHeader = document.getElementById('btnFullscreenHeader');
+      const iconFooter = document.getElementById('fullscreenIconFooter');
+      const btnFooter = document.getElementById('btnFullscreenFooter');
+
+      if (isFs) {
+        if (iconHeader) iconHeader.className = 'fa-solid fa-compress text-amber-400';
+        if (textHeader) textHeader.innerText = 'Fenster';
+        if (btnHeader) btnHeader.title = 'Vollbild beenden (Taste: F oder Esc)';
+        if (iconFooter) iconFooter.className = 'fa-solid fa-compress text-amber-400 text-sm';
+        if (btnFooter) btnFooter.title = 'Vollbild beenden (Taste: F oder Esc)';
+      } else {
+        if (iconHeader) iconHeader.className = 'fa-solid fa-expand text-emerald-400';
+        if (textHeader) textHeader.innerText = 'Vollbild';
+        if (btnHeader) btnHeader.title = 'Vollbildmodus (Taste: F)';
+        if (iconFooter) iconFooter.className = 'fa-solid fa-expand text-sm';
+        if (btnFooter) btnFooter.title = 'Vollbild umschalten (Taste: F)';
+      }
+    }
+
+    document.addEventListener('fullscreenchange', updateFullscreenUI);
+    document.addEventListener('webkitfullscreenchange', updateFullscreenUI);
 
     function openLightbox(src, caption, googleUrl) {
       document.getElementById('lightboxImage').src = src;
