@@ -1740,7 +1740,24 @@
 
       try {
         let data = null;
-        if (runnerMode === 'local') {
+
+        // 1. Primär: Echte Live-Übertragung an SAP CPI über Cloud Function Bridge
+        try {
+          const resp = await fetch('/api/orcai/v1/cpi-batch', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+          });
+          if (resp.ok) {
+            data = await resp.json();
+            console.log('[Live CPI Gateway Response]', data);
+          }
+        } catch (e) {
+          console.warn('[Live CPI Gateway Offline/Error]', e);
+        }
+
+        // 2. Fallback: Optionaler lokaler Runner
+        if (!data && runnerMode === 'local') {
           try {
             const targetUrl = API_BASE ? (API_BASE + '/api/run-test') : '/api/run-test';
             const resp = await fetch(targetUrl, {
@@ -1752,12 +1769,12 @@
               data = await resp.json();
             }
           } catch (e) {
-            console.warn("Local runner nicht erreichbar, nutze autarke Browser-Engine:", e);
+            console.warn("Local runner nicht erreichbar:", e);
           }
         }
         
+        // 3. Fallback: Autarker Simulations-Modus falls gar keine Verbindung
         if (!data) {
-          // Ausführung über integrierte autarke BTP-Engine
           data = await executeStandaloneBtpTest(payload);
         }
 
@@ -1778,6 +1795,38 @@
       document.getElementById('quickDuration').innerText = data.duration + ' s';
       document.getElementById('btnShellDrawer').classList.remove('hidden');
       document.getElementById('fabDrawer').classList.remove('hidden');
+
+      // Update simulation or live notice
+      const simNotice = document.getElementById('drawerSimNotice');
+      if (simNotice) {
+        if (data.is_live_cpi) {
+          simNotice.className = 'p-3 rounded-lg bg-emerald-50 border border-emerald-300 text-emerald-900 text-xs font-sans mb-3';
+          simNotice.innerHTML = `
+            <div class="flex items-center gap-2 font-bold mb-1">
+              <i class="fa-solid fa-circle-check text-emerald-600"></i>
+              <span>Live-Übertragung an SAP BTP Cloud Integration erfolgreich!</span>
+            </div>
+            <p class="leading-relaxed">
+              Dieser Batch wurde in Echtzeit an Ihren Tenant <code>b9c123f3trial</code> gesendet. 
+              Die Nachricht ist soeben in Ihrem <strong>SAP CPI Message Monitoring</strong> unter <code>IFL_MDM_BP_Batch_Receiver</code> eingetroffen!
+            </p>
+          `;
+          document.getElementById('quickSummary').innerHTML = '✅ <strong>Echtzeit-Übertragung:</strong> Erfolgreich an <code>IFL_MDM_BP_Batch_Receiver</code> übermittelt. Trace ist jetzt im SAP CPI Monitoring sichtbar!';
+          const badge = document.getElementById('shellTenantText');
+          if (badge) badge.innerHTML = '<span class="inline-block w-2 h-2 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>BTP Cloud Integration: Verbunden (Live Gateway)';
+        } else {
+          simNotice.className = 'p-3 rounded-lg bg-amber-50 border border-amber-300 text-amber-900 text-xs font-sans mb-3';
+          simNotice.innerHTML = `
+            <div class="flex items-center gap-2 font-bold mb-1">
+              <i class="fa-solid fa-circle-info text-amber-600"></i>
+              <span>Autarker Simulationsmodus (Mock)</span>
+            </div>
+            <p class="leading-relaxed">
+              Dieser Lauf wurde lokal im Browser simuliert (Fallback).
+            </p>
+          `;
+        }
+      }
 
       const drawerBadge = document.getElementById('drawerBadge');
       const drawerIcon = document.getElementById('drawerIcon');
