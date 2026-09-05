@@ -359,6 +359,27 @@ def agent_chat_query(req: ChatQueryRequest):
     paragraphs = [p.strip() for p in best["content"].split("\n\n") if p.strip() and not p.startswith("#")]
     extracted_answer = "\n\n".join(paragraphs[:2]) if paragraphs else fm.get("description", "")
 
+    # If GEMINI_API_KEY is configured, enhance answer with Google AI Studio Gemini API
+    gemini_key = os.environ.get("GEMINI_API_KEY")
+    if gemini_key:
+        try:
+            from google import genai
+            from google.genai import types
+            client = genai.Client(api_key=gemini_key)
+            top_docs = [item[1] for item in scored[:3]]
+            context_text = "\n\n---\n\n".join([f"### {d['title']}\n{d['content']}" for d in top_docs])
+            prompt = f"Architektur-Kontext:\n{context_text}\n\nFrage: {req.question}\n\nBeantworte fundiert als Conciliamus Architecture Advisor mit Quellenangaben (ADRs)."
+            resp = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(temperature=0.2)
+            )
+            if resp.text:
+                extracted_answer = resp.text
+        except Exception as e:
+            # Fallback to extracted text if Gemini API call fails
+            extracted_answer += f"\n\n*(Hinweis: Gemini-Generierung fehlgeschlagen: {e})*"
+
     return ChatQueryResponse(
         question=req.question,
         primaryConcept=summary,
@@ -370,5 +391,6 @@ def agent_chat_query(req: ChatQueryRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    print("[API Server] Starte Conciliamus Architecture Knowledge API auf http://127.0.0.1:8000 ...")
-    uvicorn.run(app, host="127.0.0.1", port=8000)
+    port = int(os.environ.get("PORT", 8000))
+    print(f"[API Server] Starte Conciliamus Architecture Knowledge API auf Port {port} ...")
+    uvicorn.run(app, host="0.0.0.0", port=port)
