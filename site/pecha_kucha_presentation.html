@@ -527,10 +527,10 @@
             "id": 19,
             "phase": "GLOSSAR",
             "badgeColor": "bg-purple-100 text-purple-800",
-            "title": "Das Enterprise Acronym Digest (45 Begriffe)",
-            "subtitle": "Vom SAP-Sprech zu solider Informatik: Alle Architektur-Konzepte alphabetisch entschlüsselt",
-            "visual": "\n          <div class=\"h-full flex flex-col justify-between gap-3\">\n            <div id=\"digestInspector\" class=\"bg-gradient-to-r from-slate-900 via-[#1d2d3e] to-slate-900 text-white p-4 rounded-2xl border-2 border-[#0070f2] shadow-xl flex flex-col justify-between transition-all duration-200\">\n              <div class=\"flex items-center justify-between border-b border-slate-700/80 pb-2\">\n                <div class=\"flex items-center gap-2\">\n                  <span id=\"inspectTerm\" class=\"px-2.5 py-0.5 bg-[#0070f2] text-white font-mono font-black text-sm rounded-lg shadow-sm\">XSUAA</span>\n                  <span id=\"inspectTitle\" class=\"text-sm font-bold text-slate-100\">XML/Extended Services User Account and Authentication</span>\n                </div>\n                <span id=\"inspectCategory\" class=\"px-2.5 py-0.5 bg-red-500/20 text-red-300 border border-red-500/40 text-[10px] font-bold rounded-full uppercase font-mono\">Security & SAP</span>\n              </div>\n\n              <div class=\"grid grid-cols-1 md:grid-cols-2 gap-3 my-2.5 text-xs\">\n                <div class=\"bg-amber-500/10 border border-amber-500/30 p-2.5 rounded-xl\">\n                  <div class=\"text-[10px] uppercase font-bold text-amber-400 flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-arrows-rotate\"></i> SAP-Sprech (Reformulierung)\n                  </div>\n                  <div id=\"inspectSap\" class=\"text-slate-200 mt-1 font-medium leading-snug\">\n                    BTP-spezifischer Auth-Broker auf Cloud Foundry zur Authentifizierung und Rechteverwaltung\n                  </div>\n                </div>\n                <div class=\"bg-emerald-500/10 border border-emerald-500/30 p-2.5 rounded-xl\">\n                  <div class=\"text-[10px] uppercase font-bold text-emerald-400 flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-microchip\"></i> Informatik-Realität & Standard\n                  </div>\n                  <div id=\"inspectReal\" class=\"text-slate-200 mt-1 font-medium leading-snug\">\n                    Extended OAuth 2.0 Auth Server & Token Broker, der JWT-Tokens mit proprietären SAP-Scopes signiert.\n                  </div>\n                </div>\n              </div>\n\n              <div class=\"flex items-center justify-between text-[11px] pt-1.5 border-t border-slate-700/80\">\n                <div class=\"flex items-center gap-1.5 text-blue-300\">\n                  <i class=\"fa-solid fa-bullseye text-[#0070f2]\"></i>\n                  <span class=\"font-semibold text-slate-300\">Projektbezug:</span>\n                  <span id=\"inspectContext\" class=\"text-slate-300 font-medium\">Gewährleistet Zero-Trust M2M-Autorisierung für den iFlow 1 Inbound-Endpunkt (Folie 07).</span>\n                </div>\n                <span class=\"text-[10px] text-amber-300/80 font-mono hidden sm:inline\">👆 Hovern für Details</span>\n              </div>\n            </div>\n\n            <div class=\"p-2.5 bg-slate-100 rounded-2xl border border-slate-200 shadow-inner\">\n              <div class=\"flex items-center justify-between mb-1.5 px-1 text-[11px] text-slate-500 font-medium\">\n                <span>45 Schlüsselbegriffe • Alphabetisch sortiert (Zahlen & A–Z)</span>\n                <span class=\"font-mono text-[10px] bg-blue-100 text-[#0070f2] px-2 py-0.5 rounded font-bold\">Blau = SAP-Sprech Übersetzung</span>\n              </div>\n              <div class=\"grid grid-cols-3 sm:grid-cols-5 md:grid-cols-9 gap-1.5 max-h-[160px] overflow-y-auto custom-scrollbar p-0.5\">\n                <button id=\"pill_200\" type=\"button\" onmouseenter=\"updateDigestInspector('200')\" onclick=\"updateDigestInspector('200')\" title=\"HTTP 200 OK &#10;SAP: Synchrone OData/REST Erfolgsantwort (GET / PATCH auf S/4HANA)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">200</button>\n                <button id=\"pill_202\" type=\"button\" onmouseenter=\"updateDigestInspector('202')\" onclick=\"updateDigestInspector('202')\" title=\"HTTP 202 Accepted &#10;SAP: Asynchroner Inbound-Handshake im Cloud Integration Ingest-Flow\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">202</button>\n                <button id=\"pill_401\" type=\"button\" onmouseenter=\"updateDigestInspector('401')\" onclick=\"updateDigestInspector('401')\" title=\"HTTP 401 Unauthorized &#10;SAP: Fehlendes/abgelaufenes OAuth2/XSUAA Bearer Token oder CORS-Preflight Abweisung\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">401</button>\n                <button id=\"pill_500\" type=\"button\" onmouseenter=\"updateDigestInspector('500')\" onclick=\"updateDigestInspector('500')\" title=\"HTTP 500 Internal Server Error &#10;SAP: Laufzeitabbruch im iFlow oder S/4HANA Backend\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">500</button>\n                <button id=\"pill_ADR\" type=\"button\" onmouseenter=\"updateDigestInspector('ADR')\" onclick=\"updateDigestInspector('ADR')\" title=\"Architectural Decision Record &#10;SAP: Architektur-Vorgabe & verbindlicher Entscheidungsnachweis im Projekt\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">ADR</button>\n                <button id=\"pill_AI\" type=\"button\" onmouseenter=\"updateDigestInspector('AI')\" onclick=\"updateDigestInspector('AI')\" title=\"Artificial Intelligence &#10;SAP: SAP Joule & Business AI Services (GenAI auf SAP BTP)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">AI</button>\n                <button id=\"pill_API\" type=\"button\" onmouseenter=\"updateDigestInspector('API')\" onclick=\"updateDigestInspector('API')\" title=\"Application Programming Interface &#10;SAP: SAP Business Accelerator Hub Schnittstelle (OData/REST Service)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">API</button>\n                <button id=\"pill_aws\" type=\"button\" onmouseenter=\"updateDigestInspector('aws')\" onclick=\"updateDigestInspector('aws')\" title=\"Amazon Web Services &#10;SAP: Hyperscaler Foundation für SAP BTP Cloud Foundry Region US10 (cf-us10-001)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">aws</button>\n                <button id=\"pill_BP_Business_Partner\" type=\"button\" onmouseenter=\"updateDigestInspector('BP Business Partner')\" onclick=\"updateDigestInspector('BP Business Partner')\" title=\"Business Partner (Geschäftspartner) &#10;SAP: Zentrales Stammdatenobjekt in S/4HANA (Transaktion BP; ersetzt Debitoren/Kreditoren)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/70 text-blue-900 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">BP Business Partner</button>\n                <button id=\"pill_BPMN\" type=\"button\" onmouseenter=\"updateDigestInspector('BPMN')\" onclick=\"updateDigestInspector('BPMN')\" title=\"Business Process Model and Notation &#10;SAP: Visuelles iFlow-Modell im SAP Integration Suite Web-Editor\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/70 text-blue-900 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">BPMN</button>\n                <button id=\"pill_BTP\" type=\"button\" onmouseenter=\"updateDigestInspector('BTP')\" onclick=\"updateDigestInspector('BTP')\" title=\"SAP Business Technology Platform &#10;SAP: SAPs zentrales Integrations- & Innovations-Betriebssystem (Multi-Cloud PaaS/SaaS)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/70 text-blue-900 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">BTP</button>\n                <button id=\"pill_CORS\" type=\"button\" onmouseenter=\"updateDigestInspector('CORS')\" onclick=\"updateDigestInspector('CORS')\" title=\"Cross-Origin Resource Sharing &#10;SAP: Browser-Sicherheitsmechanismus; von SAP BTP Integration Suite standardmäßig blockiert\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">CORS</button>\n                <button id=\"pill_CPI\" type=\"button\" onmouseenter=\"updateDigestInspector('CPI')\" onclick=\"updateDigestInspector('CPI')\" title=\"Cloud Platform Integration (SAP CI) &#10;SAP: Der Kern-Integrationsdienst der SAP Integration Suite (ehemals HCI)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/70 text-blue-900 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">CPI</button>\n                <button id=\"pill_Credly\" type=\"button\" onmouseenter=\"updateDigestInspector('Credly')\" onclick=\"updateDigestInspector('Credly')\" title=\"Credly Digital Credentials &#10;SAP: Offizielle Verifikationsplattform für SAP Global Certifications und Partner-Badges\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">Credly</button>\n                <button id=\"pill_CTFL\" type=\"button\" onmouseenter=\"updateDigestInspector('CTFL')\" onclick=\"updateDigestInspector('CTFL')\" title=\"Certified Tester Foundation Level (ISTQB) &#10;SAP: Formale Qualifikation für Testmanager und Integrationsprüfer in SAP-Rollouts\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">CTFL</button>\n                <button id=\"pill_ERP\" type=\"button\" onmouseenter=\"updateDigestInspector('ERP')\" onclick=\"updateDigestInspector('ERP')\" title=\"Enterprise Resource Planning &#10;SAP: Zentrales ERP-Betriebssystem des Unternehmens (von R/3 über ECC bis S/4HANA)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">ERP</button>\n                <button id=\"pill_FIORI\" type=\"button\" onmouseenter=\"updateDigestInspector('FIORI')\" onclick=\"updateDigestInspector('FIORI')\" title=\"SAP Fiori (Design System) / Look-alike &#10;SAP: Offizielles UX-Design-Paradigma von SAP, implementiert via OpenUI5/SAPUI5 Framework\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/70 text-blue-900 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">FIORI</button>\n                <button id=\"pill_GIT\" type=\"button\" onmouseenter=\"updateDigestInspector('GIT')\" onclick=\"updateDigestInspector('GIT')\" title=\"Git (Versionskontrolle) &#10;SAP: Quellcodeverwaltung für Cloud-native Integrationsartefakte und ABAP-Git\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">GIT</button>\n                <button id=\"pill_GITHUB\" type=\"button\" onmouseenter=\"updateDigestInspector('GITHUB')\" onclick=\"updateDigestInspector('GITHUB')\" title=\"GitHub Enterprise / Cloud &#10;SAP: Cloud-Repository für Open Source & Enterprise Integrations-Code\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">GITHUB</button>\n                <button id=\"pill_HTML\" type=\"button\" onmouseenter=\"updateDigestInspector('HTML')\" onclick=\"updateDigestInspector('HTML')\" title=\"Hypertext Markup Language (HTML5) &#10;SAP: Ausgabeformat von Web-Dynpro, Fiori Launchpad und Cloud-UIs\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">HTML</button>\n                <button id=\"pill_HTTP\" type=\"button\" onmouseenter=\"updateDigestInspector('HTTP')\" onclick=\"updateDigestInspector('HTTP')\" title=\"Hypertext Transfer Protocol (RFC 9110) &#10;SAP: Transportprotokoll aller SAP OData-, SOAP- und REST-Kopplungen\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">HTTP</button>\n                <button id=\"pill_IFLOW\" type=\"button\" onmouseenter=\"updateDigestInspector('IFLOW')\" onclick=\"updateDigestInspector('IFLOW')\" title=\"Integration Flow (iFlow) &#10;SAP: Ein im SAP Web-Designer grafisch konfigurierter, modularer Integrationsablauf\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/70 text-blue-900 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">IFLOW</button>\n                <button id=\"pill_in\" type=\"button\" onmouseenter=\"updateDigestInspector('in')\" onclick=\"updateDigestInspector('in')\" title=\"LinkedIn Profil (/in/) &#10;SAP: Professionelles Netzwerk für SAP-Experten, Architekten und Kunden\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">in</button>\n                <button id=\"pill_ISTQB\" type=\"button\" onmouseenter=\"updateDigestInspector('ISTQB')\" onclick=\"updateDigestInspector('ISTQB')\" title=\"International Software Testing Qualifications Board &#10;SAP: Qualitätssicherungs-Standard für Abnahmetests und Cutover in SAP-Landschaften\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">ISTQB</button>\n                <button id=\"pill_ITIL\" type=\"button\" onmouseenter=\"updateDigestInspector('ITIL')\" onclick=\"updateDigestInspector('ITIL')\" title=\"Information Technology Infrastructure Library &#10;SAP: Betriebsführung nach SAP Application Lifecycle Management (ALM) & Solution Manager\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">ITIL</button>\n                <button id=\"pill_JSD\" type=\"button\" onmouseenter=\"updateDigestInspector('JSD')\" onclick=\"updateDigestInspector('JSD')\" title=\"Johannesstift Diakonie gAG &#10;SAP: Der Auftraggeber und das Zielumfeld für die Stammdatenintegration\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">JSD</button>\n                <button id=\"pill_JSD_MDM\" type=\"button\" onmouseenter=\"updateDigestInspector('JSD-MDM')\" onclick=\"updateDigestInspector('JSD-MDM')\" title=\"JSD Master Data Management System &#10;SAP: Quellsystem (Legacy/SaaS), das Stammdaten an die SAP BTP sendet\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">JSD-MDM</button>\n                <button id=\"pill_JSON\" type=\"button\" onmouseenter=\"updateDigestInspector('JSON')\" onclick=\"updateDigestInspector('JSON')\" title=\"JavaScript Object Notation (RFC 8259) &#10;SAP: Standard-Nutzlast für moderne BTP REST-Services und OData V4\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">JSON</button>\n                <button id=\"pill_JWT_JSON_Web_Token\" type=\"button\" onmouseenter=\"updateDigestInspector('JWT JSON Web Token')\" onclick=\"updateDigestInspector('JWT JSON Web Token')\" title=\"JSON Web Token (RFC 7519) &#10;SAP: XSUAA-Token mit verschachtelten SAP-Scopes, Tenant-IDs und User-Attributes\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">JWT JSON Web Token</button>\n                <button id=\"pill_KI\" type=\"button\" onmouseenter=\"updateDigestInspector('KI')\" onclick=\"updateDigestInspector('KI')\" title=\"Künstliche Intelligenz (AI) &#10;SAP: SAP Business AI, Joule Copilot und SAP Generative AI Hub\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">KI</button>\n                <button id=\"pill_KRITIS\" type=\"button\" onmouseenter=\"updateDigestInspector('KRITIS')\" onclick=\"updateDigestInspector('KRITIS')\" title=\"Kritische Infrastrukturen (BSI KritisV) &#10;SAP: IT-Compliance und Sicherheitsanforderungen für Krankenhäuser und Versorger\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">KRITIS</button>\n                <button id=\"pill_LeanIX\" type=\"button\" onmouseenter=\"updateDigestInspector('LeanIX')\" onclick=\"updateDigestInspector('LeanIX')\" title=\"LeanIX (Enterprise Architecture Management) &#10;SAP: SAPs strategisches Tool zur Erfassung und Transformation der Unternehmensarchitektur (EAM)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">LeanIX</button>\n                <button id=\"pill_MDM\" type=\"button\" onmouseenter=\"updateDigestInspector('MDM')\" onclick=\"updateDigestInspector('MDM')\" title=\"Master Data Management (Stammdaten) &#10;SAP: SAP Master Data Governance (MDG) bzw. domänenspezifische Stammdatenverwaltung\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">MDM</button>\n                <button id=\"pill_OAUTH\" type=\"button\" onmouseenter=\"updateDigestInspector('OAUTH')\" onclick=\"updateDigestInspector('OAUTH')\" title=\"OAuth 2.0 Authorization Framework (RFC 6749) &#10;SAP: BTP Service Key Bindung mit Client-ID und Client-Secret gegen XSUAA Token-URL\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">OAUTH</button>\n                <button id=\"pill_ODATA\" type=\"button\" onmouseenter=\"updateDigestInspector('ODATA')\" onclick=\"updateDigestInspector('ODATA')\" title=\"Open Data Protocol (OASIS) &#10;SAP: Das Standard-Datenprotokoll für alle SAP Fiori Apps und S/4HANA Business APIs\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/70 text-blue-900 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">ODATA</button>\n                <button id=\"pill_OKF\" type=\"button\" onmouseenter=\"updateDigestInspector('OKF')\" onclick=\"updateDigestInspector('OKF')\" title=\"Open Knowledge Format (Google OKF v0.2) &#10;SAP: Nicht-proprietäre, maschinenlesbare Architekturdokumentation für KI-Systeme\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">OKF</button>\n                <button id=\"pill_Phyton\" type=\"button\" onmouseenter=\"updateDigestInspector('Phyton')\" onclick=\"updateDigestInspector('Phyton')\" title=\"Python (vom Benutzer als Phyton benannt) &#10;SAP: SAP HANA Python Client API (hdbcli) / Machine Learning Foundation\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">Phyton</button>\n                <button id=\"pill_PI_PO\" type=\"button\" onmouseenter=\"updateDigestInspector('PI/PO')\" onclick=\"updateDigestInspector('PI/PO')\" title=\"SAP Process Integration / Process Orchestration &#10;SAP: Die On-Premise Vorgängergeneration von Cloud Integration (Dual-Stack ABAP/Java, NetWeaver)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/70 text-blue-900 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">PI/PO</button>\n                <button id=\"pill_S_4HANA\" type=\"button\" onmouseenter=\"updateDigestInspector('S/4HANA')\" onclick=\"updateDigestInspector('S/4HANA')\" title=\"SAP S/4HANA &#10;SAP: Die moderne In-Memory-ERP-Generation von SAP mit vereinfachtem Datenmodell\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">S/4HANA</button>\n                <button id=\"pill_SAP\" type=\"button\" onmouseenter=\"updateDigestInspector('SAP')\" onclick=\"updateDigestInspector('SAP')\" title=\"Systems, Applications and Products in Data Processing &#10;SAP: Der weltweite Marktführer für integrierte Unternehmenssoftware (ERP/Cloud)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">SAP</button>\n                <button id=\"pill_Streamlit\" type=\"button\" onmouseenter=\"updateDigestInspector('Streamlit')\" onclick=\"updateDigestInspector('Streamlit')\" title=\"Streamlit Web App Framework &#10;SAP: Moderne Alternative zu klassischen Fiori-UIs für Daten- und KI-Anwendungen\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">Streamlit</button>\n                <button id=\"pill_TLS\" type=\"button\" onmouseenter=\"updateDigestInspector('TLS')\" onclick=\"updateDigestInspector('TLS')\" title=\"Transport Layer Security (RFC 8446) &#10;SAP: Verschlüsselte HTTPS-Verbindung auf BTP Cloud Foundry Load Balancern\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">TLS</button>\n                <button id=\"pill_TOGAF\" type=\"button\" onmouseenter=\"updateDigestInspector('TOGAF')\" onclick=\"updateDigestInspector('TOGAF')\" title=\"The Open Group Architecture Framework &#10;SAP: Enterprise Architecture Methodik (kompatibel mit SAP Enterprise Architecture Framework)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">TOGAF</button>\n                <button id=\"pill_XML\" type=\"button\" onmouseenter=\"updateDigestInspector('XML')\" onclick=\"updateDigestInspector('XML')\" title=\"Extensible Markup Language (W3C) &#10;SAP: Traditionelles internes Datenformat in SAP PI/PO und Cloud Integration (XPath, XSLT)\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">XML</button>\n                <button id=\"pill_XSUAA\" type=\"button\" onmouseenter=\"updateDigestInspector('XSUAA')\" onclick=\"updateDigestInspector('XSUAA')\" title=\"XML/Extended Services User Account and Authentication &#10;SAP: BTP-spezifischer Auth-Broker auf Cloud Foundry zur Authentifizierung und Rechteverwaltung\" class=\"digest-pill px-2 py-1.5 text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/70 text-blue-900 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate\">XSUAA</button>\n              </div>\n            </div>\n\n            <div class=\"grid grid-cols-3 gap-2 text-center text-xs\">\n              <span class=\"p-1.5 bg-slate-100 rounded-lg font-bold text-slate-700\">🔤 45 Akronyme</span>\n              <span class=\"p-1.5 bg-slate-100 rounded-lg font-bold text-slate-700\">🔄 SAP-Sprech Entschlüsselt</span>\n              <span class=\"p-1.5 bg-slate-100 rounded-lg font-bold text-slate-700\">📐 TOGAF & BTP Architektur</span>\n            </div>\n          </div>\n        ",
-            "notes": "In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist im Grunde ein erweiterter JWT-Server, ein iFlow eine Camel-Route, und ProcessDirect ein latenzfreier In-Memory-Bus. Dieses Digest entschlüsselt 45 Kernbegriffe für unser Team – fahren Sie einfach mit der Maus über die Begriffe!"
+            "title": "Das Enterprise Acronym Digest (75 Begriffe)",
+            "subtitle": "Vom SAP-Sprech zu solider Informatik: 75 Schlüsselbegriffe von VA01 bis Joule alphabetisch entschlüsselt",
+            "visual": "\n          <div class=\"h-full flex flex-col justify-between gap-2.5\">\n            <!-- Compact Modern Inspector HUD Card -->\n            <div id=\"digestInspector\" class=\"bg-gradient-to-r from-slate-900 via-[#1d2d3e] to-slate-900 text-white px-4 py-3 rounded-2xl border-2 border-[#0070f2] shadow-xl flex flex-col justify-between transition-all duration-150 shrink-0\">\n              <div class=\"flex items-center justify-between border-b border-slate-700/70 pb-1.5\">\n                <div class=\"flex items-center gap-2\">\n                  <span id=\"inspectTerm\" class=\"px-2.5 py-0.5 bg-[#0070f2] text-white font-mono font-black text-xs sm:text-sm rounded-lg shadow-sm\">XSUAA</span>\n                  <span id=\"inspectTitle\" class=\"text-xs sm:text-sm font-bold text-slate-100 truncate max-w-md\">XML/Extended Services User Account and Authentication</span>\n                </div>\n                <div class=\"flex items-center gap-2\">\n                  <span id=\"inspectCategory\" class=\"px-2 py-0.5 bg-red-500/20 text-red-300 border border-red-500/40 text-[9px] sm:text-[10px] font-bold rounded-full uppercase font-mono\">Security & SAP</span>\n                  <span class=\"text-[9px] text-amber-300/80 font-mono hidden md:inline\">👆 Hovern für Details</span>\n                </div>\n              </div>\n\n              <div class=\"grid grid-cols-1 md:grid-cols-2 gap-2 my-1.5 text-xs\">\n                <div class=\"bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-xl\">\n                  <div class=\"text-[9px] uppercase font-bold text-amber-400 flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-arrows-rotate\"></i> SAP-Sprech (Reformulierung)\n                  </div>\n                  <div id=\"inspectSap\" class=\"text-slate-200 mt-0.5 font-medium leading-tight text-[11px] sm:text-xs\">\n                    BTP-spezifischer Auth-Broker auf Cloud Foundry zur Authentifizierung und Rechteverwaltung\n                  </div>\n                </div>\n                <div class=\"bg-emerald-500/10 border border-emerald-500/30 px-3 py-1.5 rounded-xl\">\n                  <div class=\"text-[9px] uppercase font-bold text-emerald-400 flex items-center gap-1.5\">\n                    <i class=\"fa-solid fa-microchip\"></i> Informatik-Realität & Standard\n                  </div>\n                  <div id=\"inspectReal\" class=\"text-slate-200 mt-0.5 font-medium leading-tight text-[11px] sm:text-xs\">\n                    Extended OAuth 2.0 Auth Server & Token Broker, der JWT-Tokens mit proprietären SAP-Scopes signiert.\n                  </div>\n                </div>\n              </div>\n\n              <div class=\"flex items-center justify-between text-[10px] sm:text-[11px] pt-1 border-t border-slate-700/70\">\n                <div class=\"flex items-center gap-1.5 text-blue-300 truncate\">\n                  <i class=\"fa-solid fa-bullseye text-[#0070f2] shrink-0\"></i>\n                  <span class=\"font-semibold text-slate-300 shrink-0\">Projektbezug:</span>\n                  <span id=\"inspectContext\" class=\"text-slate-300 font-medium truncate\">Gewährleistet Zero-Trust M2M-Autorisierung für den iFlow 1 Inbound-Endpunkt (Folie 07).</span>\n                </div>\n                <span class=\"text-[9px] text-slate-400 font-mono shrink-0 hidden sm:inline\">75 Begriffe im Speicher</span>\n              </div>\n            </div>\n\n            <!-- Generous Acronym Pills Grid Container (No vertical clipping, ample breathing room) -->\n            <div class=\"p-3 bg-slate-100/90 rounded-2xl border border-slate-200 shadow-inner flex-1 flex flex-col justify-between\">\n              <!-- Filter & Header Bar -->\n              <div class=\"flex flex-wrap items-center justify-between gap-1.5 pb-2 border-b border-slate-200/80 shrink-0\">\n                <div class=\"flex items-center gap-2\">\n                  <span class=\"text-xs font-black text-slate-800 tracking-tight\">75 Enterprise-Akronyme</span>\n                  <span class=\"text-[10px] font-mono text-slate-500 font-medium hidden sm:inline\">• Alphabetisch (Zahlen & A–Z)</span>\n                </div>\n                <!-- Interactive Filter Tabs -->\n                <div class=\"flex flex-wrap items-center gap-1 text-[10px] font-semibold\" id=\"digestFilterGroup\">\n                  <button type=\"button\" onclick=\"filterDigest('all')\" id=\"btnFilter_all\" class=\"px-2 py-0.5 rounded-md bg-[#0070f2] text-white font-bold transition shadow-xs\">Alle (75)</button>\n                  <button type=\"button\" onclick=\"filterDigest('sap')\" id=\"btnFilter_sap\" class=\"px-2 py-0.5 rounded-md bg-white hover:bg-blue-50 text-blue-900 border border-blue-200 transition\">SAP & Transaktionen (24)</button>\n                  <button type=\"button\" onclick=\"filterDigest('ai')\" id=\"btnFilter_ai\" class=\"px-2 py-0.5 rounded-md bg-white hover:bg-purple-50 text-purple-900 border border-purple-200 transition\">AI & GenAI (12)</button>\n                  <button type=\"button\" onclick=\"filterDigest('arch')\" id=\"btnFilter_arch\" class=\"px-2 py-0.5 rounded-md bg-white hover:bg-emerald-50 text-emerald-900 border border-emerald-200 transition\">Architektur & QS (12)</button>\n                  <button type=\"button\" onclick=\"filterDigest('web')\" id=\"btnFilter_web\" class=\"px-2 py-0.5 rounded-md bg-white hover:bg-cyan-50 text-cyan-900 border border-cyan-200 transition\">Web, Cloud & Security (27)</button>\n                </div>\n              </div>\n\n              <!-- High-Density Responsive Grid (11 Cols on Desktop = 7 comfortable rows with zero clipping) -->\n              <div id=\"pillsScrollContainer\" class=\"grid grid-cols-4 sm:grid-cols-6 md:grid-cols-9 lg:grid-cols-11 gap-1.5 py-2.5 px-1 max-h-[290px] overflow-y-auto custom-scrollbar\">\n                <button id=\"pill_200\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('200')\" onclick=\"updateDigestInspector('200')\" title=\"HTTP 200 OK &#10;SAP: Synchrone OData/REST Erfolgsantwort (GET / PATCH auf S/4HANA)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">200</button>\n                <button id=\"pill_202\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('202')\" onclick=\"updateDigestInspector('202')\" title=\"HTTP 202 Accepted &#10;SAP: Asynchroner Inbound-Handshake im Cloud Integration Ingest-Flow\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">202</button>\n                <button id=\"pill_401\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('401')\" onclick=\"updateDigestInspector('401')\" title=\"HTTP 401 Unauthorized &#10;SAP: Fehlendes/abgelaufenes OAuth2/XSUAA Bearer Token oder CORS-Preflight Abweisung\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">401</button>\n                <button id=\"pill_500\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('500')\" onclick=\"updateDigestInspector('500')\" title=\"HTTP 500 Internal Server Error &#10;SAP: Laufzeitabbruch im iFlow oder S/4HANA Backend\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">500</button>\n                <button id=\"pill_ABAP\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('ABAP')\" onclick=\"updateDigestInspector('ABAP')\" title=\"Advanced Business Application Programming &#10;SAP: SAPs proprietäre Programmiersprache für den transaktionalen Kern seit R/2 (ABAP Cloud, RAP)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">ABAP <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_ADR\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('ADR')\" onclick=\"updateDigestInspector('ADR')\" title=\"Architectural Decision Record &#10;SAP: Architektur-Vorgabe & verbindlicher Entscheidungsnachweis im Projekt\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">ADR</button>\n                <button id=\"pill_ADT\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('ADT')\" onclick=\"updateDigestInspector('ADT')\" title=\"ABAP Development Tools (in Eclipse) &#10;SAP: Die moderne IDE für ABAP Cloud, Core Data Services (CDS) und RAP\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">ADT <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_AI\" type=\"button\" data-groups=\"all ai\" onmouseenter=\"updateDigestInspector('AI')\" onclick=\"updateDigestInspector('AI')\" title=\"Artificial Intelligence &#10;SAP: SAP Joule & Business AI Services (GenAI auf SAP BTP)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-purple-300 bg-purple-50/80 text-purple-900 hover:bg-purple-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">AI <span class='text-[8px] text-purple-500 font-normal'>🤖</span></button>\n                <button id=\"pill_AI_HUB\" type=\"button\" data-groups=\"all sap ai\" onmouseenter=\"updateDigestInspector('AI HUB')\" onclick=\"updateDigestInspector('AI HUB')\" title=\"SAP Generative AI Hub (BTP) &#10;SAP: Zentraler BTP-Dienst für sicheren, mandantenfähigen Zugriff auf Foundation Models (OpenAI, Gemini, Claude)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">AI HUB <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_ALM\" type=\"button\" data-groups=\"all sap arch\" onmouseenter=\"updateDigestInspector('ALM')\" onclick=\"updateDigestInspector('ALM')\" title=\"Application Lifecycle Management (SAP Cloud ALM) &#10;SAP: SAPs Cloud-native Plattform für Betrieb, Monitoring und Release-Management (Nachfolger von Solution Manager)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">ALM <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_API\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('API')\" onclick=\"updateDigestInspector('API')\" title=\"Application Programming Interface &#10;SAP: SAP Business Accelerator Hub Schnittstelle (OData/REST Service)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">API</button>\n                <button id=\"pill_APL\" type=\"button\" data-groups=\"all sap ai\" onmouseenter=\"updateDigestInspector('APL')\" onclick=\"updateDigestInspector('APL')\" title=\"Automated Predictive Library (SAP HANA) &#10;SAP: In-Database Machine Learning Algorithmen direkt in der SAP HANA Datenbank-Engine\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">APL <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_aws\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('aws')\" onclick=\"updateDigestInspector('aws')\" title=\"Amazon Web Services &#10;SAP: Hyperscaler Foundation für SAP BTP Cloud Foundry Region US10 (cf-us10-001)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">aws</button>\n                <button id=\"pill_BP_Business_Partner\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('BP Business Partner')\" onclick=\"updateDigestInspector('BP Business Partner')\" title=\"Business Partner (Geschäftspartner) &#10;SAP: Zentrales Stammdatenobjekt in S/4HANA (Transaktion BP; ersetzt alte getrennte Debitoren/Kreditoren)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">BP Business Partner <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_BPMN\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('BPMN')\" onclick=\"updateDigestInspector('BPMN')\" title=\"Business Process Model and Notation &#10;SAP: Visuelles iFlow-Modell im SAP Integration Suite Web-Editor\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">BPMN</button>\n                <button id=\"pill_BTP\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('BTP')\" onclick=\"updateDigestInspector('BTP')\" title=\"SAP Business Technology Platform &#10;SAP: SAPs zentrales Integrations- & Innovations-Betriebssystem (Multi-Cloud PaaS/SaaS)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">BTP <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_CAP\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('CAP')\" onclick=\"updateDigestInspector('CAP')\" title=\"SAP Cloud Application Programming Model &#10;SAP: SAPs empfohlenes Entwicklungs-Framework für Cloud-native Enterprise-Anwendungen auf BTP\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">CAP <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_CI_CD\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('CI/CD')\" onclick=\"updateDigestInspector('CI/CD')\" title=\"Continuous Integration / Continuous Delivery &#10;SAP: Automatisiertes Build- und Deployment-Management (Project 'Piper', BTP CI/CD Service)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">CI/CD</button>\n                <button id=\"pill_CORS\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('CORS')\" onclick=\"updateDigestInspector('CORS')\" title=\"Cross-Origin Resource Sharing &#10;SAP: Browser-Sicherheitsmechanismus; von SAP BTP Integration Suite standardmäßig blockiert\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">CORS</button>\n                <button id=\"pill_CPI\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('CPI')\" onclick=\"updateDigestInspector('CPI')\" title=\"Cloud Platform Integration (SAP CI) &#10;SAP: Der Kern-Integrationsdienst der SAP Integration Suite (ehemals HCI)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">CPI <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_Credly\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('Credly')\" onclick=\"updateDigestInspector('Credly')\" title=\"Credly Digital Credentials &#10;SAP: Offizielle Verifikationsplattform für SAP Global Certifications und Partner-Badges\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">Credly</button>\n                <button id=\"pill_CTFL\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('CTFL')\" onclick=\"updateDigestInspector('CTFL')\" title=\"Certified Tester Foundation Level (ISTQB) &#10;SAP: Formale Qualifikation für Testmanager und Integrationsprüfer in SAP-Rollouts\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">CTFL</button>\n                <button id=\"pill_ERP\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('ERP')\" onclick=\"updateDigestInspector('ERP')\" title=\"Enterprise Resource Planning &#10;SAP: Zentrales ERP-Betriebssystem des Unternehmens (von R/3 über ECC bis S/4HANA)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">ERP <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_EU_AI_Act\" type=\"button\" data-groups=\"all ai arch\" onmouseenter=\"updateDigestInspector('EU AI Act')\" onclick=\"updateDigestInspector('EU AI Act')\" title=\"Europäische KI-Verordnung (EU 2024/1689) &#10;SAP: Gesetzliche Compliance-Vorgabe für vertrauenswürdige und transparente KI im Enterprise-Umfeld\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-purple-300 bg-purple-50/80 text-purple-900 hover:bg-purple-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">EU AI Act <span class='text-[8px] text-purple-500 font-normal'>🤖</span></button>\n                <button id=\"pill_FIORI\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('FIORI')\" onclick=\"updateDigestInspector('FIORI')\" title=\"SAP Fiori (Design System) / Look-alike &#10;SAP: Offizielles UX-Design-Paradigma von SAP, implementiert via OpenUI5/SAPUI5 Framework\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">FIORI <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_GIT\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('GIT')\" onclick=\"updateDigestInspector('GIT')\" title=\"Git (Versionskontrolle) &#10;SAP: Quellcodeverwaltung für Cloud-native Integrationsartefakte und ABAP-Git\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">GIT</button>\n                <button id=\"pill_GITHUB\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('GITHUB')\" onclick=\"updateDigestInspector('GITHUB')\" title=\"GitHub Enterprise / Cloud &#10;SAP: Cloud-Repository für Open Source & Enterprise Integrations-Code\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">GITHUB</button>\n                <button id=\"pill_GUI\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('GUI')\" onclick=\"updateDigestInspector('GUI')\" title=\"Graphical User Interface (SAP GUI) &#10;SAP: Der klassische Win32/Java Desktop-Client von SAP (Transaktionscode-Eingabe, Dynpro)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">GUI <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_HITL__HOTL\" type=\"button\" data-groups=\"all ai arch\" onmouseenter=\"updateDigestInspector('HITL, HOTL')\" onclick=\"updateDigestInspector('HITL, HOTL')\" title=\"Human-in-the-Loop & Human-on-the-Loop &#10;SAP: Menschliche Kontroll- und Freigabeschritte bei KI-gestützten Automatisierungen\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-purple-300 bg-purple-50/80 text-purple-900 hover:bg-purple-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">HITL, HOTL <span class='text-[8px] text-purple-500 font-normal'>🤖</span></button>\n                <button id=\"pill_HTML\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('HTML')\" onclick=\"updateDigestInspector('HTML')\" title=\"Hypertext Markup Language (HTML5) &#10;SAP: Ausgabeformat von Web-Dynpro, Fiori Launchpad und Cloud-UIs\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">HTML</button>\n                <button id=\"pill_HTTP\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('HTTP')\" onclick=\"updateDigestInspector('HTTP')\" title=\"Hypertext Transfer Protocol (RFC 9110) &#10;SAP: Transportprotokoll aller SAP OData-, SOAP- und REST-Kopplungen\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">HTTP</button>\n                <button id=\"pill_IFLOW\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('IFLOW')\" onclick=\"updateDigestInspector('IFLOW')\" title=\"Integration Flow (iFlow) &#10;SAP: Ein im SAP Web-Designer grafisch konfigurierter, modularer Integrationsablauf\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">IFLOW <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_in\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('in')\" onclick=\"updateDigestInspector('in')\" title=\"LinkedIn Profil (/in/) &#10;SAP: Professionelles Netzwerk für SAP-Experten, Architekten und Kunden\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">in</button>\n                <button id=\"pill_ISLM\" type=\"button\" data-groups=\"all sap ai\" onmouseenter=\"updateDigestInspector('ISLM')\" onclick=\"updateDigestInspector('ISLM')\" title=\"Intelligent Scenario Lifecycle Management &#10;SAP: Zentrales SAP-Framework zur Orchestrierung und Verwaltung von ML- und KI-Szenarien in S/4HANA\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">ISLM <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_ISTQB\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('ISTQB')\" onclick=\"updateDigestInspector('ISTQB')\" title=\"International Software Testing Qualifications Board &#10;SAP: Qualitätssicherungs-Standard für Abnahmetests und Cutover in SAP-Landschaften\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">ISTQB</button>\n                <button id=\"pill_ITIL\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('ITIL')\" onclick=\"updateDigestInspector('ITIL')\" title=\"Information Technology Infrastructure Library &#10;SAP: Betriebsführung nach SAP Application Lifecycle Management (ALM) & Solution Manager\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">ITIL</button>\n                <button id=\"pill_JOULE\" type=\"button\" data-groups=\"all sap ai\" onmouseenter=\"updateDigestInspector('JOULE')\" onclick=\"updateDigestInspector('JOULE')\" title=\"SAP Joule (Generativer KI-Copilot) &#10;SAP: Der universelle, kontextbezogene KI-Assistent über alle SAP-Cloud-Lösungen hinweg\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">JOULE <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_JS\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('JS')\" onclick=\"updateDigestInspector('JS')\" title=\"JavaScript (ECMAScript) &#10;SAP: Laufzeitsprache für SAPUI5, SAP Fiori und CAP Node.js Backend-Services\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">JS</button>\n                <button id=\"pill_JSD\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('JSD')\" onclick=\"updateDigestInspector('JSD')\" title=\"Johannesstift Diakonie gAG &#10;SAP: Der Auftraggeber und das Zielumfeld für die Stammdatenintegration\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">JSD</button>\n                <button id=\"pill_JSD_MDM\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('JSD-MDM')\" onclick=\"updateDigestInspector('JSD-MDM')\" title=\"JSD Master Data Management System &#10;SAP: Quellsystem (Legacy/SaaS), das Stammdaten an die SAP BTP sendet\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">JSD-MDM</button>\n                <button id=\"pill_JSON\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('JSON')\" onclick=\"updateDigestInspector('JSON')\" title=\"JavaScript Object Notation (RFC 8259) &#10;SAP: Standard-Nutzlast für moderne BTP REST-Services und OData V4\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">JSON</button>\n                <button id=\"pill_JWT_JSON_Web_Token\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('JWT JSON Web Token')\" onclick=\"updateDigestInspector('JWT JSON Web Token')\" title=\"JSON Web Token (RFC 7519) &#10;SAP: XSUAA-Token mit verschachtelten SAP-Scopes, Tenant-IDs und User-Attributes\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">JWT JSON Web Token</button>\n                <button id=\"pill_KI\" type=\"button\" data-groups=\"all ai\" onmouseenter=\"updateDigestInspector('KI')\" onclick=\"updateDigestInspector('KI')\" title=\"Künstliche Intelligenz (AI) &#10;SAP: SAP Business AI, Joule Copilot und SAP Generative AI Hub\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-purple-300 bg-purple-50/80 text-purple-900 hover:bg-purple-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">KI <span class='text-[8px] text-purple-500 font-normal'>🤖</span></button>\n                <button id=\"pill_KRITIS\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('KRITIS')\" onclick=\"updateDigestInspector('KRITIS')\" title=\"Kritische Infrastrukturen (BSI KritisV) &#10;SAP: IT-Compliance und Sicherheitsanforderungen für Krankenhäuser und Versorger\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">KRITIS</button>\n                <button id=\"pill_LeanIX\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('LeanIX')\" onclick=\"updateDigestInspector('LeanIX')\" title=\"LeanIX (Enterprise Architecture Management) &#10;SAP: SAPs strategisches Tool zur Erfassung und Transformation der Unternehmensarchitektur (EAM)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">LeanIX</button>\n                <button id=\"pill_LLM\" type=\"button\" data-groups=\"all ai\" onmouseenter=\"updateDigestInspector('LLM')\" onclick=\"updateDigestInspector('LLM')\" title=\"Large Language Model (Großes Sprachmodell) &#10;SAP: Generative KI-Modelle zur Text-, Code- und Schema-Generierung auf BTP\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-purple-300 bg-purple-50/80 text-purple-900 hover:bg-purple-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">LLM <span class='text-[8px] text-purple-500 font-normal'>🤖</span></button>\n                <button id=\"pill_MDM\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('MDM')\" onclick=\"updateDigestInspector('MDM')\" title=\"Master Data Management (Stammdaten) &#10;SAP: SAP Master Data Governance (MDG) bzw. domänenspezifische Stammdatenverwaltung\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">MDM</button>\n                <button id=\"pill_OAUTH\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('OAUTH')\" onclick=\"updateDigestInspector('OAUTH')\" title=\"OAuth 2.0 Authorization Framework (RFC 6749) &#10;SAP: BTP Service Key Bindung mit Client-ID und Client-Secret gegen XSUAA Token-URL\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">OAUTH</button>\n                <button id=\"pill_ODATA\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('ODATA')\" onclick=\"updateDigestInspector('ODATA')\" title=\"Open Data Protocol (OASIS) &#10;SAP: Das Standard-Datenprotokoll für alle SAP Fiori Apps und S/4HANA Business APIs\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">ODATA <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_OKF\" type=\"button\" data-groups=\"all ai arch\" onmouseenter=\"updateDigestInspector('OKF')\" onclick=\"updateDigestInspector('OKF')\" title=\"Open Knowledge Format (Google OKF v0.2) &#10;SAP: Nicht-proprietäre, maschinenlesbare Architekturdokumentation für KI-Systeme\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-purple-300 bg-purple-50/80 text-purple-900 hover:bg-purple-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">OKF <span class='text-[8px] text-purple-500 font-normal'>🤖</span></button>\n                <button id=\"pill_Phyton\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('Phyton')\" onclick=\"updateDigestInspector('Phyton')\" title=\"Python (vom Benutzer als Phyton benannt) &#10;SAP: SAP HANA Python Client API (hdbcli) / Machine Learning Foundation\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">Phyton</button>\n                <button id=\"pill_PI_PO\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('PI/PO')\" onclick=\"updateDigestInspector('PI/PO')\" title=\"SAP Process Integration / Process Orchestration &#10;SAP: Die On-Premise Vorgängergeneration von Cloud Integration (Dual-Stack ABAP/Java, NetWeaver)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">PI/PO <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_PoC\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('PoC')\" onclick=\"updateDigestInspector('PoC')\" title=\"Proof of Concept (Machbarkeitsnachweis) &#10;SAP: Vorprojekt zur Risikominimierung vor dem unternehmensweiten S/4HANA Rollout\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">PoC</button>\n                <button id=\"pill_QM\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('QM')\" onclick=\"updateDigestInspector('QM')\" title=\"Quality Management (Qualitätsmanagement) &#10;SAP: SAP QM Modul bzw. unternehmensweite Prüf- und QS-Prozesse\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">QM</button>\n                <button id=\"pill_RAG\" type=\"button\" data-groups=\"all ai\" onmouseenter=\"updateDigestInspector('RAG')\" onclick=\"updateDigestInspector('RAG')\" title=\"Retrieval-Augmented Generation &#10;SAP: Grounding von Foundation Models mit unternehmenseigenen SAP-Geschäftsdaten\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-purple-300 bg-purple-50/80 text-purple-900 hover:bg-purple-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">RAG <span class='text-[8px] text-purple-500 font-normal'>🤖</span></button>\n                <button id=\"pill_RDF\" type=\"button\" data-groups=\"all ai\" onmouseenter=\"updateDigestInspector('RDF')\" onclick=\"updateDigestInspector('RDF')\" title=\"Resource Description Framework (W3C) &#10;SAP: Semantische Datenmodellierung für Wissensnetze und Enterprise-Ontologien\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-purple-300 bg-purple-50/80 text-purple-900 hover:bg-purple-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">RDF <span class='text-[8px] text-purple-500 font-normal'>🤖</span></button>\n                <button id=\"pill_REST\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('REST')\" onclick=\"updateDigestInspector('REST')\" title=\"Representational State Transfer (Roy Fielding) &#10;SAP: Leichtgewichtige Web-Schnittstellen (Alternative oder Basis für OData)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">REST</button>\n                <button id=\"pill_S_4HANA\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('S/4HANA')\" onclick=\"updateDigestInspector('S/4HANA')\" title=\"SAP S/4HANA &#10;SAP: Die moderne In-Memory-ERP-Generation von SAP mit vereinfachtem Datenmodell\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">S/4HANA <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_SAP\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('SAP')\" onclick=\"updateDigestInspector('SAP')\" title=\"Systems, Applications and Products in Data Processing &#10;SAP: Der weltweite Marktführer für integrierte Unternehmenssoftware (ERP/Cloud)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">SAP <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_SDK\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('SDK')\" onclick=\"updateDigestInspector('SDK')\" title=\"Software Development Kit &#10;SAP: SAP Cloud SDK (Java / JavaScript) für typsichere OData-Zugriffe auf S/4HANA\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">SDK</button>\n                <button id=\"pill_SE16N\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('SE16N')\" onclick=\"updateDigestInspector('SE16N')\" title=\"Allgemeine Tabellenanzeige (SAP GUI Transaktion) &#10;SAP: Die legendäre Support- und Analyse-Transaktion zur direkten DB-Tabelleneinsicht (z.B. BUT000)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">SE16N <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_SE18\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('SE18')\" onclick=\"updateDigestInspector('SE18')\" title=\"Business Add-Ins Definition (SAP GUI Transaktion) &#10;SAP: Transaktion zur Definition modularer Erweiterungspunkte (BAdI) im ABAP-Standard\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">SE18 <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_SE19\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('SE19')\" onclick=\"updateDigestInspector('SE19')\" title=\"Business Add-Ins Implementierung (SAP GUI Transaktion) &#10;SAP: Transaktion zur Aktivierung und Implementierung kundeneigener BAdI-Klassen\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">SE19 <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_SPARQL\" type=\"button\" data-groups=\"all ai\" onmouseenter=\"updateDigestInspector('SPARQL')\" onclick=\"updateDigestInspector('SPARQL')\" title=\"SPARQL Protocol and RDF Query Language &#10;SAP: Semantische Abfragesprache für Wissensgraphen und Ontologien\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-purple-300 bg-purple-50/80 text-purple-900 hover:bg-purple-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">SPARQL <span class='text-[8px] text-purple-500 font-normal'>🤖</span></button>\n                <button id=\"pill_Streamlit\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('Streamlit')\" onclick=\"updateDigestInspector('Streamlit')\" title=\"Streamlit Web App Framework &#10;SAP: Moderne Alternative zu klassischen Fiori-UIs für Daten- und KI-Anwendungen\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">Streamlit</button>\n                <button id=\"pill_TLS\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('TLS')\" onclick=\"updateDigestInspector('TLS')\" title=\"Transport Layer Security (RFC 8446) &#10;SAP: Verschlüsselte HTTPS-Verbindung auf BTP Cloud Foundry Load Balancern\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">TLS</button>\n                <button id=\"pill_TOGAF\" type=\"button\" data-groups=\"all arch\" onmouseenter=\"updateDigestInspector('TOGAF')\" onclick=\"updateDigestInspector('TOGAF')\" title=\"The Open Group Architecture Framework &#10;SAP: Enterprise Architecture Methodik (kompatibel mit SAP Enterprise Architecture Framework)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">TOGAF</button>\n                <button id=\"pill_UI\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('UI')\" onclick=\"updateDigestInspector('UI')\" title=\"User Interface (Benutzeroberfläche) &#10;SAP: Von SAP GUI über Web Dynpro bis SAP Fiori Horizon Launchpad\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">UI</button>\n                <button id=\"pill_URL\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('URL')\" onclick=\"updateDigestInspector('URL')\" title=\"Uniform Resource Locator (RFC 3986) &#10;SAP: Service-Endpunktadresse auf dem BTP-Host (cfapps.us10-001.hana.ondemand.com)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">URL</button>\n                <button id=\"pill_VA01\" type=\"button\" data-groups=\"all sap\" onmouseenter=\"updateDigestInspector('VA01')\" onclick=\"updateDigestInspector('VA01')\" title=\"Kundenauftrag anlegen (SAP GUI Transaktion) &#10;SAP: Die berühmteste Transaktion der SAP-Welt: Auftragsanlage im Vertrieb (SD)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">VA01 <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_Webhook\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('Webhook')\" onclick=\"updateDigestInspector('Webhook')\" title=\"HTTP-basierter Ereignis-Callback &#10;SAP: SAP Event Mesh Event-Subscription bzw. BTP Event Trigger\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">Webhook</button>\n                <button id=\"pill_X_509\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('X.509')\" onclick=\"updateDigestInspector('X.509')\" title=\"ITU-T Standard für Public-Key-Zertifikate &#10;SAP: Client-Zertifikatsauthentifizierung (mTLS) im BTP Keystore\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">X.509</button>\n                <button id=\"pill_XML\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('XML')\" onclick=\"updateDigestInspector('XML')\" title=\"Extensible Markup Language (W3C) &#10;SAP: Traditionelles internes Datenformat in SAP PI/PO und Cloud Integration (XPath, XSLT)\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">XML</button>\n                <button id=\"pill_XSUAA\" type=\"button\" data-groups=\"all sap web\" onmouseenter=\"updateDigestInspector('XSUAA')\" onclick=\"updateDigestInspector('XSUAA')\" title=\"XML/Extended Services User Account and Authentication &#10;SAP: BTP-spezifischer Auth-Broker auf Cloud Foundry zur Authentifizierung und Rechteverwaltung\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-blue-300 bg-blue-50/80 text-blue-900 hover:bg-blue-100 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">XSUAA <span class='text-[8px] text-blue-500 font-normal'>🔄</span></button>\n                <button id=\"pill_YAML\" type=\"button\" data-groups=\"all web\" onmouseenter=\"updateDigestInspector('YAML')\" onclick=\"updateDigestInspector('YAML')\" title=\"YAML Ain't Markup Language &#10;SAP: Konfigurationsformat für Cloud Foundry Manifests (manifest.yml) und K8s Helm Charts\" class=\"digest-pill px-1.5 py-1 text-[10px] sm:text-[11px] font-bold font-mono rounded-lg border text-center transition-all duration-150 border-slate-300 bg-white text-slate-800 hover:bg-slate-50 shadow-xs hover:shadow-md hover:border-[#0070f2] hover:scale-105 active:scale-95 cursor-pointer truncate select-none\">YAML</button>\n              </div>\n\n              <!-- Footer legend -->\n              <div class=\"pt-1.5 border-t border-slate-200/80 flex items-center justify-between text-[10px] text-slate-500 font-medium shrink-0\">\n                <span class=\"flex items-center gap-1\"><span class=\"w-2 h-2 rounded-full bg-blue-500\"></span> <strong>Blau (🔄):</strong> SAP-Sprech vs. Informatik-Realität</span>\n                <span class=\"flex items-center gap-1\"><span class=\"w-2 h-2 rounded-full bg-purple-500\"></span> <strong>Lila (🤖):</strong> GenAI & Wissensgraph</span>\n                <span class=\"font-mono text-slate-600 hidden md:inline\">SE16N • SE18 • SE19 • VA01 • Joule • BTP</span>\n              </div>\n            </div>\n\n            <!-- Footer Meta Bar -->\n            <div class=\"grid grid-cols-3 gap-2 text-center text-xs shrink-0\">\n              <span class=\"p-1.5 bg-slate-100 rounded-lg font-bold text-slate-700\">🔤 75 Enterprise-Akronyme</span>\n              <span class=\"p-1.5 bg-slate-100 rounded-lg font-bold text-slate-700\">🔄 Klassiker bis GenAI</span>\n              <span class=\"p-1.5 bg-slate-100 rounded-lg font-bold text-slate-700\">📐 TOGAF & BTP Architektur</span>\n            </div>\n          </div>\n",
+            "notes": "In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist ein erweiterter JWT-Server, SE16N ein SQL-Viewer, und Joule ein RAG-Interface. Dieses Digest entschlüsselt fünfundsiebzig Kernbegriffe – von klassischen GUI-Transaktionen bis zum EU AI Act. Fahren oder filtern Sie einfach mit der Maus!"
       },
       {
             "id": 20,
@@ -759,8 +759,8 @@
     }
 
 
-    // ========================================================
-    // 45 ACRONYM DIGEST DATA & INSPECTOR ENGINE (SLIDE 19)
+// ========================================================
+    // 75 ACRONYM DIGEST DATA & INSPECTOR ENGINE (SLIDE 19)
     // ========================================================
     const ACRONYM_DIGEST_MAP = {
     "200": {
@@ -768,6 +768,7 @@
         "title": "HTTP 200 OK",
         "category": "Status",
         "color": "emerald",
+        "tag": "web",
         "sap": "Synchrone OData/REST Erfolgsantwort (GET / PATCH auf S/4HANA)",
         "real": "RFC 9110 Standard-Statuscode für erfolgreiche synchrone HTTP-Anfragen.",
         "context": "OData GET Existenzprüfung & PATCH-Updates auf S/4HANA (Folie 11 & 15)."
@@ -777,6 +778,7 @@
         "title": "HTTP 202 Accepted",
         "category": "Status",
         "color": "blue",
+        "tag": "web",
         "sap": "Asynchroner Inbound-Handshake im Cloud Integration Ingest-Flow",
         "real": "RFC 9110 Status: Auftrag akzeptiert, Verarbeitung erfolgt asynchron im Hintergrund.",
         "context": "iFlow 1 quittiert den MDM-Batch sofort nach Schema-Check mit 202 (Folie 09)."
@@ -786,6 +788,7 @@
         "title": "HTTP 401 Unauthorized",
         "category": "Status",
         "color": "amber",
+        "tag": "security",
         "sap": "Fehlendes/abgelaufenes OAuth2/XSUAA Bearer Token oder CORS-Preflight Abweisung",
         "real": "RFC 9110 Client-Fehler: Fehlende oder ungültige Authentifizierungs-Credentials.",
         "context": "Auftretend bei direkten Browser-Aufrufen gegen BTP (CORS Preflight), gelöst via ADR-006 (Folie 05)."
@@ -795,42 +798,97 @@
         "title": "HTTP 500 Internal Server Error",
         "category": "Status",
         "color": "red",
+        "tag": "web",
         "sap": "Laufzeitabbruch im iFlow oder S/4HANA Backend",
         "real": "RFC 9110 Generischer Serverfehler bei unbehandelter Exception in der Laufzeit.",
         "context": "Isoliert im Exception Subprocess von iFlow 2; verhindert Abbruch von Nachbardatensätzen (Folie 13)."
+    },
+    "ABAP": {
+        "term": "ABAP",
+        "title": "Advanced Business Application Programming",
+        "category": "SAP Core",
+        "color": "blue",
+        "tag": "sap",
+        "sap": "SAPs proprietäre Programmiersprache für den transaktionalen Kern seit R/2 (ABAP Cloud, RAP)",
+        "real": "Höhere, typisierte 4GL-Business-Programmiersprache mit nativer SQL-Kopplung (OpenSQL) und Work-Process-Laufzeit.",
+        "context": "Das S/4HANA Backend verarbeitet unsere OData-Calls nativ in ABAP; in CPI ablöse- und wartungsfrei durch No-Code/Groovy."
     },
     "ADR": {
         "term": "ADR",
         "title": "Architectural Decision Record",
         "category": "Architektur",
         "color": "indigo",
+        "tag": "arch",
         "sap": "Architektur-Vorgabe & verbindlicher Entscheidungsnachweis im Projekt",
         "real": "Leichtgewichtiges Textartefakt nach Michael Nygard zur Dokumentation von Entwurfsentscheidungen.",
         "context": "ADR-001 (Dual-iFlow), ADR-002 (ProcessDirect), ADR-005 (Fiori Lookalike), ADR-006 (GitOps)."
     },
+    "ADT": {
+        "term": "ADT",
+        "title": "ABAP Development Tools (in Eclipse)",
+        "category": "SAP Core",
+        "color": "blue",
+        "tag": "sap",
+        "sap": "Die moderne IDE für ABAP Cloud, Core Data Services (CDS) und RAP",
+        "real": "Eclipse-Plugin mit REST-basierter Client-Server-Anbindung an das SAP NetWeaver Backend (ersetzt SE80).",
+        "context": "Standard-Entwicklungswerkzeug zur Definition von CDS-Views und OData-Services auf S/4HANA."
+    },
     "AI": {
         "term": "AI",
         "title": "Artificial Intelligence",
-        "category": "KI & Innovation",
+        "category": "GenAI & LLM",
         "color": "purple",
+        "tag": "ai",
         "sap": "SAP Joule & Business AI Services (GenAI auf SAP BTP)",
         "real": "Maschinelles Lernen, LLMs (Gemini 3.6 Flash) und semantische Wissensverarbeitung.",
         "context": "Conciliamus AI Architecture Advisor als ständiger quellenbasierter Architekturberater (Folie 17)."
+    },
+    "AI HUB": {
+        "term": "AI HUB",
+        "title": "SAP Generative AI Hub (BTP)",
+        "category": "GenAI & LLM",
+        "color": "purple",
+        "tag": "sap",
+        "sap": "Zentraler BTP-Dienst für sicheren, mandantenfähigen Zugriff auf Foundation Models (OpenAI, Gemini, Claude)",
+        "real": "Enterprise API-Gateway & Proxy für LLMs mit Zero-Data-Retention-Garantie und Prompt-Orchestrierung.",
+        "context": "Enterprise-Pendant zu unserer Gemini 3.6 Flash Lösung; sichert Unternehmensdaten bei KI-Abfragen ab."
+    },
+    "ALM": {
+        "term": "ALM",
+        "title": "Application Lifecycle Management (SAP Cloud ALM)",
+        "category": "Governance",
+        "color": "indigo",
+        "tag": "sap",
+        "sap": "SAPs Cloud-native Plattform für Betrieb, Monitoring und Release-Management (Nachfolger von Solution Manager)",
+        "real": "Zentrale Observability- und ITIL-Governance-Suite für Multi-Cloud-Deployments und Integration Monitoring.",
+        "context": "Überwachung der Schnittstellenlaufzeiten und SLA-Einhaltung für die KRITIS-Infrastruktur der Diakonie."
     },
     "API": {
         "term": "API",
         "title": "Application Programming Interface",
         "category": "Web & API",
         "color": "cyan",
+        "tag": "web",
         "sap": "SAP Business Accelerator Hub Schnittstelle (OData/REST Service)",
         "real": "Formalisierter Programmiervertrag zur Interaktion zwischen Softwaresystemen.",
         "context": "SAP S/4HANA Cloud OData V2 API_BUSINESS_PARTNER als primäre Ziel-API (Folie 04 & 10)."
+    },
+    "APL": {
+        "term": "APL",
+        "title": "Automated Predictive Library (SAP HANA)",
+        "category": "Data & AI",
+        "color": "purple",
+        "tag": "sap",
+        "sap": "In-Database Machine Learning Algorithmen direkt in der SAP HANA Datenbank-Engine",
+        "real": "C++-optimierte statistische ML-Routinen (Regression, Klassifikation, Zeitreihen) ohne Datenbewegung (In-Memory).",
+        "context": "Ermöglicht prädiktive Anomalieerkennung bei Stammdatenänderungen direkt auf DB-Ebene."
     },
     "aws": {
         "term": "aws",
         "title": "Amazon Web Services",
         "category": "Cloud & IaaS",
         "color": "amber",
+        "tag": "cloud",
         "sap": "Hyperscaler Foundation für SAP BTP Cloud Foundry Region US10 (cf-us10-001)",
         "real": "Weltgrößter Cloud-Infrastruktur-Provider (IaaS), auf dem SAP seine Multi-Cloud BTP hostet.",
         "context": "Unser BTP Trial Tenant b9c123f3trial läuft nativ auf AWS US East (N. Virginia) (Folie 01 & 07)."
@@ -840,7 +898,8 @@
         "title": "Business Partner (Geschäftspartner)",
         "category": "SAP Domäne",
         "color": "blue",
-        "sap": "Zentrales Stammdatenobjekt in S/4HANA (Transaktion BP; ersetzt Debitoren/Kreditoren)",
+        "tag": "sap",
+        "sap": "Zentrales Stammdatenobjekt in S/4HANA (Transaktion BP; ersetzt alte getrennte Debitoren/Kreditoren)",
         "real": "Klassische relationale Stammdaten-Entität mit Rollen, Adressen und steuerlichen Identifikatoren.",
         "context": "Kernobjekt der Synchronisation: JSD-MDM Partner werden nach S/4HANA synchronisiert (Folie 01, 04, 10)."
     },
@@ -849,6 +908,7 @@
         "title": "Business Process Model and Notation",
         "category": "Methodik",
         "color": "emerald",
+        "tag": "arch",
         "sap": "Visuelles iFlow-Modell im SAP Integration Suite Web-Editor",
         "real": "ISO/IEC 19510 Standard zur Geschäftsprozessmodellierung; im iFlow als Camel-XML interpretiert.",
         "context": "Bruce-Silver-konforme Modellierung (Method & Style): Klare Trennung von Ingest und Fachlogik (Folie 06, 09)."
@@ -858,15 +918,37 @@
         "title": "SAP Business Technology Platform",
         "category": "SAP Domäne",
         "color": "blue",
+        "tag": "sap",
         "sap": "SAPs zentrales Integrations- & Innovations-Betriebssystem (Multi-Cloud PaaS/SaaS)",
         "real": "Multi-Cloud Plattform auf Cloud Foundry & Kubernetes (Gardener) Basis auf Hyperscalern.",
         "context": "Host-Plattform für unsere Cloud Integration Tenant-Instanz b9c123f3trial (Folie 01, 07, 15)."
+    },
+    "CAP": {
+        "term": "CAP",
+        "title": "SAP Cloud Application Programming Model",
+        "category": "Entwicklung",
+        "color": "blue",
+        "tag": "sap",
+        "sap": "SAPs empfohlenes Entwicklungs-Framework für Cloud-native Enterprise-Anwendungen auf BTP",
+        "real": "Meinungsstarkes Full-Stack-Framework (Node.js/Java) basierend auf Core Data Services (CDS) und OData/REST-Generierung.",
+        "context": "Best-Practice-Architektur für Erweiterungs-Apps neben der Core Integration Suite."
+    },
+    "CI/CD": {
+        "term": "CI/CD",
+        "title": "Continuous Integration / Continuous Delivery",
+        "category": "DevOps",
+        "color": "slate",
+        "tag": "devops",
+        "sap": "Automatisiertes Build- und Deployment-Management (Project 'Piper', BTP CI/CD Service)",
+        "real": "Pipeline zur automatisierten Code-Prüfung, Testausführung und Bereitstellung per Webhook/GitOps.",
+        "context": "In Folie 05 per ADR-006 realisiert: git push origin main rollt den Advisor in unter 20s weltweit aus."
     },
     "CORS": {
         "term": "CORS",
         "title": "Cross-Origin Resource Sharing",
         "category": "Web & Security",
         "color": "red",
+        "tag": "web",
         "sap": "Browser-Sicherheitsmechanismus; von SAP BTP Integration Suite standardmäßig blockiert",
         "real": "W3C-Standard zur Einschränkung von Cross-Origin HTTP-Requests im Webbrowser.",
         "context": "Per ADR-006 elegant gelöst durch Streamlit Cloud Serverless Proxy: Serverseitig kein CORS (Folie 05)."
@@ -876,6 +958,7 @@
         "title": "Cloud Platform Integration (SAP CI)",
         "category": "SAP Domäne",
         "color": "blue",
+        "tag": "sap",
         "sap": "Der Kern-Integrationsdienst der SAP Integration Suite (ehemals HCI)",
         "real": "Enterprise Integration Patterns (EIP) Runtime auf Apache Camel Basis in einer Cloud-PaaS.",
         "context": "Die zentrale Integrationsplattform für unsere iFlows 1 & 2 (Folie 01, 06, 09, 10)."
@@ -885,6 +968,7 @@
         "title": "Credly Digital Credentials",
         "category": "Zertifizierung",
         "color": "amber",
+        "tag": "profile",
         "sap": "Offizielle Verifikationsplattform für SAP Global Certifications und Partner-Badges",
         "real": "Weltweites Verifikationsnetzwerk für kryptografisch validierte digitale Bildungsnachweise.",
         "context": "Offizieller Verifizierungsnachweis für Dieter Rüfflers CPI, PO, TOGAF, AWS und ISTQB Zertifikate (Folie 02)."
@@ -894,6 +978,7 @@
         "title": "Certified Tester Foundation Level (ISTQB)",
         "category": "Zertifizierung",
         "color": "emerald",
+        "tag": "profile",
         "sap": "Formale Qualifikation für Testmanager und Integrationsprüfer in SAP-Rollouts",
         "real": "Weltweit anerkannter ISTQB Grundstufen-Standard für strukturiertes Testdesign.",
         "context": "Fundament für unsere 10-stufige Testfallmatrix (Äquivalenzklassen & Grenzwerte) (Folie 02 & 14)."
@@ -903,15 +988,27 @@
         "title": "Enterprise Resource Planning",
         "category": "Enterprise",
         "color": "slate",
+        "tag": "sap",
         "sap": "Zentrales ERP-Betriebssystem des Unternehmens (von R/3 über ECC bis S/4HANA)",
         "real": "Integrierte betriebswirtschaftliche Standard-Anwendungssoftware zur Ressourcenplanung.",
         "context": "Das transaktionale Zielsystem, das vor Überlastung geschützt werden muss (Folie 03 & 04)."
+    },
+    "EU AI Act": {
+        "term": "EU AI Act",
+        "title": "Europäische KI-Verordnung (EU 2024/1689)",
+        "category": "Governance",
+        "color": "red",
+        "tag": "ai",
+        "sap": "Gesetzliche Compliance-Vorgabe für vertrauenswürdige und transparente KI im Enterprise-Umfeld",
+        "real": "Verbindlicher Rechtsrahmen der EU zur Risikoklassifizierung und Regulierung von KI-Systemen.",
+        "context": "Unser Digital Brain garantiert durch 100% OKF-Grounding Nachvollziehbarkeit und risikofreie Einstufung."
     },
     "FIORI": {
         "term": "FIORI",
         "title": "SAP Fiori (Design System) / Look-alike",
         "category": "SAP Domäne",
         "color": "blue",
+        "tag": "sap",
         "sap": "Offizielles UX-Design-Paradigma von SAP, implementiert via OpenUI5/SAPUI5 Framework",
         "real": "ADR-005: Eigenentwickelte Fiori Look-alike Web-App im Horizon-Theme ohne schwere UI5-Laufzeitlast.",
         "context": "Fiori Horizon Look-alike Test-Runner für interaktives Stammdaten-Testing (Folie 16)."
@@ -921,6 +1018,7 @@
         "title": "Git (Versionskontrolle)",
         "category": "DevOps",
         "color": "slate",
+        "tag": "devops",
         "sap": "Quellcodeverwaltung für Cloud-native Integrationsartefakte und ABAP-Git",
         "real": "Verteiltes Versionskontrollsystem zur lückenlosen Nachvollziehbarkeit jedes Commits.",
         "context": "Versionierung aller iFlow-Skripte, OKF-Wissensartefakte und ADRs (Folie 05)."
@@ -930,15 +1028,37 @@
         "title": "GitHub Enterprise / Cloud",
         "category": "DevOps",
         "color": "slate",
+        "tag": "devops",
         "sap": "Cloud-Repository für Open Source & Enterprise Integrations-Code",
         "real": "Führende Entwicklungsplattform mit integrierten Webhooks, CI/CD und Pull Requests.",
         "context": "Zentrales Repository gonzo42nixon/conciliamus-architecture-knowledge (Folie 05)."
+    },
+    "GUI": {
+        "term": "GUI",
+        "title": "Graphical User Interface (SAP GUI)",
+        "category": "SAP Core",
+        "color": "blue",
+        "tag": "sap",
+        "sap": "Der klassische Win32/Java Desktop-Client von SAP (Transaktionscode-Eingabe, Dynpro)",
+        "real": "Proprietäres Client-Server-GUI mit DIAG-Protokoll; wird sukzessive durch Web-UIs (Fiori) ersetzt.",
+        "context": "Technologischer Kontrast zu unserer modernen Fiori-Lookalike Web-App (Folie 16)."
+    },
+    "HITL, HOTL": {
+        "term": "HITL, HOTL",
+        "title": "Human-in-the-Loop & Human-on-the-Loop",
+        "category": "GenAI & Governance",
+        "color": "purple",
+        "tag": "ai",
+        "sap": "Menschliche Kontroll- und Freigabeschritte bei KI-gestützten Automatisierungen",
+        "real": "Interaktionsmuster: HITL = Mensch entscheidet vor Ausführung; HOTL = Mensch überwacht und kann intervenieren.",
+        "context": "Bei KRITIS-Stammdaten essenziell: KI bereitet Mappings vor, der Architekt gibt frei (Folie 17)."
     },
     "HTML": {
         "term": "HTML",
         "title": "Hypertext Markup Language (HTML5)",
         "category": "Web",
         "color": "cyan",
+        "tag": "web",
         "sap": "Ausgabeformat von Web-Dynpro, Fiori Launchpad und Cloud-UIs",
         "real": "Semantischer W3C-Standard zur Strukturierung von Webseiten und Anwendungen.",
         "context": "Fundament der Pecha Kucha Präsentation und des Fiori-Lookalike Test-Runners (Folie 16)."
@@ -948,6 +1068,7 @@
         "title": "Hypertext Transfer Protocol (RFC 9110)",
         "category": "Web & Protocol",
         "color": "cyan",
+        "tag": "web",
         "sap": "Transportprotokoll aller SAP OData-, SOAP- und REST-Kopplungen",
         "real": "Zustandsloses Anwendungsprotokoll des World Wide Web auf TCP/IP-Basis.",
         "context": "Basis für Inbound-Ingest, ProcessDirect-Routing und S/4HANA OData Aufrufe."
@@ -957,6 +1078,7 @@
         "title": "Integration Flow (iFlow)",
         "category": "SAP Domäne",
         "color": "blue",
+        "tag": "sap",
         "sap": "Ein im SAP Web-Designer grafisch konfigurierter, modularer Integrationsablauf",
         "real": "Deklarative Apache Camel Route (EIP), ausgeführt in einer OSGi/Spring-Boot Container-Runtime.",
         "context": "Kernbausteine: iFlow 1 (Batch Receiver) & iFlow 2 (Item Processor) nach ADR-001 (Folie 06, 09, 10)."
@@ -966,15 +1088,27 @@
         "title": "LinkedIn Profil (/in/)",
         "category": "Profil & Netzwerk",
         "color": "blue",
+        "tag": "profile",
         "sap": "Professionelles Netzwerk für SAP-Experten, Architekten und Kunden",
         "real": "Führendes internationales Business-Netzwerk mit öffentlichem Architektenprofil.",
         "context": "Dieter Rüfflers Profil /in/dieter-rueffler-05981623b direkt auf Folie 01 verlinkt."
+    },
+    "ISLM": {
+        "term": "ISLM",
+        "title": "Intelligent Scenario Lifecycle Management",
+        "category": "Data & AI",
+        "color": "purple",
+        "tag": "sap",
+        "sap": "Zentrales SAP-Framework zur Orchestrierung und Verwaltung von ML- und KI-Szenarien in S/4HANA",
+        "real": "Enterprise-MLOps-Plattform zur Anbindung interner (HANA PAL/APL) und externer KI-Modelle.",
+        "context": "Standard-Integrationspunkt für KI-Modelle in S/4HANA Business Partner Workflows."
     },
     "ISTQB": {
         "term": "ISTQB",
         "title": "International Software Testing Qualifications Board",
         "category": "Methodik",
         "color": "emerald",
+        "tag": "arch",
         "sap": "Qualitätssicherungs-Standard für Abnahmetests und Cutover in SAP-Landschaften",
         "real": "Global führende Non-Profit-Organisation für die Zertifizierung professioneller Softwaretester.",
         "context": "Methodische Grundlage für Dieter Rüfflers Testfall-Design und Äquivalenzklassen (Folie 02 & 14)."
@@ -984,15 +1118,37 @@
         "title": "Information Technology Infrastructure Library",
         "category": "Governance",
         "color": "indigo",
+        "tag": "arch",
         "sap": "Betriebsführung nach SAP Application Lifecycle Management (ALM) & Solution Manager",
         "real": "De-facto-Weltstandard für IT-Service-Management (Incident-, Problem-, Change-Management).",
         "context": "Dieter Rüfflers Zertifizierungsgrundlage für stabilen 24/7 Betrieb in KRITIS-Umfeldern (Folie 02)."
+    },
+    "JOULE": {
+        "term": "JOULE",
+        "title": "SAP Joule (Generativer KI-Copilot)",
+        "category": "GenAI & LLM",
+        "color": "purple",
+        "tag": "sap",
+        "sap": "Der universelle, kontextbezogene KI-Assistent über alle SAP-Cloud-Lösungen hinweg",
+        "real": "RAG-basiertes Enterprise-LLM-Interface mit Anbindung an SAP-Metadaten und Business Context.",
+        "context": "Ergänzt durch unseren Conciliamus Architecture Advisor mit Google OKF v0.2 für tiefes Architekturwissen."
+    },
+    "JS": {
+        "term": "JS",
+        "title": "JavaScript (ECMAScript)",
+        "category": "Web & Code",
+        "color": "amber",
+        "tag": "web",
+        "sap": "Laufzeitsprache für SAPUI5, SAP Fiori und CAP Node.js Backend-Services",
+        "real": "Universelle, dynamische Web-Programmiersprache für Browser und Event-gesteuerte Runtimes.",
+        "context": "Treibt die interaktiven Funktionen unseres Pecha-Kucha-Players und der Test-Runner-App."
     },
     "JSD": {
         "term": "JSD",
         "title": "Johannesstift Diakonie gAG",
         "category": "Unternehmen & Domäne",
         "color": "emerald",
+        "tag": "profile",
         "sap": "Der Auftraggeber und das Zielumfeld für die Stammdatenintegration",
         "real": "Größtes konfessionelles Gesundheits- und Sozialunternehmen in Berlin und Nordostdeutschland.",
         "context": "Fachlicher Kontext und Trägergesellschaft für Conciliamus (Folie 03)."
@@ -1002,6 +1158,7 @@
         "title": "JSD Master Data Management System",
         "category": "Architektur & System",
         "color": "emerald",
+        "tag": "arch",
         "sap": "Quellsystem (Legacy/SaaS), das Stammdaten an die SAP BTP sendet",
         "real": "Fachliche Stammdatenquelle für Geschäftspartner, die Batches per JSON-POST liefert.",
         "context": "Sendet 10er-Batches von Geschäftspartnern an iFlow 1 (Folie 04 & 09)."
@@ -1011,6 +1168,7 @@
         "title": "JavaScript Object Notation (RFC 8259)",
         "category": "Web & Daten",
         "color": "amber",
+        "tag": "web",
         "sap": "Standard-Nutzlast für moderne BTP REST-Services und OData V4",
         "real": "Textbasiertes, sprachunabhängiges Standard-Datenaustauschformat.",
         "context": "Format des Inbound-Batches von JSD-MDM; in iFlow 1 geparst und validiert (Folie 04, 09, 16)."
@@ -1020,6 +1178,7 @@
         "title": "JSON Web Token (RFC 7519)",
         "category": "Security",
         "color": "red",
+        "tag": "security",
         "sap": "XSUAA-Token mit verschachtelten SAP-Scopes, Tenant-IDs und User-Attributes",
         "real": "Kompaktes, URL-sicheres Mittel zur Darstellung signierter Claims zwischen zwei Parteien.",
         "context": "Autorisierung aller Inbound-Calls an den BTP-Tenant via Bearer-Header (Folie 07)."
@@ -1027,8 +1186,9 @@
     "KI": {
         "term": "KI",
         "title": "Künstliche Intelligenz (AI)",
-        "category": "KI & Innovation",
+        "category": "GenAI & LLM",
         "color": "purple",
+        "tag": "ai",
         "sap": "SAP Business AI, Joule Copilot und SAP Generative AI Hub",
         "real": "Fortgeschrittene maschinelle Lern- und Sprachmodelle für Automatisierung und semantische Analyse.",
         "context": "Fachbuch-Kapitel 'KI mit SAP' (Rheinwerk Verlag) & Conciliamus AI Advisor (Folie 17)."
@@ -1038,6 +1198,7 @@
         "title": "Kritische Infrastrukturen (BSI KritisV)",
         "category": "Governance",
         "color": "red",
+        "tag": "arch",
         "sap": "IT-Compliance und Sicherheitsanforderungen für Krankenhäuser und Versorger",
         "real": "Gesetzliche Verpflichtung nach § 8a BSIG zu höchster Resilienz, Auditierung und Ausfallsicherheit.",
         "context": "Johannesstift Diakonie Kliniken fallen unter KRITIS: Zero-Data-Loss & Audit Trail Pflicht (Folie 03)."
@@ -1047,15 +1208,27 @@
         "title": "LeanIX (Enterprise Architecture Management)",
         "category": "Enterprise EAM",
         "color": "indigo",
+        "tag": "arch",
         "sap": "SAPs strategisches Tool zur Erfassung und Transformation der Unternehmensarchitektur (EAM)",
         "real": "SaaS-Plattform zur Modellierung von Applikationslandschaften, Schnittstellen und Business Capabilities.",
         "context": "Dokumentation der Schnittstellenlandkarte von JSD-MDM zu S/4HANA (Folie 02 & 18)."
+    },
+    "LLM": {
+        "term": "LLM",
+        "title": "Large Language Model (Großes Sprachmodell)",
+        "category": "GenAI & LLM",
+        "color": "purple",
+        "tag": "ai",
+        "sap": "Generative KI-Modelle zur Text-, Code- und Schema-Generierung auf BTP",
+        "real": "Deep-Learning-Transformermodelle (wie Gemini 3.6 oder GPT-4) mit Milliarden Parametern.",
+        "context": "Gemini 3.6 Flash als KI-Kern unseres Conciliamus Architecture Advisors (Folie 17)."
     },
     "MDM": {
         "term": "MDM",
         "title": "Master Data Management (Stammdaten)",
         "category": "Domäne",
         "color": "emerald",
+        "tag": "arch",
         "sap": "SAP Master Data Governance (MDG) bzw. domänenspezifische Stammdatenverwaltung",
         "real": "Methoden und Technologien zur Bereitstellung einer Single Source of Truth für Stammobjekte.",
         "context": "Kernfachlichkeit des Projekts: Saubere Pflege und Abgleich von Geschäftspartnerdaten (Folie 04)."
@@ -1065,6 +1238,7 @@
         "title": "OAuth 2.0 Authorization Framework (RFC 6749)",
         "category": "Security",
         "color": "red",
+        "tag": "security",
         "sap": "BTP Service Key Bindung mit Client-ID und Client-Secret gegen XSUAA Token-URL",
         "real": "Offenes Autorisierungsprotokoll für delegierten Zugriff (hier: Client Credentials M2M-Flow).",
         "context": "Absicherung des Inbound-Endpunkts unseres BTP Batch Receivers (Folie 07)."
@@ -1074,6 +1248,7 @@
         "title": "Open Data Protocol (OASIS)",
         "category": "SAP Domäne",
         "color": "blue",
+        "tag": "sap",
         "sap": "Das Standard-Datenprotokoll für alle SAP Fiori Apps und S/4HANA Business APIs",
         "real": "REST-basiertes Protokoll mit standardisierten Abfragen ($filter, $select) und Schema-Metadaten.",
         "context": "OData V2 Service API_BUSINESS_PARTNER auf SAP S/4HANA mit Two-Legged Handshake (Folie 04, 10, 11)."
@@ -1083,6 +1258,7 @@
         "title": "Open Knowledge Format (Google OKF v0.2)",
         "category": "Architektur & AI",
         "color": "purple",
+        "tag": "ai",
         "sap": "Nicht-proprietäre, maschinenlesbare Architekturdokumentation für KI-Systeme",
         "real": "Strukturierte Markdown-Frontmatter-Spezifikation für deterministisches KI-Knowledge-Grounding.",
         "context": "28 Wissensdateien und 72 Kanten in unserem Repository für den AI Architecture Advisor (Folie 17)."
@@ -1092,6 +1268,7 @@
         "title": "Python (vom Benutzer als Phyton benannt)",
         "category": "Entwicklung",
         "color": "amber",
+        "tag": "devops",
         "sap": "SAP HANA Python Client API (hdbcli) / Machine Learning Foundation",
         "real": "Universelle Hochsprache (Python 3.11/3.14) für Test-Runner, KI-Agenten und Middleware-Automatisierung.",
         "context": "Engine für den Fiori-Lookalike Test-Runner (api/server.py) und den Streamlit KI-Advisor."
@@ -1101,15 +1278,67 @@
         "title": "SAP Process Integration / Process Orchestration",
         "category": "SAP Legacy",
         "color": "slate",
+        "tag": "sap",
         "sap": "Die On-Premise Vorgängergeneration von Cloud Integration (Dual-Stack ABAP/Java, NetWeaver)",
         "real": "Klassischer On-Premise Enterprise Service Bus (ESB), Wartungsende 2027.",
         "context": "Dieter Rüfflers 20 Jahre Praxiserfahrung in der Migration gewachsener PI/PO-Landschaften auf BTP (Folie 01, 02, 18)."
+    },
+    "PoC": {
+        "term": "PoC",
+        "title": "Proof of Concept (Machbarkeitsnachweis)",
+        "category": "Methodik",
+        "color": "emerald",
+        "tag": "arch",
+        "sap": "Vorprojekt zur Risikominimierung vor dem unternehmensweiten S/4HANA Rollout",
+        "real": "Pragmatische prototypische Implementierung zur empirischen Validierung der Architektur.",
+        "context": "Genau das ist dieses Projekt: Lauffähiger Beweis der BTP-Integration vor Vertragsabschluss!"
+    },
+    "QM": {
+        "term": "QM",
+        "title": "Quality Management (Qualitätsmanagement)",
+        "category": "Governance",
+        "color": "emerald",
+        "tag": "arch",
+        "sap": "SAP QM Modul bzw. unternehmensweite Prüf- und QS-Prozesse",
+        "real": "Systematischer Prozessrahmen (DIN EN ISO 9001 / ISTQB) zur Sicherstellung von Software- und Datenqualität.",
+        "context": "Dieter Rüfflers Kernkompetenz: Fehlerfreie Stammdaten für kritische Klinikumgebungen (Folie 02 & 14)."
+    },
+    "RAG": {
+        "term": "RAG",
+        "title": "Retrieval-Augmented Generation",
+        "category": "GenAI & LLM",
+        "color": "purple",
+        "tag": "ai",
+        "sap": "Grounding von Foundation Models mit unternehmenseigenen SAP-Geschäftsdaten",
+        "real": "Architekturmuster: Abfrage relevanter Vektordaten vor der LLM-Prompteinspeisung gegen Halluzinationen.",
+        "context": "Realisiert durch den Conciliamus AI Advisor mit dem Open Knowledge Format (OKF) als Faktenbasis."
+    },
+    "RDF": {
+        "term": "RDF",
+        "title": "Resource Description Framework (W3C)",
+        "category": "Data & Graph",
+        "color": "indigo",
+        "tag": "ai",
+        "sap": "Semantische Datenmodellierung für Wissensnetze und Enterprise-Ontologien",
+        "real": "Graphbasiertes Datenmodell basierend auf Subjekt-Prädikat-Objekt Tripeln (W3C-Standard).",
+        "context": "Grundstruktur unseres Wissensgraphen (28 Knoten / 72 Kanten) für semantisches KI-Grounding."
+    },
+    "REST": {
+        "term": "REST",
+        "title": "Representational State Transfer (Roy Fielding)",
+        "category": "Web & API",
+        "color": "cyan",
+        "tag": "web",
+        "sap": "Leichtgewichtige Web-Schnittstellen (Alternative oder Basis für OData)",
+        "real": "Architekturstil für zustandslose, verteilte Hypermedia-Systeme über Standard-HTTP-Verben.",
+        "context": "Basis für den JSON-Batch Ingest in iFlow 1 und die Streamlit Cloud API-Aufrufe."
     },
     "S/4HANA": {
         "term": "S/4HANA",
         "title": "SAP S/4HANA",
         "category": "SAP Domäne",
         "color": "blue",
+        "tag": "sap",
         "sap": "Die moderne In-Memory-ERP-Generation von SAP mit vereinfachtem Datenmodell",
         "real": "Transaktionales Kern-ERP-System auf relationaler columnar In-Memory-Datenbank.",
         "context": "Zielsystem für alle Geschäftspartnerdaten im Conciliamus-Projekt (Folie 01, 04, 10)."
@@ -1119,15 +1348,67 @@
         "title": "Systems, Applications and Products in Data Processing",
         "category": "Enterprise",
         "color": "blue",
+        "tag": "sap",
         "sap": "Der weltweite Marktführer für integrierte Unternehmenssoftware (ERP/Cloud)",
         "real": "Walldorfer Softwarekonzern; Erfinder von R/2, R/3, NetWeaver, ECC, S/4HANA und BTP.",
         "context": "Kernplattform aller Integrationsszenarien dieses Projekts."
+    },
+    "SDK": {
+        "term": "SDK",
+        "title": "Software Development Kit",
+        "category": "Entwicklung",
+        "color": "cyan",
+        "tag": "devops",
+        "sap": "SAP Cloud SDK (Java / JavaScript) für typsichere OData-Zugriffe auf S/4HANA",
+        "real": "Sammlung von Bibliotheken, Typdefinitionen und Tools zur vereinfachten Softwareentwicklung.",
+        "context": "Verwendung von Standard-Bibliotheken zur Koppelung von Python-Runtimes an SAP OData."
+    },
+    "SE16N": {
+        "term": "SE16N",
+        "title": "Allgemeine Tabellenanzeige (SAP GUI Transaktion)",
+        "category": "SAP Transaktion",
+        "color": "amber",
+        "tag": "sap",
+        "sap": "Die legendäre Support- und Analyse-Transaktion zur direkten DB-Tabelleneinsicht (z.B. BUT000)",
+        "real": "Grafischer SQL-SELECT-Client im SAP GUI mit Direktzugriff auf das relationale Schema.",
+        "context": "Klassischer Prüfungsweg für SAP-Berater: BUT000 prüfen, um OData-Synchronisation zu validieren."
+    },
+    "SE18": {
+        "term": "SE18",
+        "title": "Business Add-Ins Definition (SAP GUI Transaktion)",
+        "category": "SAP Transaktion",
+        "color": "amber",
+        "tag": "sap",
+        "sap": "Transaktion zur Definition modularer Erweiterungspunkte (BAdI) im ABAP-Standard",
+        "real": "Objektorientiertes Interface- und Plugin-Pattern im ABAP-Laufzeitsystem.",
+        "context": "Basis für kundeneigene Validierungslogik im S/4HANA Business Partner Eingang."
+    },
+    "SE19": {
+        "term": "SE19",
+        "title": "Business Add-Ins Implementierung (SAP GUI Transaktion)",
+        "category": "SAP Transaktion",
+        "color": "amber",
+        "tag": "sap",
+        "sap": "Transaktion zur Aktivierung und Implementierung kundeneigener BAdI-Klassen",
+        "real": "Konkrete Implementierungsklasse eines BAdI-Interfaces zur Laufzeit-Injektion.",
+        "context": "Saubere Customizing-Erweiterung im Backend ohne Kernmodifikationen (Clean Core)."
+    },
+    "SPARQL": {
+        "term": "SPARQL",
+        "title": "SPARQL Protocol and RDF Query Language",
+        "category": "Data & Graph",
+        "color": "indigo",
+        "tag": "ai",
+        "sap": "Semantische Abfragesprache für Wissensgraphen und Ontologien",
+        "real": "W3C-Standardabfragesprache für RDF-Tripelstores (äquivalent zu SQL für Graphendaten).",
+        "context": "Ermöglicht deterministische Graphabfragen über Relationen und Knoten in Wissensnetzen."
     },
     "Streamlit": {
         "term": "Streamlit",
         "title": "Streamlit Web App Framework",
         "category": "Entwicklung & Cloud",
         "color": "red",
+        "tag": "web",
         "sap": "Moderne Alternative zu klassischen Fiori-UIs für Daten- und KI-Anwendungen",
         "real": "Open-Source Python-Bibliothek zur schnellen Erstellung interaktiver, reaktiver Web-Frontends.",
         "context": "Host für den Conciliamus AI Architecture Advisor auf Streamlit Community Cloud (ADR-006 / Folie 05 & 17)."
@@ -1137,6 +1418,7 @@
         "title": "Transport Layer Security (RFC 8446)",
         "category": "Security",
         "color": "cyan",
+        "tag": "security",
         "sap": "Verschlüsselte HTTPS-Verbindung auf BTP Cloud Foundry Load Balancern",
         "real": "Kryptografisches Protokoll zur sicheren Ende-zu-Ende Datenübertragung (TLS 1.3).",
         "context": "Durchgängige Verschlüsselung aller Inbound- und Outbound-Kanäle (Folie 07)."
@@ -1146,15 +1428,67 @@
         "title": "The Open Group Architecture Framework",
         "category": "Methodik",
         "color": "indigo",
+        "tag": "arch",
         "sap": "Enterprise Architecture Methodik (kompatibel mit SAP Enterprise Architecture Framework)",
         "real": "Weltweiter De-facto-Standard für methodische Unternehmens- und Integrationsarchitektur (ADM).",
         "context": "Dieter Rüfflers methodisches Fundament für saubere Architektur- und Schichtenmodelle (Folie 02)."
+    },
+    "UI": {
+        "term": "UI",
+        "title": "User Interface (Benutzeroberfläche)",
+        "category": "Web & UX",
+        "color": "cyan",
+        "tag": "web",
+        "sap": "Von SAP GUI über Web Dynpro bis SAP Fiori Horizon Launchpad",
+        "real": "Die visuelle Interaktionsschicht zwischen Mensch und Softwaresystem.",
+        "context": "Im Fokus unserer Fiori-Lookalike App nach ADR-005: 100% Single-Viewport Ergonomie."
+    },
+    "URL": {
+        "term": "URL",
+        "title": "Uniform Resource Locator (RFC 3986)",
+        "category": "Web & Protocol",
+        "color": "cyan",
+        "tag": "web",
+        "sap": "Service-Endpunktadresse auf dem BTP-Host (cfapps.us10-001.hana.ondemand.com)",
+        "real": "Standardisierte Zeichenkette zur Lokalisierung von Ressourcen im Internet.",
+        "context": "Eindeutige Adressierung der iFlow-Endpunkte und des S/4HANA OData Katalogs."
+    },
+    "VA01": {
+        "term": "VA01",
+        "title": "Kundenauftrag anlegen (SAP GUI Transaktion)",
+        "category": "SAP Transaktion",
+        "color": "amber",
+        "tag": "sap",
+        "sap": "Die berühmteste Transaktion der SAP-Welt: Auftragsanlage im Vertrieb (SD)",
+        "real": "Komplexe Business-Transaktion zur Generierung von Verkaufsbelegen auf Basis valider Geschäftspartner.",
+        "context": "Der ultimative Härtetest im Betrieb: Ohne synchrone Partnerdaten scheitert VA01 sofort!"
+    },
+    "Webhook": {
+        "term": "Webhook",
+        "title": "HTTP-basierter Ereignis-Callback",
+        "category": "Web & Integration",
+        "color": "cyan",
+        "tag": "web",
+        "sap": "SAP Event Mesh Event-Subscription bzw. BTP Event Trigger",
+        "real": "Benutzerdefinierte HTTP-POST-Callbacks bei Statusänderungen (Event-Driven Architecture).",
+        "context": "GitHub Webhooks zur automatisierten Streamlit Cloud Bereitstellung nach jedem Commit."
+    },
+    "X.509": {
+        "term": "X.509",
+        "title": "ITU-T Standard für Public-Key-Zertifikate",
+        "category": "Security",
+        "color": "red",
+        "tag": "security",
+        "sap": "Client-Zertifikatsauthentifizierung (mTLS) im BTP Keystore",
+        "real": "Kryptografischer Standard zur Bindung von Identitäten an öffentliche Schlüssel per Signaturkette.",
+        "context": "Schützt die Transportverschlüsselung (TLS 1.3) und ermöglicht zertifikatsbasierte M2M-Kopplungen."
     },
     "XML": {
         "term": "XML",
         "title": "Extensible Markup Language (W3C)",
         "category": "Datenformate",
         "color": "amber",
+        "tag": "web",
         "sap": "Traditionelles internes Datenformat in SAP PI/PO und Cloud Integration (XPath, XSLT)",
         "real": "Strukturierte Auszeichnungssprache für hierarchische Datensätze.",
         "context": "Konvertierung von JSON zu XML in iFlow 1 zur Nutzung des nativen Streaming-Splitters (Folie 09)."
@@ -1164,9 +1498,20 @@
         "title": "XML/Extended Services User Account and Authentication",
         "category": "Security & SAP",
         "color": "red",
+        "tag": "sap",
         "sap": "BTP-spezifischer Auth-Broker auf Cloud Foundry zur Authentifizierung und Rechteverwaltung",
         "real": "Extended OAuth 2.0 Auth Server & Token Broker, der JWT-Tokens mit proprietären SAP-Scopes signiert.",
         "context": "Gewährleistet Zero-Trust M2M-Autorisierung für den iFlow 1 Inbound-Endpunkt (Folie 07)."
+    },
+    "YAML": {
+        "term": "YAML",
+        "title": "YAML Ain't Markup Language",
+        "category": "DevOps & Daten",
+        "color": "amber",
+        "tag": "devops",
+        "sap": "Konfigurationsformat für Cloud Foundry Manifests (manifest.yml) und K8s Helm Charts",
+        "real": "Für Menschen optimal lesbares Datenserialisierungsformat mit strenger Einrückung.",
+        "context": "Steuert Konfigurationen für CI/CD-Pipelines und OKF-Metadaten in unserem Knowledge Repo."
     }
 };
 
@@ -1197,6 +1542,31 @@
       if (activePill) {
         activePill.classList.add('ring-2', 'ring-[#0070f2]', 'bg-[#0070f2]', 'text-white', 'shadow-md');
       }
+    }
+
+    function filterDigest(filterGroup) {
+      // Update filter buttons styling
+      const buttons = document.querySelectorAll('#digestFilterGroup button');
+      buttons.forEach(btn => {
+        btn.className = 'px-2 py-0.5 rounded-md bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 transition';
+      });
+      const activeBtn = document.getElementById('btnFilter_' + filterGroup);
+      if (activeBtn) {
+        activeBtn.className = 'px-2 py-0.5 rounded-md bg-[#0070f2] text-white font-bold transition shadow-xs';
+      }
+
+      // Show/hide pills
+      const pills = document.querySelectorAll('.digest-pill');
+      pills.forEach(pill => {
+        const groups = (pill.getAttribute('data-groups') || '').split(' ');
+        if (filterGroup === 'all' || groups.includes(filterGroup)) {
+          pill.style.display = '';
+        } else {
+          pill.style.display = 'none';
+        }
+      });
+    }
+
     }
 
     function renderSlide(index) {

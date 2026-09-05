@@ -44,7 +44,7 @@ relations:
 | **16** | Tooling | **Der Fiori-Lookalike Test-Runner** | Single-Viewport Web-App im authentischen SAP Fiori Horizon Look |
 | **17** | Innovation | **Generative AI im SAP-Ökosystem** | Google OKF v0.2 & Gemini 3.6 Flash: Das Digital Brain des Architekten |
 | **18** | Fit | **Mehrwert für Conciliamus & Dieter Rüffler** | Drei Säulen für den Teamerfolg: Architektur-Exzellenz, Methodenkompetenz, Innovationskraft |
-| **19** | Glossar | **Das Enterprise Acronym Digest (45 Begriffe)** | Vom SAP-Sprech zu solider Informatik: Alle 45 Architektur-Konzepte alphabetisch entschlüsselt mit interaktiven Tooltips |
+| **19** | Glossar | **Das Enterprise Acronym Digest (75 Begriffe)** | Vom SAP-Sprech zu solider Informatik: 75 Schlüsselbegriffe von VA01 bis Joule alphabetisch entschlüsselt mit interaktiven Tooltips |
 | **20** | Finale | **Überleitung in die Live-Demo** | Fragen, Fachgespräch & Live-Ausführung auf der BTP Cloud Integration |
 
 ---
@@ -195,11 +195,11 @@ relations:
 
 ---
 
-### Folie 19: Das Enterprise Acronym Digest (45 Begriffe)
-* **Visuelles Motiv:** Interaktives Acronym-Tableau: Dynamischer Live-Inspector (`#digestInspector`) oben mit Gegenüberstellung *„SAP-Sprech vs. Informatik-Realität“* (z.B. `XSUAA` ➔ Extended OAuth 2.0 Auth Server mit signierten JWT-Claims, `iFlow` ➔ Apache Camel Route in OSGi-Runtime, `ProcessDirect` ➔ Direct-VM In-Memory Bus) und alphabetisch sortiertem 9×5-Grid aus 45 interaktiven Pills mit Mouse-Hover-Tooltips.
-* **Kernbotschaft:** Vom Marketing- und SAP-Sprech zu solider, transparenter Informatik – alle 45 Schlüsselbegriffe der Enterprise-Architektur entschlüsselt.
+### Folie 19: Das Enterprise Acronym Digest (75 Begriffe)
+* **Visuelles Motiv:** Großzügig dimensioniertes Acronym-Tableau: Kompakter dynamischer Live-Inspector (`#digestInspector`) oben mit Gegenüberstellung *„SAP-Sprech vs. Informatik-Realität“* (z.B. `XSUAA` ➔ Extended OAuth 2.0 Auth Server mit signierten JWT-Claims, `SE16N` ➔ SQL-Tabellenbrowser, `VA01` ➔ SD Kundenauftragsanlage, `Joule` ➔ RAG Enterprise LLM Copilot, `ProcessDirect` ➔ Direct-VM In-Memory Bus) und alphabetisch sortiertem 11-Spalten-Grid aus 75 interaktiven Pills mit Mouse-Hover-Tooltips und Kategorie-Filtertabs (`[Alle]`, `[SAP & Transaktionen]`, `[AI & GenAI]`, `[Architektur]`, `[Web & Security]`).
+* **Kernbotschaft:** Vom Marketing- und SAP-Sprech zu solider, transparenter Informatik – 75 Schlüsselbegriffe der Enterprise-Architektur (von klassischen Transaktionen bis zum EU AI Act) entschlüsselt.
 * **Sprechertext (20 Sek. / 52 Wörter):**
-> „In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist im Grunde ein erweiterter JWT-Server, ein iFlow eine Camel-Route, und ProcessDirect ein latenzfreier In-Memory-Bus. Dieses Digest entschlüsselt 45 Kernbegriffe für unser Team – fahren Sie einfach mit der Maus über die Begriffe!“
+> „In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist ein erweiterter JWT-Server, SE16N ein SQL-Viewer, und Joule ein RAG-Interface. Dieses Digest entschlüsselt fünfundsiebzig Kernbegriffe – von klassischen GUI-Transaktionen bis zum EU AI Act. Fahren oder filtern Sie einfach mit der Maus!“
 
 ---
 
