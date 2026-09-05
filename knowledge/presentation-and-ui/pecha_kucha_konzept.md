@@ -204,8 +204,8 @@ relations:
   4. **`🏗️ Stack`** (nach den 7 klassischen Schichten der Enterprise-Architektur sortiert: Layer 1 Hardware ➔ Layer 2 OS & Netz ➔ Layer 3 Daten & APIs ➔ Layer 4 ERP & BTP ➔ Layer 5 UI & Frameworks ➔ Layer 6 Security & KRITIS ➔ Layer 7 KI & Frontier) umgeschaltet werden.
 * **Filterung & Hervorhebung:** Interaktive Ausbleich-Filterung (`is-bleached` mit 18% Opazität statt `display:none`, Pills behalten ihre exakte Gitterposition) mit 8 Kategorien, kombiniert mit augenfälligem Orange-Highlighting (`#f97316` Hintergrund, schwarze fette Schrift) bei Hover/Klick.
 * **Kernbotschaft:** Vom Marketing- und SAP-Sprech zu solider, transparenter Informatik – 200 Schlüsselbegriffe der IT-Geschichte und Enterprise-Architektur (von Al-Chwarizmi 825 über Bletchley Park, Shannon Bit, Ethernet, CUDA und Hyperscaler-Gründungen bis zu NIS-2, Google OKF 2026 und AGI 2030) entschlüsselt, wechselweise nach Zeitstrahl, Alphabet, historischem Impact oder Architektur-Stack sortierbar.
-* **Sprechertext (20 Sek. / 53 Wörter):**
-> „In zwanzig Jahren SAP-Integration habe ich eines gelernt: SAP benennt klassische Informatik-Konzepte gern mit eigenen Akronymen um. XSUAA ist ein erweiterter JWT-Server, SE16N ein SQL-Viewer, und BAPIs sind RFC-Funktionsaufrufe. Dieses Digest entschlüsselt achtzig Kernbegriffe – von Alan Turings Test über SAP R/1 bis zu ‚Attention is all you need‘. Fahren oder filtern Sie einfach mit der Maus!“
+* **Sprechertext (20 Sek. / 54 Wörter):**
+> „In zwanzig Jahren SAP-Integration habe ich gelernt: SAP benennt fundamentale Informatik gern mit eigenen Akronymen um. Dieses Digest entschlüsselt zweihundert Meilensteine – von der Industrialisierung über Bletchley Park und Ethernet bis zu NIS-2 und AGI 2030. Sortieren Sie nach Zeitstrahl, Alphabet, weltweitem Impact oder dem siebenschichtigen Architektur-Stack. Fahren Sie einfach mit der Maus darüber!“
 
 ---
 
