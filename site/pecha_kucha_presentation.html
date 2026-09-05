@@ -245,23 +245,7 @@
         </div>
       </div>
 
-          <!-- KI-Advisor Floating Action Button (FAB) (Slides 17-20) -->
-      <div id="kiAdvisorFabContainer" class="absolute bottom-2 right-4 z-40 transition-all duration-300" style="display: none;">
-        <a id="kiAdvisorFab" href="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/" target="_blank" rel="noopener noreferrer" title="KI-Advisor" aria-label="KI-Advisor" class="group relative flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-slate-900 via-[#1d2d3e] to-purple-950 border-2 border-purple-400 hover:border-emerald-400 shadow-xl hover:shadow-purple-500/50 transition-all duration-200 hover:scale-110 active:scale-95">
-          <!-- Pulse effect -->
-          <span class="absolute -inset-0.5 rounded-full bg-gradient-to-r from-purple-500 to-emerald-500 opacity-40 group-hover:opacity-75 blur-sm transition duration-200 animate-pulse pointer-events-none"></span>
-          
-          <!-- Icon Image -->
-          <img src="https://lh3.googleusercontent.com/pw/AP1GczNopyl_jUGFG9Gii9MaQ1JyjPm72_iN1oLV9XlPyzkwW8HYB_Oj_hSb3D1AgGWh0bVPsTetLYwQjXvaL1I4yMyL1F06XymmtBnWpoX8SzW8eqshuNnD=s0" onerror="this.src='./ki_advisor_icon.png'" alt="KI-Advisor" class="w-9 h-6 object-contain drop-shadow relative z-10 transition-transform duration-200 group-hover:scale-110" />
-          
-          <!-- Hover Tooltip / Badge (Slides in on hover) -->
-          <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-slate-900 text-white text-xs font-bold rounded-xl border border-purple-400 shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none flex items-center gap-1.5 z-50">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>KI-Advisor</span>
-            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-purple-300 ml-0.5"></i>
-          </span>
-        </a>
-      </div>
+
     </div>
 
     <!-- Floating / Docked Speaker Notes Pane -->
@@ -338,7 +322,37 @@
       </button>
     </div>
   </footer>
-  </div><!-- /pechaProtectedContent -->
+  
+  <!-- Floating Draggable KI-Advisor Widget (Slides 17-20) -->
+  <div id="kiAdvisorFloatingWidget"
+       style="display: none; position: fixed; bottom: 85px; right: 35px; z-index: 45; touch-action: none;"
+       class="select-none transition-transform duration-200 hover:scale-105 cursor-grab">
+    <a id="kiAdvisorLink"
+       href="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/"
+       target="_blank"
+       rel="noopener noreferrer"
+       title="KI-Advisor • Klicken zum Öffnen • Ziehen zum Verschieben"
+       class="block relative group">
+      
+      <!-- Icon Image (Raw cut-out, no grey circle, large & crisp with drop-shadow) -->
+      <img id="kiAdvisorImg"
+           src="https://lh3.googleusercontent.com/pw/AP1GczNopyl_jUGFG9Gii9MaQ1JyjPm72_iN1oLV9XlPyzkwW8HYB_Oj_hSb3D1AgGWh0bVPsTetLYwQjXvaL1I4yMyL1F06XymmtBnWpoX8SzW8eqshuNnD=s0"
+           onerror="this.src='./ki_advisor_icon.png'"
+           alt="KI-Advisor"
+           draggable="false"
+           class="w-28 sm:w-32 md:w-36 h-auto object-contain drop-shadow-[0_12px_28px_rgba(0,0,0,0.75)] filter group-hover:drop-shadow-[0_0_25px_rgba(56,189,248,0.6)] transition-all pointer-events-none" />
+      
+      <!-- Hover Tooltip / Badge -->
+      <span class="absolute right-full mr-3 top-1/2 -translate-y-1/2 px-3 py-1.5 bg-slate-900/95 text-white text-xs font-bold rounded-xl border border-sky-400/60 shadow-2xl opacity-0 group-hover:opacity-100 transition-all duration-200 whitespace-nowrap pointer-events-none flex items-center gap-1.5 z-50 backdrop-blur">
+        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span>KI-Advisor</span>
+        <span class="text-[10px] text-slate-400 font-normal ml-0.5">(ziehen)</span>
+        <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-sky-300 ml-0.5"></i>
+      </span>
+    </a>
+  </div>
+
+</div><!-- /pechaProtectedContent -->
 
   <!-- Auth Gatekeeper Shield (Visible and blocking when logged out) -->
   <div id="pechaAuthShield" class="fixed inset-0 top-14 z-20 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm transition-all duration-300 select-none">
@@ -792,6 +806,7 @@
       buildDots();
       renderSlide(0);
       updateTotalTimeDisplay();
+      initKiAdvisorDraggable();
 
       // Keyboard listener
       window.addEventListener('keydown', (e) => {
@@ -4699,18 +4714,8 @@ function updateDigestInspector(termKey) {
 
       // Reset Slide Timer
       resetSlideTimer();
-      // KI-Advisor Floating Action Button (FAB) (Slides 17-20: index >= 16)
-      const kiFab = document.getElementById('kiAdvisorFabContainer');
-      const authorFooter = document.getElementById('slideAuthorFooter');
-      if (kiFab) {
-        if (index >= 16) {
-          kiFab.style.display = 'block';
-          if (authorFooter) authorFooter.style.marginRight = '52px';
-        } else {
-          kiFab.style.display = 'none';
-          if (authorFooter) authorFooter.style.marginRight = '0px';
-        }
-      }
+      // KI-Advisor Floating & Draggable Widget visibility (Slides 17-20: index >= 16)
+      updateKiAdvisorVisibility(index);
 
     }
 
@@ -4803,6 +4808,7 @@ function updateDigestInspector(termKey) {
         remainingTime--;
         totalElapsedTime++;
         updateTotalTimeDisplay();
+      initKiAdvisorDraggable();
 
         if (remainingTime <= 0) {
           if (currentSlideIndex < SLIDES.length - 1) {
@@ -4846,6 +4852,7 @@ function updateDigestInspector(termKey) {
       pausePresentation();
       totalElapsedTime = 0;
       updateTotalTimeDisplay();
+      initKiAdvisorDraggable();
       renderSlide(0);
     }
 
@@ -4945,6 +4952,159 @@ function updateDigestInspector(termKey) {
         }
       }
     });
+
+    
+    // ========================================================
+    // KI-ADVISOR FLOATING & DRAGGABLE WIDGET (Slides 17-20)
+    // ========================================================
+    const kiWidget = document.getElementById('kiAdvisorFloatingWidget');
+    let isWidgetDragging = false;
+    let widgetDragStartX = 0;
+    let widgetDragStartY = 0;
+    let widgetInitialLeft = 0;
+    let widgetInitialTop = 0;
+    let hasMovedSignificantly = false;
+
+    function initKiAdvisorDraggable() {
+      if (!kiWidget) return;
+
+      const onStart = (clientX, clientY) => {
+        isWidgetDragging = true;
+        hasMovedSignificantly = false;
+        widgetDragStartX = clientX;
+        widgetDragStartY = clientY;
+
+        const rect = kiWidget.getBoundingClientRect();
+        widgetInitialLeft = rect.left;
+        widgetInitialTop = rect.top;
+
+        // Switch to absolute pixel coordinates for dragging
+        kiWidget.style.left = `${rect.left}px`;
+        kiWidget.style.top = `${rect.top}px`;
+        kiWidget.style.right = 'auto';
+        kiWidget.style.bottom = 'auto';
+
+        kiWidget.classList.remove('cursor-grab', 'hover:scale-105', 'transition-transform');
+        kiWidget.classList.add('cursor-grabbing');
+      };
+
+      const onMove = (clientX, clientY) => {
+        if (!isWidgetDragging) return;
+
+        const dx = clientX - widgetDragStartX;
+        const dy = clientY - widgetDragStartY;
+
+        if (Math.hypot(dx, dy) > 5) {
+          hasMovedSignificantly = true;
+        }
+
+        const width = kiWidget.offsetWidth || 140;
+        const height = kiWidget.offsetHeight || 95;
+
+        let newLeft = widgetInitialLeft + dx;
+        let newTop = widgetInitialTop + dy;
+
+        // Clamp to viewport
+        newLeft = Math.max(10, Math.min(window.innerWidth - width - 10, newLeft));
+        newTop = Math.max(50, Math.min(window.innerHeight - height - 60, newTop));
+
+        kiWidget.style.left = `${newLeft}px`;
+        kiWidget.style.top = `${newTop}px`;
+      };
+
+      const onEnd = () => {
+        if (!isWidgetDragging) return;
+        isWidgetDragging = false;
+
+        kiWidget.classList.remove('cursor-grabbing');
+        kiWidget.classList.add('cursor-grab', 'hover:scale-105', 'transition-transform');
+      };
+
+      // Mouse Events
+      kiWidget.addEventListener('mousedown', (e) => {
+        if (e.button !== 0) return; // Primary button only
+        onStart(e.clientX, e.clientY);
+        e.preventDefault();
+      });
+
+      window.addEventListener('mousemove', (e) => {
+        if (isWidgetDragging) {
+          onMove(e.clientX, e.clientY);
+          e.preventDefault();
+        }
+      });
+
+      window.addEventListener('mouseup', () => {
+        if (isWidgetDragging) {
+          onEnd();
+        }
+      });
+
+      // Touch Events (Mobile/Tablet)
+      kiWidget.addEventListener('touchstart', (e) => {
+        if (e.touches.length === 1) {
+          onStart(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: false });
+
+      window.addEventListener('touchmove', (e) => {
+        if (isWidgetDragging && e.touches.length === 1) {
+          onMove(e.touches[0].clientX, e.touches[0].clientY);
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      window.addEventListener('touchend', () => {
+        if (isWidgetDragging) {
+          onEnd();
+        }
+      });
+
+      // Double-click to reset position to default bottom-right
+      kiWidget.addEventListener('dblclick', (e) => {
+        e.preventDefault();
+        kiWidget.style.left = 'auto';
+        kiWidget.style.top = 'auto';
+        kiWidget.style.right = '35px';
+        kiWidget.style.bottom = '85px';
+      });
+
+      // Window resize guard
+      window.addEventListener('resize', () => {
+        if (!kiWidget || kiWidget.style.display === 'none') return;
+        if (kiWidget.style.left && kiWidget.style.left !== 'auto') {
+          const width = kiWidget.offsetWidth || 140;
+          const height = kiWidget.offsetHeight || 95;
+          let curLeft = parseFloat(kiWidget.style.left) || 0;
+          let curTop = parseFloat(kiWidget.style.top) || 0;
+          curLeft = Math.max(10, Math.min(window.innerWidth - width - 10, curLeft));
+          curTop = Math.max(50, Math.min(window.innerHeight - height - 60, curTop));
+          kiWidget.style.left = `${curLeft}px`;
+          kiWidget.style.top = `${curTop}px`;
+        }
+      });
+
+      // Prevent link click if user was dragging
+      const kiLink = document.getElementById('kiAdvisorLink');
+      if (kiLink) {
+        kiLink.addEventListener('click', (e) => {
+          if (hasMovedSignificantly) {
+            e.preventDefault();
+            e.stopPropagation();
+            hasMovedSignificantly = false;
+          }
+        });
+      }
+    }
+
+    function updateKiAdvisorVisibility(index) {
+      if (!kiWidget) return;
+      if (index >= 16) {
+        kiWidget.style.display = 'block';
+      } else {
+        kiWidget.style.display = 'none';
+      }
+    }
 
     window.onload = init;
   </script>
