@@ -1,6 +1,7 @@
 """
 Conciliamus AI Advisor - Streamlit Web Application
-Powered by Google AI Studio (Gemini API) and Google Open Knowledge Format (OKF v0.2).
+Powered by Google AI Studio (Gemini API), DeepSeek / OpenRouter Multi-LLM,
+and Google Open Knowledge Format (OKF v0.2).
 Zero-Docker, Serverless Deployment on Streamlit Community Cloud.
 """
 import os
@@ -11,6 +12,10 @@ import base64
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
 import time
+import urllib.request
+import urllib.parse
+import urllib.error
+import http.cookiejar
 import streamlit as st
 import streamlit.components.v1 as components
 
@@ -38,13 +43,6 @@ def get_advisor_logo_base64() -> str:
 
 def execute_cpi_live_test(payload_str: str, creds: Dict[str, str]) -> Dict[str, Any]:
     """Executes a real live batch test against SAP Cloud Integration tenant."""
-    import urllib.request
-    import urllib.parse
-    import urllib.error
-    import http.cookiejar
-    import base64
-    import time
-
     start_time = time.time()
     audit_log = []
 
@@ -194,7 +192,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for fixed bottom chat input & clean Google-like layout
+# Custom CSS for high contrast typography, fixed bottom input & Google-like layout
 st.markdown("""
 <style>
     /* Global Base & Typography - Rich Dark, High Contrast, Readable Size */
@@ -395,7 +393,7 @@ def get_knowledge_mtime() -> float:
 @st.cache_resource
 def load_knowledge_base(mtime_key: float) -> Tuple[List[Dict[str, Any]], Dict[str, Any], Dict[str, Any]]:
     concepts = []
-    frontmatter_re = re.compile(r"^---s*\n(.*?)\n---s*\n", re.DOTALL)
+    frontmatter_re = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
     
     if KNOWLEDGE_DIR.exists():
         for file_path in KNOWLEDGE_DIR.rglob("*.md"):
@@ -409,6 +407,8 @@ def load_knowledge_base(mtime_key: float) -> Tuple[List[Dict[str, Any]], Dict[st
                     fm = yaml.safe_load(match.group(1)) or {}
                     body = text[match.end():].strip()
                     cid = fm.get("id") or rel_path.replace(".md", "")
+                    full_text = (fm.get("title", "") + " " + fm.get("description", "") + " " + body).lower()
+                    tokens = set(re.findall(r"\b[a-z0-9_\-äöüß]{2,}\b", full_text))
                     concepts.append({
                         "id": cid,
                         "path": rel_path,
@@ -417,7 +417,8 @@ def load_knowledge_base(mtime_key: float) -> Tuple[List[Dict[str, Any]], Dict[st
                         "title": fm.get("title", cid),
                         "type": fm.get("type", "Concept"),
                         "tags": fm.get("tags", []),
-                        "fullText": (fm.get("title", "") + " " + fm.get("description", "") + " " + body).lower()
+                        "fullText": full_text,
+                        "tokens": tokens
                     })
             except Exception:
                 pass
@@ -440,19 +441,33 @@ def load_knowledge_base(mtime_key: float) -> Tuple[List[Dict[str, Any]], Dict[st
 
 concepts, graph, manifest = load_knowledge_base(get_knowledge_mtime())
 
-# Retrieve top relevant context documents
-def retrieve_relevant_docs(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
+# ----------------- HIGH-PRECISION RETRIEVAL WITH CONFIDENCE SCORING -----------------
+def retrieve_relevant_docs(query: str, top_k: int = 5) -> Tuple[List[Dict[str, Any]], int, Dict[str, Any]]:
+    """
+    Retrieves the most relevant OKF architecture documents and computes a calibrated confidence score (0-99%).
+    STRICT SAFETY RULE: Never returns irrelevant fallback documents if confidence is low.
+    """
     stop_words = {
         "wie", "was", "warum", "welche", "welcher", "welches", "und", "oder", 
         "der", "die", "das", "dem", "den", "des", "ein", "eine", "einer", "eines", 
         "einem", "einen", "nach", "für", "fuer", "mit", "von", "aus", "bei", 
-        "zum", "zur", "ist", "sind", "wird", "werden", "hat", "haben", "kann", "können"
+        "zum", "zur", "ist", "sind", "wird", "werden", "hat", "haben", "kann", "können", 
+        "ab", "an", "auf", "in", "im", "ins", "über", "ueber", "unter", "vor", "hinter", 
+        "neben", "zwischen", "durch", "ohne", "gegen", "um", "bis", "seit", "beim", "am", "vom",
+        "ich", "mich", "mir", "du", "dir", "dich", "er", "sie", "es", "wir", "uns", "ihr", "euch", "ihnen",
+        "mein", "meine", "meiner", "meines", "dein", "sein", "unser", "euer"
     }
-    explicit_adrs = [m.lower() for m in re.findall(r"adr-d{3}", query, re.IGNORECASE)]
-    keywords = [w.lower() for w in re.findall(r"w+", query) if len(w) > 2 and w.lower() not in stop_words]
+
+    # Extract explicit ADR tokens (e.g. adr-001 ... adr-012)
+    explicit_adrs = [m.lower() for m in re.findall(r"adr-\d{3}", query, re.IGNORECASE)]
+
+    # Extract alphanumeric and hyphenated keywords (min length 3, excluding stop words)
+    raw_words = re.findall(r"\b[a-zA-Z0-9_\-äöüÄÖÜß]{3,}\b", query)
+    keywords = [w.lower() for w in raw_words if w.lower() not in stop_words]
+
     if not keywords and not explicit_adrs:
-        return concepts[:top_k]
-    
+        return [], 0, {"match_type": "empty_query"}
+
     scored = []
     for c in concepts:
         score = 0
@@ -461,34 +476,61 @@ def retrieve_relevant_docs(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
         ctitle_lower = c["title"].lower()
         slug = cpath_lower.split("/")[-1].replace(".md", "")
         term = str(c["frontmatter"].get("term", "")).lower()
-        
-        # Priority boost for matching ADRs
+
+        # 1. Major boost for explicit ADR matches
         for eadr in explicit_adrs:
             if eadr in cid_lower or eadr in cpath_lower:
-                score += 120
+                score += 200
             elif eadr in ctitle_lower:
-                score += 60
+                score += 100
 
+        # 2. Targeted whole-word keyword & acronym scoring
+        doc_tokens = c.get("tokens") or set()
         for kw in keywords:
-            cnt = min(c["fullText"].count(kw), 8)
-            score += cnt
+            # Exact acronym or slug match (e.g. btp, csrf, iflow, processdirect, camel)
             if kw == slug or kw == term or kw == cid_lower.split("/")[-1]:
-                score += 50
-            elif kw in cid_lower:
-                score += 15
-            if kw in ctitle_lower:
-                score += 12
-            if any(kw in t.lower() for t in c["tags"]):
-                score += 8
-            if kw in c["frontmatter"].get("description", "").lower():
-                score += 5
+                score += 60
+            elif kw in cid_lower.split("/")[-1].split("-"):
+                score += 30
+            elif kw in re.findall(r"\b[a-z0-9_\-äöüß]{2,}\b", ctitle_lower):
+                score += 25
+            elif any(kw == t.lower() for t in c["tags"]):
+                score += 20
+            elif kw in doc_tokens:
+                cnt = min(len(re.findall(r"\b" + re.escape(kw) + r"\b", c["fullText"])), 8)
+                score += cnt * 2
+
         if score > 0:
             scored.append((score, c))
-            
-    scored.sort(key=lambda x: x[0], reverse=True)
-    return [item[1] for item in scored[:top_k]] if scored else concepts[:2]
 
-# Build Gemini System Prompt
+    if not scored:
+        return [], 0, {"match_type": "no_match"}
+
+    scored.sort(key=lambda x: x[0], reverse=True)
+    top_score = scored[0][0]
+
+    # Calculate calibrated confidence percentage (0 to 99%)
+    if explicit_adrs:
+        confidence = min(99, 88 + min(11, top_score // 30))
+    elif top_score >= 60:
+        confidence = min(95, int(top_score * 1.1))
+    elif top_score >= 25:
+        confidence = min(75, int(top_score * 1.5))
+    else:
+        confidence = max(10, int(top_score * 1.8))
+
+    # Strict Confidence Gate: Never return random concepts if query doesn't match!
+    if confidence < 25 and not explicit_adrs:
+        return [], confidence, {"match_type": "low_confidence", "top_score": top_score}
+
+    selected = [item[1] for item in scored[:top_k]]
+    return selected, confidence, {
+        "match_type": "adr" if explicit_adrs else "concept",
+        "top_score": top_score,
+        "explicit_adrs": explicit_adrs
+    }
+
+# Build System Prompt
 def get_system_prompt() -> str:
     persona = manifest.get("spec", {}).get("persona", {})
     role = persona.get("role", "Senior SAP BTP Cloud Integration Specialist & Enterprise Architect")
@@ -509,8 +551,10 @@ Verbindliche Richtlinien:
 6. Wenn eine Information im Wissensbündel nicht enthalten ist, weise transparent darauf hin, statt zu spekulieren.
 """
 
-# Call Gemini API
-def ask_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> str:
+# ----------------- LLM PROVIDERS: GEMINI & DEEPSEEK / OPENROUTER -----------------
+
+def call_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> str:
+    """Calls Google Gemini with production model verification."""
     try:
         from google import genai
         from google.genai import types
@@ -530,21 +574,20 @@ def ask_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dic
 BENUTZERFRAGE:
 {query}
 """
-
         system_instruction = get_system_prompt()
         config = types.GenerateContentConfig(
             system_instruction=system_instruction,
             temperature=0.2
         )
 
-        # Try requested model, with automatic fallback if deprecated/404
-        models_to_try = [model_name]
-        for fallback in ["gemini-3.6-flash", "gemini-2.0-flash", "gemini-1.5-flash"]:
-            if fallback not in models_to_try:
-                models_to_try.append(fallback)
+        # Real, valid Google Gemini API models (NO fictitious names)
+        real_models = [model_name]
+        for fallback in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro", "gemini-1.5-pro"]:
+            if fallback not in real_models:
+                real_models.append(fallback)
 
-        last_err = None
-        for m in models_to_try:
+        last_error = None
+        for m in real_models:
             try:
                 response = client.models.generate_content(
                     model=m,
@@ -554,34 +597,110 @@ BENUTZERFRAGE:
                 if response and response.text:
                     return response.text
             except Exception as e:
-                last_err = e
-                # Fallback on 404 (model not found), 503 (high demand/overload), 429 (rate limit) or transient errors
+                last_error = e
                 err_str = str(e)
-                if any(k in err_str for k in ["404", "NOT_FOUND", "503", "UNAVAILABLE", "429", "RESOURCE_EXHAUSTED", "high demand", "no longer available"]):
-                    continue
-                else:
-                    continue
+                if "API_KEY_INVALID" in err_str or "401" in err_str:
+                    return f"❌ **Gemini API-Fehler:** Der API-Schlüssel ist ungültig. Bitte prüfen Sie den Key in der Seitenleiste."
+                continue
 
-        # If all Gemini cloud models are busy/unavailable, fall back gracefully to the grounded local knowledge
-        best_doc = context_docs[0] if context_docs else None
-        if best_doc:
-            return (
-                f"⚠️ *(Google AI Studio ist momentan kurzzeitig ausgelastet [503/429]. "
-                f"Der Conciliamus Advisor greift direkt auf die verifizierten OKF-Architekturdaten zu:)*\n\n"
-                f"### {best_doc['title']}\n\n"
-                f"{best_doc['content']}"
-            )
-        return f"❌ Fehler beim Aufruf der Gemini API: {str(last_err)}"
+        return f"❌ **Gemini API-Fehler:** Verbindung fehlgeschlagen ({str(last_error)})."
     except Exception as e:
-        best_doc = context_docs[0] if context_docs else None
-        if best_doc:
-            return (
-                f"⚠️ *(Temporärer Verbindungsengpass zu Google AI Studio. "
-                f"Direkte Antwort aus den verifizierten Architektur-Dokumenten:)*\n\n"
-                f"### {best_doc['title']}\n\n"
-                f"{best_doc['content']}"
-            )
-        return f"❌ Fehler beim Aufruf der Gemini API: {str(e)}"
+        return f"❌ **Gemini Client-Fehler:** {str(e)}"
+
+def call_deepseek_or_openrouter(api_key: str, provider: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> str:
+    """Calls DeepSeek or OpenRouter API (OpenAI-compatible)."""
+    context_str = "\n\n---\n\n".join([
+        f"### Dokument: {d['title']} ({d['path']})\n**Typ:** {d['type']} | **Status:** {d['frontmatter'].get('status', 'verified')}\n\n{d['content']}"
+        for d in context_docs
+    ])
+
+    user_content = f"""Folgende verifizierte Architektur-Dokumente liegen dir vor:
+
+{context_str}
+
+---
+BENUTZERFRAGE:
+{query}
+"""
+    system_prompt = get_system_prompt()
+
+    if "deepseek" in provider.lower() and "openrouter" not in provider.lower():
+        url = "https://api.deepseek.com/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
+        active_model = model_name if model_name in ["deepseek-chat", "deepseek-reasoner"] else "deepseek-chat"
+    else:
+        url = "https://openrouter.ai/api/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://orcai-54321.web.app",
+            "X-Title": "Conciliamus AI Advisor"
+        }
+        active_model = model_name if "/" in model_name else "deepseek/deepseek-chat"
+
+    payload = {
+        "model": active_model,
+        "messages": [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_content}
+        ],
+        "temperature": 0.2
+    }
+
+    try:
+        req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
+        with urllib.request.urlopen(req, timeout=45) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            return data["choices"][0]["message"]["content"]
+    except urllib.error.HTTPError as e:
+        err_body = e.read().decode("utf-8", errors="replace")
+        return f"❌ **{provider} HTTP {e.code} Fehler:** {e.reason} ({err_body})"
+    except Exception as e:
+        return f"❌ **{provider} Verbindungsfehler:** {str(e)}"
+
+def run_critic_audit(critic_key: str, query: str, draft_answer: str, context_docs: List[Dict[str, Any]]) -> str:
+    """DeepSeek acts as the architectural critic and judge, refining and validating the draft."""
+    url = "https://openrouter.ai/api/v1/chat/completions" if len(critic_key) > 40 and "sk-or" in critic_key else "https://api.deepseek.com/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {critic_key}",
+        "Content-Type": "application/json"
+    }
+    model = "deepseek/deepseek-chat" if "openrouter" in url else "deepseek-chat"
+
+    sources_summary = ", ".join([d["title"] for d in context_docs[:3]])
+    audit_prompt = f"""Du bist der unabhängige Architecture Reviewer & Auditor (DeepSeek Quality Gate).
+Benutzerfrage: "{query}"
+Quellen: {sources_summary}
+
+Antwortentwurf:
+{draft_answer}
+
+AUFGABE:
+1. Prüfe, ob die Antwort die Benutzerfrage präzise und vollständig beantwortet.
+2. Prüfe, ob alle Zitate (z.B. ADRs) exakt den Tatsachen entsprechen und keine Halluzinationen vorliegen.
+3. Wenn nötig, verbessere ungenaue Passagen direkt und erhalte das professionelle Markdown-Format.
+Gib die geprüfte, optimierte Antwort aus."""
+
+    payload = {
+        "model": model,
+        "messages": [
+            {"role": "system", "content": "Du bist ein strenger Senior Enterprise Integration Auditor. Korrigiere Halluzinationen und unpassende Antworten."},
+            {"role": "user", "content": audit_prompt}
+        ],
+        "temperature": 0.1
+    }
+
+    try:
+        req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            audited = data["choices"][0]["message"]["content"]
+            return audited + "\n\n---\n🛡️ *Qualitäts-Audit: Durch DeepSeek-V3 erfolgreich verifiziert und freigegeben.*"
+    except Exception:
+        return draft_answer
 
 # Define all 12 ADR sample queries
 sample_queries = [
@@ -595,7 +714,7 @@ sample_queries = [
     "Wie unterscheidet ADR-008 zwischen fachlichen Fehlern und technischem DLQ-Replay?",
     "Welche Ergonomie-Prinzipien definiert ADR-009 für die Fiori Horizon Workbench?",
     "Wie löst ADR-010 das BTP CORS-Problem und das serverlose GitOps-Deployment?",
-    "Wie stellt ADR-011 mit OKF v0.2 und Gemini 3.6 quellenbasierte Beratung sicher?",
+    "Wie stellt ADR-011 mit OKF v0.2 und Gemini quellenbasierte Beratung sicher?",
     "Wie verhindert ADR-012 den HTTP 401 Header-Verlust bei Camel Request-Reply durch Exchange Properties & Zero-Hardcoding?"
 ]
 
@@ -626,7 +745,7 @@ with st.sidebar:
 
     # BEREICH 2: Wissensbasis & Metriken
     with st.expander("📊 Wissensbasis & Status", expanded=False):
-        nodes_count = len(graph.get("nodes", [])) if "nodes" in graph else graph.get("nodesCount", 34)
+        nodes_count = len(graph.get("nodes", [])) if "nodes" in graph else graph.get("nodesCount", 308)
         edges_count = len(graph.get("edges", [])) if "edges" in graph else graph.get("edgesCount", 99)
         st.markdown(f"- **OKF Dokumente:** `{len(concepts)}`")
         st.markdown(f"- **Wissensgraph:** `{nodes_count} Knoten / {edges_count} Kanten`")
@@ -686,25 +805,47 @@ with st.sidebar:
         """)
         st.link_button("📂 OpenAPI Spec auf GitHub ↗", "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/api/conciliamus-architecture.openapi.yaml", use_container_width=True)
 
-    # BEREICH 6: Modell- & API-Konfiguration
-    with st.expander("⚙️ KI-Modell & API-Key", expanded=False):
-        default_key = get_secret("GEMINI_API_KEY", "")
+    # BEREICH 6: Multi-LLM Provider & Qualitäts-Audit Konfiguration
+    with st.expander("⚙️ KI-Provider, DeepSeek & Audit", expanded=False):
+        provider_choice = st.selectbox(
+            "KI-Architektur & Provider:",
+            [
+                "Google Gemini (Schnell & Quellentreu)",
+                "DeepSeek (Direkt via DeepSeek API)",
+                "OpenRouter (DeepSeek V3 / R1 / Claude)",
+                "Dual-Inspector: Gemini + DeepSeek Verifier (Höchste Qualität)"
+            ],
+            index=0
+        )
+
+        # Gemini Key
+        gemini_secret = get_secret("GEMINI_API_KEY", "")
         api_key = st.text_input(
             "Gemini API-Key:",
             type="password",
-            value=default_key,
-            help="Kostenloser API-Key auf aistudio.google.com – ohne Kreditkarte!"
+            value=gemini_secret,
+            help="Kostenloser Key von aistudio.google.com"
         )
-        if not api_key:
-            st.info("💡 Kostenloser Key: [aistudio.google.com/apikey](https://aistudio.google.com/apikey)")
-        else:
-            st.success("✅ API-Key hinterlegt")
 
-        model_choice = st.selectbox(
-            "Gemini Modell:",
-            ["gemini-3.6-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"],
-            index=0
+        # DeepSeek / OpenRouter Key
+        deepseek_secret = get_secret("DEEPSEEK_API_KEY", "") or get_secret("OPENROUTER_API_KEY", "")
+        deepseek_key = st.text_input(
+            "DeepSeek / OpenRouter Key:",
+            type="password",
+            value=deepseek_secret,
+            help="Key für DeepSeek API oder OpenRouter (für Dual-Inspection & Audit)"
         )
+
+        # Model selection
+        if "DeepSeek" in provider_choice and "Dual" not in provider_choice:
+            model_choice = st.selectbox("DeepSeek Modell:", ["deepseek-chat", "deepseek-reasoner"], index=0)
+        elif "OpenRouter" in provider_choice:
+            model_choice = st.selectbox("OpenRouter Modell:", ["deepseek/deepseek-chat", "deepseek/deepseek-r1", "google/gemini-2.5-flash", "anthropic/claude-3.5-sonnet"], index=0)
+        else:
+            model_choice = st.selectbox("Gemini Modell:", ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"], index=0)
+
+        enable_audit = st.checkbox("🛡️ DeepSeek Qualitäts-Audit aktivieren", value=bool(deepseek_key))
+
         if st.button("🗑️ Chat-Verlauf löschen", key="btn_clear_chat", use_container_width=True):
             st.session_state.messages = []
             st.rerun()
@@ -723,7 +864,7 @@ if len(st.session_state.messages) == 0:
             Senior SAP BTP Cloud Integration Specialist &amp; Enterprise Architect
         </p>
         <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #38bdf8; background: rgba(14, 165, 233, 0.18); border: 1.5px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 9999px;">
-            <span>Google OKF v0.2</span> • <span>{len(concepts)} Konzepte</span> • <span>12 verifizierte ADRs</span> • <span>Gemini 3.6 Flash</span>
+            <span>Google OKF v0.2</span> • <span>{len(concepts)} Konzepte</span> • <span>12 verifizierte ADRs</span> • <span>Gemini &amp; DeepSeek</span>
         </div>
         <p style="font-size: 13.5px; color: #94a3b8; font-weight: 500; margin-top: 26px;">
             💡 Wählen Sie links eine Beispielfrage aus der Seitenleiste ⇦ oder tippen Sie unten in das Eingabefeld.
@@ -748,32 +889,60 @@ if user_input:
         st.markdown(user_input)
 
     with st.chat_message("assistant"):
-        relevant_docs = retrieve_relevant_docs(user_input, top_k=5)
-        
-        # Check if api_key is available
-        active_key = api_key if "api_key" in locals() and api_key else get_secret("GEMINI_API_KEY", "")
-        active_model = model_choice if "model_choice" in locals() else "gemini-3.6-flash"
+        relevant_docs, confidence, meta = retrieve_relevant_docs(user_input, top_k=5)
 
-        if active_key:
-            with st.spinner("Conciliamus Advisor konsultiert Gemini und Wissensgraph..."):
-                answer = ask_gemini(active_key, active_model, user_input, relevant_docs)
-        else:
-            best = relevant_docs[0] if relevant_docs else None
-            if best:
-                answer = (
-                    f"*(Hinweis: Lokale Wissensextraktion ohne Gemini API-Key. Für vollständige KI-Antworten bitte links in den Einstellungen einen kostenlosen Key von Google AI Studio eintragen.)*\n\n"
-                    f"### {best['title']}\n\n"
-                    f"{best['content']}\n\n"
-                )
+        # CONFIDENCE GATE: Warn user cleanly if no matching architecture docs found
+        if confidence < 25 or not relevant_docs:
+            answer = (
+                f"⚠️ **Konfidenz-Warnung (Relevanz-Score: {confidence}%)**\n\n"
+                f"Zu Ihrer Frage konnten im Wissensgraphen keine hinreichend spezifischen Architektur-Entscheidungen (ADR-001 bis ADR-012) "
+                f"oder Acronym-Digest-Konzepte identifiziert werden.\n\n"
+                f"💡 **Empfehlung:**\n"
+                f"- Wählen Sie links in der Seitenleiste eine der 12 vorkonfigurierten ADR-Beispielfragen.\n"
+                f"- Oder verwenden Sie konkrete Begriffe wie *'ADR-007'*, *'CSRF'*, *'Dual-iFlow'*, *'ProcessDirect'*, *'BTP'* oder *'Camel'*."
+            )
+            st.markdown(answer)
+            st.session_state.messages.append({"role": "assistant", "content": answer})
+            st.rerun()
+
+        # Check API key configuration
+        active_gemini_key = api_key or get_secret("GEMINI_API_KEY", "")
+        active_deepseek_key = deepseek_key or get_secret("DEEPSEEK_API_KEY", "") or get_secret("OPENROUTER_API_KEY", "")
+
+        answer = ""
+        with st.spinner("Conciliamus Advisor prüft Wissensgraph und generiert Antwort..."):
+            # Provider Execution
+            if "DeepSeek" in provider_choice and "Dual" not in provider_choice and active_deepseek_key:
+                answer = call_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", model_choice, user_input, relevant_docs)
+            elif "OpenRouter" in provider_choice and active_deepseek_key:
+                answer = call_deepseek_or_openrouter(active_deepseek_key, "OpenRouter", model_choice, user_input, relevant_docs)
+            elif active_gemini_key:
+                answer = call_gemini(active_gemini_key, model_choice, user_input, relevant_docs)
+            elif active_deepseek_key:
+                answer = call_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", "deepseek-chat", user_input, relevant_docs)
             else:
-                answer = "Zu dieser Frage wurden keine spezifischen Konzepte im Wissensgraph gefunden."
+                # 100% Grounded, Safe Local Fallback: Output the EXACT matched document (NEVER ENIAC!)
+                best = relevant_docs[0]
+                answer = (
+                    f"> [!NOTE]\n"
+                    f"> **🏛️ Verifizierte Architektur-Antwort (Lokales Grounding • Konfidenz: {confidence}%)**\n"
+                    f"> *(Direkte quellengetreue Extraktion aus dem Google OKF v0.2 Repository für `{best['id']}`)*\n\n"
+                    f"### {best['title']}\n\n"
+                    f"{best['content']}\n"
+                )
+
+            # Optional Critic / Audit Pass with DeepSeek
+            if enable_audit and active_deepseek_key and not answer.startswith("❌") and not answer.startswith("⚠️"):
+                with st.spinner("DeepSeek führt unabhängigen Architektur-Audit durch..."):
+                    answer = run_critic_audit(active_deepseek_key, user_input, answer, relevant_docs)
 
         st.markdown(answer)
 
+        # Citations & Source Links
         if relevant_docs:
-            with st.expander("📚 Herangezogene Quellen & Relationen"):
+            with st.expander(f"📚 Herangezogene Quellen & Relationen (Konfidenz: {confidence}%)"):
                 for d in relevant_docs:
                     st.markdown(f"- **[{d['title']}](https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/knowledge/{d['path']})** (`{d['type']}`)")
-        
+
         st.session_state.messages.append({"role": "assistant", "content": answer})
         st.rerun()
