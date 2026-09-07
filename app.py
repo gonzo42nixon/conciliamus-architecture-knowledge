@@ -1,3 +1,4 @@
+from __future__ import annotations
 """
 Conciliamus AI Advisor - Streamlit Web Application
 Powered by Google AI Studio (Gemini API), DeepSeek / OpenRouter Multi-LLM,
@@ -10,7 +11,7 @@ import json
 import yaml
 import base64
 from pathlib import Path
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Optional
 import time
 import urllib.request
 import urllib.parse
