@@ -1,5 +1,5 @@
 """
-Conciliamus Architecture Advisor - Streamlit Web Application
+Conciliamus AI Advisor - Streamlit Web Application
 Powered by Google AI Studio (Gemini API) and Google Open Knowledge Format (OKF v0.2).
 Zero-Docker, Serverless Deployment on Streamlit Community Cloud.
 """
@@ -7,6 +7,7 @@ import os
 import re
 import json
 import yaml
+import base64
 from pathlib import Path
 from typing import List, Dict, Any, Tuple
 import time
@@ -23,6 +24,17 @@ PECHA_KONZEPT_PATH = ROOT_DIR / "knowledge" / "presentation-and-ui" / "pecha_kuc
 TEST_RUNNER_HTML_PATH = ROOT_DIR / "site" / "test-runner.html"
 ISTQB_STRATEGY_PATH = ROOT_DIR / "knowledge" / "verification" / "istqb-test-strategy.md"
 TESTDATA_DIR = ROOT_DIR / "testdata"
+
+def get_advisor_logo_base64() -> str:
+    """Returns the base64-encoded IT-Advisor logo (ki_advisor_icon.png) for 100% reliable rendering."""
+    for loc in [ROOT_DIR / "site" / "ki_advisor_icon.png", ROOT_DIR / "ki_advisor_icon.png"]:
+        if loc.exists():
+            try:
+                with open(loc, "rb") as f:
+                    return "data:image/png;base64," + base64.b64encode(f.read()).decode("utf-8")
+            except Exception:
+                pass
+    return "https://lh3.googleusercontent.com/pw/AP1GczNopyl_jUGFG9Gii9MaQ1JyjPm72_iN1oLV9XlPyzkwW8HYB_Oj_hSb3D1AgGWh0bVPsTetLYwQjXvaL1I4yMyL1F06XymmtBnWpoX8SzW8eqshuNnD=s0"
 
 def execute_cpi_live_test(payload_str: str, creds: Dict[str, str]) -> Dict[str, Any]:
     """Executes a real live batch test against SAP Cloud Integration tenant."""
@@ -99,40 +111,57 @@ def execute_cpi_live_test(payload_str: str, creds: Dict[str, str]) -> Dict[str, 
         if csrf_token:
             audit_log.append(f"[+] CSRF-Token aus Fehler-Header extrahiert ({time.time() - csrf_start:.2f}s): {csrf_token}")
         else:
-            audit_log.append(f"[-] CSRF-Warnung ({e.code}): Kein explizites CSRF-Token erhalten.")
-    except Exception as e:
-        audit_log.append(f"[-] CSRF-Fehler: {str(e)}")
-
-    # Step 3: Batch POST
-    audit_log.append(f"[*] Sende Batch-Payload an SAP Cloud Integration ({endpoint})...")
-    post_start = time.time()
-    try:
-        req2 = urllib.request.Request(endpoint, data=payload_str.encode("utf-8"), method="POST")
-        req2.add_header("Authorization", f"Bearer {token}")
-        if csrf_token:
-            req2.add_header("X-CSRF-Token", csrf_token)
-        req2.add_header("Content-Type", "application/json")
-        req2.add_header("Accept", "application/json, application/xml, text/plain")
-
-        with opener.open(req2, timeout=25) as resp2:
-            body = resp2.read().decode("utf-8", errors="replace")
-            duration = round(time.time() - start_time, 2)
-            headers = dict(resp2.headers)
-            sap_msg_id = headers.get("Sap-Message-Id") or headers.get("sap-message-id") or headers.get("X-Correlation-ID") or "N/A"
-            audit_log.append(f"[+++] HTTP {resp2.status} OK empfangen ({time.time() - post_start:.2f}s) - Gesamtzeit: {duration}s")
+            audit_log.append(f"[-] CSRF-Fehler (HTTP {e.code}): {str(e)}")
             return {
-                "success": True,
-                "status": resp2.status,
-                "duration": duration,
-                "body": body,
-                "headers": headers,
-                "sap_message_id": sap_msg_id,
+                "success": False,
+                "status": e.code,
+                "error": f"CSRF-Handshake fehlgeschlagen: {str(e)}",
+                "duration": round(time.time() - start_time, 2),
                 "audit_log": audit_log
             }
-    except urllib.error.HTTPError as e:
-        err_body = e.read().decode("utf-8", errors="replace")
+    except Exception as e:
+        audit_log.append(f"[-] CSRF-Verbindungsfehler: {str(e)}")
+        return {
+            "success": False,
+            "status": 500,
+            "error": f"CSRF-Verbindung fehlgeschlagen: {str(e)}",
+            "duration": round(time.time() - start_time, 2),
+            "audit_log": audit_log
+        }
+
+    # Step 3: Send Batch POST
+    audit_log.append(f"[*] Sende Batch-Payload an: {endpoint}")
+    post_start = time.time()
+    try:
+        post_data = payload_str.encode("utf-8")
+        req2 = urllib.request.Request(endpoint, data=post_data, method="POST")
+        req2.add_header("Authorization", f"Bearer {token}")
+        req2.add_header("Content-Type", "application/json")
+        req2.add_header("Accept", "application/json")
+        if csrf_token:
+            req2.add_header("X-CSRF-Token", csrf_token)
+
+        resp2 = opener.open(req2, timeout=30)
+        resp_body = resp2.read().decode("utf-8")
         duration = round(time.time() - start_time, 2)
-        audit_log.append(f"[-] HTTP {e.code} Fehler von CPI: {err_body[:200]}")
+        sap_msg_id = resp2.headers.get("SAP_MessageProcessingLogID", "N/A")
+
+        audit_log.append(f"[+] Batch erfolgreich verarbeitet ({time.time() - post_start:.2f}s)! HTTP Status: {resp2.status}")
+        if sap_msg_id != "N/A":
+            audit_log.append(f"[+] SAP Message Processing Log ID: {sap_msg_id}")
+
+        return {
+            "success": True,
+            "status": resp2.status,
+            "duration": duration,
+            "body": resp_body,
+            "sap_message_id": sap_msg_id,
+            "audit_log": audit_log
+        }
+    except urllib.error.HTTPError as e:
+        duration = round(time.time() - start_time, 2)
+        err_body = e.read().decode("utf-8", errors="replace")
+        audit_log.append(f"[-] Übertragungsfehler (HTTP {e.code}): {e.reason}")
         return {
             "success": False,
             "status": e.code,
@@ -153,72 +182,66 @@ def execute_cpi_live_test(payload_str: str, creds: Dict[str, str]) -> Dict[str, 
             "audit_log": audit_log
         }
 
+# Set page config with custom logo icon
+logo_icon_file = ROOT_DIR / "site" / "ki_advisor_icon.png"
+if not logo_icon_file.exists():
+    logo_icon_file = ROOT_DIR / "ki_advisor_icon.png"
+
 st.set_page_config(
-    page_title="Conciliamus Architecture Advisor",
-    page_icon="🏛️",
+    page_title="Conciliamus AI Advisor",
+    page_icon=str(logo_icon_file) if logo_icon_file.exists() else "🤖",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS for modern enterprise look
+# Custom CSS for fixed bottom chat input & clean Google-like layout
 st.markdown("""
 <style>
-    .main-header {
-        font-size: 2.2rem;
-        font-weight: 700;
-        color: #1a365d;
-        margin-bottom: 0.2rem;
-    }
-    .sub-header {
-        font-size: 1.05rem;
-        color: #4a5568;
-        margin-bottom: 1.5rem;
-    }
-    .badge-okf {
-        background-color: #ebf8ff;
-        color: #2b6cb0;
-        padding: 0.2rem 0.6rem;
-        border-radius: 9999px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        border: 1px solid #bee3f8;
-    }
-    .badge-gemini {
-        background-color: #f0fff4;
-        color: #276749;
-        padding: 0.2rem 0.6rem;
-        border-radius: 9999px;
-        font-size: 0.8rem;
-        font-weight: 600;
-        border: 1px solid #c6f6d5;
-    }
-    /* Fixed Bottom Chat Bar (like ChatGPT / Claude / modern AI bots) */
+    /* Fixed Bottom Chat Bar: Rigidly anchored at the bottom of the viewport */
     div[data-testid="stBottom"] {
         position: fixed !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        z-index: 9999 !important;
-        background: linear-gradient(180deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.98) 35%, rgba(15, 23, 42, 1) 100%) !important;
-        backdrop-filter: blur(14px) !important;
-        -webkit-backdrop-filter: blur(14px) !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
-        padding-top: 0.75rem !important;
-        padding-bottom: 0.75rem !important;
-        padding-left: 1.5rem !important;
-        padding-right: 1.5rem !important;
+        bottom: 0px !important;
+        left: 0px !important;
+        right: 0px !important;
+        width: 100% !important;
+        z-index: 999999 !important;
+        background: rgba(15, 23, 42, 0.98) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8) !important;
+        padding: 12px 20px 16px 20px !important;
     }
 
-    /* Prevent bottom content from being obscured behind fixed chat input */
+    div[data-testid="stBottom"] > div {
+        max-width: 860px !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+    }
+
+    /* Scrollable content container with generous bottom offset */
     .main .block-container {
-        padding-bottom: 125px !important;
-        padding-top: 1.25rem !important;
-        max-width: 100% !important;
+        padding-bottom: 140px !important;
+        padding-top: 1rem !important;
+        max-width: 860px !important;
+        margin: 0 auto !important;
     }
 
-    /* Clean subtle starter suggestion buttons */
-    div[data-testid="stButton"] button {
+    /* Clean subtle sidebar expanders */
+    [data-testid="stSidebar"] [data-testid="stExpander"] {
+        border: 1px solid rgba(255, 255, 255, 0.08) !important;
         border-radius: 10px !important;
+        margin-bottom: 8px !important;
+        background: rgba(15, 23, 42, 0.5) !important;
+    }
+
+    /* Custom button styling in sidebar */
+    [data-testid="stSidebar"] div[data-testid="stButton"] button {
+        border-radius: 8px !important;
+        font-size: 11.5px !important;
+        text-align: left !important;
+        padding: 6px 10px !important;
+        line-height: 1.3 !important;
         transition: all 0.2s ease !important;
     }
 </style>
@@ -255,7 +278,7 @@ def get_knowledge_mtime() -> float:
 @st.cache_resource
 def load_knowledge_base(mtime_key: float) -> Tuple[List[Dict[str, Any]], Dict[str, Any], Dict[str, Any]]:
     concepts = []
-    frontmatter_re = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
+    frontmatter_re = re.compile(r"^---s*\n(.*?)\n---s*\n", re.DOTALL)
     
     if KNOWLEDGE_DIR.exists():
         for file_path in KNOWLEDGE_DIR.rglob("*.md"):
@@ -308,8 +331,8 @@ def retrieve_relevant_docs(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
         "einem", "einen", "nach", "für", "fuer", "mit", "von", "aus", "bei", 
         "zum", "zur", "ist", "sind", "wird", "werden", "hat", "haben", "kann", "können"
     }
-    explicit_adrs = [m.lower() for m in re.findall(r"adr-\d{3}", query, re.IGNORECASE)]
-    keywords = [w.lower() for w in re.findall(r"\w+", query) if len(w) > 2 and w.lower() not in stop_words]
+    explicit_adrs = [m.lower() for m in re.findall(r"adr-d{3}", query, re.IGNORECASE)]
+    keywords = [w.lower() for w in re.findall(r"w+", query) if len(w) > 2 and w.lower() not in stop_words]
     if not keywords and not explicit_adrs:
         return concepts[:top_k]
     
@@ -351,13 +374,13 @@ def get_system_prompt() -> str:
     tone = persona.get("tone", "professionell, methodisch präzise, architekturbewusst, lösungsorientiert")
     purpose = manifest.get("spec", {}).get("purpose", "")
 
-    return f"""Du bist der Conciliamus Architecture Advisor.
+    return f"""Du bist der Conciliamus AI Architecture Advisor.
 Rolle: {role}
 Ton: {tone}
 Aufgabe: {purpose}
 
 Verbindliche Richtlinien:
-1. Beantworte alle Fragen strikt auf Basis der beigefügten Dokumente aus dem Google Open Knowledge Format (OKF v0.2) Wissensbündel.
+1. Beantworte alle Fragen strikt auf Basis der beigefügten Dokumente aus dem Google Open Knowledge Format (OKF v0.2) Wissensbündel (34 Dokumente, 12 ADRs).
 2. Zitiere konkrete Architecture Decision Records (z.B. [ADR-001] bis [ADR-012]) und Konzeptdateien.
 3. Wenn Diagramme den Sachverhalt verdeutlichen, formatiere sie als Mermaid-Codeblöcke (`mermaid`).
 4. Betone stets Idempotenz, Entkopplung (Dual-iFlow), Bruce Silver BPMN 2.0 Method & Style Nomenklatur und Resilienz.
@@ -439,68 +462,7 @@ BENUTZERFRAGE:
             )
         return f"❌ Fehler beim Aufruf der Gemini API: {str(e)}"
 
-# ----------------- SIDEBAR -----------------
-with st.sidebar:
-    st.markdown("### 🔑 Google AI Studio")
-    
-    default_key = get_secret("GEMINI_API_KEY", "")
-    api_key = st.text_input(
-        "Gemini API-Key:",
-        type="password",
-        value=default_key,
-        help="Holen Sie sich Ihren kostenlosen API-Key auf aistudio.google.com – ohne Billing-Setup!"
-    )
-    
-    if not api_key:
-        st.info("💡 **Kein Key?** Kostenloser Key auf:")
-        st.markdown("[👉 aistudio.google.com/apikey](https://aistudio.google.com/apikey)")
-    else:
-        st.success("✅ API-Key aktiv")
-
-    model_choice = st.selectbox(
-        "Gemini Modell:",
-        ["gemini-3.6-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"],
-        index=0
-    )
-
-    st.markdown("---")
-    st.markdown("### 📊 Wissensbasis Metriken")
-    nodes_count = len(graph.get("nodes", [])) if "nodes" in graph else graph.get("nodesCount", 33)
-    edges_count = len(graph.get("edges", [])) if "edges" in graph else graph.get("edgesCount", 93)
-    st.markdown(f"- **OKF Dokumente:** `{len(concepts)}`")
-    st.markdown(f"- **Wissensgraph:** `{nodes_count} Knoten / {edges_count} Kanten`")
-    st.markdown(f"- **Architektur-Entscheidungen:** `12 ADRs (ADR-001 bis ADR-012)`")
-    st.markdown(f"- **OKF Version:** `v0.2`")
-
-    st.markdown("---")
-    if st.button("🔄 Wissensbasis neu laden", use_container_width=True):
-        st.cache_resource.clear()
-        st.rerun()
-
-    if st.button("🚪 Abmelden", use_container_width=True):
-        st.session_state["password_correct"] = False
-        st.rerun()
-
-# ----------------- MAIN VIEW -----------------
-st.markdown('<div class="main-header">🏛️ Conciliamus Architecture Advisor</div>', unsafe_allow_html=True)
-st.markdown(
-    '<div class="sub-header">'
-    '<span class="badge-okf">Google Open Knowledge Format v0.2</span> &nbsp; '
-    '<span class="badge-gemini">Google Gemini AI Studio</span> &nbsp; '
-    'SAP BTP Cloud Integration & S/4HANA OData Architekturberater'
-    '</div>', 
-    unsafe_allow_html=True
-)
-
-tab_chat, tab_pecha, tab_runner, tab_adrs, tab_specs = st.tabs([
-    "💬 Architektur-Chat", 
-    "⏱️ Pecha Kucha (20x20)", 
-    "🧪 Test-Runner (Workbench)",
-    "📜 Architecture Decisions (ADRs)", 
-    "📐 OpenAPI & Schemas"
-])
-
-# ----------------- TAB 1: CHAT -----------------
+# Define all 12 ADR sample queries
 sample_queries = [
     "Wie funktioniert das Dual-iFlow Entkopplungsmuster nach ADR-001?",
     "Wie setzt ADR-002 die Zero-Trust & BTP PaaS Security (OAuth2/XSUAA) um?",
@@ -516,388 +478,181 @@ sample_queries = [
     "Wie verhindert ADR-012 den HTTP 401 Header-Verlust bei Camel Request-Reply durch Exchange Properties & Zero-Hardcoding?"
 ]
 
-with tab_chat:
-    if "messages" not in st.session_state:
-        st.session_state.messages = [
-            {
-                "role": "assistant",
-                "content": (
-                    "Hallo! Ich bin der **Conciliamus Architecture Advisor** (Senior SAP BTP Cloud Integration Specialist & Enterprise Architect).\n\n"
-                    "Ich beantworte alle Fragen zur MDM-zu-S/4HANA Geschäftspartner-Synchronisation auf Basis der 34 kuratierten "
-                    "OKF-Architekturdokumente und 12 verifizierten Architecture Decision Records (ADR-001 bis ADR-012).\n\n"
-                    "**Wählen Sie unten eine Beispielfrage oder tippen Sie Ihre Frage in das Eingabefeld am unteren Rand!**"
-                )
-            }
-        ]
+# ----------------- SIDEBAR (AUF- UND ZUKLAPPBARE BEREICHE) -----------------
+logo_b64 = get_advisor_logo_base64()
 
+with st.sidebar:
+    # Sidebar Header with Dieter's Logo
+    st.markdown(f"""
+    <div style="display: flex; align-items: center; gap: 12px; padding: 6px 0 12px 0; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: 12px;">
+        <img src="{logo_b64}" style="height: 38px; width: auto; object-fit: contain;" alt="IT-Advisor Logo" />
+        <div>
+            <div style="font-weight: 800; font-size: 13.5px; color: #f8fafc; letter-spacing: -0.3px;">Conciliamus AI Advisor</div>
+            <div style="font-size: 10px; color: #38bdf8; font-family: monospace;">OKF v0.2 • 12 ADRs</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # BEREICH 1: Beispielfragen (Hier im Drawer aufklappbar, nicht im Hauptbereich!)
+    with st.expander("💡 Beispielfragen (ADR-001 bis ADR-012)", expanded=True):
+        st.markdown("<div style='font-size:11px; color:#94a3b8; margin-bottom:8px;'>Klicken Sie auf eine Frage, um den Dialog im Hauptbereich zu starten:</div>", unsafe_allow_html=True)
+        for idx, sq in enumerate(sample_queries):
+            adr_num = sq.split("ADR-")[1][:3] if "ADR-" in sq else str(idx+1)
+            btn_label = f"📌 [ADR-{adr_num}] {sq}"
+            if st.button(btn_label, key=f"sb_adr_chip_{idx}", use_container_width=True):
+                st.session_state.current_prompt = sq
+                st.rerun()
+
+    # BEREICH 2: Wissensbasis & Metriken
+    with st.expander("📊 Wissensbasis & Status", expanded=False):
+        nodes_count = len(graph.get("nodes", [])) if "nodes" in graph else graph.get("nodesCount", 34)
+        edges_count = len(graph.get("edges", [])) if "edges" in graph else graph.get("edgesCount", 99)
+        st.markdown(f"- **OKF Dokumente:** `{len(concepts)}`")
+        st.markdown(f"- **Wissensgraph:** `{nodes_count} Knoten / {edges_count} Kanten`")
+        st.markdown(f"- **Architektur-Entscheidungen:** `12 ADRs (ADR-001 bis ADR-012)`")
+        st.markdown(f"- **OKF Version:** `v0.2`")
+        st.markdown("---")
+        if st.button("🔄 Wissensbasis neu laden", key="btn_reload_kb", use_container_width=True):
+            st.cache_resource.clear()
+            st.rerun()
+
+    # BEREICH 3: ADR-Katalog Übersicht
+    with st.expander("📜 ADR-Katalog (12 Entscheidungen)", expanded=False):
+        adr_docs = [c for c in concepts if c.get("type") == "Decision Record" or "adr-" in c["id"]]
+        adr_docs.sort(key=lambda x: x["id"])
+        for adr in adr_docs:
+            fm = adr["frontmatter"]
+            status = fm.get('status', 'accepted').upper()
+            title = fm.get('title', adr['title'])
+            with st.expander(f"{title} [{status}]", expanded=False):
+                st.markdown(f"**Beschreibung:** {fm.get('description', '-')}")
+                st.markdown(f"**Status:** `{status}` | **Ressource:** `{fm.get('resource', '-')}`")
+                st.markdown("---")
+                st.markdown(adr["content"])
+
+    # BEREICH 4: BTP Live-Workbench
+    with st.expander("🧪 BTP Live-Workbench", expanded=False):
+        st.markdown("Führen Sie einen Live-Batch-Test gegen den BTP-Tenant aus:")
+        default_client_id = "sb-e1a4ca1f-7a33-4513-858d-77ba2c5e58dd!b706425|it-rt-b9c123f3trial!b55215"
+        default_client_secret = "11930c12-a78b-4172-8004-f8c5a3a024b4$NCHm0cqnZea8wy3M_TT2Kp_Geurr7DE1cReWFnC2FJU="
+        default_token_url = "https://b9c123f3trial.authentication.us10.hana.ondemand.com/oauth/token"
+        default_runtime_url = "https://b9c123f3trial.it-cpitrial06-rt.cfapps.us10-001.hana.ondemand.com"
+
+        if st.button("🚀 10er-Batch an BTP CPI senden", key="sb_btn_live_batch", use_container_width=True):
+            with st.spinner("Sende Live-Batch an SAP Cloud Integration..."):
+                creds = {
+                    "token_url": default_token_url,
+                    "runtime_url": default_runtime_url,
+                    "client_id": default_client_id,
+                    "client_secret": default_client_secret
+                }
+                testdata_file = TESTDATA_DIR / "Testdaten_prepared.json"
+                payload = testdata_file.read_text(encoding="utf-8") if testdata_file.exists() else "{}"
+                res = execute_cpi_live_test(payload, creds)
+                if res.get("success"):
+                    st.success(f"🎉 Erfolg: HTTP {res.get('status')} in {res.get('duration')}s")
+                else:
+                    st.error(f"❌ Fehler: {res.get('error')}")
+
+        st.link_button("🌐 Test-Runner öffnen ↗", "https://orcai-54321.web.app/test-runner.html", use_container_width=True)
+
+    # BEREICH 5: OpenAPI Spezifikationen & Schemas
+    with st.expander("📐 OpenAPI & Schemas", expanded=False):
+        st.markdown("""
+        **Spezifizierte Integrationsendpunkte:**
+        - `POST /http/conciliamus/v1/businesspartners/batch` (Inbound)
+        - `POST /conciliamus/v1/businesspartners/item` (ProcessDirect)
+        """)
+        st.link_button("📂 OpenAPI Spec auf GitHub ↗", "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/api/conciliamus-architecture.openapi.yaml", use_container_width=True)
+
+    # BEREICH 6: Modell- & API-Konfiguration
+    with st.expander("⚙️ KI-Modell & API-Key", expanded=False):
+        default_key = get_secret("GEMINI_API_KEY", "")
+        api_key = st.text_input(
+            "Gemini API-Key:",
+            type="password",
+            value=default_key,
+            help="Kostenloser API-Key auf aistudio.google.com – ohne Kreditkarte!"
+        )
+        if not api_key:
+            st.info("💡 Kostenloser Key: [aistudio.google.com/apikey](https://aistudio.google.com/apikey)")
+        else:
+            st.success("✅ API-Key hinterlegt")
+
+        model_choice = st.selectbox(
+            "Gemini Modell:",
+            ["gemini-3.6-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"],
+            index=0
+        )
+        if st.button("🗑️ Chat-Verlauf löschen", key="btn_clear_chat", use_container_width=True):
+            st.session_state.messages = []
+            st.rerun()
+
+# ----------------- HAUPTBEREICH (SO LEER UND AUFGERÄUMT WIE DIE GOOGLE-SUCHSEITE) -----------------
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+# If no messages yet: Google-like centered landing view
+if len(st.session_state.messages) == 0:
+    st.markdown(f"""
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 52vh; text-align: center; padding: 20px 10px;">
+        <img src="{logo_b64}" style="max-height: 115px; width: auto; object-fit: contain; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.6)); margin-bottom: 20px;" alt="Conciliamus AI Advisor Logo" />
+        <h1 style="font-size: 32px; font-weight: 800; color: #f8fafc; margin: 0 0 8px 0; letter-spacing: -0.5px;">Conciliamus AI Advisor</h1>
+        <p style="font-size: 14px; color: #94a3b8; max-width: 540px; margin: 0 auto 16px auto; line-height: 1.5;">
+            Senior SAP BTP Cloud Integration Specialist &amp; Enterprise Architect
+        </p>
+        <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; color: #38bdf8; background: rgba(14, 165, 233, 0.12); border: 1px solid rgba(56, 189, 248, 0.25); padding: 4px 14px; border-radius: 9999px;">
+            <span>Google OKF v0.2</span> • <span>34 Konzepte</span> • <span>12 verifizierte ADRs</span> • <span>Gemini 3.6 Flash</span>
+        </div>
+        <p style="font-size: 12px; color: #64748b; margin-top: 24px;">
+            💡 Wählen Sie links eine Beispielfrage aus der Seitenleiste ⇦ oder tippen Sie unten in das Eingabefeld.
+        </p>
+    </div>
+    """, unsafe_allow_html=True)
+else:
+    # Render Chat Conversation
     for msg in st.session_state.messages:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-    # Vorgeschlagene Beispielfragen nur initial im Drawer anzeigen, damit der Benutzer nicht erschlagen wird
-    if len(st.session_state.messages) <= 1:
-        st.markdown("""
-        <div style="background: rgba(30, 41, 59, 0.45); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 12px 16px; margin: 12px 0 14px 0;">
-            <div style="font-size: 13px; font-weight: 700; color: #f1f5f9; display: flex; align-items: center; gap: 6px;">
-                <span>💡</span><span>Vorgeschlagene Themenschwerpunkte:</span>
-            </div>
-            <div style="font-size: 11.5px; color: #94a3b8; margin-top: 2px;">
-                Klicken Sie auf ein Thema oder tippen Sie Ihre individuelle Frage in das Feld unten:
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+# ----------------- RIGIDLY FIXED BOTTOM CHAT INPUT -----------------
+user_input = st.chat_input("Ihre Frage an den Conciliamus AI Advisor...")
+if "current_prompt" in st.session_state and st.session_state.current_prompt:
+    user_input = st.session_state.current_prompt
+    st.session_state.current_prompt = None
 
-        starter_topics = [
-            ("⚡ Dual-iFlow & ProcessDirect", "Wie funktioniert das Dual-iFlow Entkopplungsmuster nach ADR-001 und ADR-005?"),
-            ("🛡️ Two-Legged CSRF & Cookies", "Wie läuft der Two-Legged CSRF- und Cookie-Handshake nach ADR-007 ab?"),
-            ("💾 DLQ & Resilienz-Routing", "Wie unterscheidet ADR-008 zwischen fachlichen Fehlern und technischem DLQ-Replay?"),
-            ("🔑 Camel Header Preservation", "Wie verhindert ADR-012 den HTTP 401 Header-Verlust bei Camel Request-Reply durch Exchange Properties & Zero-Hardcoding?")
-        ]
+if user_input:
+    st.session_state.messages.append({"role": "user", "content": user_input})
+    with st.chat_message("user"):
+        st.markdown(user_input)
 
-        col1, col2 = st.columns(2)
-        for idx, (label, query) in enumerate(starter_topics):
-            col = col1 if idx % 2 == 0 else col2
-            with col:
-                if st.button(label, key=f"starter_chip_{idx}", use_container_width=True, help=query):
-                    st.session_state.current_prompt = query
-                    st.rerun()
+    with st.chat_message("assistant"):
+        relevant_docs = retrieve_relevant_docs(user_input, top_k=5)
+        
+        # Check if api_key is available
+        active_key = api_key if "api_key" in locals() and api_key else get_secret("GEMINI_API_KEY", "")
+        active_model = model_choice if "model_choice" in locals() else "gemini-3.6-flash"
 
-        with st.expander("📚 Weitere Beispielfragen (ADR-001 bis ADR-012) anzeigen", expanded=False):
-            exp_cols = st.columns(2)
-            for idx, sq in enumerate(sample_queries):
-                with exp_cols[idx % 2]:
-                    adr_badge = sq.split("ADR-")[1][:3] if "ADR-" in sq else ""
-                    label = f"📌 [ADR-{adr_badge}] {sq}" if adr_badge else sq
-                    if st.button(label, key=f"chat_chip_more_{idx}", use_container_width=True):
-                        st.session_state.current_prompt = sq
-                        st.rerun()
-
-    user_input = st.chat_input("Ihre Frage zur Conciliamus-Architektur...")
-    if "current_prompt" in st.session_state and st.session_state.current_prompt:
-        user_input = st.session_state.current_prompt
-        st.session_state.current_prompt = None
-
-    if user_input:
-        st.session_state.messages.append({"role": "user", "content": user_input})
-        with st.chat_message("user"):
-            st.markdown(user_input)
-
-        with st.chat_message("assistant"):
-            relevant_docs = retrieve_relevant_docs(user_input, top_k=5)
-            
-            if api_key:
-                with st.spinner("Conciliamus Advisor konsultiert Gemini und Wissensgraph..."):
-                    answer = ask_gemini(api_key, model_choice, user_input, relevant_docs)
-            else:
-                best = relevant_docs[0] if relevant_docs else None
-                if best:
-                    answer = (
-                        f"*(Hinweis: Lokale Wissensextraktion ohne Gemini API-Key. Für vollständige KI-Antworten bitte links einen kostenlosen Key von Google AI Studio eintragen.)*\n\n"
-                        f"### {best['title']}\n\n"
-                        f"{best['content']}\n\n"
-                    )
-                else:
-                    answer = "Zu dieser Frage wurden keine spezifischen Konzepte gefunden."
-
-            st.markdown(answer)
-
-            if relevant_docs:
-                with st.expander("📚 Herangezogene Quellen & Relationen"):
-                    for d in relevant_docs:
-                        st.markdown(f"- **[{d['title']}](https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/knowledge/{d['path']})** (`{d['type']}`)")
-            
-            st.session_state.messages.append({"role": "assistant", "content": answer})
-
-# ----------------- TAB 2: PECHA KUCHA -----------------
-with tab_pecha:
-    st.markdown("### ⏱️ Pecha Kucha: MDM Business Partner Synchronisation")
-    st.markdown("""
-    **SAP Cloud Integration • Dual-iFlow Architektur • BPMN 2.0 Method & Style**  
-    * **Format:** Exakt 20 Folien × 20 Sekunden = 6 Minuten 40 Sekunden (automatischer Folienwechsel & Audio-Chime)  
-    * **Referent:** Dieter Rüffler (Dipl.-Inform. TU Berlin, ISTQB CTFL, ITIL V2)  
-    * **Zielgruppe:** Markus Engelmann & Team *Plattform & Integration*, Conciliamus GmbH (Johannesstift Diakonie gAG)
-    """)
-
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 1.8rem; border-radius: 12px; border: 1px solid #334155; margin: 1.2rem 0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);">
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem;">
-            <span style="background: #0070f2; color: white; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.85rem;">STAND-ALONE VOLLBILD</span>
-            <span style="color: #cbd5e1; font-size: 0.9rem;">Web Audio Chime • SVG Countdown-Ring • Google Auth</span>
-        </div>
-        <h2 style="color: #ffffff; margin: 0 0 0.8rem 0; font-size: 1.5rem;">🎬 Pecha Kucha 20×20 Live-Präsentation</h2>
-        <p style="color: #94a3b8; margin: 0 0 1.2rem 0; line-height: 1.5;">
-            Öffnen Sie die Präsentation direkt als eigenständige Web-Anwendung im Vollbild.
-            Dort funktioniert die <strong>Google Firebase Authentifizierung nativ und ohne iFrame-Sicherheitssperren</strong> moderner Browser.
-        </p>
-        <a href="https://orcai-54321.web.app/pecha-kucha.html" target="_blank" style="display: inline-block; background: #0070f2; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 1rem; box-shadow: 0 4px 14px rgba(0,112,242,0.4);">
-            🚀 Pecha Kucha Stand-Alone starten (Neuer Tab) ↗
-        </a>
-    </div>
-    """, unsafe_allow_html=True)
-
-    col_btn1, col_btn2 = st.columns([1, 1])
-    pecha_html = ""
-    if PECHA_HTML_PATH.exists():
-        pecha_html = PECHA_HTML_PATH.read_text(encoding="utf-8")
-        with col_btn1:
-            st.download_button(
-                "💾 Präsentation als HTML herunterladen",
-                pecha_html,
-                file_name="pecha_kucha_presentation.html",
-                mime="text/html",
-                use_container_width=True
-            )
-    with col_btn2:
-        st.link_button(
-            "📂 Quellcode auf GitHub ansehen",
-            "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/site/pecha_kucha_presentation.html",
-            use_container_width=True
-        )
-
-    # 20 Slides Transcript & Concept
-    st.markdown("---")
-    st.markdown("#### 📖 Ablauf & 20-Sekunden-Sprechertexte aller 20 Folien")
-    if PECHA_KONZEPT_PATH.exists():
-        konzept_text = PECHA_KONZEPT_PATH.read_text(encoding="utf-8")
-        slides = re.split(r"### Folie\s+(\d+):\s+(.*?)\n", konzept_text)
-        if len(slides) > 1:
-            for i in range(1, len(slides), 3):
-                num = slides[i]
-                title = slides[i+1].strip()
-                body = slides[i+2].strip()
-                with st.expander(f"Folie {num}: {title}"):
-                    st.markdown(body)
+        if active_key:
+            with st.spinner("Conciliamus Advisor konsultiert Gemini und Wissensgraph..."):
+                answer = ask_gemini(active_key, active_model, user_input, relevant_docs)
         else:
-            st.markdown(konzept_text)
-
-# ----------------- TAB 3: TEST-RUNNER WORKBENCH -----------------
-with tab_runner:
-    st.markdown("### 🧪 SAP Fiori Integration Workbench & Test-Runner")
-    st.markdown("""
-    **SAP Fiori Horizon Design System • Single-Viewport Workbench (ADR-009) • ISTQB CTFL Testsuite**  
-    * **Technologie:** TailwindCSS, FontAwesome 6, Google Firebase Auth (Compat v12.2.1), SAP Horizon Design Tokens  
-    * **Testsuite:** 10 automatisierte Testfälle (3× PATCH Existenz-Update, 7× POST Neuanlage & Boundary-Validierung)  
-    * **Funktionen:** Echtzeit-Payload-Inspektor, Mock & Live-Runtime Modus, OData Response-Analyse, Log-Export  
-    """)
-
-    st.markdown("""
-    <div style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 1.8rem; border-radius: 12px; border: 1px solid #334155; margin: 1.2rem 0; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.3);">
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem;">
-            <span style="background: #107e3e; color: white; padding: 4px 10px; border-radius: 6px; font-weight: bold; font-size: 0.85rem;">STAND-ALONE VOLLBILD</span>
-            <span style="color: #cbd5e1; font-size: 0.9rem;">SAP Fiori Horizon • OData v2 Payloads • Native Google Auth</span>
-        </div>
-        <h2 style="color: #ffffff; margin: 0 0 0.8rem 0; font-size: 1.5rem;">🧪 SAP Fiori Test-Runner Workbench Live</h2>
-        <p style="color: #94a3b8; margin: 0 0 1.2rem 0; line-height: 1.5;">
-            Öffnen Sie die Test-Runner Workbench direkt als eigenständige Web-Anwendung im Vollbild.
-            Dort funktioniert die <strong>Google Firebase Authentifizierung nativ und ohne iFrame-Sicherheitssperren</strong> moderner Browser (Third-Party Cookies / Cross-Origin Popup-Blocker).
-        </p>
-        <a href="https://orcai-54321.web.app/test-runner.html" target="_blank" style="display: inline-block; background: #0070f2; color: white; padding: 12px 24px; border-radius: 8px; font-weight: bold; text-decoration: none; font-size: 1rem; box-shadow: 0 4px 14px rgba(0,112,242,0.4);">
-            🚀 Test-Runner Workbench Stand-Alone starten (Neuer Tab) ↗
-        </a>
-    </div>
-    """, unsafe_allow_html=True)
-
-    col_btn_r1, col_btn_r2 = st.columns([1, 1])
-    runner_html = ""
-    if TEST_RUNNER_HTML_PATH.exists():
-        runner_html = TEST_RUNNER_HTML_PATH.read_text(encoding="utf-8")
-        with col_btn_r1:
-            st.download_button(
-                "💾 Test-Runner als HTML herunterladen",
-                runner_html,
-                file_name="sap_fiori_test_runner.html",
-                mime="text/html",
-                use_container_width=True
-            )
-    with col_btn_r2:
-        st.link_button(
-            "📂 Quellcode auf GitHub ansehen",
-            "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/site/test-runner.html",
-            use_container_width=True
-        )
-
-    st.markdown("---")
-    st.markdown("#### 📋 ISTQB Testfallmatrix (10 Testfälle: 3× PATCH, 7× POST)")
-    st.markdown("""
-| # | Testfall-ID | Kategorie & Beschreibung | HTTP Methode | Erwarteter Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **01** | `TC-01` | Existierender Partner 1 (Organisation) | **PATCH** | `204 No Content` |
-| **02** | `TC-02` | Existierender Partner 2 (`BECHTLE AG`) | **PATCH** | `204 No Content` |
-| **03** | `TC-03` | Existierender Partner 3 (`XYZ-PEPPOL`) | **PATCH** | `204 No Content` |
-| **04** | `TC-04` | Neuanlage Partner (`JSD-BP-100001` Organisation) | **POST** | `201 Created` |
-| **05** | `TC-05` | Neuanlage Natürliche Person mit Rollen `FLCU01`/`FLVN01` | **POST** | `201 Created` |
-| **06** | `TC-06` | Duplikaterkennung & Abweisung (Mehrdeutiger Treffer) | **POST** | `422 FAILED_BUSINESS` |
-| **07** | `TC-07` | Validierungsfehler: Fehlende Pflichtfelder | **POST** | `400 FAILED_VALIDATION` |
-| **08** | `TC-08` | Schemavalidierung: Ungültige Partner-Kategorie | **POST** | `400 Bad Request` |
-| **09** | `TC-09` | Grenzwertanalyse: Maximale Feldlängen & Sonderzeichen | **POST** | `200 / 201 OK` |
-| **10** | `TC-10` | In-Memory ProcessDirect Routing zum Sub-iFlow | **POST** | `200 OK` |
-    """)
-
-    if ISTQB_STRATEGY_PATH.exists():
-        with st.expander("📖 Vollständiges ISTQB Strategiedokument einsehen (OKF Knowledge Base)"):
-            st.markdown(ISTQB_STRATEGY_PATH.read_text(encoding="utf-8"))
-
-    # ----------------- LIVE CPI EXECUTION -----------------
-    st.markdown("---")
-    st.markdown("### ⚡ Live-Batch an SAP BTP Cloud Integration senden (Echtzeit)")
-    st.markdown("""
-    Hier können Sie einen **echten, unsimulierten Integrationslauf** direkt gegen Ihren SAP BTP Cloud Integration Tenant durchführen:
-    * **OAuth2 Token-Dienst:** Authentifiziert sich mit XSUAA Client Credentials.
-    * **CSRF-Schutz:** Holt das Session-Cookie und den dynamischen `X-CSRF-Token` vom Inbound-Endpunkt.
-    * **Batch-POST:** Sendet das Batch-JSON an `IFL_MDM_BP_Batch_Receiver` (`/http/conciliamus/v1/businesspartners/batch`).
-    * **Trace-Garantie:** **Jeder Klick erzeugt sofort einen sichtbaren Nachrichteneintrag im SAP CPI Message Monitoring!**
-    """)
-
-    default_client_id = "sb-e1a4ca1f-7a33-4513-858d-77ba2c5e58dd!b706425|it-rt-b9c123f3trial!b55215"
-    default_client_secret = "11930c12-a78b-4172-8004-f8c5a3a024b4$NCHm0cqnZea8wy3M_TT2Kp_Geurr7DE1cReWFnC2FJU="
-    default_token_url = "https://b9c123f3trial.authentication.us10.hana.ondemand.com/oauth/token"
-    default_runtime_url = "https://b9c123f3trial.it-cpitrial06-rt.cfapps.us10-001.hana.ondemand.com"
-
-    preset_col, btn_col = st.columns([2, 1])
-    with preset_col:
-        preset_choice = st.selectbox(
-            "Test-Datensatz wählen:",
-            [
-                "10er-Vollbatch (Standard: 3x PATCH, 7x POST Deep Insert)",
-                "Nur 3x Existierende Partner (PATCH Updates)",
-                "Nur 7x Neuanlagen (POST Deep Insert)",
-                "Fehlerfall-Batch (Ungültige E-Mail & falsches Land)"
-            ],
-            key="cpi_preset_select"
-        )
-
-    # Load data for the selected preset
-    selected_payload = {}
-    testdata_file = TESTDATA_DIR / "Testdaten_prepared.json"
-    if testdata_file.exists():
-        try:
-            full_data = json.loads(testdata_file.read_text(encoding="utf-8"))
-            if "Nur 3x Existierende Partner" in preset_choice:
-                selected_payload = {
-                    "batchId": f"BP-{time.strftime('%Y%m%d-%H%M%S')}-PATCH3",
-                    "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-                    "sourceSystem": "JSD-MDM",
-                    "businessPartners": full_data.get("businessPartners", [])[:3]
-                }
-            elif "Nur 7x Neuanlagen" in preset_choice:
-                selected_payload = {
-                    "batchId": f"BP-{time.strftime('%Y%m%d-%H%M%S')}-POST7",
-                    "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-                    "sourceSystem": "JSD-MDM",
-                    "businessPartners": full_data.get("businessPartners", [])[3:]
-                }
-            elif "Fehlerfall-Batch" in preset_choice:
-                edge_file = TESTDATA_DIR / "edge_cases.json"
-                if edge_file.exists():
-                    selected_payload = json.loads(edge_file.read_text(encoding="utf-8"))
-                    selected_payload["batchId"] = f"BP-{time.strftime('%Y%m%d-%H%M%S')}-ERR"
-                else:
-                    selected_payload = {
-                        "batchId": f"BP-{time.strftime('%Y%m%d-%H%M%S')}-ERR",
-                        "createdAt": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-                        "sourceSystem": "JSD-MDM",
-                        "businessPartners": [
-                            {"externalId": "ERR-01", "company": "Invalid Co", "email": "invalid-email", "country": "DEU"}
-                        ]
-                    }
-            else:
-                selected_payload = dict(full_data)
-                selected_payload["batchId"] = f"BP-{time.strftime('%Y%m%d-%H%M%S')}-FULL"
-        except Exception:
-            pass
-
-    payload_text = st.text_area(
-        "Batch-Payload (JSON vor dem Senden editierbar):",
-        value=json.dumps(selected_payload, indent=2, ensure_ascii=False) if selected_payload else "{}",
-        height=240,
-        key="cpi_payload_editor"
-    )
-
-    with st.expander("⚙️ BTP Service Key Anmeldedaten konfigurieren"):
-        cpi_token_url = st.text_input("OAuth2 Token-URL:", value=get_secret("CPI_TOKEN_URL", default_token_url), key="cpi_cfg_token_url")
-        cpi_runtime_url = st.text_input("Cloud Integration Runtime-URL:", value=get_secret("CPI_RUNTIME_URL", default_runtime_url), key="cpi_cfg_runtime_url")
-        cpi_client_id = st.text_input("OAuth2 Client-ID:", value=get_secret("CPI_CLIENT_ID", default_client_id), key="cpi_cfg_client_id")
-        cpi_client_secret = st.text_input("OAuth2 Client-Secret:", value=get_secret("CPI_CLIENT_SECRET", default_client_secret), type="password", key="cpi_cfg_client_secret")
-
-    if st.button("🚀 Batch jetzt an SAP CPI senden (Live-Übertragung)", type="primary", use_container_width=True):
-        with st.spinner("Sende Live-Batch an SAP Cloud Integration... (OAuth2 -> CSRF -> POST)"):
-            creds = {
-                "token_url": cpi_token_url,
-                "runtime_url": cpi_runtime_url,
-                "client_id": cpi_client_id,
-                "client_secret": cpi_client_secret
-            }
-            res = execute_cpi_live_test(payload_text, creds)
-            if res.get("success"):
-                st.success(f"🎉 Batch erfolgreich an SAP Cloud Integration übertragen! (HTTP {res.get('status')} in {res.get('duration')}s)")
-                st.info(
-                    "🔍 **Spur im CPI Monitoring:** Wechseln Sie jetzt in den Browser-Tab **'Cloud Integration'** "
-                    "(Tenant `b9c123f3trial` -> Operations View -> *Monitor Message Processing*). "
-                    "Die Nachricht für `IFL_MDM_BP_Batch_Receiver` ist dort mit dem aktuellen Zeitstempel eingegangen!"
+            best = relevant_docs[0] if relevant_docs else None
+            if best:
+                answer = (
+                    f"*(Hinweis: Lokale Wissensextraktion ohne Gemini API-Key. Für vollständige KI-Antworten bitte links in den Einstellungen einen kostenlosen Key von Google AI Studio eintragen.)*\n\n"
+                    f"### {best['title']}\n\n"
+                    f"{best['content']}\n\n"
                 )
-                col_r1, col_r2, col_r3 = st.columns(3)
-                with col_r1:
-                    st.metric("HTTP Status", f"{res.get('status')} OK")
-                with col_r2:
-                    st.metric("Ausführungsdauer", f"{res.get('duration')} s")
-                with col_r3:
-                    st.metric("SAP Message ID", str(res.get("sap_message_id", "N/A"))[:20])
-
-                with st.expander("📄 Antwortkörper von SAP CPI (XML/JSON)", expanded=True):
-                    st.code(res.get("body", ""), language="xml" if "<root>" in res.get("body", "") else "json")
-
-                with st.expander("📜 Audit-Log des Live-Aufrufs"):
-                    for entry in res.get("audit_log", []):
-                        st.markdown(f"`{entry}`")
             else:
-                st.error(f"❌ Fehler bei der Übertragung an SAP CPI: {res.get('error', 'Unbekannter Fehler')}")
-                with st.expander("Fehlerdetails"):
-                    st.code(res.get("body", res.get("error", "")))
-                    for entry in res.get("audit_log", []):
-                        st.markdown(f"`{entry}`")
+                answer = "Zu dieser Frage wurden keine spezifischen Konzepte im Wissensgraph gefunden."
 
-# ----------------- TAB 4: ADRs -----------------
-with tab_adrs:
-    col_adr_title, col_adr_btn = st.columns([5, 1])
-    with col_adr_title:
-        st.markdown("### 🏛️ Verifizierte Architecture Decision Records (ADRs)")
-    with col_adr_btn:
-        if st.button("🔄 Aktualisieren", key="btn_refresh_adrs", use_container_width=True):
-            st.cache_resource.clear()
-            st.rerun()
+        st.markdown(answer)
 
-    adr_docs = [c for c in concepts if c.get("type") == "Decision Record" or "adr-" in c["id"]]
-    adr_docs.sort(key=lambda x: x["id"])
-
-    for adr in adr_docs:
-        fm = adr["frontmatter"]
-        with st.expander(f"{fm.get('title', adr['title'])} [{fm.get('status', 'accepted').upper()}]"):
-            st.markdown(f"**Beschreibung:** {fm.get('description', '-')}")
-            st.markdown(f"**Status:** `{fm.get('status', 'accepted')}` | **Ressource:** `{fm.get('resource', '-')}`")
-            st.markdown("---")
-            st.markdown(adr["content"])
-
-# ----------------- TAB 5: SPECS -----------------
-with tab_specs:
-    st.markdown("### 📐 OpenAPI Spezifikationen & Integrationsschemata")
-    col1, col2 = st.columns(2)
-    
-    with col1:
-        st.markdown("#### 🚀 iFlow Runtime API (OpenAPI 3.1.0)")
-        st.markdown("""
-        Spezifiziert die tatsächlichen Integrationsendpunkte auf SAP BTP:
-        - `POST /http/conciliamus/v1/businesspartners/batch` (HTTPS Inbound)
-        - `POST /conciliamus/v1/businesspartners/item` (ProcessDirect In-Memory)
-        """)
-        st.markdown("[👉 GitHub: conciliamus-runtime-iflows.openapi.yaml](https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/api/conciliamus-runtime-iflows.openapi.yaml)")
-
-    with col2:
-        st.markdown("#### 🧠 Knowledge API (OpenAPI 3.1.0)")
-        st.markdown("""
-        Spezifiziert die REST-Schnittstelle zur programmatischen Abfrage des OKF-Wissensbündels:
-        - `GET /concepts`, `GET /concepts/{id}`
-        - `GET /decisions/{id}`
-        - `GET /graph` (semantischer Wissensgraph)
-        - `POST /rules/verify` (Architektur-Regelprüfung)
-        """)
-        st.markdown("[👉 GitHub: conciliamus-architecture.openapi.yaml](https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/api/conciliamus-architecture.openapi.yaml)")
+        if relevant_docs:
+            with st.expander("📚 Herangezogene Quellen & Relationen"):
+                for d in relevant_docs:
+                    st.markdown(f"- **[{d['title']}](https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/knowledge/{d['path']})** (`{d['type']}`)")
+        
+        st.session_state.messages.append({"role": "assistant", "content": answer})
+        st.rerun()
