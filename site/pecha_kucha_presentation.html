@@ -386,7 +386,7 @@
   <!-- KI-Advisor Drawer -->
   <!-- Non-blur transparent backdrop (preserves 100% visual contact to slides) -->
   <div id="kiAdvisorBackdrop" class="fixed inset-0 bg-transparent z-40 hidden pointer-events-none transition-none"></div>
-  <aside id="kiAdvisorDrawer" style="width: 720px; max-width: 95vw; background: rgba(15, 23, 42, 0.60); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);" class="fixed inset-y-0 right-0 z-50 border-l border-slate-700/80 shadow-[-15px_0_35px_rgba(0,0,0,0.6)] transform translate-x-full transition-all duration-300 ease-out flex flex-col">
+  <aside id="kiAdvisorDrawer" style="width: 720px; max-width: 95vw; background: #090d16;" class="fixed inset-y-0 right-0 z-50 border-l border-slate-700 shadow-[-20px_0_40px_rgba(0,0,0,0.85)] transform translate-x-full transition-all duration-300 ease-out flex flex-col">
     <!-- Drag-to-Resize Handle on Left Border (↔ Cursor, Grip Pill, Smooth Width Adjustment) -->
     <div id="kiAdvisorResizeHandle"
          title="Breite anpassen: Klicken und nach links/rechts ziehen"
@@ -402,28 +402,28 @@
         </div>
         <div>
           <div class="flex items-center gap-2">
-            <span class="text-sm font-bold text-white">KI-Advisor</span>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-900/60 text-purple-300 border border-purple-700/60">ADR-011</span>
+            <span class="text-base font-extrabold text-white">KI-Advisor</span>
+            <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-purple-900/80 text-purple-200 border border-purple-600/80">ADR-011</span>
           </div>
-          <div class="text-[10px] text-slate-400">Grounded Consulting • Gemini 3.6 Flash • OKF v0.2</div>
+          <div class="text-xs text-slate-200 font-medium">Grounded Consulting • Gemini 3.6 Flash • OKF v0.2</div>
         </div>
       </div>
       <div class="flex items-center">
         <!-- Quick width presets & Pin mode -->
-        <div class="hidden sm:flex items-center bg-slate-800/80 rounded-lg p-0.5 border border-slate-700 mr-2 text-[11px] font-medium text-slate-400">
-          <button id="kiAdvisorPinBtn" onclick="toggleKiAdvisorPin()" title="Pin-Modus: Folien bleiben interaktiv neben dem Advisor" class="px-2 py-1 rounded bg-sky-500/20 text-sky-300 hover:bg-sky-500/30 transition flex items-center gap-1">
-            <i class="fa-solid fa-thumbtack text-[10px]"></i>
+        <div class="hidden sm:flex items-center bg-slate-800/90 rounded-lg p-1 border border-slate-700 mr-2 text-xs font-semibold text-slate-200">
+          <button id="kiAdvisorPinBtn" onclick="toggleKiAdvisorPin()" title="Pin-Modus: Folien bleiben interaktiv neben dem Advisor" class="px-2.5 py-1 rounded bg-sky-500/20 text-sky-300 hover:bg-sky-500/30 transition flex items-center gap-1.5 font-bold">
+            <i class="fa-solid fa-thumbtack text-xs"></i>
             <span id="kiAdvisorPinLabel" class="hidden md:inline">Fixiert</span>
           </button>
-          <div class="w-px h-3 bg-slate-700 mx-1"></div>
-          <button id="kiAdvisorGlassBtn" onclick="toggleKiAdvisorGlass()" title="Transparenz umschalten (Leicht transparent mit Blur)" class="px-2 py-1 rounded bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30 transition flex items-center gap-1">
-            <i class="fa-solid fa-circle-half-stroke text-[10px]"></i>
-            <span id="kiAdvisorGlassLabel" class="hidden md:inline">Glas: 68%</span>
+          <div class="w-px h-3.5 bg-slate-700 mx-1"></div>
+          <button id="kiAdvisorGlassBtn" onclick="toggleKiAdvisorGlass()" title="Transparenz umschalten (Zwischen Deckend und Glas)" class="px-2.5 py-1 rounded text-slate-300 hover:text-white hover:bg-slate-700 transition flex items-center gap-1.5 font-bold">
+            <i class="fa-solid fa-circle-half-stroke text-xs"></i>
+            <span id="kiAdvisorGlassLabel" class="hidden md:inline">Deckend</span>
           </button>
-          <div class="w-px h-3 bg-slate-700 mx-1"></div>
-          <button onclick="setKiAdvisorDrawerWidth(480)" title="Schmale Ansicht (480px)" class="px-2 py-1 rounded hover:text-white hover:bg-slate-700 transition">Kompakt</button>
-          <button onclick="setKiAdvisorDrawerWidth(720)" title="Standard-Breite (720px)" class="px-2 py-1 rounded hover:text-white hover:bg-slate-700 transition">Standard</button>
-          <button onclick="setKiAdvisorDrawerWidth(1050)" title="Breite Ansicht (1050px)" class="px-2 py-1 rounded hover:text-white hover:bg-slate-700 transition">Breit</button>
+          <div class="w-px h-3.5 bg-slate-700 mx-1"></div>
+          <button onclick="setKiAdvisorDrawerWidth(480)" title="Schmale Ansicht (480px)" class="px-2.5 py-1 rounded hover:text-white hover:bg-slate-700 transition">Kompakt</button>
+          <button onclick="setKiAdvisorDrawerWidth(720)" title="Standard-Breite (720px)" class="px-2.5 py-1 rounded hover:text-white hover:bg-slate-700 transition">Standard</button>
+          <button onclick="setKiAdvisorDrawerWidth(1050)" title="Breite Ansicht (1050px)" class="px-2.5 py-1 rounded hover:text-white hover:bg-slate-700 transition">Breit</button>
         </div>
         <a href="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/" target="_blank" rel="noopener noreferrer" title="In neuem Tab öffnen ↗" class="w-9 h-9 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white flex items-center justify-center transition mr-1"><i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
         <button id="closeKiAdvisorDrawer" type="button" aria-label="KI-Advisor schließen" class="w-9 h-9 rounded-lg hover:bg-slate-800 text-slate-300 hover:text-white flex items-center justify-center transition">
@@ -432,7 +432,7 @@
       </div>
     </div>
     <div id="kiAdvisorFrameContainer" class="flex-1 min-h-0 bg-transparent relative overflow-hidden">
-      <iframe id="kiAdvisorFrame" title="KI-Advisor" src="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/?embed=true" allowtransparency="true" style="opacity: 0.68; transition: opacity 0.25s ease;" class="w-full h-full border-0 bg-transparent"></iframe>
+      <iframe id="kiAdvisorFrame" title="KI-Advisor" src="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/?embed=true" style="opacity: 1.0; transition: opacity 0.25s ease;" class="w-full h-full border-0 bg-[#090d16]"></iframe>
     </div>
   </aside>
 
@@ -5554,7 +5554,7 @@
 
     let isKiAdvisorPinned = true; // Pin mode: slides remain 100% interactive alongside drawer
 
-    let isKiAdvisorGlass = true; // Default: Leicht transparent mit Blur (80% Deckkraft)
+    let isKiAdvisorGlass = false; // Default: Deckend (100% Deckkraft, maximaler Kontrast & Lesbarkeit)
 
     function toggleKiAdvisorGlass() {
       isKiAdvisorGlass = !isKiAdvisorGlass;
@@ -5569,24 +5569,24 @@
       const header = drawer ? drawer.querySelector('div.border-b') : null;
 
       if (isKiAdvisorGlass) {
-        if (glassBtn) glassBtn.className = 'px-2 py-1 rounded bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/30 transition flex items-center gap-1';
-        if (glassLabel) glassLabel.textContent = 'Glas: 68%';
+        if (glassBtn) glassBtn.className = 'px-2.5 py-1 rounded bg-indigo-500/30 text-indigo-200 hover:bg-indigo-500/40 transition flex items-center gap-1.5 font-bold';
+        if (glassLabel) glassLabel.textContent = 'Glas';
         if (drawer) {
-          drawer.style.background = 'rgba(15, 23, 42, 0.60)';
-          drawer.style.backdropFilter = 'blur(12px)';
-          drawer.style.webkitBackdropFilter = 'blur(12px)';
+          drawer.style.background = 'rgba(15, 23, 42, 0.85)';
+          drawer.style.backdropFilter = 'blur(16px)';
+          drawer.style.webkitBackdropFilter = 'blur(16px)';
         }
         if (header) {
-          header.style.background = 'rgba(15, 23, 42, 0.65)';
+          header.style.background = 'rgba(15, 23, 42, 0.90)';
         }
         if (frame) {
-          frame.style.opacity = '0.68';
+          frame.style.opacity = '0.90';
         }
       } else {
-        if (glassBtn) glassBtn.className = 'px-2 py-1 rounded text-slate-400 hover:text-white hover:bg-slate-700 transition flex items-center gap-1';
+        if (glassBtn) glassBtn.className = 'px-2.5 py-1 rounded text-slate-300 hover:text-white hover:bg-slate-700 transition flex items-center gap-1.5 font-bold';
         if (glassLabel) glassLabel.textContent = 'Deckend';
         if (drawer) {
-          drawer.style.background = '#020617';
+          drawer.style.background = '#090d16';
           drawer.style.backdropFilter = 'none';
           drawer.style.webkitBackdropFilter = 'none';
         }

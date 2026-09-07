@@ -197,6 +197,15 @@ st.set_page_config(
 # Custom CSS for fixed bottom chat input & clean Google-like layout
 st.markdown("""
 <style>
+    /* Global Base & Typography - Rich Dark, High Contrast, Readable Size */
+    html, body, [class*="css"], .stApp {
+        font-size: 15.5px !important;
+        color: #f8fafc !important;
+        background-color: #0b0f19 !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        -webkit-font-smoothing: antialiased !important;
+    }
+
     /* Fixed Bottom Chat Bar: Rigidly anchored at the bottom of the viewport */
     div[data-testid="stBottom"] {
         position: fixed !important;
@@ -205,12 +214,12 @@ st.markdown("""
         right: 0px !important;
         width: 100% !important;
         z-index: 999999 !important;
-        background: rgba(15, 23, 42, 0.98) !important;
+        background: rgba(11, 15, 25, 0.98) !important;
         backdrop-filter: blur(16px) !important;
         -webkit-backdrop-filter: blur(16px) !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
-        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.8) !important;
-        padding: 12px 20px 16px 20px !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+        box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.9) !important;
+        padding: 14px 20px 18px 20px !important;
     }
 
     div[data-testid="stBottom"] > div {
@@ -219,30 +228,138 @@ st.markdown("""
         padding: 0 !important;
     }
 
+    div[data-testid="stChatInput"] textarea {
+        font-size: 15.5px !important;
+        color: #ffffff !important;
+        background: #1e293b !important;
+        border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
+        border-radius: 10px !important;
+    }
+    div[data-testid="stChatInput"] textarea::placeholder {
+        color: #94a3b8 !important;
+        font-size: 15px !important;
+    }
+
     /* Scrollable content container with generous bottom offset */
     .main .block-container {
         padding-bottom: 140px !important;
-        padding-top: 1rem !important;
+        padding-top: 1.2rem !important;
         max-width: 860px !important;
         margin: 0 auto !important;
     }
 
-    /* Clean subtle sidebar expanders */
-    [data-testid="stSidebar"] [data-testid="stExpander"] {
-        border: 1px solid rgba(255, 255, 255, 0.08) !important;
-        border-radius: 10px !important;
-        margin-bottom: 8px !important;
-        background: rgba(15, 23, 42, 0.5) !important;
+    /* Headings - Bold, high-contrast pure white and bright sky blue */
+    h1 {
+        font-size: 26px !important;
+        font-weight: 800 !important;
+        color: #ffffff !important;
+        letter-spacing: -0.4px !important;
+        line-height: 1.3 !important;
+    }
+    h2 {
+        font-size: 20px !important;
+        font-weight: 700 !important;
+        color: #ffffff !important;
+        letter-spacing: -0.2px !important;
+        margin-top: 1rem !important;
+    }
+    h3 {
+        font-size: 17.5px !important;
+        font-weight: 700 !important;
+        color: #38bdf8 !important;
+    }
+    h4, h5, h6 {
+        font-size: 15.5px !important;
+        font-weight: 600 !important;
+        color: #e2e8f0 !important;
     }
 
-    /* Custom button styling in sidebar */
+    /* Standard Text & Paragraphs */
+    p, span, label {
+        font-size: 15px !important;
+        color: #f1f5f9 !important;
+        line-height: 1.6 !important;
+    }
+
+    /* CHAT MESSAGES - Distinct, large, readable */
+    [data-testid="stChatMessage"] {
+        background-color: #131b2e !important;
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 12px !important;
+        padding: 16px 20px !important;
+        margin-bottom: 14px !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4) !important;
+    }
+    [data-testid="stChatMessage"] p, [data-testid="stChatMessage"] li {
+        font-size: 15.5px !important;
+        line-height: 1.65 !important;
+        color: #f8fafc !important;
+    }
+    [data-testid="stChatMessage"] strong, [data-testid="stChatMessage"] b {
+        color: #38bdf8 !important;
+        font-weight: 700 !important;
+    }
+    [data-testid="stChatMessage"] code {
+        font-size: 14px !important;
+        background: #1e293b !important;
+        color: #38bdf8 !important;
+        padding: 3px 7px !important;
+        border-radius: 5px !important;
+        border: 1px solid rgba(56, 189, 248, 0.25) !important;
+    }
+    [data-testid="stChatMessage"] pre {
+        background: #020617 !important;
+        border: 1px solid rgba(255, 255, 255, 0.12) !important;
+        border-radius: 8px !important;
+    }
+
+    /* SIDEBAR - High-contrast container */
+    [data-testid="stSidebar"] {
+        background-color: #0d1322 !important;
+        border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
+    }
+    [data-testid="stSidebar"] p,
+    [data-testid="stSidebar"] span,
+    [data-testid="stSidebar"] div {
+        color: #e2e8f0 !important;
+    }
+
+    /* SIDEBAR EXPANDERS */
+    [data-testid="stSidebar"] [data-testid="stExpander"] {
+        border: 1px solid rgba(255, 255, 255, 0.15) !important;
+        border-radius: 10px !important;
+        margin-bottom: 10px !important;
+        background: rgba(19, 27, 46, 0.95) !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary {
+        padding: 10px 14px !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary p,
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary span {
+        font-size: 14px !important;
+        font-weight: 700 !important;
+        color: #f8fafc !important;
+    }
+
+    /* SIDEBAR BUTTONS - Highly readable, bold, clear border & hover state */
     [data-testid="stSidebar"] div[data-testid="stButton"] button {
         border-radius: 8px !important;
-        font-size: 11.5px !important;
+        font-size: 13.5px !important;
+        font-weight: 600 !important;
         text-align: left !important;
-        padding: 6px 10px !important;
-        line-height: 1.3 !important;
+        padding: 10px 13px !important;
+        line-height: 1.4 !important;
+        background: #1e293b !important;
+        border: 1px solid rgba(255, 255, 255, 0.18) !important;
+        color: #ffffff !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
         transition: all 0.2s ease !important;
+    }
+    [data-testid="stSidebar"] div[data-testid="stButton"] button:hover {
+        background: #0284c7 !important;
+        border-color: #38bdf8 !important;
+        color: #ffffff !important;
+        transform: translateX(3px) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -488,18 +605,18 @@ logo_b64 = get_advisor_logo_base64()
 with st.sidebar:
     # Sidebar Header with Dieter's Logo
     st.markdown(f"""
-    <div style="display: flex; align-items: center; gap: 12px; padding: 6px 0 12px 0; border-bottom: 1px solid rgba(255,255,255,0.12); margin-bottom: 12px;">
-        <img src="{logo_b64}" style="height: 38px; width: auto; object-fit: contain;" alt="IT-Advisor Logo" />
+    <div style="display: flex; align-items: center; gap: 12px; padding: 8px 0 14px 0; border-bottom: 1px solid rgba(255,255,255,0.18); margin-bottom: 14px;">
+        <img src="{logo_b64}" style="height: 42px; width: auto; object-fit: contain;" alt="IT-Advisor Logo" />
         <div>
-            <div style="font-weight: 800; font-size: 13.5px; color: #f8fafc; letter-spacing: -0.3px;">Conciliamus AI Advisor</div>
-            <div style="font-size: 10px; color: #38bdf8; font-family: monospace;">OKF v0.2 • 12 ADRs</div>
+            <div style="font-weight: 800; font-size: 15px; color: #ffffff; letter-spacing: -0.3px;">Conciliamus AI Advisor</div>
+            <div style="font-size: 12px; color: #38bdf8; font-family: monospace; font-weight: 700;">OKF v0.2 • 12 ADRs</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
     # BEREICH 1: Beispielfragen (Hier im Drawer aufklappbar, nicht im Hauptbereich!)
     with st.expander("💡 Beispielfragen (ADR-001 bis ADR-012)", expanded=True):
-        st.markdown("<div style='font-size:11px; color:#94a3b8; margin-bottom:8px;'>Klicken Sie auf eine Frage, um den Dialog im Hauptbereich zu starten:</div>", unsafe_allow_html=True)
+        st.markdown("<div style='font-size:13px; color:#cbd5e1; font-weight:500; margin-bottom:10px;'>Klicken Sie auf eine Frage, um den Dialog im Hauptbereich zu starten:</div>", unsafe_allow_html=True)
         for idx, sq in enumerate(sample_queries):
             adr_num = sq.split("ADR-")[1][:3] if "ADR-" in sq else str(idx+1)
             btn_label = f"📌 [ADR-{adr_num}] {sq}"
@@ -600,15 +717,15 @@ if "messages" not in st.session_state:
 if len(st.session_state.messages) == 0:
     st.markdown(f"""
     <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 52vh; text-align: center; padding: 20px 10px;">
-        <img src="{logo_b64}" style="max-height: 115px; width: auto; object-fit: contain; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.6)); margin-bottom: 20px;" alt="Conciliamus AI Advisor Logo" />
-        <h1 style="font-size: 32px; font-weight: 800; color: #f8fafc; margin: 0 0 8px 0; letter-spacing: -0.5px;">Conciliamus AI Advisor</h1>
-        <p style="font-size: 14px; color: #94a3b8; max-width: 540px; margin: 0 auto 16px auto; line-height: 1.5;">
+        <img src="{logo_b64}" style="max-height: 120px; width: auto; object-fit: contain; filter: drop-shadow(0 12px 24px rgba(0,0,0,0.8)); margin-bottom: 22px;" alt="Conciliamus AI Advisor Logo" />
+        <h1 style="font-size: 32px; font-weight: 800; color: #ffffff; margin: 0 0 10px 0; letter-spacing: -0.5px;">Conciliamus AI Advisor</h1>
+        <p style="font-size: 15.5px; color: #cbd5e1; font-weight: 500; max-width: 580px; margin: 0 auto 18px auto; line-height: 1.55;">
             Senior SAP BTP Cloud Integration Specialist &amp; Enterprise Architect
         </p>
-        <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; color: #38bdf8; background: rgba(14, 165, 233, 0.12); border: 1px solid rgba(56, 189, 248, 0.25); padding: 4px 14px; border-radius: 9999px;">
+        <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #38bdf8; background: rgba(14, 165, 233, 0.18); border: 1.5px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 9999px;">
             <span>Google OKF v0.2</span> • <span>{len(concepts)} Konzepte</span> • <span>12 verifizierte ADRs</span> • <span>Gemini 3.6 Flash</span>
         </div>
-        <p style="font-size: 12px; color: #64748b; margin-top: 24px;">
+        <p style="font-size: 13.5px; color: #94a3b8; font-weight: 500; margin-top: 26px;">
             💡 Wählen Sie links eine Beispielfrage aus der Seitenleiste ⇦ oder tippen Sie unten in das Eingabefeld.
         </p>
     </div>
