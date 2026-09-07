@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modern Chat Input</title>
+  <style>
+    :root {
+      --bg-card: #131b2e;
+      --bg-gradient: linear-gradient(180deg, #1b253b 0%, #101726 100%);
+      --border-card: rgba(255, 255, 255, 0.18);
+      --border-focus: rgba(56, 189, 248, 0.7);
+      --text-input: #ffffff;
+      --text-placeholder: #94a3b8;
+      --icon-color: #94a3b8;
+      --pill-bg: rgba(255, 255, 255, 0.07);
+      --pill-border: rgba(255, 255, 255, 0.14);
+      --pill-text: #e2e8f0;
+      --btn-action-bg: #2d3748;
+      --btn-action-hover: #3f4d67;
+      --popover-bg: #1e293b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, -apple-system, sans-serif;
+    }
+
+    html, body {
+      background: transparent;
+      overflow: visible;
+      width: 100%;
+    }
+
+    body {
+      padding: 6px 4px 6px 4px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    /* Container: Rounded card matching Screenshot 1 */
+    .input-card {
+      position: relative;
+      background: var(--bg-card);
+      background: var(--bg-gradient);
+      border: 1.5px solid var(--border-card);
+      border-radius: 24px;
+      padding: 13px 18px 11px 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      width: 100%;
+    }
+
+    .input-card:focus-within {
+      border-color: var(--border-focus);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2), 0 14px 35px rgba(0, 0, 0, 0.65);
+    }
+
+    /* Top text input row */
+    .input-top {
+      position: relative;
+      width: 100%;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    textarea#promptInput {
+      width: 100%;
+      min-height: 26px;
+      max-height: 150px;
+      background: transparent;
+      border: none;
+      outline: none;
+      resize: none;
+      color: var(--text-input);
+      font-size: 15px;
+      line-height: 1.45;
+      caret-color: #38bdf8;
+      font-weight: 400;
+      overflow-y: auto;
+    }
+
+    textarea#promptInput::placeholder {
+      color: var(--text-placeholder);
+      font-weight: 400;
+      font-size: 14.5px;
+    }
+
+    /* Bottom action bar */
+    .input-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 9px;
+      gap: 8px;
+    }
+
+    .left-actions {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    /* + Button */
+    .btn-plus {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--icon-color);
+      font-size: 18px;
+      font-weight: 300;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      line-height: 1;
+    }
+
+    .btn-plus:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    /* Model Selector Pill (Matches Screenshot 1: Gemini 3.8 Flash High ⚡ ^) */
+    .model-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3.5px 11px;
+      border-radius: 9999px;
+      background: var(--pill-bg);
+      border: 1px solid var(--pill-border);
+      color: var(--pill-text);
+      font-size: 12.5px;
+      font-weight: 500;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.15s ease;
+    }
+
+    .model-pill:hover {
+      background: rgba(255, 255, 255, 0.14);
+      border-color: rgba(255, 255, 255, 0.28);
+      color: #ffffff;
+    }
+
+    .model-pill .badge-tag {
+      font-size: 11.5px;
+      font-weight: 700;
+      color: #94a3b8;
+    }
+
+    .model-pill .icon-bolt {
+      color: #f59e0b;
+      font-size: 12.5px;
+      line-height: 1;
+    }
+
+    .model-pill .icon-chevron {
+      font-size: 9px;
+      color: #94a3b8;
+      transition: transform 0.2s ease;
+      margin-left: 1px;
+    }
+
+    .model-pill.active .icon-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Right actions: Mic & Submit */
+    .right-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    /* Microphone Speech Button */
+    .btn-mic {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: none;
+      background: transparent;
+      color: var(--icon-color);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-mic:hover {
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.14);
+    }
+
+    .btn-mic svg {
+      width: 17.5px;
+      height: 17.5px;
+      fill: currentColor;
+    }
+
+    /* Microphone active / listening state */
+    .btn-mic.recording {
+      color: #ef4444;
+      background: rgba(239, 68, 68, 0.22);
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.4);
+      animation: pulse-mic 1.4s infinite;
+    }
+
+    @keyframes pulse-mic {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.6); }
+      70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    /* Submit / Stop Action Button (Matches Screenshot 1 circle with red rounded square) */
+    .btn-action {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 31px;
+      height: 31px;
+      border-radius: 50%;
+      border: none;
+      background: var(--btn-action-bg);
+      background: rgba(255, 255, 255, 0.15);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-action:hover {
+      background: var(--btn-action-hover);
+      background: rgba(255, 255, 255, 0.25);
+      transform: scale(1.06);
+    }
+
+    .btn-action:active {
+      transform: scale(0.95);
+    }
+
+    /* Red square / Stop / Action indicator inside button */
+    .red-square {
+      width: 10.5px;
+      height: 10.5px;
+      background: #ef4444;
+      border-radius: 2px;
+      transition: transform 0.15s ease;
+    }
+
+    .btn-action:hover .red-square {
+      transform: scale(1.15);
+    }
+
+    /* Live Voice Status Indicator */
+    .voice-status {
+      display: none;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: #ef4444;
+      font-weight: 600;
+      margin-right: 4px;
+    }
+
+    .voice-status.visible {
+      display: inline-flex;
+    }
+
+    .soundwave {
+      display: flex;
+      align-items: center;
+      gap: 2.5px;
+      height: 12px;
+    }
+
+    .soundwave span {
+      width: 2px;
+      height: 100%;
+      background: #ef4444;
+      border-radius: 1px;
+      animation: wave 0.9s ease-in-out infinite alternate;
+    }
+
+    .soundwave span:nth-child(2) { animation-delay: 0.2s; }
+    .soundwave span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes wave {
+      0% { height: 3px; }
+      100% { height: 12px; }
+    }
+
+    /* Popover Menus (Model Dropdown & Plus Actions) */
+    .popover-menu {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 10px);
+      left: 12px;
+      background: var(--popover-bg);
+      border: 1.5px solid rgba(255, 255, 255, 0.18);
+      border-radius: 14px;
+      padding: 6px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.7);
+      z-index: 9999;
+      min-width: 250px;
+      backdrop-filter: blur(14px);
+    }
+
+    .popover-menu.open {
+      display: block;
+      animation: popIn 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes popIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .popover-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      color: #e2e8f0;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.1s ease;
+    }
+
+    .popover-item:hover {
+      background: rgba(56, 189, 248, 0.18);
+      color: #ffffff;
+    }
+
+    .popover-item.active {
+      background: rgba(56, 189, 248, 0.25);
+      color: #38bdf8;
+      font-weight: 700;
+    }
+
+    .popover-header {
+      padding: 6px 12px 4px 12px;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="input-card" id="inputCard">
+    <!-- Quick Actions Popover (+) -->
+    <div class="popover-menu" id="plusMenu">
+      <div class="popover-header">Schnell-Referenzen (@ / ADRs)</div>
+      <div class="popover-item" onclick="insertSnippet('@ADR-007 Two-Legged CSRF- und Cookie-Handshake')">
+        <span>🔐</span> <span>ADR-007 Two-Legged CSRF</span>
+      </div>
+      <div class="popover-item" onclick="insertSnippet('@ADR-001 Dual-iFlow Batch-Entkopplung')">
+        <span>⚡</span> <span>ADR-001 Dual-iFlow Batch</span>
+      </div>
+      <div class="popover-item" onclick="insertSnippet('@ADR-003 ProcessDirect Zero-Latency')">
+        <span>🔄</span> <span>ADR-003 ProcessDirect</span>
+      </div>
+      <div class="popover-item" onclick="insertSnippet('@ADR-006 Idempotenz-Prüfung &amp; Deduplication')">
+        <span>🛡️</span> <span>ADR-006 Idempotenz-Prüfung</span>
+      </div>
+      <div class="popover-item" onclick="insertSnippet('@ADR-012 Camel Header Preservation')">
+        <span>🐪</span> <span>ADR-012 Camel Properties</span>
+      </div>
+      <div class="popover-item" onclick="insertSnippet('Was ist die SAP Integration Suite und BTP?')">
+        <span>☁️</span> <span>SAP BTP &amp; Integration Suite</span>
+      </div>
+    </div>
+
+    <!-- Model Selector Popover -->
+    <div class="popover-menu" id="modelMenu">
+      <div class="popover-header">KI-Architektur &amp; Provider</div>
+      <div class="popover-item active" data-model="Gemini 2.5 Flash High" onclick="selectModel('Gemini 2.5 Flash High', '⚡')">
+        <span>⚡</span> <span>Gemini 2.5 Flash (Schnell &amp; Quellentreu)</span>
+      </div>
+      <div class="popover-item" data-model="Gemini 2.5 Pro High" onclick="selectModel('Gemini 2.5 Pro High', '🚀')">
+        <span>🚀</span> <span>Gemini 2.5 Pro (Deep Architecture Analysis)</span>
+      </div>
+      <div class="popover-item" data-model="DeepSeek Reasoner High" onclick="selectModel('DeepSeek Reasoner High', '🧠')">
+        <span>🧠</span> <span>DeepSeek R1 Reasoner (Method &amp; Style)</span>
+      </div>
+      <div class="popover-item" data-model="DeepSeek V3 High" onclick="selectModel('DeepSeek V3 High', '💬')">
+        <span>💬</span> <span>DeepSeek V3 (Cloud Integration Specialist)</span>
+      </div>
+      <div class="popover-item" data-model="Dual-Inspector High" onclick="selectModel('Dual-Inspector High', '🛡️')">
+        <span>🛡️</span> <span>Dual-Inspector (Gemini + DeepSeek Audit)</span>
+      </div>
+    </div>
+
+    <!-- Input text area -->
+    <div class="input-top">
+      <textarea id="promptInput" rows="1" placeholder="Ask anything, @ to mention, / for actions"></textarea>
+    </div>
+
+    <!-- Bottom actions bar -->
+    <div class="input-bottom">
+      <div class="left-actions">
+        <!-- Plus Button -->
+        <button type="button" class="btn-plus" id="btnPlus" title="Schnell-Referenzen einfügen (+)">+</button>
+
+        <!-- Model Picker Pill (Matches Screenshot 1: Gemini 3.8 Flash High ⚡ ^) -->
+        <div class="model-pill" id="modelPill" title="KI-Modell &amp; Provider wählen">
+          <span id="modelNameText">Gemini 3.8 Flash</span>
+          <span class="badge-tag">High</span>
+          <span class="icon-bolt" id="modelIcon">⚡</span>
+          <span class="icon-chevron">▲</span>
+        </div>
+      </div>
+
+      <div class="right-actions">
+        <!-- Live Voice Status Indicator -->
+        <div class="voice-status" id="voiceStatus">
+          <div class="soundwave">
+            <span></span><span></span><span></span>
+          </div>
+          <span>Höre zu...</span>
+        </div>
+
+        <!-- Microphone Speech-to-Text Button -->
+        <button type="button" class="btn-mic" id="btnMic" title="Spracheingabe starten (Deutsch / Web Speech API)">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z"/>
+            <path d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z"/>
+          </svg>
+        </button>
+
+        <!-- Submit / Stop Action Button (Matches Screenshot 1 circle with red square) -->
+        <button type="button" class="btn-action" id="btnAction" title="Frage senden (Enter)">
+          <div class="red-square" id="redSquare"></div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const inputCard = document.getElementById('inputCard');
+    const promptInput = document.getElementById('promptInput');
+    const btnPlus = document.getElementById('btnPlus');
+    const plusMenu = document.getElementById('plusMenu');
+    const modelPill = document.getElementById('modelPill');
+    const modelMenu = document.getElementById('modelMenu');
+    const modelIcon = document.getElementById('modelIcon');
+    const modelNameText = document.getElementById('modelNameText');
+    const btnMic = document.getElementById('btnMic');
+    const voiceStatus = document.getElementById('voiceStatus');
+    const btnAction = document.getElementById('btnAction');
+
+    let currentModel = 'Gemini 3.8 Flash High';
+    let isRecording = false;
+    let recognition = null;
+
+    // -------------------------------------------------------------
+    // Streamlit Component Protocol Handlers
+    // -------------------------------------------------------------
+    function notifyHeight(forcedHeight) {
+      let height;
+      const isMenuOpen = plusMenu.classList.contains('open') || modelMenu.classList.contains('open');
+      if (forcedHeight) {
+        height = forcedHeight;
+      } else if (isMenuOpen) {
+        height = 290;
+      } else {
+        height = (inputCard ? inputCard.offsetHeight : 86) + 14;
+      }
+
+      window.parent.postMessage({
+        isStreamlitMessage: true,
+        type: 'streamlit:setFrameHeight',
+        height: Math.max(92, height)
+      }, '*');
+    }
+
+    function sendToStreamlit(actionType, textValue) {
+      window.parent.postMessage({
+        isStreamlitMessage: true,
+        type: 'streamlit:setComponentValue',
+        value: {
+          action: actionType,
+          text: textValue,
+          model: currentModel,
+          timestamp: Date.now()
+        }
+      }, '*');
+    }
+
+    // Auto-resize textarea
+    function autoResize() {
+      promptInput.style.height = 'auto';
+      const newHeight = Math.min(promptInput.scrollHeight, 140);
+      promptInput.style.height = newHeight + 'px';
+      notifyHeight();
+    }
+
+    promptInput.addEventListener('input', autoResize);
+
+    // Keyboard handlers
+    promptInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        handleSubmit();
+      }
+      if (e.key === 'Escape') {
+        closeAllMenus();
+      }
+    });
+
+    // -------------------------------------------------------------
+    // Submit Handler
+    // -------------------------------------------------------------
+    function handleSubmit() {
+      const text = promptInput.value.trim();
+      if (!text) return;
+
+      if (isRecording) {
+        stopRecording();
+      }
+
+      sendToStreamlit('submit', text);
+      promptInput.value = '';
+      autoResize();
+      closeAllMenus();
+    }
+
+    btnAction.addEventListener('click', handleSubmit);
+
+    // -------------------------------------------------------------
+    // Menus: Popovers (+ and Model)
+    // -------------------------------------------------------------
+    function closeAllMenus() {
+      plusMenu.classList.remove('open');
+      modelMenu.classList.remove('open');
+      modelPill.classList.remove('active');
+      notifyHeight();
+    }
+
+    btnPlus.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = plusMenu.classList.contains('open');
+      closeAllMenus();
+      if (!isOpen) {
+        plusMenu.classList.add('open');
+        notifyHeight(280);
+      }
+    });
+
+    modelPill.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = modelMenu.classList.contains('open');
+      closeAllMenus();
+      if (!isOpen) {
+        modelMenu.classList.add('open');
+        modelPill.classList.add('active');
+        notifyHeight(290);
+      }
+    });
+
+    document.addEventListener('click', () => {
+      closeAllMenus();
+    });
+
+    function selectModel(name, icon) {
+      currentModel = name;
+      modelIcon.textContent = icon;
+      modelNameText.textContent = name.replace(' High', '');
+
+      document.querySelectorAll('#modelMenu .popover-item').forEach(el => {
+        el.classList.toggle('active', el.getAttribute('data-model') === name);
+      });
+
+      closeAllMenus();
+      sendToStreamlit('model_change', name);
+    }
+
+    function insertSnippet(snippet) {
+      if (promptInput.value) {
+        promptInput.value += ' ' + snippet;
+      } else {
+        promptInput.value = snippet;
+      }
+      promptInput.focus();
+      autoResize();
+      closeAllMenus();
+    }
+
+    // -------------------------------------------------------------
+    // Web Speech API (Spracheingabe / Speech-to-Text)
+    // -------------------------------------------------------------
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = true;
+      recognition.lang = 'de-DE'; // Default German for BTP Architecture queries
+
+      recognition.onstart = () => {
+        isRecording = true;
+        btnMic.classList.add('recording');
+        voiceStatus.classList.add('visible');
+        btnMic.title = "Zuhören beenden";
+        notifyHeight();
+      };
+
+      recognition.onresult = (event) => {
+        let transcript = '';
+        for (let i = event.resultIndex; i < event.results.length; ++i) {
+          transcript += event.results[i][0].transcript;
+        }
+        promptInput.value = transcript;
+        autoResize();
+      };
+
+      recognition.onerror = (event) => {
+        console.warn('Speech recognition error:', event.error);
+        stopRecording();
+      };
+
+      recognition.onend = () => {
+        stopRecording();
+      };
+    } else {
+      btnMic.title = "Spracheingabe in diesem Browser nicht unterstützt (Chrome/Edge empfohlen)";
+      btnMic.style.opacity = '0.4';
+    }
+
+    function startRecording() {
+      if (!recognition) {
+        alert("Spracheingabe wird in diesem Browser nicht unterstützt. Bitte verwenden Sie Google Chrome, Microsoft Edge oder Safari.");
+        return;
+      }
+      try {
+        recognition.start();
+      } catch (err) {
+        console.error("Failed to start speech recognition:", err);
+      }
+    }
+
+    function stopRecording() {
+      isRecording = false;
+      btnMic.classList.remove('recording');
+      voiceStatus.classList.remove('visible');
+      btnMic.title = "Spracheingabe starten (Deutsch / Web Speech API)";
+      notifyHeight();
+      if (recognition) {
+        try { recognition.stop(); } catch(e){}
+      }
+    }
+
+    btnMic.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (isRecording) {
+        stopRecording();
+      } else {
+        startRecording();
+      }
+    });
+
+    // -------------------------------------------------------------
+    // Streamlit Message Listener
+    // -------------------------------------------------------------
+    window.addEventListener('message', (event) => {
+      if (!event.data || event.data.type !== 'streamlit:render') return;
+      const args = event.data.args || {};
+      if (args.placeholder) {
+        promptInput.placeholder = args.placeholder;
+      }
+      if (args.initial_model) {
+        currentModel = args.initial_model;
+        modelNameText.textContent = args.initial_model.replace(' High', '');
+      }
+      notifyHeight();
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      window.parent.postMessage({
+        isStreamlitMessage: true,
+        type: 'streamlit:componentReady',
+        apiVersion: 1
+      }, '*');
+      notifyHeight();
+    });
+
+    window.addEventListener('resize', () => notifyHeight());
+  </script>
+</body>
+</html>

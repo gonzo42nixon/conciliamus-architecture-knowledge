@@ -204,20 +204,44 @@ st.markdown("""
         -webkit-font-smoothing: antialiased !important;
     }
 
-    /* Fixed Bottom Chat Bar: Rigidly anchored at the bottom of the viewport */
-    div[data-testid="stBottom"] {
+    /* Modern Chat Input: Rigidly fixed at the bottom of the viewport */
+    div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]) {
         position: fixed !important;
         bottom: 0px !important;
         left: 0px !important;
         right: 0px !important;
         width: 100% !important;
         z-index: 999999 !important;
+        background: linear-gradient(180deg, rgba(11, 15, 25, 0) 0%, rgba(11, 15, 25, 0.94) 18%, rgba(11, 15, 25, 0.98) 100%) !important;
+        padding: 6px 16px 14px 16px !important;
+        box-sizing: border-box !important;
+        pointer-events: none !important;
+    }
+
+    div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]) > iframe {
+        max-width: 860px !important;
+        margin: 0 auto !important;
+        display: block !important;
+        pointer-events: auto !important;
+        border: none !important;
+        background: transparent !important;
+        overflow: visible !important;
+    }
+
+    /* Fixed Bottom Chat Bar (Fallback stChatInput) */
+    div[data-testid="stBottom"] {
+        position: fixed !important;
+        bottom: 0px !important;
+        left: 0px !important;
+        right: 0px !important;
+        width: 100% !important;
+        z-index: 999998 !important;
         background: rgba(11, 15, 25, 0.98) !important;
         backdrop-filter: blur(16px) !important;
         -webkit-backdrop-filter: blur(16px) !important;
-        border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
         box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.9) !important;
-        padding: 14px 20px 18px 20px !important;
+        padding: 10px 20px 14px 20px !important;
     }
 
     div[data-testid="stBottom"] > div {
@@ -227,20 +251,20 @@ st.markdown("""
     }
 
     div[data-testid="stChatInput"] textarea {
-        font-size: 15.5px !important;
+        font-size: 15px !important;
         color: #ffffff !important;
         background: #1e293b !important;
         border: 1.5px solid rgba(255, 255, 255, 0.25) !important;
-        border-radius: 10px !important;
+        border-radius: 20px !important;
     }
     div[data-testid="stChatInput"] textarea::placeholder {
         color: #94a3b8 !important;
-        font-size: 15px !important;
+        font-size: 14.5px !important;
     }
 
     /* Scrollable content container with generous bottom offset */
     .main .block-container {
-        padding-bottom: 140px !important;
+        padding-bottom: 160px !important;
         padding-top: 1.2rem !important;
         max-width: 860px !important;
         margin: 0 auto !important;
@@ -807,15 +831,20 @@ with st.sidebar:
 
     # BEREICH 6: Multi-LLM Provider & Qualitäts-Audit Konfiguration
     with st.expander("⚙️ KI-Provider, DeepSeek & Audit", expanded=False):
+        provider_options = [
+            "Google Gemini (Schnell & Quellentreu)",
+            "DeepSeek (Direkt via DeepSeek API)",
+            "OpenRouter (DeepSeek V3 / R1 / Claude)",
+            "Dual-Inspector: Gemini + DeepSeek Verifier (Höchste Qualität)"
+        ]
+        default_p_idx = 0
+        if "active_provider" in st.session_state and st.session_state.active_provider in provider_options:
+            default_p_idx = provider_options.index(st.session_state.active_provider)
+
         provider_choice = st.selectbox(
             "KI-Architektur & Provider:",
-            [
-                "Google Gemini (Schnell & Quellentreu)",
-                "DeepSeek (Direkt via DeepSeek API)",
-                "OpenRouter (DeepSeek V3 / R1 / Claude)",
-                "Dual-Inspector: Gemini + DeepSeek Verifier (Höchste Qualität)"
-            ],
-            index=0
+            provider_options,
+            index=default_p_idx
         )
 
         # Gemini Key
@@ -838,11 +867,19 @@ with st.sidebar:
 
         # Model selection
         if "DeepSeek" in provider_choice and "Dual" not in provider_choice:
-            model_choice = st.selectbox("DeepSeek Modell:", ["deepseek-chat", "deepseek-reasoner"], index=0)
+            ds_models = ["deepseek-chat", "deepseek-reasoner"]
+            ds_idx = 0
+            if st.session_state.get("active_model") in ds_models:
+                ds_idx = ds_models.index(st.session_state["active_model"])
+            model_choice = st.selectbox("DeepSeek Modell:", ds_models, index=ds_idx)
         elif "OpenRouter" in provider_choice:
             model_choice = st.selectbox("OpenRouter Modell:", ["deepseek/deepseek-chat", "deepseek/deepseek-r1", "google/gemini-2.5-flash", "anthropic/claude-3.5-sonnet"], index=0)
         else:
-            model_choice = st.selectbox("Gemini Modell:", ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"], index=0)
+            gem_models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"]
+            gem_idx = 0
+            if st.session_state.get("active_model") in gem_models:
+                gem_idx = gem_models.index(st.session_state["active_model"])
+            model_choice = st.selectbox("Gemini Modell:", gem_models, index=gem_idx)
 
         enable_audit = st.checkbox("🛡️ DeepSeek Qualitäts-Audit aktivieren", value=bool(deepseek_key))
 
@@ -877,8 +914,55 @@ else:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-# ----------------- RIGIDLY FIXED BOTTOM CHAT INPUT -----------------
-user_input = st.chat_input("Ihre Frage an den Conciliamus AI Advisor...")
+# ----------------- RIGIDLY FIXED MODERN CHAT INPUT (SCREENSHOT 1 + SPRACHEINGABE) -----------------
+component_dir = os.path.join(os.path.dirname(__file__), "components", "modern_chat_input")
+custom_modern_input = None
+if os.path.exists(component_dir):
+    try:
+        import streamlit.components.v1 as components
+        custom_modern_input = components.declare_component("modern_chat_input", path=component_dir)
+    except Exception as e:
+        custom_modern_input = None
+
+user_input = None
+if custom_modern_input:
+    # Pill label matching Screenshot 1: Gemini 3.8 Flash High ⚡ ^ (or active model)
+    active_label = st.session_state.get("selected_model_label", "Gemini 3.8 Flash High")
+
+    comp_res = custom_modern_input(
+        placeholder="Ask anything, @ to mention, / for actions",
+        initial_model=active_label,
+        key="modern_input_widget"
+    )
+
+    if comp_res and isinstance(comp_res, dict):
+        action = comp_res.get("action")
+        ts = comp_res.get("timestamp")
+        if ts and ts != st.session_state.get("last_handled_input_ts"):
+            st.session_state["last_handled_input_ts"] = ts
+            if action == "submit" and comp_res.get("text"):
+                user_input = comp_res.get("text")
+            elif action == "model_change":
+                new_model_label = comp_res.get("model")
+                st.session_state["selected_model_label"] = new_model_label
+                if "DeepSeek Reasoner" in new_model_label or "R1" in new_model_label:
+                    st.session_state["active_provider"] = "DeepSeek (Direkt via DeepSeek API)"
+                    st.session_state["active_model"] = "deepseek-reasoner"
+                elif "DeepSeek V3" in new_model_label:
+                    st.session_state["active_provider"] = "DeepSeek (Direkt via DeepSeek API)"
+                    st.session_state["active_model"] = "deepseek-chat"
+                elif "Dual" in new_model_label:
+                    st.session_state["active_provider"] = "Dual-Inspector: Gemini + DeepSeek Verifier (Höchste Qualität)"
+                elif "Pro" in new_model_label:
+                    st.session_state["active_provider"] = "Google Gemini (Schnell & Quellentreu)"
+                    st.session_state["active_model"] = "gemini-2.5-pro"
+                else:
+                    st.session_state["active_provider"] = "Google Gemini (Schnell & Quellentreu)"
+                    st.session_state["active_model"] = "gemini-2.5-flash"
+                st.rerun()
+else:
+    user_input = st.chat_input("Ask anything, @ to mention, / for actions")
+
 if "current_prompt" in st.session_state and st.session_state.current_prompt:
     user_input = st.session_state.current_prompt
     st.session_state.current_prompt = None
