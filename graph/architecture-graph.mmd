@@ -21,6 +21,7 @@ graph TD
   decisions_adr_009_single_viewport_fiori["ADR-009: Single-Viewport Ergonomie für die Fiori-Lookalike Workbench<br/><i>Decision Record</i>"]
   decisions_adr_010_streamlit_cloud_agent_deployment["ADR-010: Serverless KI-Agenten-Bereitstellung via Streamlit Community Cloud & GitHub GitOps<br/><i>Decision Record</i>"]
   decisions_adr_011_google_okf_knowledge_graph["ADR-011: Google Open Knowledge Format (OKF v0.2) & Grounded AI Architecture Advisor<br/><i>Decision Record</i>"]
+  decisions_adr_012_camel_header_preservation["ADR-012: Camel Exchange Property Preservation bei Request-Reply & Zero-Hardcoding<br/><i>Decision Record</i>"]
   iflows_batch_receiver_iflow["IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher<br/><i>iFlow Specification</i>"]
   iflows_item_processor_iflow["IFL_MDM_BP_Item_Processor: Atomare Partner-Verarbeitung<br/><i>iFlow Specification</i>"]
   iflows_reprocessor_iflow["IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf<br/><i>iFlow Specification</i>"]
@@ -31,8 +32,8 @@ graph TD
   qa_core_architecture_faq["Zentrale Architekturfragen & Antworten<br/><i>Architecture FAQ</i>"]
   qa_error_handling_faq["Resilienz- und Troubleshooting-FAQ<br/><i>Architecture FAQ</i>"]
   verification_istqb_test_strategy["ISTQB Teststrategie & Testfallmatrix<br/><i>Test Evidence</i>"]
-  verification_live_btp_execution["Live-End-to-End Testlauf auf SAP BTP<br/><i>Test Evidence</i>"]
-  verification_sandbox_limitations_405["SAP Sandbox Limitationen & HTTP 405 Handling<br/><i>Test Evidence</i>"]
+  verification_live_btp_execution["Live-End-to-End Testlauf auf SAP BTP & Audit-Trail<br/><i>Test Evidence</i>"]
+  verification_sandbox_limitations_405["SAP Sandbox Limitationen & HTTP 405 / 401 Fehlerdiagnose<br/><i>Test Evidence</i>"]
   architecture_agent_deployment_and_gitops -->|implements| decisions_adr_010_streamlit_cloud_agent_deployment
   architecture_agent_deployment_and_gitops -->|contains| presentation_and_ui_streamlit_chat_advisor
   architecture_dual_iflow_pattern -->|contains| iflows_batch_receiver_iflow
@@ -81,6 +82,10 @@ graph TD
   decisions_adr_010_streamlit_cloud_agent_deployment -->|dependsOn| architecture_agent_deployment_and_gitops
   decisions_adr_011_google_okf_knowledge_graph -->|implements| presentation_and_ui_streamlit_chat_advisor
   decisions_adr_011_google_okf_knowledge_graph -->|dependsOn| architecture_agent_deployment_and_gitops
+  decisions_adr_012_camel_header_preservation -->|implements| architecture_dual_iflow_pattern
+  decisions_adr_012_camel_header_preservation -->|dependsOn| iflows_item_processor_iflow
+  decisions_adr_012_camel_header_preservation -->|relatesTo| decisions_adr_002_zero_trust_btp_security
+  decisions_adr_012_camel_header_preservation -->|relatesTo| decisions_adr_007_two_legged_csrf_handshake
   iflows_batch_receiver_iflow -->|partOf| architecture_dual_iflow_pattern
   iflows_batch_receiver_iflow -->|routesTo| iflows_item_processor_iflow
   iflows_batch_receiver_iflow -->|implements| decisions_adr_004_bpmn_method_and_style
@@ -125,4 +130,6 @@ graph TD
   verification_live_btp_execution -->|verifies| architecture_dual_iflow_pattern
   verification_live_btp_execution -->|verifies| iflows_batch_receiver_iflow
   verification_live_btp_execution -->|verifies| iflows_item_processor_iflow
+  verification_live_btp_execution -->|verifies| decisions_adr_012_camel_header_preservation
   verification_sandbox_limitations_405 -->|verifies| iflows_item_processor_iflow
+  verification_sandbox_limitations_405 -->|relatesTo| decisions_adr_012_camel_header_preservation
