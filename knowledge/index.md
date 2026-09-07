@@ -67,3 +67,24 @@ Willkommen im **Google Open Knowledge Format (OKF v0.2)** Bundle der Conciliamus
 ## ❓ 7. Architektur-FAQ für KI-Agenten (`qa/`)
 * [Zentrale Architekturfragen & Antworten](/qa/core-architecture-faq.md) – Strukturierte Frage-Antwort-Paare zur Lösungsarchitektur.
 * [Resilienz- und Troubleshooting-FAQ](/qa/error-handling-faq.md) – Verhalten bei Timeouts, Duplikaten und ungültigen Stammdaten.
+
+---
+
+## 🔎 8. Exportierte Artefakte & beobachtete Implementierung
+
+* [Item-Processor-Export](/artifacts/item-processor-export.md) – Inventar, SHA-256 und Evidenzgrenze des CPI-Exports.
+* [Batch-Receiver-Export](/artifacts/batch-receiver-export.md) – Inventar, SHA-256 und Evidenzgrenze des CPI-Exports.
+* [Beobachteter Item Processor](/implementation/item-processor-observed.md) – Tatsächlich exportierte Schritte, Skripte, Router und HTTP-Adapter.
+* [Beobachteter Batch Receiver](/implementation/batch-receiver-observed.md) – Tatsächlich exportierte HTTPS-, Converter-, Splitter- und ProcessDirect-Konfiguration.
+* [Exchange-Property-Lebenszyklus](/implementation/exchange-property-lifecycle.md) – Erzeuger und Verbraucher zentraler Camel Properties und Header.
+
+---
+
+## 🧭 9. Architekturkonformität & offene Lücken
+
+* [ADR-007-Konformität](/conformance/adr-007-csrf-conformance.md) – CSRF- und Session-Handshake im Export nicht implementiert.
+* [ADR-008-Konformität](/conformance/adr-008-dlq-conformance.md) – Fehlerklassifizierung vorhanden, Data-Store-Persistenz fehlt.
+* [ADR-012-Konformität](/conformance/adr-012-property-conformance.md) – Parameterexternalisierung vorhanden, Header-Wiederherstellung unvollständig.
+* [CSRF-Implementierungslücke](/gaps/missing-csrf-handshake.md)
+* [DLQ-Persistenzlücke](/gaps/missing-dlq-persistence.md)
+* [Header-Wiederherstellungslücke](/gaps/incomplete-header-restoration.md)

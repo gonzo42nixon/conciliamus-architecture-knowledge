@@ -755,20 +755,23 @@ Gib die geprüfte, optimierte Antwort aus."""
     except Exception:
         return draft_answer
 
-# Define all 12 ADR sample queries
-sample_queries = [
-    "Wie funktioniert das Dual-iFlow Entkopplungsmuster nach ADR-001?",
-    "Wie setzt ADR-002 die Zero-Trust & BTP PaaS Security (OAuth2/XSUAA) um?",
-    "Wie gewährleistet ADR-003 die End-to-End Traceability im SAP MPL-Log?",
-    "Welche BPMN 2.0 Regeln nach Bruce Silver definiert ADR-004 für den Ingest-Flow?",
-    "Warum nutzt die Architektur ProcessDirect statt Message Queues (ADR-005)?",
-    "Wie funktioniert die idempotente Existenzprüfung (POST vs. PATCH) nach ADR-006?",
-    "Wie läuft der Two-Legged CSRF- und Cookie-Handshake nach ADR-007 ab?",
-    "Wie unterscheidet ADR-008 zwischen fachlichen Fehlern und technischem DLQ-Replay?",
-    "Welche Ergonomie-Prinzipien definiert ADR-009 für die Fiori Horizon Workbench?",
-    "Wie löst ADR-010 das BTP CORS-Problem und das serverlose GitOps-Deployment?",
-    "Wie stellt ADR-011 mit OKF v0.2 und Gemini quellenbasierte Beratung sicher?",
-    "Wie verhindert ADR-012 den HTTP 401 Header-Verlust bei Camel Request-Reply durch Exchange Properties & Zero-Hardcoding?"
+# Curated, OKF-grounded starter questions grouped by user intent.
+question_groups = [
+    {
+        "id": "adr", "title": "🏛️ ADR – Architecture Decision Records (12)", "expanded": True,
+        "questions": [
+            "Wie funktioniert das Dual-iFlow Entkopplungsmuster nach ADR-001?", "Wie setzt ADR-002 die Zero-Trust & BTP PaaS Security (OAuth2/XSUAA) um?", "Wie gewährleistet ADR-003 die End-to-End Traceability im SAP MPL-Log?", "Welche BPMN 2.0 Regeln nach Bruce Silver definiert ADR-004 für den Ingest-Flow?", "Warum nutzt die Architektur ProcessDirect statt Message Queues (ADR-005)?", "Wie funktioniert die idempotente Existenzprüfung (POST vs. PATCH) nach ADR-006?", "Wie läuft der Two-Legged CSRF- und Cookie-Handshake nach ADR-007 ab?", "Wie unterscheidet ADR-008 zwischen fachlichen Fehlern und technischem DLQ-Replay?", "Welche Ergonomie-Prinzipien definiert ADR-009 für die Fiori Horizon Workbench?", "Wie löst ADR-010 das BTP CORS-Problem und das serverlose GitOps-Deployment?", "Wie stellt ADR-011 mit OKF v0.2 und Gemini quellenbasierte Beratung sicher?", "Wie verhindert ADR-012 den HTTP 401 Header-Verlust bei Camel Request-Reply durch Exchange Properties & Zero-Hardcoding?",
+        ],
+    },
+    {"id": "flows", "title": "🔄 Integration Flows & Data Flow", "expanded": False, "questions": ["Zeige den vollständigen Weg eines Business Partners vom MDM bis SAP S/4HANA.", "Welche Aufgaben übernimmt der IFL_MDM_BP_Batch_Receiver?", "Welche Aufgaben übernimmt der IFL_MDM_BP_Item_Processor?", "Warum werden Batch- und Einzelverarbeitung getrennt?", "Wie werden zehn Partner voneinander isoliert verarbeitet?", "Erzeuge ein Mermaid-Sequenzdiagramm des End-to-End-Ablaufs.", "Welche Daten und Metadaten werden über ProcessDirect weitergegeben?", "An welchen Stellen verändert sich das Nachrichtenformat?"]},
+    {"id": "development", "title": "💻 Development", "expanded": False, "questions": ["Wie verarbeitet der Batch Receiver einen eingehenden JSON-Batch?", "Wie arbeitet der Streaming Iterating Splitter?", "Welche Validierungen führt ValidateBusinessPartnerItem.groovy aus?", "Wie wird das Ergebnis der OData-Existenzprüfung ausgewertet?", "Wie werden POST- und PATCH-Payloads aufgebaut?", "Welche Exchange Properties und HTTP-Header werden verwendet?", "Wie wird die SAP-Business-Partner-Nummer dynamisch ermittelt?", "Wo befindet sich testdatenspezifische oder hart codierte Logik?", "Wie müsste der CSRF-Handshake im iFlow ergänzt werden?", "Wie müsste der Data-Store-Write für die DLQ implementiert werden?"]},
+    {"id": "contracts", "title": "🗂️ Data Contracts & Mapping", "expanded": False, "questions": ["Wie sieht der MDM-Inbound-Datenvertrag aus?", "Welche Felder sind Pflichtfelder?", "Wie wird externalId auf SAP S/4HANA abgebildet?", "Wie werden Firma, Adresse, E-Mail und Telefon gemappt?", "Wie sieht der POST-Deep-Insert-Payload aus?", "Welche Felder enthält der PATCH-Payload?", "Warum wird vatId aktuell nicht übertragen?", "Welche SAP-Feldlängen müssen berücksichtigt werden?", "Wie werden ungültige Länder- und E-Mail-Werte behandelt?"]},
+    {"id": "security", "title": "🛡️ Security & Compliance", "expanded": False, "questions": ["Wie ist der öffentliche HTTPS-Endpunkt abgesichert?", "Welche Rolle besitzt ESBMessaging.send?", "Wie funktioniert OAuth2 Client Credentials mit XSUAA?", "Wozu dient der SAP-Sandbox-API-Key?", "Welche Secrets und Endpunkte sind externalisiert?", "Wie funktioniert der Two-Legged-CSRF-Handshake?", "Warum müssen CSRF-Token und Session-Cookie gemeinsam übertragen werden?", "Welche Security-Unterschiede bestehen zwischen Sandbox und Produktion?", "Welche Zero-Trust-Anforderungen sind umgesetzt und welche fehlen?"]},
+    {"id": "testing", "title": "🧪 Testing & Quality Assurance", "expanded": False, "questions": ["Welche Testfälle decken POST, PATCH und Duplikate ab?", "Warum enthält der Referenzbatch drei Updates und sieben Neuanlagen?", "Wie teste ich einen ungültigen Einzeldatensatz?", "Wie teste ich die Fehlerisolation innerhalb eines Batches?", "Wie simuliere ich einen technischen Zielsystemausfall?", "Wie prüfe ich die Idempotenz?", "Wie teste ich einen Mehrfachtreffer bei der Existenzprüfung?", "Welche Aussagen sind durch einen Live-Lauf belegt?", "Welche Aussagen sind nur durch Design-Time-Artefakte belegt?"]},
+    {"id": "operations", "title": "📈 Operations", "expanded": False, "questions": ["Wie finde ich einen Batch anhand seiner BatchId im MPL?", "Wie finde ich alle Nachrichten zu einer ExternalId?", "Welche Custom Status Values verwendet die Lösung?", "Wie unterscheide ich fachliche und technische Fehler?", "Welche Informationen enthalten die MPL-Attachments?", "Was bedeuten FAILED_BUSINESS und FAILED_TECHNICAL?", "Welche Timeouts und Retry-Einstellungen sind konfiguriert?", "Wie funktioniert der selektive Wiederanlauf?", "Welche Betriebsinformationen fehlen für Production Readiness?"]},
+    {"id": "troubleshooting", "title": "🚨 Troubleshooting & Resilience", "expanded": False, "questions": ["Warum erhält ein POST- oder PATCH-Aufruf HTTP 401?", "Warum antwortet SAP mit HTTP 403?", "Was bedeutet HTTP 405 in der SAP-Sandbox?", "Warum wurde ein Business Partner mehrfach gefunden?", "Warum wurde ein Batch nicht vollständig verarbeitet?", "Warum kann der APIKey nach einem Request-Reply fehlen?", "Warum wird eine Nachricht nicht in der DLQ gespeichert?", "Warum wurde ein Partner als POST statt PATCH behandelt?", "Warum wurden Adressdaten bei PATCH nicht geändert?", "Wie kann eine einzelne Nachricht sicher erneut verarbeitet werden?"]},
+    {"id": "conformance", "title": "🧭 Implementation Conformance & Gaps", "expanded": False, "questions": ["Welche ADRs sind im aktuellen Export vollständig umgesetzt?", "Wo weicht der Item Processor von ADR-007 ab?", "Ist die DLQ aus ADR-008 tatsächlich implementiert?", "Ist die Header-Preservation aus ADR-012 vollständig umgesetzt?", "Welche Unterschiede bestehen zwischen dokumentierter und beobachteter Implementierung?", "Welche Lücken verhindern derzeit Production Readiness?", "Welche Änderungen haben die höchste Priorität?", "Welche Aussage stammt aus einem ADR und welche direkt aus dem ZIP-Export?", "Erstelle eine Conformance-Matrix aller ADRs."]},
+    {"id": "digest", "title": "📚 Enterprise Acronym Digest", "expanded": False, "questions": ["Was bedeuten BTP, CPI und SAP Integration Suite?", "Was sind MPL und Custom Header Properties?", "Was ist ein iFlow?", "Was ist ProcessDirect?", "Was bedeuten BP, CVI und API_BUSINESS_PARTNER?", "Was sind OData V2, REST und HTTP?", "Was bedeuten POST, PATCH, GET und DELETE?", "Was sind CSRF, OAuth2, XSUAA und JWT?", "Was bedeuten DLQ, Retry und Replay?", "Was sind BPMN, EIP und ADR?", "Was bedeuten API, OpenAPI und JSON Schema?", "Erkläre alle Akronyme der aktuellen Antwort."]},
 ]
 
 # ----------------- SIDEBAR (AUF- UND ZUKLAPPBARE BEREICHE) -----------------
@@ -786,15 +789,14 @@ with st.sidebar:
     </div>
     """, unsafe_allow_html=True)
 
-    # BEREICH 1: Beispielfragen (Hier im Drawer aufklappbar, nicht im Hauptbereich!)
-    with st.expander("💡 Beispielfragen (ADR-001 bis ADR-012)", expanded=True):
-        st.markdown("<div style='font-size:13px; color:#cbd5e1; font-weight:500; margin-bottom:10px;'>Klicken Sie auf eine Frage, um den Dialog im Hauptbereich zu starten:</div>", unsafe_allow_html=True)
-        for idx, sq in enumerate(sample_queries):
-            adr_num = sq.split("ADR-")[1][:3] if "ADR-" in sq else str(idx+1)
-            btn_label = f"📌 [ADR-{adr_num}] {sq}"
-            if st.button(btn_label, key=f"sb_adr_chip_{idx}", use_container_width=True):
-                st.session_state.current_prompt = sq
-                st.rerun()
+    # BEREICH 1: Rollen- und themenbezogene Starterfragen
+    st.markdown("<div style='font-size:13px; color:#cbd5e1; font-weight:500; margin-bottom:10px;'>Thema öffnen und eine quellenbasierte Frage auswählen:</div>", unsafe_allow_html=True)
+    for group in question_groups:
+        with st.expander(group["title"], expanded=group["expanded"]):
+            for idx, question in enumerate(group["questions"]):
+                if st.button(f"📌 {question}", key=f"sb_question_{group['id']}_{idx}", use_container_width=True):
+                    st.session_state.current_prompt = question
+                    st.rerun()
 
     # BEREICH 2: Wissensbasis & Metriken
     with st.expander("📊 Wissensbasis & Status", expanded=False):
@@ -1048,10 +1050,10 @@ if user_input:
         if confidence < 25 or not relevant_docs:
             answer = (
                 f"⚠️ **Konfidenz-Warnung (Relevanz-Score: {confidence}%)**\n\n"
-                f"Zu Ihrer Frage konnten im Wissensgraphen keine hinreichend spezifischen Architektur-Entscheidungen (ADR-001 bis ADR-012) "
+                f"Zu Ihrer Frage konnten im Wissensgraphen keine hinreichend spezifischen Architektur-, Implementierungs-, Betriebs- "
                 f"oder Acronym-Digest-Konzepte identifiziert werden.\n\n"
                 f"💡 **Empfehlung:**\n"
-                f"- Wählen Sie links in der Seitenleiste eine der 12 vorkonfigurierten ADR-Beispielfragen.\n"
+                f"- Öffnen Sie links einen Themenblock und wählen Sie eine vorbereitete, OKF-basierte Frage.\n"
                 f"- Oder verwenden Sie konkrete Begriffe wie *'ADR-007'*, *'CSRF'*, *'Dual-iFlow'*, *'ProcessDirect'*, *'BTP'* oder *'Camel'*."
             )
             st.markdown(answer)

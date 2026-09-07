@@ -7,6 +7,11 @@ graph TD
   architecture_resilience_and_dead_letter["Resilienz & Dead-Letter-Behandlung<br/><i>Architecture Concept</i>"]
   architecture_session_and_csrf_handshake["Session & CSRF Handshake<br/><i>Architecture Concept</i>"]
   architecture_streaming_iterating_splitter["Streaming Iterating Splitter<br/><i>Architecture Concept</i>"]
+  artifacts_batch_receiver_export["SAP Cloud Integration Export: IFL_MDM_BP_Batch_Receiver<br/><i>Implementation Artifact</i>"]
+  artifacts_item_processor_export["SAP Cloud Integration Export: IFL_MDM_BP_Item_Processor<br/><i>Implementation Artifact</i>"]
+  conformance_adr_007_csrf_conformance["Konformitätsprüfung: Item Processor gegen ADR-007<br/><i>Architecture Conformance Assessment</i>"]
+  conformance_adr_008_dlq_conformance["Konformitätsprüfung: Item Processor gegen ADR-008<br/><i>Architecture Conformance Assessment</i>"]
+  conformance_adr_012_property_conformance["Konformitätsprüfung: Item Processor gegen ADR-012<br/><i>Architecture Conformance Assessment</i>"]
   data_contracts_custom_header_properties["Custom Header Properties & Message Processing Log (MPL)<br/><i>Data Contract</i>"]
   data_contracts_mdm_inbound_contract["MDM Inbound JSON Kontrakt<br/><i>Data Contract</i>"]
   data_contracts_s4_odata_mapping["SAP S/4HANA OData Mapping<br/><i>Data Contract</i>"]
@@ -296,9 +301,15 @@ graph TD
   digest_zero_trust["Zero Trust Sicherheitsarchitektur (John Kindervag / Forrester 2010)<br/><i>Architecture Concept</i>"]
   digest_zuse_z1["Konrad Zuse Z1 – Erster frei programmierbarer Rechner (1938)<br/><i>Architecture Concept</i>"]
   digest_zweiter_weltkrieg["Zweiter Weltkrieg – Bletchley Park, Enigma & Turing-Bombe (1939–1945)<br/><i>Architecture Concept</i>"]
+  gaps_incomplete_header_restoration["Nicht nachgewiesene Header-Wiederherstellung nach Request-Reply<br/><i>Knowledge and Implementation Gap</i>"]
+  gaps_missing_csrf_handshake["Fehlender CSRF- und Session-Handshake im Item Processor<br/><i>Knowledge and Implementation Gap</i>"]
+  gaps_missing_dlq_persistence["Fehlende Data-Store-Persistenz im Error Subprocess<br/><i>Knowledge and Implementation Gap</i>"]
   iflows_batch_receiver_iflow["IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher<br/><i>iFlow Specification</i>"]
   iflows_item_processor_iflow["IFL_MDM_BP_Item_Processor: Atomare Partner-Verarbeitung<br/><i>iFlow Specification</i>"]
   iflows_reprocessor_iflow["IFL_MDM_BP_Reprocessor: Selektiver Wiederanlauf<br/><i>iFlow Specification</i>"]
+  implementation_batch_receiver_observed["Beobachtete Implementierung des IFL_MDM_BP_Batch_Receiver<br/><i>Observed Implementation</i>"]
+  implementation_exchange_property_lifecycle["Exchange-Property- und Header-Lebenszyklus im Item Processor<br/><i>Implementation Contract</i>"]
+  implementation_item_processor_observed["Beobachtete Implementierung des IFL_MDM_BP_Item_Processor<br/><i>Observed Implementation</i>"]
   presentation_and_ui_fiori_workbench_ui["SAP Fiori Horizon Lookalike Workbench & Test-Runner<br/><i>UI Concept</i>"]
   presentation_and_ui_pecha_kucha_20x20["Pecha Kucha 20x20 Präsentationsarchitektur<br/><i>Presentation Concept</i>"]
   presentation_and_ui_pecha_kucha_konzept["Pecha Kucha 20x20 Konzept & Foliensprechertexte<br/><i>Presentation Concept</i>"]
@@ -328,6 +339,19 @@ graph TD
   architecture_session_and_csrf_handshake -->|dependsOn| architecture_existence_check_and_routing
   architecture_streaming_iterating_splitter -->|contains| iflows_batch_receiver_iflow
   architecture_streaming_iterating_splitter -->|routesTo| architecture_process_direct_interconnect
+  artifacts_batch_receiver_export -->|verifies| implementation_batch_receiver_observed
+  artifacts_batch_receiver_export -->|references| iflows_batch_receiver_iflow
+  artifacts_item_processor_export -->|verifies| implementation_item_processor_observed
+  artifacts_item_processor_export -->|references| iflows_item_processor_iflow
+  conformance_adr_007_csrf_conformance -->|references| decisions_adr_007_two_legged_csrf_handshake
+  conformance_adr_007_csrf_conformance -->|dependsOn| implementation_item_processor_observed
+  conformance_adr_007_csrf_conformance -->|handlesError| gaps_missing_csrf_handshake
+  conformance_adr_008_dlq_conformance -->|references| decisions_adr_008_data_store_dlq
+  conformance_adr_008_dlq_conformance -->|dependsOn| implementation_item_processor_observed
+  conformance_adr_008_dlq_conformance -->|handlesError| gaps_missing_dlq_persistence
+  conformance_adr_012_property_conformance -->|references| decisions_adr_012_camel_header_preservation
+  conformance_adr_012_property_conformance -->|dependsOn| implementation_exchange_property_lifecycle
+  conformance_adr_012_property_conformance -->|handlesError| gaps_incomplete_header_restoration
   data_contracts_custom_header_properties -->|implementedBy| iflows_item_processor_iflow
   data_contracts_custom_header_properties -->|verifies| verification_live_btp_execution
   data_contracts_mdm_inbound_contract -->|implements| iflows_batch_receiver_iflow
@@ -360,6 +384,9 @@ graph TD
   decisions_adr_012_camel_header_preservation -->|dependsOn| iflows_item_processor_iflow
   decisions_adr_012_camel_header_preservation -->|relatesTo| decisions_adr_002_zero_trust_btp_security
   decisions_adr_012_camel_header_preservation -->|relatesTo| decisions_adr_007_two_legged_csrf_handshake
+  gaps_incomplete_header_restoration -->|references| conformance_adr_012_property_conformance
+  gaps_missing_csrf_handshake -->|references| conformance_adr_007_csrf_conformance
+  gaps_missing_dlq_persistence -->|references| conformance_adr_008_dlq_conformance
   iflows_batch_receiver_iflow -->|partOf| architecture_dual_iflow_pattern
   iflows_batch_receiver_iflow -->|routesTo| iflows_item_processor_iflow
   iflows_batch_receiver_iflow -->|implements| decisions_adr_004_bpmn_method_and_style
@@ -372,6 +399,17 @@ graph TD
   iflows_item_processor_iflow -->|verifies| verification_live_btp_execution
   iflows_reprocessor_iflow -->|implements| decisions_adr_008_data_store_dlq
   iflows_reprocessor_iflow -->|routesTo| iflows_item_processor_iflow
+  implementation_batch_receiver_observed -->|implements| iflows_batch_receiver_iflow
+  implementation_batch_receiver_observed -->|dependsOn| artifacts_batch_receiver_export
+  implementation_batch_receiver_observed -->|routesTo| implementation_item_processor_observed
+  implementation_exchange_property_lifecycle -->|partOf| implementation_item_processor_observed
+  implementation_exchange_property_lifecycle -->|references| data_contracts_custom_header_properties
+  implementation_item_processor_observed -->|implements| iflows_item_processor_iflow
+  implementation_item_processor_observed -->|dependsOn| artifacts_item_processor_export
+  implementation_item_processor_observed -->|dependsOn| implementation_exchange_property_lifecycle
+  implementation_item_processor_observed -->|references| conformance_adr_007_csrf_conformance
+  implementation_item_processor_observed -->|references| conformance_adr_008_dlq_conformance
+  implementation_item_processor_observed -->|references| conformance_adr_012_property_conformance
   presentation_and_ui_fiori_workbench_ui -->|implements| decisions_adr_009_single_viewport_fiori
   presentation_and_ui_fiori_workbench_ui -->|verifies| verification_live_btp_execution
   presentation_and_ui_pecha_kucha_20x20 -->|references| decisions_adr_004_bpmn_method_and_style

@@ -1,7 +1,7 @@
 {
   "okfVersion": "0.2",
-  "nodesCount": 308,
-  "edgesCount": 99,
+  "nodesCount": 319,
+  "edgesCount": 126,
   "nodes": [
     {
       "id": "architecture/agent-deployment-and-gitops",
@@ -135,6 +135,93 @@
       "degree": 2
     },
     {
+      "id": "artifacts/batch-receiver-export",
+      "label": "SAP Cloud Integration Export: IFL_MDM_BP_Batch_Receiver",
+      "type": "Implementation Artifact",
+      "path": "/artifacts/batch-receiver-export.md",
+      "tags": [
+        "artifact",
+        "iflow",
+        "batch-receiver",
+        "provenance",
+        "sha256",
+        "sap-cloud-integration"
+      ],
+      "description": "Provenienz und Inventar des analysierten SAP-Cloud-Integration-Exports für Batch-Annahme, Konvertierung, Split und ProcessDirect-Dispatch.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 3
+    },
+    {
+      "id": "artifacts/item-processor-export",
+      "label": "SAP Cloud Integration Export: IFL_MDM_BP_Item_Processor",
+      "type": "Implementation Artifact",
+      "path": "/artifacts/item-processor-export.md",
+      "tags": [
+        "artifact",
+        "iflow",
+        "item-processor",
+        "provenance",
+        "sha256",
+        "sap-cloud-integration"
+      ],
+      "description": "Provenienz und Inventar des analysierten SAP-Cloud-Integration-Exports des atomaren Business-Partner-Prozessors.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 3
+    },
+    {
+      "id": "conformance/adr-007-csrf-conformance",
+      "label": "Konformitätsprüfung: Item Processor gegen ADR-007",
+      "type": "Architecture Conformance Assessment",
+      "path": "/conformance/adr-007-csrf-conformance.md",
+      "tags": [
+        "conformance",
+        "adr-007",
+        "csrf",
+        "cookie",
+        "gap"
+      ],
+      "description": "Vergleich des exportierten Item Processors mit dem beschlossenen Two-Legged-CSRF- und Cookie-Handshake.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 5
+    },
+    {
+      "id": "conformance/adr-008-dlq-conformance",
+      "label": "Konformitätsprüfung: Item Processor gegen ADR-008",
+      "type": "Architecture Conformance Assessment",
+      "path": "/conformance/adr-008-dlq-conformance.md",
+      "tags": [
+        "conformance",
+        "adr-008",
+        "dlq",
+        "data-store",
+        "gap"
+      ],
+      "description": "Vergleich des exportierten Error Subprocess mit der beschlossenen persistenten Data-Store-DLQ.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 5
+    },
+    {
+      "id": "conformance/adr-012-property-conformance",
+      "label": "Konformitätsprüfung: Item Processor gegen ADR-012",
+      "type": "Architecture Conformance Assessment",
+      "path": "/conformance/adr-012-property-conformance.md",
+      "tags": [
+        "conformance",
+        "adr-012",
+        "camel",
+        "headers",
+        "externalization"
+      ],
+      "description": "Vergleich der exportierten Externalisierung und Headerbehandlung mit ADR-012.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 5
+    },
+    {
       "id": "data-contracts/custom-header-properties",
       "label": "Custom Header Properties & Message Processing Log (MPL)",
       "type": "Data Contract",
@@ -150,7 +237,7 @@
       "description": "Definition der im BTP Message Processing Log gesetzten Metadaten für Volltextsuche und Audit-Trails.",
       "status": "verified",
       "domain": "General",
-      "degree": 3
+      "degree": 4
     },
     {
       "id": "data-contracts/mdm-inbound-contract",
@@ -318,7 +405,7 @@
       "description": "Zweistufiges Kommunikationsmuster zur zuverlässigen Aushandlung und Persistierung von X-CSRF-Tokens und Session-Cookies für schreibende SAP S/4HANA OData V2 Calls.",
       "status": "accepted",
       "domain": "General",
-      "degree": 4
+      "degree": 5
     },
     {
       "id": "decisions/adr-008-data-store-dlq",
@@ -336,7 +423,7 @@
       "description": "Einsatz eines persistenten BTP Data Stores für fehlgeschlagene Einzelnachrichten zur Ermöglichung eines punktuellen Wiederanlaufs.",
       "status": "accepted",
       "domain": "General",
-      "degree": 6
+      "degree": 7
     },
     {
       "id": "decisions/adr-009-single-viewport-fiori",
@@ -418,7 +505,7 @@
       "description": "Persistierung flüchtiger Authentifizierungs-Header in Camel Exchange Properties zur Vermeidung von HTTP 401-Verlusten über Request-Reply-Grenzen hinweg sowie striktes Zero-Hardcoding via parameters.prop.",
       "status": "accepted",
       "domain": "General",
-      "degree": 6
+      "degree": 7
     },
     {
       "id": "digest/1950-turing-test",
@@ -5012,6 +5099,56 @@
       "degree": 0
     },
     {
+      "id": "gaps/incomplete-header-restoration",
+      "label": "Nicht nachgewiesene Header-Wiederherstellung nach Request-Reply",
+      "type": "Knowledge and Implementation Gap",
+      "path": "/gaps/incomplete-header-restoration.md",
+      "tags": [
+        "gap",
+        "camel",
+        "header",
+        "request-reply",
+        "api-key"
+      ],
+      "description": "Der API-Key wird als Property gesichert, im exportierten Modell nach dem GET aber nicht explizit als Header wiederhergestellt.",
+      "status": "draft",
+      "domain": "General",
+      "degree": 2
+    },
+    {
+      "id": "gaps/missing-csrf-handshake",
+      "label": "Fehlender CSRF- und Session-Handshake im Item Processor",
+      "type": "Knowledge and Implementation Gap",
+      "path": "/gaps/missing-csrf-handshake.md",
+      "tags": [
+        "gap",
+        "csrf",
+        "session",
+        "production-readiness"
+      ],
+      "description": "Der akzeptierte ADR-007 ist im analysierten CPI-Export nicht umgesetzt.",
+      "status": "draft",
+      "domain": "General",
+      "degree": 2
+    },
+    {
+      "id": "gaps/missing-dlq-persistence",
+      "label": "Fehlende Data-Store-Persistenz im Error Subprocess",
+      "type": "Knowledge and Implementation Gap",
+      "path": "/gaps/missing-dlq-persistence.md",
+      "tags": [
+        "gap",
+        "dlq",
+        "data-store",
+        "replay",
+        "resilience"
+      ],
+      "description": "Der exportierte Item Processor klassifiziert technische Fehler, persistiert sie aber nicht in der von ADR-008 vorgesehenen DLQ.",
+      "status": "draft",
+      "domain": "General",
+      "degree": 2
+    },
+    {
       "id": "iflows/batch-receiver-iflow",
       "label": "IFL_MDM_BP_Batch_Receiver: Batch Ingest & Dispatcher",
       "type": "iFlow Specification",
@@ -5028,7 +5165,7 @@
       "description": "Spezifikation des Ingestion-iFlows zur Annahme von MDM-Massen-Batches, syntaktischen Vorvalidierung und Streaming-Zerlegung.",
       "status": "verified",
       "domain": "General",
-      "degree": 12
+      "degree": 14
     },
     {
       "id": "iflows/item-processor-iflow",
@@ -5048,7 +5185,7 @@
       "description": "Spezifikation des verarbeitenden iFlows für Validierung, OData GET Existenzprüfung, deterministisches Routing und S/4HANA OData Aufrufe.",
       "status": "verified",
       "domain": "General",
-      "degree": 22
+      "degree": 24
     },
     {
       "id": "iflows/reprocessor-iflow",
@@ -5067,6 +5204,60 @@
       "status": "verified",
       "domain": "General",
       "degree": 5
+    },
+    {
+      "id": "implementation/batch-receiver-observed",
+      "label": "Beobachtete Implementierung des IFL_MDM_BP_Batch_Receiver",
+      "type": "Observed Implementation",
+      "path": "/implementation/batch-receiver-observed.md",
+      "tags": [
+        "implemented",
+        "iflow",
+        "batch",
+        "https",
+        "splitter",
+        "processdirect"
+      ],
+      "description": "Aus dem CPI-Export extrahierter Ist-Ablauf für HTTPS-Annahme, Validierung, Streaming-Split und ProcessDirect-Weitergabe.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 4
+    },
+    {
+      "id": "implementation/exchange-property-lifecycle",
+      "label": "Exchange-Property- und Header-Lebenszyklus im Item Processor",
+      "type": "Implementation Contract",
+      "path": "/implementation/exchange-property-lifecycle.md",
+      "tags": [
+        "camel",
+        "exchange-properties",
+        "headers",
+        "mpl",
+        "traceability"
+      ],
+      "description": "Beobachtete Erzeuger und Verbraucher der für Routing, HTTP-Aufrufe, Mapping und Monitoring relevanten Camel-Werte.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 4
+    },
+    {
+      "id": "implementation/item-processor-observed",
+      "label": "Beobachtete Implementierung des IFL_MDM_BP_Item_Processor",
+      "type": "Observed Implementation",
+      "path": "/implementation/item-processor-observed.md",
+      "tags": [
+        "implemented",
+        "iflow",
+        "item-processor",
+        "odata",
+        "post",
+        "patch",
+        "routing"
+      ],
+      "description": "Aus dem CPI-Export extrahierter Ist-Ablauf des atomaren Business-Partner-Prozessors einschließlich Skripten, Router und HTTP-Adaptern.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 11
     },
     {
       "id": "presentation-and-ui/fiori-workbench-ui",
@@ -5338,6 +5529,71 @@
       "relation": "routesTo"
     },
     {
+      "source": "artifacts/batch-receiver-export",
+      "target": "implementation/batch-receiver-observed",
+      "relation": "verifies"
+    },
+    {
+      "source": "artifacts/batch-receiver-export",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "references"
+    },
+    {
+      "source": "artifacts/item-processor-export",
+      "target": "implementation/item-processor-observed",
+      "relation": "verifies"
+    },
+    {
+      "source": "artifacts/item-processor-export",
+      "target": "iflows/item-processor-iflow",
+      "relation": "references"
+    },
+    {
+      "source": "conformance/adr-007-csrf-conformance",
+      "target": "decisions/adr-007-two-legged-csrf-handshake",
+      "relation": "references"
+    },
+    {
+      "source": "conformance/adr-007-csrf-conformance",
+      "target": "implementation/item-processor-observed",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "conformance/adr-007-csrf-conformance",
+      "target": "gaps/missing-csrf-handshake",
+      "relation": "handlesError"
+    },
+    {
+      "source": "conformance/adr-008-dlq-conformance",
+      "target": "decisions/adr-008-data-store-dlq",
+      "relation": "references"
+    },
+    {
+      "source": "conformance/adr-008-dlq-conformance",
+      "target": "implementation/item-processor-observed",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "conformance/adr-008-dlq-conformance",
+      "target": "gaps/missing-dlq-persistence",
+      "relation": "handlesError"
+    },
+    {
+      "source": "conformance/adr-012-property-conformance",
+      "target": "decisions/adr-012-camel-header-preservation",
+      "relation": "references"
+    },
+    {
+      "source": "conformance/adr-012-property-conformance",
+      "target": "implementation/exchange-property-lifecycle",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "conformance/adr-012-property-conformance",
+      "target": "gaps/incomplete-header-restoration",
+      "relation": "handlesError"
+    },
+    {
       "source": "data-contracts/custom-header-properties",
       "target": "iflows/item-processor-iflow",
       "relation": "implementedBy"
@@ -5498,6 +5754,21 @@
       "relation": "relatesTo"
     },
     {
+      "source": "gaps/incomplete-header-restoration",
+      "target": "conformance/adr-012-property-conformance",
+      "relation": "references"
+    },
+    {
+      "source": "gaps/missing-csrf-handshake",
+      "target": "conformance/adr-007-csrf-conformance",
+      "relation": "references"
+    },
+    {
+      "source": "gaps/missing-dlq-persistence",
+      "target": "conformance/adr-008-dlq-conformance",
+      "relation": "references"
+    },
+    {
       "source": "iflows/batch-receiver-iflow",
       "target": "architecture/dual-iflow-pattern",
       "relation": "partOf"
@@ -5556,6 +5827,61 @@
       "source": "iflows/reprocessor-iflow",
       "target": "iflows/item-processor-iflow",
       "relation": "routesTo"
+    },
+    {
+      "source": "implementation/batch-receiver-observed",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "implements"
+    },
+    {
+      "source": "implementation/batch-receiver-observed",
+      "target": "artifacts/batch-receiver-export",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "implementation/batch-receiver-observed",
+      "target": "implementation/item-processor-observed",
+      "relation": "routesTo"
+    },
+    {
+      "source": "implementation/exchange-property-lifecycle",
+      "target": "implementation/item-processor-observed",
+      "relation": "partOf"
+    },
+    {
+      "source": "implementation/exchange-property-lifecycle",
+      "target": "data-contracts/custom-header-properties",
+      "relation": "references"
+    },
+    {
+      "source": "implementation/item-processor-observed",
+      "target": "iflows/item-processor-iflow",
+      "relation": "implements"
+    },
+    {
+      "source": "implementation/item-processor-observed",
+      "target": "artifacts/item-processor-export",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "implementation/item-processor-observed",
+      "target": "implementation/exchange-property-lifecycle",
+      "relation": "dependsOn"
+    },
+    {
+      "source": "implementation/item-processor-observed",
+      "target": "conformance/adr-007-csrf-conformance",
+      "relation": "references"
+    },
+    {
+      "source": "implementation/item-processor-observed",
+      "target": "conformance/adr-008-dlq-conformance",
+      "relation": "references"
+    },
+    {
+      "source": "implementation/item-processor-observed",
+      "target": "conformance/adr-012-property-conformance",
+      "relation": "references"
     },
     {
       "source": "presentation-and-ui/fiori-workbench-ui",
