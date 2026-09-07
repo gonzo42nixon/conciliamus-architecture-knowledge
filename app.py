@@ -208,12 +208,13 @@ st.markdown("""
     }
 
     /* Modern Chat Input: Rigidly fixed at the bottom of the viewport */
-    div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]) {
+    div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]),
+    div[data-testid="stElementContainer"]:has(iframe[title*="modern_chat_input"]) {
         position: fixed !important;
         bottom: 0px !important;
-        left: 0px !important;
+        left: 21rem !important;
         right: 0px !important;
-        width: 100% !important;
+        width: auto !important;
         z-index: 999999 !important;
         background: linear-gradient(180deg, rgba(11, 15, 25, 0) 0%, rgba(11, 15, 25, 0.94) 18%, rgba(11, 15, 25, 0.98) 100%) !important;
         padding: 6px 16px 14px 16px !important;
@@ -221,7 +222,8 @@ st.markdown("""
         pointer-events: none !important;
     }
 
-    div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]) > iframe {
+    div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]) iframe[title*="modern_chat_input"],
+    div[data-testid="stElementContainer"]:has(iframe[title*="modern_chat_input"]) iframe[title*="modern_chat_input"] {
         max-width: 860px !important;
         margin: 0 auto !important;
         display: block !important;
@@ -229,6 +231,14 @@ st.markdown("""
         border: none !important;
         background: transparent !important;
         overflow: visible !important;
+    }
+
+    @media (max-width: 760px) {
+        div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]),
+        div[data-testid="stElementContainer"]:has(iframe[title*="modern_chat_input"]) {
+            left: 0 !important;
+            padding-inline: 10px !important;
+        }
     }
 
     /* Fixed Bottom Chat Bar (Fallback stChatInput) */
