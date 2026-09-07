@@ -20,6 +20,8 @@ import http.cookiejar
 import streamlit as st
 import streamlit.components.v1 as components
 
+from glossary_advisor import GLOSSARY_SWEEP_QUESTION, build_glossary_analysis_prompt, parse_glossary_query
+
 # Setup paths
 ROOT_DIR = Path(__file__).parent.resolve()
 KNOWLEDGE_DIR = ROOT_DIR / "knowledge"
@@ -1123,6 +1125,12 @@ with st.sidebar:
 if "messages" not in st.session_state:
     st.session_state.messages = []
 
+glossary_context = parse_glossary_query(st.query_params)
+if glossary_context and glossary_context["request_id"] != st.session_state.get("last_glossary_request_id"):
+    st.session_state.last_glossary_request_id = glossary_context["request_id"]
+    st.session_state.current_glossary_context = glossary_context
+    st.session_state.current_prompt = GLOSSARY_SWEEP_QUESTION
+
 # If no messages yet: Google-like centered landing view
 if len(st.session_state.messages) == 0:
     st.markdown(f"""
@@ -1205,6 +1213,12 @@ if "current_prompt" in st.session_state and st.session_state.current_prompt:
     st.session_state.current_prompt = None
 
 if user_input:
+    active_glossary_context = st.session_state.pop("current_glossary_context", None)
+    analysis_input = (
+        build_glossary_analysis_prompt(active_glossary_context)
+        if active_glossary_context
+        else user_input
+    )
     st.session_state.messages.append({"role": "user", "content": user_input})
     user_avatar = str(USER_AVATAR_PATH) if USER_AVATAR_PATH.exists() else None
     assistant_avatar = str(ASSISTANT_AVATAR_PATH) if ASSISTANT_AVATAR_PATH.exists() else None
@@ -1212,7 +1226,7 @@ if user_input:
         st.markdown(user_input)
 
     with st.chat_message("assistant", avatar=assistant_avatar):
-        relevant_docs, confidence, meta = retrieve_relevant_docs(user_input, top_k=5)
+        relevant_docs, confidence, meta = retrieve_relevant_docs(analysis_input, top_k=5)
 
         # CONFIDENCE GATE: Warn user cleanly if no matching architecture docs found
         if confidence < 25 or not relevant_docs:
@@ -1236,13 +1250,13 @@ if user_input:
         with st.spinner("Conciliamus Advisor prüft Wissensgraph und generiert Antwort..."):
             # Provider Execution
             if "DeepSeek" in provider_choice and "Dual" not in provider_choice and active_deepseek_key:
-                answer = call_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", model_choice, user_input, relevant_docs)
+                answer = call_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", model_choice, analysis_input, relevant_docs)
             elif "OpenRouter" in provider_choice and active_deepseek_key:
-                answer = call_deepseek_or_openrouter(active_deepseek_key, "OpenRouter", model_choice, user_input, relevant_docs)
+                answer = call_deepseek_or_openrouter(active_deepseek_key, "OpenRouter", model_choice, analysis_input, relevant_docs)
             elif active_gemini_key:
-                answer = call_gemini(active_gemini_key, model_choice, user_input, relevant_docs)
+                answer = call_gemini(active_gemini_key, model_choice, analysis_input, relevant_docs)
             elif active_deepseek_key:
-                answer = call_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", "deepseek-chat", user_input, relevant_docs)
+                answer = call_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", "deepseek-chat", analysis_input, relevant_docs)
 
             # Resilient Fail-Safe: If provider returned None or failed with error, seamlessly fall back to Local Grounding!
             if not answer or (isinstance(answer, str) and answer.startswith("❌")):
@@ -1259,7 +1273,7 @@ if user_input:
             # Optional Critic / Audit Pass with DeepSeek
             if enable_audit and active_deepseek_key and not answer.startswith("❌") and not answer.startswith("⚠️"):
                 with st.spinner("DeepSeek führt unabhängigen Architektur-Audit durch..."):
-                    answer = run_critic_audit(active_deepseek_key, user_input, answer, relevant_docs)
+                    answer = run_critic_audit(active_deepseek_key, analysis_input, answer, relevant_docs)
 
         st.markdown(answer)
 
