@@ -342,6 +342,8 @@ def retrieve_relevant_docs(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
         cid_lower = c["id"].lower()
         cpath_lower = c["path"].lower()
         ctitle_lower = c["title"].lower()
+        slug = cpath_lower.split("/")[-1].replace(".md", "")
+        term = str(c["frontmatter"].get("term", "")).lower()
         
         # Priority boost for matching ADRs
         for eadr in explicit_adrs:
@@ -353,7 +355,9 @@ def retrieve_relevant_docs(query: str, top_k: int = 5) -> List[Dict[str, Any]]:
         for kw in keywords:
             cnt = min(c["fullText"].count(kw), 8)
             score += cnt
-            if kw in cid_lower:
+            if kw == slug or kw == term or kw == cid_lower.split("/")[-1]:
+                score += 50
+            elif kw in cid_lower:
                 score += 15
             if kw in ctitle_lower:
                 score += 12
@@ -380,7 +384,7 @@ Ton: {tone}
 Aufgabe: {purpose}
 
 Verbindliche Richtlinien:
-1. Beantworte alle Fragen strikt auf Basis der beigefügten Dokumente aus dem Google Open Knowledge Format (OKF v0.2) Wissensbündel (34 Dokumente, 12 ADRs).
+1. Beantworte alle Fragen strikt auf Basis der beigefügten Dokumente aus dem Google Open Knowledge Format (OKF v0.2) Wissensbündel ({len(concepts)} verifizierte Dokumente inkl. 12 ADRs und Enterprise Acronym Digest).
 2. Zitiere konkrete Architecture Decision Records (z.B. [ADR-001] bis [ADR-012]) und Konzeptdateien.
 3. Wenn Diagramme den Sachverhalt verdeutlichen, formatiere sie als Mermaid-Codeblöcke (`mermaid`).
 4. Betone stets Idempotenz, Entkopplung (Dual-iFlow), Bruce Silver BPMN 2.0 Method & Style Nomenklatur und Resilienz.
@@ -602,7 +606,7 @@ if len(st.session_state.messages) == 0:
             Senior SAP BTP Cloud Integration Specialist &amp; Enterprise Architect
         </p>
         <div style="display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 600; color: #38bdf8; background: rgba(14, 165, 233, 0.12); border: 1px solid rgba(56, 189, 248, 0.25); padding: 4px 14px; border-radius: 9999px;">
-            <span>Google OKF v0.2</span> • <span>34 Konzepte</span> • <span>12 verifizierte ADRs</span> • <span>Gemini 3.6 Flash</span>
+            <span>Google OKF v0.2</span> • <span>{len(concepts)} Konzepte</span> • <span>12 verifizierte ADRs</span> • <span>Gemini 3.6 Flash</span>
         </div>
         <p style="font-size: 12px; color: #64748b; margin-top: 24px;">
             💡 Wählen Sie links eine Beispielfrage aus der Seitenleiste ⇦ oder tippen Sie unten in das Eingabefeld.

@@ -1,6 +1,6 @@
 {
   "okfVersion": "0.2",
-  "nodesCount": 34,
+  "nodesCount": 308,
   "edgesCount": 99,
   "nodes": [
     {
@@ -419,6 +419,4597 @@
       "status": "accepted",
       "domain": "General",
       "degree": 6
+    },
+    {
+      "id": "digest/1950-turing-test",
+      "label": "1950: Turing Test (Imitation Game von Alan Turing)",
+      "type": "Architecture Concept",
+      "path": "/digest/1950-turing-test.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-1950"
+      ],
+      "description": "Klassisches Kriterium für Maschinenintelligenz: Kann ein Mensch im Textdialog Mensch und Maschine noch unterscheiden?",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/1956-dartmouth-workshop",
+      "label": "1956: Dartmouth Workshop (Geburt der KI)",
+      "type": "Architecture Concept",
+      "path": "/digest/1956-dartmouth-workshop.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-1956"
+      ],
+      "description": "Sommerkonferenz von John McCarthy, Marvin Minsky, Claude Shannon; Prägung des Begriffs Artificial Intelligence.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/1972-sap-r-1",
+      "label": "1972: SAP R/1 (Echtzeit-Finanzbuchhaltung / System R)",
+      "type": "Architecture Concept",
+      "path": "/digest/1972-sap-r-1.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-meilenstein",
+        "enterprise-erp-sap-btp",
+        "year-1972"
+      ],
+      "description": "Pionierleistung der EDV: Echtzeit-Verarbeitung von Buchungsbelegen auf IBM DOS/360 ohne Lochkarten-Batchläufe.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/1974-ki-winter-1",
+      "label": "1974: Erster KI-Winter (Lighthill-Report & DARPA)",
+      "type": "Architecture Concept",
+      "path": "/digest/1974-ki-winter-1.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-1974"
+      ],
+      "description": "Dramatischer Einbruch von Forschungsgeldern nach Scheitern früher maschineller Übersetzungen und kombinatorischer Explosion.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/1979-sap-r-2",
+      "label": "1979: SAP R/2 (Mainframe Standardsoftware)",
+      "type": "Architecture Concept",
+      "path": "/digest/1979-sap-r-2.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-meilenstein",
+        "enterprise-erp-sap-btp",
+        "year-1979"
+      ],
+      "description": "Integrierte betriebswirtschaftliche Standard-Software für Großrechnerarchitekturen (IBM, Siemens) in dialogfähiger Form.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/1987-ki-winter-2",
+      "label": "1987: Zweiter KI-Winter (Kollaps der Lisp-Maschinen)",
+      "type": "Architecture Concept",
+      "path": "/digest/1987-ki-winter-2.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier"
+      ],
+      "description": "Marktzusammenbruch spezialisierter Hardware-Hersteller; PC- und Unix-Workstations überflügeln teure KI-Silos.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/1992-sap-r-3",
+      "label": "1992: SAP R/3 (Client/Server 3-Schichten-Architektur)",
+      "type": "Architecture Concept",
+      "path": "/digest/1992-sap-r-3.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-meilenstein",
+        "enterprise-erp-sap-btp",
+        "year-1992"
+      ],
+      "description": "Klassische 3-Schichten-Architektur: Datenbank (RDBMS), Applikationsserver (ABAP Dynpro/Workprozesse) und SAP GUI Client.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/1997-ai-chess-supremacy",
+      "label": "1997: AI Chess Supremacy (Deep Blue schlägt Kasparow)",
+      "type": "Architecture Concept",
+      "path": "/digest/1997-ai-chess-supremacy.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-1997"
+      ],
+      "description": "IBM Deep Blue nutzt massive Parallel-Hardware (ASICs) und Alpha-Beta-Suchbäume mit 200 Mio. Stellungen/Sekunde.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/200",
+      "label": "HTTP 200 OK",
+      "type": "Architecture Concept",
+      "path": "/digest/200.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status",
+        "web-ui-frameworks",
+        "year-1996"
+      ],
+      "description": "RFC 9110 Standard-Statuscode für erfolgreiche synchrone HTTP-Anfragen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/2004-sap-ecc-6-0",
+      "label": "2004: SAP ECC 6.0 (ERP Central Component & NetWeaver)",
+      "type": "Architecture Concept",
+      "path": "/digest/2004-sap-ecc-6-0.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-meilenstein",
+        "enterprise-erp-sap-btp",
+        "year-2004"
+      ],
+      "description": "Service-orientierte ERP-Plattform mit nativer Web-Fähigkeit (ICM), Enterprise Services und PI/PO Middleware.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/201",
+      "label": "HTTP 201 Created (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/201.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status-http",
+        "os-netzwerk-transport",
+        "year-1996"
+      ],
+      "description": "Standard-Erfolgsstatuscode: Die Anfrage war erfolgreich und hat zur Erstellung einer neuen Ressource geführt.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/2011-sap-hana",
+      "label": "2011: SAP HANA (High-Performance Analytic Appliance)",
+      "type": "Architecture Concept",
+      "path": "/digest/2011-sap-hana.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-meilenstein",
+        "enterprise-erp-sap-btp",
+        "year-2011"
+      ],
+      "description": "Spaltenorientiertes In-Memory Relationales Datenbanksystem mit nativer massiver Parallelverarbeitung und Code-Pushdown.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/2012-deep-learning-boom",
+      "label": "2012: AlexNet & Deep Learning Revolution",
+      "type": "Architecture Concept",
+      "path": "/digest/2012-deep-learning-boom.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-2012"
+      ],
+      "description": "Durchbruch von Convolutional Neural Networks (CNNs) auf GPUs bei ImageNet (Krizhevsky, Sutskever, Hinton).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/2015-sap-s-4hana",
+      "label": "2015: SAP S/4HANA (Business Suite 4 SAP HANA)",
+      "type": "Architecture Concept",
+      "path": "/digest/2015-sap-s-4hana.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-meilenstein",
+        "enterprise-erp-sap-btp",
+        "year-2015"
+      ],
+      "description": "Cloud- und On-Premise fähiges Enterprise-ERP mit REST/OData-First Architektur und entkoppelter UI.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/2016-ai-go-supremacy",
+      "label": "2016: AI GO Supremacy (AlphaGo schlägt Lee Sedol)",
+      "type": "Architecture Concept",
+      "path": "/digest/2016-ai-go-supremacy.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-2016"
+      ],
+      "description": "Google DeepMind kombiniert Deep Neural Networks mit Monte Carlo Tree Search (MCTS) und Reinforcement Learning.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/2017-attention-is-all-you-need",
+      "label": "2017: Attention Is All You Need (Transformer-Architektur)",
+      "type": "Architecture Concept",
+      "path": "/digest/2017-attention-is-all-you-need.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-2017"
+      ],
+      "description": "Google Brain Meilenstein-Paper: Einführung der Self-Attention Mechanik; löst sequenzielle RNNs/LSTMs ab.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/2018-erstes-llm",
+      "label": "2018: Erstes LLM (BERT & GPT-1 Foundation Models)",
+      "type": "Architecture Concept",
+      "path": "/digest/2018-erstes-llm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-2018"
+      ],
+      "description": "Paradigmenwechsel zum unüberwachten Pre-Training auf massiven Web-Korpora mit nachfolgendem Task-spezifischem Fine-Tuning.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/202",
+      "label": "HTTP 202 Accepted",
+      "type": "Architecture Concept",
+      "path": "/digest/202.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status",
+        "web-ui-frameworks",
+        "year-1996"
+      ],
+      "description": "RFC 9110 Status: Auftrag akzeptiert, Verarbeitung erfolgt asynchron im Hintergrund.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/2020-sap-btp",
+      "label": "2020: SAP BTP (Business Technology Platform)",
+      "type": "Architecture Concept",
+      "path": "/digest/2020-sap-btp.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-meilenstein",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "PaaS-Ökosystem basierend auf Cloud Foundry, Kubernetes (Kyma) und Hyperscalern (AWS, Azure, GCP).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/2022-chatgpt-genai",
+      "label": "2022: ChatGPT & Generative AI Durchbruch",
+      "type": "Architecture Concept",
+      "path": "/digest/2022-chatgpt-genai.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-2022"
+      ],
+      "description": "OpenAI kombiniert GPT-3.5 mit Reinforcement Learning from Human Feedback (RLHF); 100 Mio. Nutzer in zwei Monaten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/204",
+      "label": "HTTP 204 No Content (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/204.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status-http",
+        "os-netzwerk-transport",
+        "year-1996"
+      ],
+      "description": "Erfolgsstatus: Die Server-Aktion wurde ausgeführt, liefert aber absichtlich keinen Response-Body zurück.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/400",
+      "label": "HTTP 400 Bad Request (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/400.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status-http",
+        "os-netzwerk-transport",
+        "year-1996"
+      ],
+      "description": "Client-Fehlercode: Der Server kann die Anfrage aufgrund fehlerhafter Syntax nicht verarbeiten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/401",
+      "label": "HTTP 401 Unauthorized",
+      "type": "Architecture Concept",
+      "path": "/digest/401.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status",
+        "os-netzwerk-transport",
+        "year-1996"
+      ],
+      "description": "RFC 9110 Client-Fehler: Fehlende oder ungültige Authentifizierungs-Credentials.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/403",
+      "label": "HTTP 403 Forbidden (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/403.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status-security",
+        "os-netzwerk-transport",
+        "year-1996"
+      ],
+      "description": "Client-Fehlercode: Die Authentifizierung war gültig, aber dem Client fehlen die Zugriffsrechte.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/404",
+      "label": "HTTP 404 Not Found (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/404.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status-http",
+        "os-netzwerk-transport",
+        "year-1996"
+      ],
+      "description": "Client-Fehlercode: Die angeforderte Zielressource konnte auf dem Zielserver nicht gefunden werden.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/409",
+      "label": "HTTP 409 Conflict (RFC 7231 / RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/409.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-status",
+        "os-netzwerk-transport",
+        "year-1996"
+      ],
+      "description": "Signalisiert, dass der Request aufgrund eines Ressourcenkonflikts (z. B. Versionierungskonflikt bei gleichzeitigem PATCH) nicht ausgeführt werden konnte.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/429",
+      "label": "HTTP 429 Too Many Requests (RFC 6585)",
+      "type": "Architecture Concept",
+      "path": "/digest/429.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status-http",
+        "os-netzwerk-transport"
+      ],
+      "description": "Client-Fehler: Der Client hat innerhalb eines Zeitfensters zu viele Anfragen gesendet (Rate Limit).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/500",
+      "label": "HTTP 500 Internal Server Error",
+      "type": "Architecture Concept",
+      "path": "/digest/500.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status",
+        "web-ui-frameworks",
+        "year-1996"
+      ],
+      "description": "RFC 9110 Generischer Serverfehler bei unbehandelter Exception in der Laufzeit.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/502",
+      "label": "HTTP 502 Bad Gateway (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/502.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status-http",
+        "os-netzwerk-transport"
+      ],
+      "description": "Server-Fehler: Ein Server fungierte als Gateway/Proxy und erhielt eine ungültige Antwort vom Upstream-Server.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/503",
+      "label": "HTTP 503 Service Unavailable (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/503.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status-http",
+        "os-netzwerk-transport",
+        "year-1996"
+      ],
+      "description": "Server-Fehler: Der Server ist vorübergehend nicht bereit, die Anfrage zu verarbeiten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/504",
+      "label": "HTTP 504 Gateway Timeout (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/504.md",
+      "tags": [
+        "digest",
+        "concept",
+        "status-http",
+        "os-netzwerk-transport"
+      ],
+      "description": "Server-Fehler: Der Gateway-Server erhielt nicht rechtzeitig eine Antwort vom Upstream-Backend.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/abap",
+      "label": "Advanced Business Application Programming",
+      "type": "Architecture Concept",
+      "path": "/digest/abap.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-core",
+        "enterprise-erp-sap-btp",
+        "year-1983"
+      ],
+      "description": "Höhere, typisierte 4GL-Business-Programmiersprache mit nativer SQL-Kopplung (OpenSQL) und Work-Process-Laufzeit.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ada-lovelace",
+      "label": "Erster Computeralgorithmus der Geschichte (Ada Lovelace 1843)",
+      "type": "Architecture Concept",
+      "path": "/digest/ada-lovelace.md",
+      "tags": [
+        "digest",
+        "concept",
+        "software-meilenstein",
+        "hardware-physis",
+        "year-1843"
+      ],
+      "description": "Verfasste für Charles Babbages 'Analytical Engine' den Algorithmus zur Berechnung von Bernoulli-Zahlen – erstes Computerprogramm der Welt.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/adr",
+      "label": "Architectural Decision Record",
+      "type": "Architecture Concept",
+      "path": "/digest/adr.md",
+      "tags": [
+        "digest",
+        "concept",
+        "architektur",
+        "security-governance-kritis",
+        "year-2011"
+      ],
+      "description": "Leichtgewichtiges Textartefakt nach Michael Nygard zur Dokumentation von Entwurfsentscheidungen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/adt",
+      "label": "ABAP Development Tools (in Eclipse)",
+      "type": "Architecture Concept",
+      "path": "/digest/adt.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-core",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Eclipse-Plugin mit REST-basierter Client-Server-Anbindung an das SAP NetWeaver Backend (ersetzt SE80).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/agentic-coding",
+      "label": "Agentic Coding (Autonomes Pair Programming)",
+      "type": "Architecture Concept",
+      "path": "/digest/agentic-coding.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-devops",
+        "ki-agenten-frontier",
+        "year-2025"
+      ],
+      "description": "Paradigmenwechsel: Autonome KI-Agenten schreiben, testen, debuggen und deployen Code selbstständig im ReAct-Loop.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ai-hub",
+      "label": "SAP Generative AI Hub (BTP)",
+      "type": "Architecture Concept",
+      "path": "/digest/ai-hub.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier",
+        "year-2024"
+      ],
+      "description": "Enterprise API-Gateway & Proxy für LLMs mit Zero-Data-Retention-Garantie und Prompt-Orchestrierung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ai",
+      "label": "Artificial Intelligence",
+      "type": "Architecture Concept",
+      "path": "/digest/ai.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier"
+      ],
+      "description": "Maschinelles Lernen, LLMs (Gemini 3.6 Flash) und semantische Wissensverarbeitung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ale",
+      "label": "Application Link Enabling (SAP Architektur)",
+      "type": "Architecture Concept",
+      "path": "/digest/ale.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-integration",
+        "enterprise-erp-sap-btp",
+        "year-1994"
+      ],
+      "description": "Enterprise Application Integration (EAI) Mechanismus für Stammdaten- und Belegverteilung im SAP-Verbund.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/alexnet",
+      "label": "AlexNet – Deep Learning Durchbruch (Krizhevsky & Hinton ImageNet 2012)",
+      "type": "Architecture Concept",
+      "path": "/digest/alexnet.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier",
+        "year-2012"
+      ],
+      "description": "Convolutional Neural Network (CNN) trainiert auf zwei Nvidia GPUs; deklassierte bisherige Bildverarbeitung und startete den KI-Frühling.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/algorithmus",
+      "label": "Erfindung des Begriffs Algorithmus (Al-Chwarizmi ca. 825 n. Chr.)",
+      "type": "Architecture Concept",
+      "path": "/digest/algorithmus.md",
+      "tags": [
+        "digest",
+        "concept",
+        "informatik-urprung",
+        "ki-agenten-frontier",
+        "year-825"
+      ],
+      "description": "Zurückzuführen auf den persischen Universalgelehrten Al-Chwarizmi: Systematische, endliche Handlungsvorschrift zur schrittweisen Problemlösung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/alibaba",
+      "label": "Gründung von Alibaba (Jack Ma April 1999)",
+      "type": "Architecture Concept",
+      "path": "/digest/alibaba.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hyperscaler-gruendung",
+        "security-governance-kritis",
+        "year-1999"
+      ],
+      "description": "Führender asiatischer E-Commerce- und Cloud-Gigant (Alibaba Cloud / Aliyun) mit massiver Skalierung im ostasiatischen Wirtschaftsraum.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/alm",
+      "label": "Application Lifecycle Management (SAP Cloud ALM)",
+      "type": "Architecture Concept",
+      "path": "/digest/alm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "governance",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Zentrale Observability- und ITIL-Governance-Suite für Multi-Cloud-Deployments und Integration Monitoring.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/amazon",
+      "label": "Gründung von Amazon (Jeff Bezos Juli 1994)",
+      "type": "Architecture Concept",
+      "path": "/digest/amazon.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hyperscaler-gruendung",
+        "hardware-physis",
+        "year-1994"
+      ],
+      "description": "Startete als Online-Buchhändler; revolutionierte den globalen E-Commerce und schuf durch eigene Überkapazitäten die moderne Cloud-Industrie.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/analytical-engine",
+      "label": "Babbage Analytical Engine – Erster universeller Computerentwurf (1837)",
+      "type": "Architecture Concept",
+      "path": "/digest/analytical-engine.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "hardware-physis",
+        "year-1837"
+      ],
+      "description": "Charles Babbages mechanischer Entwurf eines universell programmierbaren Rechners mit Arithmetik, Speicher, Verzweigungen und Schleifen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/angular",
+      "label": "Angular 2+ (Google TypeScript Rewrite 2016)",
+      "type": "Architecture Concept",
+      "path": "/digest/angular.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "web-ui-frameworks",
+        "year-2016"
+      ],
+      "description": "Skalierbares TypeScript-Framework mit strikter Modularität, Dependency Injection und reaktiven RxJS-Streams.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/angularjs",
+      "label": "AngularJS 1.x (Google 2010)",
+      "type": "Architecture Concept",
+      "path": "/digest/angularjs.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "web-ui-frameworks",
+        "year-2010"
+      ],
+      "description": "Googles bahnbrechendes Client-seitiges MVC/MVVM-Framework mit Two-Way Data Binding und Dependency Injection.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/anthropic",
+      "label": "Anthropic PBC (AI Safety & Research Company)",
+      "type": "Architecture Concept",
+      "path": "/digest/anthropic.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-ecosystem",
+        "ki-agenten-frontier",
+        "year-2021"
+      ],
+      "description": "KI-Forschungsunternehmen mit Fokus auf Constitutional AI, Model Steerability und sichere Frontier-Modelle.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/antigravity",
+      "label": "Google Antigravity Agentic Platform",
+      "type": "Architecture Concept",
+      "path": "/digest/antigravity.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-devops",
+        "ki-agenten-frontier",
+        "year-2025"
+      ],
+      "description": "Hochentwickeltes agentisches KI-System des Google DeepMind Teams für autonomes Multi-Agenten Pair Programming.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/apache-camel",
+      "label": "Apache Camel (Open-Source EIP Framework & CPI Runtime)",
+      "type": "Architecture Concept",
+      "path": "/digest/apache-camel.md",
+      "tags": [
+        "digest",
+        "concept",
+        "architektur-standard",
+        "software-architektur-frameworks",
+        "year-2007"
+      ],
+      "description": "Führendes Open-Source Enterprise Integration Patterns (EIP) Framework mit deklarativen Routen, Exchange-Objekt und Komponenten-Ökosystem.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/api",
+      "label": "Application Programming Interface",
+      "type": "Architecture Concept",
+      "path": "/digest/api.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-api",
+        "web-ui-frameworks",
+        "year-1968"
+      ],
+      "description": "Formalisierter Programmiervertrag zur Interaktion zwischen Softwaresystemen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/apl",
+      "label": "Automated Predictive Library (SAP HANA)",
+      "type": "Architecture Concept",
+      "path": "/digest/apl.md",
+      "tags": [
+        "digest",
+        "concept",
+        "data-ai",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "C++-optimierte statistische ML-Routinen (Regression, Klassifikation, Zeitreihen) ohne Datenbewegung (In-Memory).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/apple-i",
+      "label": "Apple I Computer (Steve Wozniak & Steve Jobs 1976)",
+      "type": "Architecture Concept",
+      "path": "/digest/apple-i.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "web-ui-frameworks",
+        "year-1976"
+      ],
+      "description": "Von Steve Wozniak in Handarbeit entworfene Einplatinen-Computerplatine, vermarktet von Steve Jobs aus der Garage.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/apple",
+      "label": "Gründung von Apple Computer Co. (Jobs & Wozniak April 1976)",
+      "type": "Architecture Concept",
+      "path": "/digest/apple.md",
+      "tags": [
+        "digest",
+        "concept",
+        "pionier-plattform",
+        "web-ui-frameworks",
+        "year-1976"
+      ],
+      "description": "Pionier für Personal Computer (Apple II, Mac), grafische Benutzeroberflächen und das Smartphone-Ökosystem (iOS/App Store).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/arpanet",
+      "label": "ARPANET – Vorläufer des Internets (DARPA 1969)",
+      "type": "Architecture Concept",
+      "path": "/digest/arpanet.md",
+      "tags": [
+        "digest",
+        "concept",
+        "netzwerk-meilenstein",
+        "web-ui-frameworks",
+        "year-1969"
+      ],
+      "description": "Erstes dezentrales, paketvermittelndes Weitverkehrsnetz der DARPA (Kopplung von UCLA, Stanford, UCSB, Utah).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/aws",
+      "label": "Start von Amazon Web Services (AWS S3 & EC2 2006)",
+      "type": "Architecture Concept",
+      "path": "/digest/aws.md",
+      "tags": [
+        "digest",
+        "concept",
+        "cloud-hyperscaler",
+        "security-governance-kritis",
+        "year-2006"
+      ],
+      "description": "Geburtsstunde von Infrastructure-as-a-Service (IaaS): Programmierbare Rechenleistung und Speicher auf Knopfdruck über REST-APIs.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/azure",
+      "label": "Ankündigung von Windows Azure (Microsoft Okt 2008)",
+      "type": "Architecture Concept",
+      "path": "/digest/azure.md",
+      "tags": [
+        "digest",
+        "concept",
+        "cloud-hyperscaler",
+        "security-governance-kritis",
+        "year-2008"
+      ],
+      "description": "Microsofts globale Cloud-Plattform: Bietet IaaS, PaaS und Enterprise-Integration nahtlos verzahnt mit Active Directory und Office.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/bapi",
+      "label": "Business Application Programming Interface",
+      "type": "Architecture Concept",
+      "path": "/digest/bapi.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-core",
+        "enterprise-erp-sap-btp",
+        "year-1996"
+      ],
+      "description": "Remote Function Call (RFC) fähiger Funktionsbaustein mit stabiler Schnittstelle und Datenbank-Commit.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/bd87",
+      "label": "Statusmonitor zur IDoc-Nachbearbeitung (SAP GUI)",
+      "type": "Architecture Concept",
+      "path": "/digest/bd87.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-1996"
+      ],
+      "description": "Transaktion zur gezielten Fehlerbehebung und Wiederholung fehlgeschlagener Integrationsnachrichten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/bitcoin",
+      "label": "Bitcoin & Blockchain Whitepaper (Satoshi Nakamoto Okt 2008)",
+      "type": "Architecture Concept",
+      "path": "/digest/bitcoin.md",
+      "tags": [
+        "digest",
+        "concept",
+        "krypto-konsens",
+        "security-governance-kritis",
+        "year-2008"
+      ],
+      "description": "Erste dezentrale Kryptowährung mit Proof-of-Work-Konsens. Löst das Problem der Byzantinischen Generäle ohne zentrale Bank.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/bootstrap",
+      "label": "Twitter Bootstrap Framework (2011)",
+      "type": "Architecture Concept",
+      "path": "/digest/bootstrap.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "web-ui-frameworks",
+        "year-2011"
+      ],
+      "description": "Das populärste HTML5/CSS3 UI-Framework für responsive Grid-Layouts, Komponenten und Typografie.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/bp-business-partner",
+      "label": "Business Partner (Geschäftspartner)",
+      "type": "Architecture Concept",
+      "path": "/digest/bp-business-partner.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-domaene",
+        "enterprise-erp-sap-btp",
+        "year-1998"
+      ],
+      "description": "Klassische relationale Stammdaten-Entität mit Rollen, Adressen und steuerlichen Identifikatoren.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/bpmn",
+      "label": "Business Process Model and Notation",
+      "type": "Architecture Concept",
+      "path": "/digest/bpmn.md",
+      "tags": [
+        "digest",
+        "concept",
+        "methodik",
+        "enterprise-erp-sap-btp",
+        "year-2004"
+      ],
+      "description": "ISO/IEC 19510 Standard zur Geschäftsprozessmodellierung; im iFlow als Camel-XML interpretiert.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/btp",
+      "label": "SAP Business Technology Platform",
+      "type": "Architecture Concept",
+      "path": "/digest/btp.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-domaene",
+        "enterprise-erp-sap-btp",
+        "year-2021"
+      ],
+      "description": "Multi-Cloud Plattform auf Cloud Foundry & Kubernetes (Gardener) Basis auf Hyperscalern.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/c",
+      "label": "Programmiersprache C (Dennis Ritchie / Bell Labs 1972)",
+      "type": "Architecture Concept",
+      "path": "/digest/c.md",
+      "tags": [
+        "digest",
+        "concept",
+        "software-meilenstein",
+        "web-ui-frameworks",
+        "year-1972"
+      ],
+      "description": "Systemnahe, hocheffiziente Programmiersprache von Dennis Ritchie – schuf das Unix-Betriebssystem und prägte alle modernen Sprachen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/cap",
+      "label": "SAP Cloud Application Programming Model",
+      "type": "Architecture Concept",
+      "path": "/digest/cap.md",
+      "tags": [
+        "digest",
+        "concept",
+        "entwicklung",
+        "enterprise-erp-sap-btp",
+        "year-2018"
+      ],
+      "description": "Meinungsstarkes Full-Stack-Framework (Node.js/Java) basierend auf Core Data Services (CDS) und OData/REST-Generierung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/cdn",
+      "label": "Content Delivery Network",
+      "type": "Architecture Concept",
+      "path": "/digest/cdn.md",
+      "tags": [
+        "digest",
+        "concept",
+        "cloud-web",
+        "web-ui-frameworks"
+      ],
+      "description": "Geografisch verteiltes Netzwerk von Proxy-Servern zur schnellen, latenzarmen Auslieferung von Webinhalten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/cds",
+      "label": "Core Data Services (SAP HANA / ABAP)",
+      "type": "Architecture Concept",
+      "path": "/digest/cds.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-core-data",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Deklaratives DDL/DQL Datenmodellierungswerkzeug zur Definition semantisch reicher Views mit Code-Pushdown.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ci-cd",
+      "label": "Continuous Integration & Continuous Delivery (2001)",
+      "type": "Architecture Concept",
+      "path": "/digest/ci-cd.md",
+      "tags": [
+        "digest",
+        "concept",
+        "methodik-devops",
+        "security-governance-kritis",
+        "year-2001"
+      ],
+      "description": "DevOps-Praxis zur kontinuierlichen automatisierten Integration, Testausführung und Bereitstellung von Softwareänderungen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/cisco",
+      "label": "Gründung von Cisco Systems (Bosack & Lerner Stanford 1984)",
+      "type": "Architecture Concept",
+      "path": "/digest/cisco.md",
+      "tags": [
+        "digest",
+        "concept",
+        "netzwerk-hardware",
+        "os-netzwerk-transport",
+        "year-1984"
+      ],
+      "description": "Pionier des Multi-Protokoll-Routers (AGS). Schuf die Hardware-Infrastruktur für den weltweiten Aufbau des Internets.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/claude",
+      "label": "Claude (Frontier AI Model Family by Anthropic)",
+      "type": "Architecture Concept",
+      "path": "/digest/claude.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier",
+        "year-2023"
+      ],
+      "description": "Hochpräzise autoregressive LLM-Familie (Sonnet, Opus, Haiku) mit großem Kontextfenster und starker Logikleistung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/cloud-computing",
+      "label": "Durchbruch des Cloud-Computing (Eric Schmidt / AWS 2006)",
+      "type": "Architecture Concept",
+      "path": "/digest/cloud-computing.md",
+      "tags": [
+        "digest",
+        "concept",
+        "cloud-paradigma",
+        "security-governance-kritis",
+        "year-2006"
+      ],
+      "description": "On-Demand-Bereitstellung von IT-Ressourcen (Server, Speicher, Datenbanken, Software) über das Internet nach Pay-as-you-go.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/co",
+      "label": "SAP CO (Controlling / Kostenrechnung)",
+      "type": "Architecture Concept",
+      "path": "/digest/co.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-modul",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Management Accounting Modul zur internen Kostenverrechnung und Wirtschaftlichkeitsanalyse.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/codex",
+      "label": "OpenAI Codex Agentic Coding Tool (OpenAI 2025)",
+      "type": "Architecture Concept",
+      "path": "/digest/codex.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-tooling",
+        "ki-agenten-frontier",
+        "year-2025"
+      ],
+      "description": "Autonomes Agentic-Coding-Tool von OpenAI: Versteht Code-Repositories, führt Terminalbefehle aus und refaktoriert Multi-File-Codebases.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/connect",
+      "label": "HTTP CONNECT (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/connect.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-verb",
+        "web-ui-frameworks"
+      ],
+      "description": "Standard-HTTP-Methode zur Etablierung eines bidirektionalen TCP/IP-Tunnels über einen HTTP-Proxy.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/cors",
+      "label": "Cross-Origin Resource Sharing",
+      "type": "Architecture Concept",
+      "path": "/digest/cors.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-security",
+        "web-ui-frameworks",
+        "year-2006"
+      ],
+      "description": "W3C-Standard zur Einschränkung von Cross-Origin HTTP-Requests im Webbrowser.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/cpi",
+      "label": "Cloud Platform Integration (SAP CI)",
+      "type": "Architecture Concept",
+      "path": "/digest/cpi.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-domaene",
+        "enterprise-erp-sap-btp",
+        "year-2016"
+      ],
+      "description": "Enterprise Integration Patterns (EIP) Runtime auf Apache Camel Basis in einer Cloud-PaaS.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/credly",
+      "label": "Credly Digital Credentials",
+      "type": "Architecture Concept",
+      "path": "/digest/credly.md",
+      "tags": [
+        "digest",
+        "concept",
+        "zertifizierung",
+        "hardware-physis"
+      ],
+      "description": "Weltweites Verifikationsnetzwerk für kryptografisch validierte digitale Bildungsnachweise.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/csrf",
+      "label": "CSRF-Schutz & Two-Legged Handshake",
+      "type": "Architecture Concept",
+      "path": "/digest/csrf.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-security",
+        "security-governance-kritis",
+        "year-2006"
+      ],
+      "description": "Sicherheitsstandard (OWASP Top 10), der verhindert, dass unautorisierte Befehle im Namen eines authentifizierten Benutzers übertragen werden.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ctfl",
+      "label": "Certified Tester Foundation Level (ISTQB)",
+      "type": "Architecture Concept",
+      "path": "/digest/ctfl.md",
+      "tags": [
+        "digest",
+        "concept",
+        "zertifizierung",
+        "hardware-physis"
+      ],
+      "description": "Weltweit anerkannter ISTQB Grundstufen-Standard für strukturiertes Testdesign.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/cuda",
+      "label": "Nvidia CUDA – General-Purpose GPU-Computing (Juni 2006)",
+      "type": "Architecture Concept",
+      "path": "/digest/cuda.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-ki-motor",
+        "ki-agenten-frontier",
+        "year-2006"
+      ],
+      "description": "Compute Unified Device Architecture: Machte hochgradig parallele Grafikprozessoren universell für Matrixrechnungen programmierbar.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/deepseek",
+      "label": "DeepSeek Open-Weights Frontier AI (2024)",
+      "type": "Architecture Concept",
+      "path": "/digest/deepseek.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-frontier",
+        "ki-agenten-frontier",
+        "year-2024"
+      ],
+      "description": "Open-Weights LLM-Durchbruch aus China mit Mixture-of-Experts (MoE) und Multi-Head Latent Attention bei radikal reduzierten Trainingskosten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/delete",
+      "label": "HTTP DELETE (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/delete.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-verb",
+        "web-ui-frameworks",
+        "year-1996"
+      ],
+      "description": "Standard-HTTP-Methode zum Entfernen der durch den Request-URI identifizierten Ressource.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/dell",
+      "label": "Gründung von Dell Technologies / PC's Limited (Michael Dell Mai 1984)",
+      "type": "Architecture Concept",
+      "path": "/digest/dell.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-server",
+        "hardware-physis",
+        "year-1984"
+      ],
+      "description": "Pionier des direkten Built-to-Order-Vertriebs; standardisierte kosteneffiziente Enterprise-x86-Serverarchitekturen weltweit.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/dlq",
+      "label": "Dead Letter Queue & Technischer Fehlerpfad (Data Store)",
+      "type": "Architecture Concept",
+      "path": "/digest/dlq.md",
+      "tags": [
+        "digest",
+        "concept",
+        "architektur",
+        "enterprise-erp-sap-btp",
+        "year-2003"
+      ],
+      "description": "Enterprise Integration Pattern (EIP): Nachrichten, die nach Erschöpfung der Retries nicht zugestellt werden können, werden in eine DLQ verschoben.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/dns",
+      "label": "Domain Name System (Paul Mockapetris RFC 882 1983)",
+      "type": "Architecture Concept",
+      "path": "/digest/dns.md",
+      "tags": [
+        "digest",
+        "concept",
+        "netzwerk-standard",
+        "web-ui-frameworks",
+        "year-1983"
+      ],
+      "description": "Hierarchisch verteiltes Namenssystem zur Übersetzung lesbarer Domainnamen in numerische IP-Adressen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/docker",
+      "label": "Docker Container-Revolution (Solomon Hykes März 2013)",
+      "type": "Architecture Concept",
+      "path": "/digest/docker.md",
+      "tags": [
+        "digest",
+        "concept",
+        "cloud-container",
+        "security-governance-kritis",
+        "year-2013"
+      ],
+      "description": "Leichtgewichtige Betriebssystem-Virtualisierung via Linux-Namespaces und cgroups. Schuf standardisierte, portable Container-Images.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/dom",
+      "label": "Document Object Model (W3C)",
+      "type": "Architecture Concept",
+      "path": "/digest/dom.md",
+      "tags": [
+        "digest",
+        "concept",
+        "xml-parsing",
+        "web-ui-frameworks",
+        "year-1998"
+      ],
+      "description": "Baumorientierte In-Memory-Repräsentation von XML- und HTML-Dokumenten mit Traversierungs-API.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/dora",
+      "label": "EU Digital Operational Resilience Act (Januar 2025)",
+      "type": "Architecture Concept",
+      "path": "/digest/dora.md",
+      "tags": [
+        "digest",
+        "concept",
+        "eu-regulierung-resilienz",
+        "security-governance-kritis",
+        "year-2025"
+      ],
+      "description": "Einheitliches EU-Regelwerk für operative digitale Resilienz, Threat-Led Penetration Testing (TLPT) und IKT-Incident-Management.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/dsgvo-gdpr",
+      "label": "EU-Datenschutz-Grundverordnung (DSGVO / GDPR Mai 2018)",
+      "type": "Architecture Concept",
+      "path": "/digest/dsgvo-gdpr.md",
+      "tags": [
+        "digest",
+        "concept",
+        "eu-regulierung-recht",
+        "security-governance-kritis",
+        "year-2018"
+      ],
+      "description": "Weltweiter Goldstandard für informationelle Selbstbestimmung: Privacy by Design, Recht auf Vergessenwerden und drakonische Bußgelder.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/dsgvo",
+      "label": "EU-Datenschutz-Grundverordnung (DSGVO / GDPR Mai 2018)",
+      "type": "Architecture Concept",
+      "path": "/digest/dsgvo.md",
+      "tags": [
+        "digest",
+        "concept",
+        "eu-regulierung-recht",
+        "security-governance-kritis",
+        "year-2018"
+      ],
+      "description": "Weltweiter Goldstandard für informationelle Selbstbestimmung: Privacy by Design, Recht auf Vergessenwerden und drakonische Bußgelder.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/dtd",
+      "label": "Document Type Definition (W3C)",
+      "type": "Architecture Concept",
+      "path": "/digest/dtd.md",
+      "tags": [
+        "digest",
+        "concept",
+        "xml-schema",
+        "web-ui-frameworks"
+      ],
+      "description": "Historischer Vorläufer von XML-Schema (XSD) zur formalen Definition erlaubter Elemente und Attribute.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/eai",
+      "label": "Enterprise Application Integration (Gartner Standard 1998)",
+      "type": "Architecture Concept",
+      "path": "/digest/eai.md",
+      "tags": [
+        "digest",
+        "concept",
+        "integration-methodik",
+        "ki-agenten-frontier",
+        "year-1998"
+      ],
+      "description": "Architekturdisziplin zur Verknüpfung heterogener Unternehmensanwendungen über zentralisierte Middleware (Hub-and-Spoke, Message Bus).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/eniac",
+      "label": "ENIAC – Erster elektronischer Universalrechner (1945)",
+      "type": "Architecture Concept",
+      "path": "/digest/eniac.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "hardware-physis",
+        "year-1945"
+      ],
+      "description": "Electronic Numerical Integrator and Computer: Erster universeller, rein elektronischer Röhrenrechner (18.000 Elektronenröhren, 5.000 Additionen/Sek.).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/erp",
+      "label": "Enterprise Resource Planning",
+      "type": "Architecture Concept",
+      "path": "/digest/erp.md",
+      "tags": [
+        "digest",
+        "concept",
+        "enterprise",
+        "enterprise-erp-sap-btp",
+        "year-1990"
+      ],
+      "description": "Integrierte betriebswirtschaftliche Standard-Anwendungssoftware zur Ressourcenplanung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/erster-weltkrieg",
+      "label": "Erster Weltkrieg – Chiffrierung, Funk & Logistik (1914–1918)",
+      "type": "Architecture Concept",
+      "path": "/digest/erster-weltkrieg.md",
+      "tags": [
+        "digest",
+        "concept",
+        "epoche-meilenstein",
+        "security-governance-kritis",
+        "year-1914"
+      ],
+      "description": "Erster industrialisierter Krieg: Durchbruch drahtloser Telegrafie, mechanischer Chiffriergeräte (ADFGVX) und militärischer Standardisierung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/esperanto",
+      "label": "Esperanto – Friedenssprache nach dem Zweiten Weltkrieg (UNESCO 1954)",
+      "type": "Architecture Concept",
+      "path": "/digest/esperanto.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sprach-kommunikations-meilenstein",
+        "hardware-physis",
+        "year-1954"
+      ],
+      "description": "Konstruierte, neutrale Weltsprache für völkerverbindende Verständigung. Erlebte nach dem 2. Weltkrieg mit der UNESCO-Resolution 1954 ihren historischen Höhepunk",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ethernet",
+      "label": "Ethernet LAN-Standard (Robert Metcalfe / Xerox PARC 1973)",
+      "type": "Architecture Concept",
+      "path": "/digest/ethernet.md",
+      "tags": [
+        "digest",
+        "concept",
+        "netzwerk-standard",
+        "web-ui-frameworks",
+        "year-1973"
+      ],
+      "description": "Erfindung der kabelgebundenen Paketübertragung mit CSMA/CD. Standardisierte weltweite LANs (IEEE 802.3).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/eu-ai-act",
+      "label": "Europäische KI-Verordnung (EU 2024/1689)",
+      "type": "Architecture Concept",
+      "path": "/digest/eu-ai-act.md",
+      "tags": [
+        "digest",
+        "concept",
+        "governance",
+        "ki-agenten-frontier",
+        "year-2024"
+      ],
+      "description": "Verbindlicher Rechtsrahmen der EU zur Risikoklassifizierung und Regulierung von KI-Systemen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/event-mesh",
+      "label": "SAP Event Mesh (Cloud Message Broker)",
+      "type": "Architecture Concept",
+      "path": "/digest/event-mesh.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-integration",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Message-Queueing und Event-Publish/Subscribe Dienst nach CloudEvents-Standard (Alternative zu Apache Kafka).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ewm",
+      "label": "SAP EWM (Extended Warehouse Management)",
+      "type": "Architecture Concept",
+      "path": "/digest/ewm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-modul",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Spezialisierte Supply-Chain-Software für Lagerplatzverwaltung, Kommissionierung und Ressourcensteuerung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ext-js",
+      "label": "Ext JS / Sencha Enterprise Desktop Framework (2007)",
+      "type": "Architecture Concept",
+      "path": "/digest/ext-js.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "web-ui-frameworks",
+        "year-2007"
+      ],
+      "description": "Schwergewichtiges JavaScript-MVC-Framework für desktop-ähnliche Web-Oberflächen (Grids, Trees, Tabs) vor HTML5.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/fi",
+      "label": "SAP FI (Financial Accounting / Finanzwesen)",
+      "type": "Architecture Concept",
+      "path": "/digest/fi.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-modul",
+        "enterprise-erp-sap-btp",
+        "year-1979"
+      ],
+      "description": "Gesetzlich reguliertes Buchhaltungssystem zur lückenlosen Erfassung aller finanzrelevanten Geschäftsvorfälle.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/fiori-horizon",
+      "label": "SAP Fiori Horizon Design System (SAP 2022)",
+      "type": "Architecture Concept",
+      "path": "/digest/fiori-horizon.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework-sap",
+        "enterprise-erp-sap-btp",
+        "year-2022"
+      ],
+      "description": "Moderne Designsprache mit abgerundeten Ecken, subtilen Schatten, Hell/Dunkel-Modus (Morning/Evening) und hoher Barrierefreiheit.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/fiori",
+      "label": "SAP Fiori (HTML5 Enterprise Design System & UX)",
+      "type": "Architecture Concept",
+      "path": "/digest/fiori.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework-sap",
+        "enterprise-erp-sap-btp",
+        "year-2013"
+      ],
+      "description": "HTML5/CSS3 Single-Page Application (SPA) Paradigma (2013). Bricht mit proprietärem Web Dynpro (HTML 4.01) und setzt auf responsive W3C HTML5-Standards (Canvas, ",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/flutter",
+      "label": "Flutter Multi-Platform UI Toolkit (Google 2017)",
+      "type": "Architecture Concept",
+      "path": "/digest/flutter.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "web-ui-frameworks",
+        "year-2017"
+      ],
+      "description": "Cross-Platform UI-Engine mit eigener Rendering-Pipeline (Skia/Impeller) und Dart-Sprachbasis.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/gemini",
+      "label": "Google Gemini (Multimodales Frontier Model)",
+      "type": "Architecture Concept",
+      "path": "/digest/gemini.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier",
+        "year-2023"
+      ],
+      "description": "Nativ multimodale Modellfamilie von Google DeepMind mit bis zu 2M+ Token Kontextfenster und hoher Inferenzgeschwindigkeit.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/general-ai",
+      "label": "General AI (AGI – Künstliche Allgemeine Intelligenz Zielhorizont 2030+)",
+      "type": "Architecture Concept",
+      "path": "/digest/general-ai.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-zukunftshorizont",
+        "ki-agenten-frontier",
+        "year-2030"
+      ],
+      "description": "Hypothetisches KI-System mit menschengleicher oder überlegener Problemlösungskompetenz über beliebige Domänen hinweg.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/get",
+      "label": "HTTP GET (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/get.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-verb",
+        "web-ui-frameworks",
+        "year-1991"
+      ],
+      "description": "Sichere, idempotente HTTP-Standardmethode für Leseabfragen ohne zustandsändernde Seiteneffekte.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/git",
+      "label": "Git Verteiltes Versionskontrollsystem (Linus Torvalds 2005)",
+      "type": "Architecture Concept",
+      "path": "/digest/git.md",
+      "tags": [
+        "digest",
+        "concept",
+        "software-meilenstein",
+        "hardware-physis",
+        "year-2005"
+      ],
+      "description": "Verteiltes, kryptografisch gesichertes Versionskontrollsystem von Linus Torvalds. Standard für weltweite Softwareentwicklung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/github",
+      "label": "Gründung von GitHub (Wanstrath, Hyett, Preston-Werner 2008)",
+      "type": "Architecture Concept",
+      "path": "/digest/github.md",
+      "tags": [
+        "digest",
+        "concept",
+        "devops-plattform",
+        "security-governance-kritis",
+        "year-2008"
+      ],
+      "description": "Weltweit größte Kollaborationsplattform für Softwareentwicklung basierend auf Git mit Pull Requests und Actions.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/google-cloud",
+      "label": "Start der Google App Engine / Google Cloud (April 2008)",
+      "type": "Architecture Concept",
+      "path": "/digest/google-cloud.md",
+      "tags": [
+        "digest",
+        "concept",
+        "cloud-hyperscaler",
+        "ki-agenten-frontier",
+        "year-2008"
+      ],
+      "description": "Pionier im Platform-as-a-Service (PaaS) und serverloser Ausführung, heute globale Hyperscaler-Plattform (GCP).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/google",
+      "label": "Gründung von Google (Larry Page & Sergey Brin Sept 1998)",
+      "type": "Architecture Concept",
+      "path": "/digest/google.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hyperscaler-gruendung",
+        "ki-agenten-frontier",
+        "year-1998"
+      ],
+      "description": "PageRank-Suchmaschine; revolutionierte den globalen Informationszugang, schuf Android, Chrome, Transformer-Architekturen und Google Cloud.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/gpt-3",
+      "label": "OpenAI GPT-3 – Der Durchbruch der Large Language Models (2020)",
+      "type": "Architecture Concept",
+      "path": "/digest/gpt-3.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-meilenstein",
+        "ki-agenten-frontier",
+        "year-2020"
+      ],
+      "description": "Sprachmodell mit 175 Milliarden Parametern. Demonstrierte erstmals Zero-Shot und Few-Shot Reasoning auf menschlichem Niveau.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/graphql",
+      "label": "GraphQL Deklarative Abfragesprache (Meta/Facebook 2015)",
+      "type": "Architecture Concept",
+      "path": "/digest/graphql.md",
+      "tags": [
+        "digest",
+        "concept",
+        "api-standard",
+        "web-ui-frameworks",
+        "year-2015"
+      ],
+      "description": "Typisierte Abfragesprache für APIs, die es Clients erlaubt, exakt die benötigten Felder abzufragen – verhindert Over- und Underfetching.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/grok",
+      "label": "Grok (xAI Frontier Conversational Model)",
+      "type": "Architecture Concept",
+      "path": "/digest/grok.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier",
+        "year-2023"
+      ],
+      "description": "Frontier LLM entwickelt von xAI mit direktem Zugriff auf Echtzeit-Informationsflüsse der Plattform X.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/grpc",
+      "label": "gRPC Remote Procedure Calls (Google / CNCF)",
+      "type": "Architecture Concept",
+      "path": "/digest/grpc.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-microservices",
+        "web-ui-frameworks"
+      ],
+      "description": "Open-Source RPC-Framework basierend auf HTTP/2 und Protocol Buffers (Protobuf) für minimale Latenz.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/gui",
+      "label": "Graphical User Interface (SAP GUI)",
+      "type": "Architecture Concept",
+      "path": "/digest/gui.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-core",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Proprietäres Client-Server-GUI mit DIAG-Protokoll; wird sukzessive durch Web-UIs (Fiori) ersetzt.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/head",
+      "label": "HTTP HEAD (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/head.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-verb",
+        "web-ui-frameworks"
+      ],
+      "description": "HTTP-Methode wie GET, überträgt jedoch ausschließlich Response-Header ohne Message-Body.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/hitl-hotl",
+      "label": "Human-in-the-Loop & Human-on-the-Loop",
+      "type": "Architecture Concept",
+      "path": "/digest/hitl-hotl.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-governance",
+        "ki-agenten-frontier"
+      ],
+      "description": "Interaktionsmuster: HITL = Mensch entscheidet vor Ausführung; HOTL = Mensch überwacht und kann intervenieren.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/hollerith-maschine",
+      "label": "Hollerith-Lochkarten-Tabelliermaschine (US-Volkszählung 1890)",
+      "type": "Architecture Concept",
+      "path": "/digest/hollerith-maschine.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "hardware-physis",
+        "year-1890"
+      ],
+      "description": "Elektrisch abgetastete Lochkarten zur automatisierten Erfassung von Millionen Datensätzen; reduzierte Auswertungszeiten von 8 Jahren auf 1 Jahr.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/hp",
+      "label": "Gründung von Hewlett-Packard in Palo Alto Garage (Januar 1939)",
+      "type": "Architecture Concept",
+      "path": "/digest/hp.md",
+      "tags": [
+        "digest",
+        "concept",
+        "pionier-hardware",
+        "hardware-physis",
+        "year-1939"
+      ],
+      "description": "Bill Hewlett & Dave Packard begründen in einer Garage in Palo Alto die legendäre Keimzelle des Silicon Valley.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/html-1-0",
+      "label": "HyperText Markup Language 1.0 (Tim Berners-Lee 1993)",
+      "type": "Architecture Concept",
+      "path": "/digest/html-1-0.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-standard",
+        "web-ui-frameworks",
+        "year-1993"
+      ],
+      "description": "Erster informeller IETF-Entwurf von Tim Berners-Lee für Hypertext im World Wide Web (Basis-Tags wie <a>, <p>, <h1>).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/html-2-0",
+      "label": "Hypertext Markup Language 2.0 (RFC 1866 Standard 1995)",
+      "type": "Architecture Concept",
+      "path": "/digest/html-2-0.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-standard",
+        "web-ui-frameworks",
+        "year-1995"
+      ],
+      "description": "Erster offiziell verabschiedeter IETF-Standard für HTML mit Formularen (<form>, <input>) für interaktive Datenübertragung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/html-3-2",
+      "label": "HTML 3.2 'Wilbur' (W3C Recommendation 1997)",
+      "type": "Architecture Concept",
+      "path": "/digest/html-3-2.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-standard",
+        "web-ui-frameworks",
+        "year-1997"
+      ],
+      "description": "Erste offizielle W3C-Empfehlung mit voller Tabellen-Unterstützung (<table>), Textumfluss und Java-Applets (<applet>).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/html-4-01",
+      "label": "HTML 4.01 Specification (W3C Recommendation 1999)",
+      "type": "Architecture Concept",
+      "path": "/digest/html-4-01.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-standard",
+        "web-ui-frameworks",
+        "year-1999"
+      ],
+      "description": "Trennung von Struktur (HTML) und Styling (CSS), Skripteinbettung und IFrames. Dominanter Standard für über ein Jahrzehnt.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/html",
+      "label": "Hypertext Markup Language (HTML5)",
+      "type": "Architecture Concept",
+      "path": "/digest/html.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web",
+        "web-ui-frameworks"
+      ],
+      "description": "Semantischer W3C-Standard zur Strukturierung von Webseiten und Anwendungen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/html5",
+      "label": "HTML5 Standard (W3C Recommendation 2014)",
+      "type": "Architecture Concept",
+      "path": "/digest/html5.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-standard-ui",
+        "web-ui-frameworks",
+        "year-2014"
+      ],
+      "description": "Moderner Webstandard für reichhaltige Single-Page Applications mit Canvas, LocalStorage, WebSockets und responsivem Touch.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/http-0-9",
+      "label": "Hypertext Transfer Protocol 0.9 (Tim Berners-Lee 1991)",
+      "type": "Architecture Concept",
+      "path": "/digest/http-0-9.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-protokoll",
+        "os-netzwerk-transport",
+        "year-1991"
+      ],
+      "description": "Das ursprüngliche One-Line Protokoll: Ausschließlich 'GET /pfad' ohne Header, ohne Statuscodes, lieferte nur reines HTML.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/http-1-0",
+      "label": "HTTP/1.0 Spezifikation (RFC 1945 Mai 1996)",
+      "type": "Architecture Concept",
+      "path": "/digest/http-1-0.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-protokoll",
+        "os-netzwerk-transport",
+        "year-1996"
+      ],
+      "description": "Führte HTTP-Header, MIME-Content-Types und Statuscodes (200, 404, 500) sowie POST und DELETE ein.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/http-1-1",
+      "label": "HTTP/1.1 Standard (RFC 2068 / RFC 2616 1997/1999)",
+      "type": "Architecture Concept",
+      "path": "/digest/http-1-1.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-protokoll",
+        "os-netzwerk-transport",
+        "year-1997"
+      ],
+      "description": "Führte persistente Verbindungen (Keep-Alive), Chunked Transfer Encoding und den Pflicht-Header 'Host' für Virtual Hosting ein.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/http-2",
+      "label": "HTTP/2 Binary Framing & Multiplexing (RFC 7540 Mai 2015)",
+      "type": "Architecture Concept",
+      "path": "/digest/http-2.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-protokoll",
+        "os-netzwerk-transport",
+        "year-2015"
+      ],
+      "description": "Binäres Framing-Protokoll: Multiplexing mehrerer Requests über eine einzige TCP-Verbindung, HPACK-Header-Kompression.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/http-3",
+      "label": "HTTP/3 über QUIC / UDP (RFC 9114 Juni 2022)",
+      "type": "Architecture Concept",
+      "path": "/digest/http-3.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-protokoll",
+        "os-netzwerk-transport",
+        "year-2022"
+      ],
+      "description": "Basiert auf UDP und dem QUIC-Transportprotokoll. 0-RTT Verbindungsaufbau, eliminiert TCP-Paketverlust-Blockaden.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/http-verben",
+      "label": "Die 9 HTTP-Aktionsmethoden (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/http-verben.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-protocol",
+        "web-ui-frameworks"
+      ],
+      "description": "Die 9 definierten Methoden: GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/http",
+      "label": "Hypertext Transfer Protocol (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/http.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-protocol",
+        "web-ui-frameworks",
+        "year-1991"
+      ],
+      "description": "Zustandsloses Anwendungsprotokoll des World Wide Web auf TCP/IP-Basis.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/huggingface",
+      "label": "Hugging Face (Open Machine Learning Hub & Registry)",
+      "type": "Architecture Concept",
+      "path": "/digest/huggingface.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-ecosystem",
+        "ki-agenten-frontier"
+      ],
+      "description": "Zentraler Plattform-Hub und Repository für Open-Source Modelle, Datensätze, Tokenizer und Inferenz-Pipelines.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ibm-pc",
+      "label": "IBM Personal Computer Modell 5150 (IBM 1981)",
+      "type": "Architecture Concept",
+      "path": "/digest/ibm-pc.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "hardware-physis",
+        "year-1981"
+      ],
+      "description": "Etablierte die offene x86-Architektur und MS-DOS als weltweiten De-facto-Standard für Büro- und Geschäftscomputer.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ibm",
+      "label": "Gründung der Computing-Tabulating-Recording Co. / IBM (Juni 1911)",
+      "type": "Architecture Concept",
+      "path": "/digest/ibm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "konzern-grossrechner",
+        "hardware-physis",
+        "year-1911"
+      ],
+      "description": "Weltweit prägender Technologiekonzern für Großrechner (Mainframe /360), Festplatten (RAMAC), relationales SQL und Fortran.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/idempotenz",
+      "label": "Idempotente Nachrichtenverarbeitung (Idempotency Pattern)",
+      "type": "Architecture Concept",
+      "path": "/digest/idempotenz.md",
+      "tags": [
+        "digest",
+        "concept",
+        "architektur",
+        "enterprise-erp-sap-btp",
+        "year-1960"
+      ],
+      "description": "Mathematische Eigenschaft: f(f(x)) = f(x). Ein zweiter Aufruf mit identischen Parametern führt exakt zum selben Endzustand wie der erste.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/idoc",
+      "label": "Intermediate Document (SAP Standardformat)",
+      "type": "Architecture Concept",
+      "path": "/digest/idoc.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-integration",
+        "enterprise-erp-sap-btp",
+        "year-1992"
+      ],
+      "description": "Strukturierte Festlängen- oder XML-Nachricht mit Kontrollsatz, Datensätzen und Statussätzen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/iflow",
+      "label": "Integration Flow (iFlow)",
+      "type": "Architecture Concept",
+      "path": "/digest/iflow.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-domaene",
+        "enterprise-erp-sap-btp",
+        "year-2013"
+      ],
+      "description": "Deklarative Apache Camel Route (EIP), ausgeführt in einer OSGi/Spring-Boot Container-Runtime.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/in",
+      "label": "LinkedIn Profil (/in/)",
+      "type": "Architecture Concept",
+      "path": "/digest/in.md",
+      "tags": [
+        "digest",
+        "concept",
+        "profil-netzwerk",
+        "hardware-physis"
+      ],
+      "description": "Führendes internationales Business-Netzwerk mit öffentlichem Architektenprofil.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/industrialisierung",
+      "label": "Erste Industrielle Revolution (James Watt Dampfmaschine 1784)",
+      "type": "Architecture Concept",
+      "path": "/digest/industrialisierung.md",
+      "tags": [
+        "digest",
+        "concept",
+        "epoche-meilenstein",
+        "hardware-physis",
+        "year-1784"
+      ],
+      "description": "Übergang von manueller Agrarwirtschaft zu mechanisierter Fabrikfertigung durch Dampfkraft und standardisierte Werkzeugmaschinen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/iphone",
+      "label": "Steve Jobs stellt das Apple iPhone vor – Mobile Web Revolution (2007)",
+      "type": "Architecture Concept",
+      "path": "/digest/iphone.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-mobile-meilenstein",
+        "hardware-physis",
+        "year-2007"
+      ],
+      "description": "Kombination aus Mobiltelefon, vollwertigem mobilen Web-Browser (Safari) und Touch-Interface. Begründete die 'Mobile First'-Ära.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/islm",
+      "label": "Intelligent Scenario Lifecycle Management",
+      "type": "Architecture Concept",
+      "path": "/digest/islm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "data-ai",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Enterprise-MLOps-Plattform zur Anbindung interner (HANA PAL/APL) und externer KI-Modelle.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/istqb",
+      "label": "International Software Testing Qualifications Board",
+      "type": "Architecture Concept",
+      "path": "/digest/istqb.md",
+      "tags": [
+        "digest",
+        "concept",
+        "methodik",
+        "security-governance-kritis",
+        "year-1998"
+      ],
+      "description": "Global führende Non-Profit-Organisation für die Zertifizierung professioneller Softwaretester.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/itil",
+      "label": "Information Technology Infrastructure Library",
+      "type": "Architecture Concept",
+      "path": "/digest/itil.md",
+      "tags": [
+        "digest",
+        "concept",
+        "governance",
+        "security-governance-kritis",
+        "year-1989"
+      ],
+      "description": "De-facto-Weltstandard für IT-Service-Management (Incident-, Problem-, Change-Management).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/jacquard-lochkarte",
+      "label": "Jacquard-Webstuhl mit Lochkartensteuerung (1805)",
+      "type": "Architecture Concept",
+      "path": "/digest/jacquard-lochkarte.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "hardware-physis",
+        "year-1805"
+      ],
+      "description": "Erste erfolgreiche binäre Programmsteuerung der Geschichte: Gestanzte Holzkarten steuern komplexe Webmuster ohne mechanischen Umbau.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/java",
+      "label": "Java Programmiersprache & JVM (James Gosling / Sun 1995)",
+      "type": "Architecture Concept",
+      "path": "/digest/java.md",
+      "tags": [
+        "digest",
+        "concept",
+        "software-meilenstein",
+        "web-ui-frameworks",
+        "year-1995"
+      ],
+      "description": "Objektorientierte, plattformunabhängige Sprache ('Write Once, Run Anywhere') mit Bytecode-Interpretation auf der JVM.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/javascript",
+      "label": "JavaScript (Brendan Eich / Netscape 1995)",
+      "type": "Architecture Concept",
+      "path": "/digest/javascript.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-meilenstein",
+        "web-ui-frameworks",
+        "year-1995"
+      ],
+      "description": "In nur 10 Tagen von Brendan Eich entworfene dynamische Skriptsprache für Netscape Navigator. Heute die am weitesten verbreitete Sprache der Welt.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/joule",
+      "label": "SAP Joule (Generativer KI-Copilot)",
+      "type": "Architecture Concept",
+      "path": "/digest/joule.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier",
+        "year-2023"
+      ],
+      "description": "RAG-basiertes Enterprise-LLM-Interface mit Anbindung an SAP-Metadaten und Business Context.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/jquery",
+      "label": "jQuery JavaScript Library (John Resig 2006)",
+      "type": "Architecture Concept",
+      "path": "/digest/jquery.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "web-ui-frameworks",
+        "year-2006"
+      ],
+      "description": "Standardisierte DOM-Abstraktion, Event-Handling und AJAX über alle Browser der Web-2.0-Ära hinweg.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/js",
+      "label": "JavaScript (ECMAScript)",
+      "type": "Architecture Concept",
+      "path": "/digest/js.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-code",
+        "web-ui-frameworks"
+      ],
+      "description": "Universelle, dynamische Web-Programmiersprache für Browser und Event-gesteuerte Runtimes.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/jsd-mdm",
+      "label": "JSD Master Data Management System",
+      "type": "Architecture Concept",
+      "path": "/digest/jsd-mdm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "architektur-system",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Fachliche Stammdatenquelle für Geschäftspartner, die Batches per JSON-POST liefert.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/jsd",
+      "label": "Johannesstift Diakonie gAG",
+      "type": "Architecture Concept",
+      "path": "/digest/jsd.md",
+      "tags": [
+        "digest",
+        "concept",
+        "unternehmen-domaene",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Größtes konfessionelles Gesundheits- und Sozialunternehmen in Berlin und Nordostdeutschland.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/json",
+      "label": "JavaScript Object Notation (RFC 8259)",
+      "type": "Architecture Concept",
+      "path": "/digest/json.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-daten",
+        "web-ui-frameworks",
+        "year-2001"
+      ],
+      "description": "Textbasiertes, sprachunabhängiges Standard-Datenaustauschformat.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/jwt-json-web-token",
+      "label": "JSON Web Token (RFC 7519)",
+      "type": "Architecture Concept",
+      "path": "/digest/jwt-json-web-token.md",
+      "tags": [
+        "digest",
+        "concept",
+        "security",
+        "security-governance-kritis",
+        "year-2015"
+      ],
+      "description": "Kompaktes, URL-sicheres Mittel zur Darstellung signierter Claims zwischen zwei Parteien.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ki",
+      "label": "Künstliche Intelligenz (AI)",
+      "type": "Architecture Concept",
+      "path": "/digest/ki.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier"
+      ],
+      "description": "Fortgeschrittene maschinelle Lern- und Sprachmodelle für Automatisierung und semantische Analyse.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/kritis",
+      "label": "Kritische Infrastrukturen (BSI KritisV)",
+      "type": "Architecture Concept",
+      "path": "/digest/kritis.md",
+      "tags": [
+        "digest",
+        "concept",
+        "governance",
+        "security-governance-kritis",
+        "year-2015"
+      ],
+      "description": "Gesetzliche Verpflichtung nach § 8a BSIG zu höchster Resilienz, Auditierung und Ausfallsicherheit.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/kubernetes",
+      "label": "Kubernetes K8s Container-Orchestrierung (Google Juni 2014)",
+      "type": "Architecture Concept",
+      "path": "/digest/kubernetes.md",
+      "tags": [
+        "digest",
+        "concept",
+        "cloud-container",
+        "security-governance-kritis",
+        "year-2014"
+      ],
+      "description": "Von Google (Projekt Borg) als Open Source gestiftetes System zur automatisierten Bereitstellung, Skalierung und Verwaltung von Containern.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/kybernetik",
+      "label": "Norbert Wiener: Kybernetik & Regelungstheorie (1948)",
+      "type": "Architecture Concept",
+      "path": "/digest/kybernetik.md",
+      "tags": [
+        "digest",
+        "concept",
+        "theorie-meilenstein",
+        "ki-agenten-frontier",
+        "year-1948"
+      ],
+      "description": "Wieners Pionierwerk über Steuerung, Regelkreise und Feedbackschleifen in biologischen Organismen und Maschinen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/leanix",
+      "label": "LeanIX (Enterprise Architecture Management)",
+      "type": "Architecture Concept",
+      "path": "/digest/leanix.md",
+      "tags": [
+        "digest",
+        "concept",
+        "enterprise-eam",
+        "hardware-physis"
+      ],
+      "description": "SaaS-Plattform zur Modellierung von Applikationslandschaften, Schnittstellen und Business Capabilities.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/lenovo",
+      "label": "Gründung von Lenovo / Legend Holdings in Peking (November 1984)",
+      "type": "Architecture Concept",
+      "path": "/digest/lenovo.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-global",
+        "hardware-physis",
+        "year-1984"
+      ],
+      "description": "Führender chinesischer und weltweiter Computerhersteller; übernahm 2005 IBMs PC-Sparte (ThinkPad) und 2014 die x86-Serversparte.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/linux",
+      "label": "Linux Open-Source Kernel (Linus Torvalds 1991)",
+      "type": "Architecture Concept",
+      "path": "/digest/linux.md",
+      "tags": [
+        "digest",
+        "concept",
+        "software-meilenstein",
+        "web-ui-frameworks",
+        "year-1991"
+      ],
+      "description": "Freier, quelloffener Unix-artiger Betriebssystem-Kernel von Linus Torvalds. Dominiert heute die weltweite Server- und Cloud-Welt.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/llm",
+      "label": "Large Language Model (Großes Sprachmodell)",
+      "type": "Architecture Concept",
+      "path": "/digest/llm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier"
+      ],
+      "description": "Deep-Learning-Transformermodelle (wie Gemini 3.6 oder GPT-4) mit Milliarden Parametern.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/mdm",
+      "label": "Master Data Management (Stammdaten)",
+      "type": "Architecture Concept",
+      "path": "/digest/mdm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "domaene",
+        "hardware-physis"
+      ],
+      "description": "Methoden und Technologien zur Bereitstellung einer Single Source of Truth für Stammobjekte.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/microsoft",
+      "label": "Gründung von Microsoft (Bill Gates & Paul Allen April 1975)",
+      "type": "Architecture Concept",
+      "path": "/digest/microsoft.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hyperscaler-gruendung",
+        "hardware-physis",
+        "year-1975"
+      ],
+      "description": "Startete mit Altair BASIC und MS-DOS; dominierte mit Windows den weltweiten PC-Markt und heute mit Azure den Enterprise-Cloud-Sektor.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/mm",
+      "label": "SAP MM (Materials Management / Materialwirtschaft)",
+      "type": "Architecture Concept",
+      "path": "/digest/mm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-modul",
+        "enterprise-erp-sap-btp",
+        "year-1979"
+      ],
+      "description": "Betriebswirtschaftliche Subdomäne für Beschaffungslogistik und operative Lieferantenverwaltung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/moore-s-law-gebrochen",
+      "label": "Moore's Law gebrochen – Physikalische Grenzen & GPU-Zeitalter (2022)",
+      "type": "Architecture Concept",
+      "path": "/digest/moore-s-law-gebrochen.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-ai-meilenstein",
+        "hardware-physis",
+        "year-2022"
+      ],
+      "description": "Jensen Huang (NVIDIA) erklärt Moore's Law für tot: Atomare Quantentunnel-Grenzen bei < 3nm erfordern Parallelisierung über GPUs und Chiplets.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/moore-s-law",
+      "label": "Moore's Law – Verdoppelung der Transistordichte (Gordon Moore 1965)",
+      "type": "Architecture Concept",
+      "path": "/digest/moore-s-law.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "hardware-physis",
+        "year-1965"
+      ],
+      "description": "Empirische Gesetzmäßigkeit: Die Anzahl der Transistoren auf einem Mikrochip verdoppelt sich bei sinkenden Kosten etwa alle 18 bis 24 Monate.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/netscape",
+      "label": "Netscape Navigator & Beginn des Web-Booms (April 1994)",
+      "type": "Architecture Concept",
+      "path": "/digest/netscape.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-pionier",
+        "web-ui-frameworks",
+        "year-1994"
+      ],
+      "description": "Erster kommerzieller Massenbrowser von Marc Andreessen & Jim Clark. Führte JavaScript, Cookies und SSL ein.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/neurallingo",
+      "label": "Neurallingo – Emergent Synthetic Language autonomer KI-Agenten (2025)",
+      "type": "Architecture Concept",
+      "path": "/digest/neurallingo.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-frontier",
+        "ki-agenten-frontier",
+        "year-2025"
+      ],
+      "description": "Von kooperierenden LLM-Agenten emergente, dichte Vektor- und Symbolsprache zur Schwarmbildung und extrem verlustfreien Datenübertragung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/next-js",
+      "label": "Next.js Fullstack React Framework (Vercel 2016)",
+      "type": "Architecture Concept",
+      "path": "/digest/next-js.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "web-ui-frameworks",
+        "year-2016"
+      ],
+      "description": "React-Framework für Hybrid-Rendering (SSR, SSG), dateibasiertes Routing und optimierte Edge-Bereitstellung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/next-webbrowser",
+      "label": "Erster Web-Browser 'WorldWideWeb' auf NeXTstation (Tim Berners-Lee Dez 1990)",
+      "type": "Architecture Concept",
+      "path": "/digest/next-webbrowser.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-meilenstein",
+        "web-ui-frameworks",
+        "year-1990"
+      ],
+      "description": "Erster grafischer Webbrowser und WYSIWYG-Editor der Welt, programmiert in Objective-C auf einem NeXTcube-Computer am CERN.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/next",
+      "label": "Steve Jobs gründet NeXT Computer Inc. (1985)",
+      "type": "Architecture Concept",
+      "path": "/digest/next.md",
+      "tags": [
+        "digest",
+        "concept",
+        "enterprise-hardware",
+        "web-ui-frameworks",
+        "year-1985"
+      ],
+      "description": "Steve Jobs gründete NeXT nach seinem Ausscheiden bei Apple. NeXTSTEP bot objektorientiertes Betriebssystem (Objective-C) und Display PostScript.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/nis-2",
+      "label": "EU NIS-2 Richtlinie für Cybersicherheit (Oktober 2024)",
+      "type": "Architecture Concept",
+      "path": "/digest/nis-2.md",
+      "tags": [
+        "digest",
+        "concept",
+        "eu-regulierung-sec",
+        "security-governance-kritis",
+        "year-2024"
+      ],
+      "description": "EU-weite Richtlinie zur Erhöhung der Cybersicherheit wesentlicher und wichtiger Einrichtungen mit strikten Sanktionen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/nvidia",
+      "label": "Gründung von Nvidia (Jensen Huang April 1993)",
+      "type": "Architecture Concept",
+      "path": "/digest/nvidia.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-ki-motor",
+        "ki-agenten-frontier",
+        "year-1993"
+      ],
+      "description": "Erfinder der GPU (1999) und CUDA (2006). Besitzt das faktische Weltmonopol für Hardware-Beschleunigung moderner generativer KI.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/oauth",
+      "label": "OAuth 2.0 Authorization Framework (RFC 6749)",
+      "type": "Architecture Concept",
+      "path": "/digest/oauth.md",
+      "tags": [
+        "digest",
+        "concept",
+        "security",
+        "security-governance-kritis",
+        "year-2012"
+      ],
+      "description": "Offenes Autorisierungsprotokoll für delegierten Zugriff (hier: Client Credentials M2M-Flow).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/odata",
+      "label": "Open Data Protocol (OASIS)",
+      "type": "Architecture Concept",
+      "path": "/digest/odata.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-domaene",
+        "enterprise-erp-sap-btp",
+        "year-2007"
+      ],
+      "description": "REST-basiertes Protokoll mit standardisierten Abfragen ($filter, $select) und Schema-Metadaten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/okf",
+      "label": "Google Open Knowledge Format v0.2 (OKF 2026)",
+      "type": "Architecture Concept",
+      "path": "/digest/okf.md",
+      "tags": [
+        "digest",
+        "concept",
+        "architektur-standard",
+        "hardware-physis",
+        "year-2026"
+      ],
+      "description": "Von Google/DeepMind spezifizierter Wissensstandard: Strukturierte Wissenskapselung in YAML/Markdown für faktenfeste RAG-Agenten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/openai",
+      "label": "OpenAI Inc. (Forschungs- & AI-Unternehmen)",
+      "type": "Architecture Concept",
+      "path": "/digest/openai.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier",
+        "year-2015"
+      ],
+      "description": "Führendes AI-Forschungslabor, Schöpfer von ChatGPT, Codex und GPT-4 Modellarchitekturen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/openapi",
+      "label": "OpenAPI Specification (OAS / Linux Foundation)",
+      "type": "Architecture Concept",
+      "path": "/digest/openapi.md",
+      "tags": [
+        "digest",
+        "concept",
+        "api-standard",
+        "web-ui-frameworks",
+        "year-2015"
+      ],
+      "description": "Universeller, maschinenlesbarer Standard (YAML/JSON) zur vollständigen Beschreibung von RESTful APIs.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/openrouter",
+      "label": "OpenRouter (Unified LLM Gateway & Router)",
+      "type": "Architecture Concept",
+      "path": "/digest/openrouter.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-ecosystem",
+        "ki-agenten-frontier"
+      ],
+      "description": "Einheitlicher API-Proxy und Lastverteiler zur flexiblen Ansprache hunderter LLMs über ein standardisiertes Interface.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/openui5",
+      "label": "OpenUI5 Open Source Toolkit (SAP Dez 2013)",
+      "type": "Architecture Concept",
+      "path": "/digest/openui5.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework-sap",
+        "enterprise-erp-sap-btp",
+        "year-2013"
+      ],
+      "description": "Frei verfügbares HTML5 MVC-Framework von SAP für weltweite Community- und Open-Source-Projekte.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/options-preflight",
+      "label": "HTTP OPTIONS (CORS Preflight)",
+      "type": "Architecture Concept",
+      "path": "/digest/options-preflight.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-verb",
+        "web-ui-frameworks",
+        "year-1996"
+      ],
+      "description": "RFC 9110 Methode zur Ermittlung der Kommunikationsoptionen und CORS-Zugriffserlaubnis.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/oracle",
+      "label": "Gründung von Oracle / SDL (Larry Ellison Juni 1977)",
+      "type": "Architecture Concept",
+      "path": "/digest/oracle.md",
+      "tags": [
+        "digest",
+        "concept",
+        "enterprise-hyperscaler",
+        "hardware-physis",
+        "year-1977"
+      ],
+      "description": "Pionier kommerzieller relationaler SQL-Datenbanken (Oracle Database). Entwickelte sich zum globalen Enterprise-Software- und Cloud-Konzern (OCI).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/patch",
+      "label": "HTTP PATCH (RFC 5789)",
+      "type": "Architecture Concept",
+      "path": "/digest/patch.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-verb",
+        "web-ui-frameworks",
+        "year-2010"
+      ],
+      "description": "RFC 5789 Methode zur partiellen Modifikation von Ressourcen ohne Überschreiben ganzer Sätze.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/phyton",
+      "label": "Python (vom Benutzer als Phyton benannt)",
+      "type": "Architecture Concept",
+      "path": "/digest/phyton.md",
+      "tags": [
+        "digest",
+        "concept",
+        "entwicklung",
+        "hardware-physis"
+      ],
+      "description": "Universelle Hochsprache (Python 3.11/3.14) für Test-Runner, KI-Agenten und Middleware-Automatisierung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/pi-po",
+      "label": "SAP Process Integration / Process Orchestration",
+      "type": "Architecture Concept",
+      "path": "/digest/pi-po.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-legacy",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Klassischer On-Premise Enterprise Service Bus (ESB), Wartungsende 2027.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/plankalkuel",
+      "label": "Plankalkül – Erste universelle höhere Programmiersprache (Zuse 1945)",
+      "type": "Architecture Concept",
+      "path": "/digest/plankalkuel.md",
+      "tags": [
+        "digest",
+        "concept",
+        "software-meilenstein",
+        "hardware-physis",
+        "year-1945"
+      ],
+      "description": "Von Konrad Zuse 1945 konzipierte höhere Programmiersprache mit Datenstrukturen, Arrays, Bedingungen und Schleifen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/poc",
+      "label": "Proof of Concept (Machbarkeitsnachweis)",
+      "type": "Architecture Concept",
+      "path": "/digest/poc.md",
+      "tags": [
+        "digest",
+        "concept",
+        "methodik",
+        "hardware-physis"
+      ],
+      "description": "Pragmatische prototypische Implementierung zur empirischen Validierung der Architektur.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/post",
+      "label": "HTTP POST (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/post.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-verb",
+        "web-ui-frameworks",
+        "year-1991"
+      ],
+      "description": "Standard-HTTP-Methode zur Übermittlung von Daten zur Erzeugung neuer untergeordneter Ressourcen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/postgresql",
+      "label": "PostgreSQL Open-Source RDBMS (Michael Stonebraker 1996)",
+      "type": "Architecture Concept",
+      "path": "/digest/postgresql.md",
+      "tags": [
+        "digest",
+        "concept",
+        "daten-meilenstein",
+        "daten-middleware-apis",
+        "year-1996"
+      ],
+      "description": "Leistungsfähigstes Open-Source Objekt-relationales Datenbanksystem der Welt mit nativer JSON-, Vektor- (pgvector) und ACID-Unterstützung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/postman",
+      "label": "Postman (API Development & Testing Platform)",
+      "type": "Architecture Concept",
+      "path": "/digest/postman.md",
+      "tags": [
+        "digest",
+        "concept",
+        "devops-testing",
+        "web-ui-frameworks"
+      ],
+      "description": "Plattform zur Konstruktion, Ausführung, Automatisierung und Dokumentation von HTTP/REST/OData-Aufrufen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/processdirect",
+      "label": "ProcessDirect Adapter (In-Memory iFlow-Verkettung)",
+      "type": "Architecture Concept",
+      "path": "/digest/processdirect.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-integration",
+        "enterprise-erp-sap-btp",
+        "year-2018"
+      ],
+      "description": "In-Memory Direct Method Invocation ohne Serialisierungsoverhead oder Netzwerk-Latenz auf Basis des Apache Camel Direct Components.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/put",
+      "label": "HTTP PUT (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/put.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-verb",
+        "web-ui-frameworks",
+        "year-1996"
+      ],
+      "description": "Idempotente HTTP-Methode zur vollständigen Ersetzung des Zielressourcen-Zustands durch die Payload.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/qm",
+      "label": "Quality Management (Qualitätsmanagement)",
+      "type": "Architecture Concept",
+      "path": "/digest/qm.md",
+      "tags": [
+        "digest",
+        "concept",
+        "governance",
+        "hardware-physis"
+      ],
+      "description": "Systematischer Prozessrahmen (DIN EN ISO 9001 / ISTQB) zur Sicherstellung von Software- und Datenqualität.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/quantum-supremacy",
+      "label": "Quantum Supremacy – Quantenüberlegenheit (Google Sycamore 2019)",
+      "type": "Architecture Concept",
+      "path": "/digest/quantum-supremacy.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "ki-agenten-frontier",
+        "year-2019"
+      ],
+      "description": "Googles 53-Qubit-Prozessor Sycamore löste eine Rechenaufgabe in 200 Sekunden, für die ein klassischer Supercomputer 10.000 Jahre bräuchte.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/rag",
+      "label": "Retrieval-Augmented Generation",
+      "type": "Architecture Concept",
+      "path": "/digest/rag.md",
+      "tags": [
+        "digest",
+        "concept",
+        "genai-llm",
+        "ki-agenten-frontier",
+        "year-2020"
+      ],
+      "description": "Architekturmuster: Abfrage relevanter Vektordaten vor der LLM-Prompteinspeisung gegen Halluzinationen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/rap",
+      "label": "ABAP RESTful Application Programming Model",
+      "type": "Architecture Concept",
+      "path": "/digest/rap.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-core-cloud",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "End-to-End Entwicklungsframework auf Basis von CDS, Behavior Definitions und nativer OData V4 Veröffentlichung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/rdf",
+      "label": "Resource Description Framework (W3C)",
+      "type": "Architecture Concept",
+      "path": "/digest/rdf.md",
+      "tags": [
+        "digest",
+        "concept",
+        "data-graph",
+        "ki-agenten-frontier"
+      ],
+      "description": "Graphbasiertes Datenmodell basierend auf Subjekt-Prädikat-Objekt Tripeln (W3C-Standard).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/react",
+      "label": "React Declarative UI Library (Meta/Facebook 2013)",
+      "type": "Architecture Concept",
+      "path": "/digest/react.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "web-ui-frameworks",
+        "year-2013"
+      ],
+      "description": "Deklarative, komponentenbasierte UI-Bibliothek mit virtuellem DOM. Revolutionierte das moderne Web-Frontend.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/rechenmaschine",
+      "label": "Erste mechanische Rechenmaschine (Wilhelm Schickard 1623)",
+      "type": "Architecture Concept",
+      "path": "/digest/rechenmaschine.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "hardware-physis",
+        "year-1623"
+      ],
+      "description": "Wilhelm Schickards 'Rechenuhr' für Johannes Kepler: Erstes Zahnrad-Rechenwerk für alle 4 Grundrechenarten mit Zehnerübertrag.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/rest",
+      "label": "Representational State Transfer (Roy Fielding)",
+      "type": "Architecture Concept",
+      "path": "/digest/rest.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-api",
+        "web-ui-frameworks",
+        "year-2000"
+      ],
+      "description": "Architekturstil für zustandslose, verteilte Hypermedia-Systeme über Standard-HTTP-Verben.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/rfc",
+      "label": "Remote Function Call (SAP Netzwerkprotokoll)",
+      "type": "Architecture Concept",
+      "path": "/digest/rfc.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-protokoll",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Zustandsbehaftetes oder zustandsloses Remote Procedure Call Protokoll auf TCP-Basis mit SAP-spezifischer Datenkodierung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/rsa",
+      "label": "RSA Public-Key-Kryptographie (Rivest, Shamir, Adleman 1977)",
+      "type": "Architecture Concept",
+      "path": "/digest/rsa.md",
+      "tags": [
+        "digest",
+        "concept",
+        "kryptographie-standard",
+        "security-governance-kritis",
+        "year-1977"
+      ],
+      "description": "Erste praxistaugliche asymmetrische Verschlüsselung basierend auf der Schwierigkeit der Primfaktorzerlegung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/s-4hana",
+      "label": "SAP S/4HANA",
+      "type": "Architecture Concept",
+      "path": "/digest/s-4hana.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-domaene",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Transaktionales Kern-ERP-System auf relationaler columnar In-Memory-Datenbank.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sap-integration-suite",
+      "label": "SAP Integration Suite (Enterprise iPaaS)",
+      "type": "Architecture Concept",
+      "path": "/digest/sap-integration-suite.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-domaene",
+        "enterprise-erp-sap-btp",
+        "year-2021"
+      ],
+      "description": "Umfassende Cloud-Integrationsplattform (iPaaS) zur Verbindung heterogener Cloud-, On-Premise- und Non-SAP-Systeme mit vorgefertigten Konnektoren, API-Gateways u",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sap",
+      "label": "Systems, Applications and Products in Data Processing",
+      "type": "Architecture Concept",
+      "path": "/digest/sap.md",
+      "tags": [
+        "digest",
+        "concept",
+        "enterprise",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Walldorfer Softwarekonzern; Erfinder von R/2, R/3, NetWeaver, ECC, S/4HANA und BTP.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sapui5",
+      "label": "SAP UI Development Toolkit for HTML5 (2011)",
+      "type": "Architecture Concept",
+      "path": "/digest/sapui5.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework-sap",
+        "enterprise-erp-sap-btp",
+        "year-2011"
+      ],
+      "description": "HTML5 MVC-Framework mit Zwei-Wege-Binding, OData V2/V4 Model, XML-Views und Enterprise-UI-Bibliothek.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sax",
+      "label": "Simple API for XML (Streaming Parser)",
+      "type": "Architecture Concept",
+      "path": "/digest/sax.md",
+      "tags": [
+        "digest",
+        "concept",
+        "xml-parsing",
+        "web-ui-frameworks"
+      ],
+      "description": "Lineare, ereignisgesteuerte Parser-API: Liest XML sequentiell von der Festplatte/Netzwerk ohne Speicheraufbau.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sd",
+      "label": "SAP SD (Sales and Distribution / Vertrieb)",
+      "type": "Architecture Concept",
+      "path": "/digest/sd.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-modul",
+        "enterprise-erp-sap-btp",
+        "year-1979"
+      ],
+      "description": "Betriebswirtschaftliche Subdomäne für Kundenbeziehungsmanagement und Auftragsverarbeitung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sdk",
+      "label": "Software Development Kit",
+      "type": "Architecture Concept",
+      "path": "/digest/sdk.md",
+      "tags": [
+        "digest",
+        "concept",
+        "entwicklung",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Sammlung von Bibliotheken, Typdefinitionen und Tools zur vereinfachten Softwareentwicklung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/se11",
+      "label": "ABAP Data Dictionary (SAP R/3 1992)",
+      "type": "Architecture Concept",
+      "path": "/digest/se11.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-1992"
+      ],
+      "description": "Relationales Schema- und Metadaten-Repository auf Datenbankebene, erzwingt typisierte Konsistenz aller SAP-Tabellen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/se16n",
+      "label": "Allgemeine Tabellenanzeige (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/se16n.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-2004"
+      ],
+      "description": "Grafischer SQL-SELECT-Client im SAP GUI mit Direktzugriff auf das relationale Schema.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/se18",
+      "label": "Business Add-Ins Definition (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/se18.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Objektorientiertes Interface- und Plugin-Pattern im ABAP-Laufzeitsystem.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/se19",
+      "label": "Business Add-Ins Implementierung (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/se19.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Konkrete Implementierungsklasse eines BAdI-Interfaces zur Laufzeit-Injektion.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/se80",
+      "label": "ABAP Workbench / Object Navigator (SAP R/3 1992)",
+      "type": "Architecture Concept",
+      "path": "/digest/se80.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-1992"
+      ],
+      "description": "Monolithische ABAP-IDE im SAP GUI – heute im Cloud-Zeitalter weitgehend durch ADT (ABAP Development Tools in Eclipse) abgelöst.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/semantic-web",
+      "label": "W3C Semantic Web (Tim Berners-Lee / SciAm Mai 2001)",
+      "type": "Architecture Concept",
+      "path": "/digest/semantic-web.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-wissensstandard",
+        "web-ui-frameworks",
+        "year-2001"
+      ],
+      "description": "Vision von Tim Berners-Lee: Erweiterung des World Wide Web um maschinenlesbare Semantik durch RDF, OWL und SPARQL.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/shannon-bit",
+      "label": "Claude Shannon: Mathematische Informationstheorie & Das Bit (1948)",
+      "type": "Architecture Concept",
+      "path": "/digest/shannon-bit.md",
+      "tags": [
+        "digest",
+        "concept",
+        "theorie-standard",
+        "os-netzwerk-transport",
+        "year-1948"
+      ],
+      "description": "Shannon begründet mit 'A Mathematical Theory of Communication' die Informationstheorie und prägt das fundamentale Kunstwort 'Bit'.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/shor-algorithmus",
+      "label": "Shor-Algorithmus für Quantencomputer (Peter Shor 1994)",
+      "type": "Architecture Concept",
+      "path": "/digest/shor-algorithmus.md",
+      "tags": [
+        "digest",
+        "concept",
+        "quanten-meilenstein",
+        "ki-agenten-frontier",
+        "year-1994"
+      ],
+      "description": "Quanten-Polynomialzeit-Algorithmus zur Primfaktorzerlegung; beweist theoretisch, dass künftige Quantenrechner RSA und ECC brechen können.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sicf",
+      "label": "Internet Communication Framework Services (SAP GUI)",
+      "type": "Architecture Concept",
+      "path": "/digest/sicf.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-2001"
+      ],
+      "description": "Hierarchische Baumkonfiguration des internen Webservers (ICM) für URI-Endpunkte und Auth-Handler.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/slg1",
+      "label": "Anwendungs-Log auswerten (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/slg1.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Strukturiertes Enterprise Application Event Log mit Schweregraden (Info, Warnung, Fehler, Abbruch).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sm37",
+      "label": "Hintergrund-Job-Übersicht (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/sm37.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-1992"
+      ],
+      "description": "Zentraler Batch-Job Scheduler und Prozess-Monitor für zeit- oder ereignisgesteuerte ABAP-Reports.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sm59",
+      "label": "RFC-Destinationen verwalten (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/sm59.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-1992"
+      ],
+      "description": "Zentrale Verbindungs- und Endpoint-Konfigurationstabelle (Typ 3 RFC, Typ G/H HTTP) mit SSL-Optionen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/soa",
+      "label": "Service-Oriented Architecture (Service-orientierte Architektur)",
+      "type": "Architecture Concept",
+      "path": "/digest/soa.md",
+      "tags": [
+        "digest",
+        "concept",
+        "architektur",
+        "hardware-physis"
+      ],
+      "description": "Softwarearchitekturmuster zur Strukturierung von Anwendungssystemen in lose gekoppelte, wiederverwendbare Dienste.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/soamanager",
+      "label": "SOA & Web Services Konfiguration (SAP GUI / Web)",
+      "type": "Architecture Concept",
+      "path": "/digest/soamanager.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Konfigurations-Cockpit für WSDL-Endpunkte, HTTP-Basisauthentifizierung und X.509 M2M-Zertifikate.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/soap",
+      "label": "Simple Object Access Protocol (W3C Standard)",
+      "type": "Architecture Concept",
+      "path": "/digest/soap.md",
+      "tags": [
+        "digest",
+        "concept",
+        "protokolle-web",
+        "web-ui-frameworks",
+        "year-1998"
+      ],
+      "description": "XML-basiertes Netzwerkprotokoll zum Austausch strukturierter Daten über HTTP/SMTP mit strikter WSDL-Bindung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sparql",
+      "label": "SPARQL Protocol and RDF Query Language",
+      "type": "Architecture Concept",
+      "path": "/digest/sparql.md",
+      "tags": [
+        "digest",
+        "concept",
+        "data-graph",
+        "ki-agenten-frontier"
+      ],
+      "description": "W3C-Standardabfragesprache für RDF-Tripelstores (äquivalent zu SQL für Graphendaten).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/spro",
+      "label": "Customizing: SAP Referenz-IMG (SAP GUI)",
+      "type": "Architecture Concept",
+      "path": "/digest/spro.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Strukturierter Konfigurationsbaum zur Parametrisierung aller betriebswirtschaftlichen Prozesse und Module.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sql",
+      "label": "Relationales Datenmodell & SQL (Edgar F. Codd 1970)",
+      "type": "Architecture Concept",
+      "path": "/digest/sql.md",
+      "tags": [
+        "digest",
+        "concept",
+        "daten-meilenstein",
+        "enterprise-erp-sap-btp",
+        "year-1970"
+      ],
+      "description": "Edgar F. Codds bahnbrechendes Paper 'A Relational Model of Data for Large Shared Data Banks'. Begründete relationale Tabellen, Keys und SQL.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sse",
+      "label": "Server-Sent Events (W3C / WHATWG)",
+      "type": "Architecture Concept",
+      "path": "/digest/sse.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-streaming",
+        "web-ui-frameworks"
+      ],
+      "description": "Standardisiertes HTTP-Streaming-Verfahren zur unidirektionalen Echtzeit-Übertragung vom Server zum Browser.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/st05",
+      "label": "Performance- & SQL-Trace (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/st05.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Low-Level Performance-Profiler zur Identifikation von Datenbank-Bottlenecks und teuren Tabellen-Scans.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/st22",
+      "label": "ABAP Dump Analysis (Laufzeitfehler-Monitor 1992)",
+      "type": "Architecture Concept",
+      "path": "/digest/st22.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-1992"
+      ],
+      "description": "Stack-Trace- und Exception-Monitor für unbehandelte Laufzeitfehler und Speichergrenzverletzungen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/starlink",
+      "label": "Start der Starlink LEO-Satellitenkonstellation (SpaceX Mai 2019)",
+      "type": "Architecture Concept",
+      "path": "/digest/starlink.md",
+      "tags": [
+        "digest",
+        "concept",
+        "netzwerk-resilienz",
+        "os-netzwerk-transport",
+        "year-2019"
+      ],
+      "description": "Megakonstellation aus tausenden LEO-Satelliten mit Laser-Interlinks. Liefert globale Breitband-Konnektivität mit minimaler Latenz.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/streamlit",
+      "label": "Streamlit Web App Framework",
+      "type": "Architecture Concept",
+      "path": "/digest/streamlit.md",
+      "tags": [
+        "digest",
+        "concept",
+        "entwicklung-cloud",
+        "web-ui-frameworks",
+        "year-2019"
+      ],
+      "description": "Open-Source Python-Bibliothek zur schnellen Erstellung interaktiver, reaktiver Web-Frontends.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/strust",
+      "label": "Trust Manager / Zertifikatsverwaltung (SAP GUI)",
+      "type": "Architecture Concept",
+      "path": "/digest/strust.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Integrierter X.509 TrustStore und Keystore für TLS-Zertifikatsketten und Gegenstellen-Validierung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/swagger",
+      "label": "Swagger (OpenAPI Toolset & UI)",
+      "type": "Architecture Concept",
+      "path": "/digest/swagger.md",
+      "tags": [
+        "digest",
+        "concept",
+        "api-tooling",
+        "web-ui-frameworks",
+        "year-2010"
+      ],
+      "description": "Open-Source-Toolset (Swagger UI, Swagger Editor) zur Visualisierung, Dokumentation und interaktiven Interaktion mit REST-APIs.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/sxmb-moni",
+      "label": "Integration Engine Monitoring (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/sxmb-moni.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp"
+      ],
+      "description": "Pipeline- und Message-Tracer für XML-basierte Enterprise Application Integration (EAI).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/tailwind-css",
+      "label": "Tailwind CSS Utility-First Framework (Adam Wathan 2017)",
+      "type": "Architecture Concept",
+      "path": "/digest/tailwind-css.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "ki-agenten-frontier",
+        "year-2017"
+      ],
+      "description": "Utility-first CSS-Framework zur rasanten Erstellung maßgeschneiderter, wartbarer Benutzeroberflächen ohne CSS-Bloat.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/tcp-ip",
+      "label": "TCP/IP Protokollsuite (Vint Cerf & Bob Kahn 1974)",
+      "type": "Architecture Concept",
+      "path": "/digest/tcp-ip.md",
+      "tags": [
+        "digest",
+        "concept",
+        "netzwerk-meilenstein",
+        "web-ui-frameworks",
+        "year-1974"
+      ],
+      "description": "Transmission Control Protocol / Internet Protocol: Standardisiertes Verbindungsprotokoll für globale, heterogene Rechnernetze.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/tls",
+      "label": "Transport Layer Security (RFC 8446)",
+      "type": "Architecture Concept",
+      "path": "/digest/tls.md",
+      "tags": [
+        "digest",
+        "concept",
+        "security",
+        "security-governance-kritis",
+        "year-1999"
+      ],
+      "description": "Kryptografisches Protokoll zur sicheren Ende-zu-Ende Datenübertragung (TLS 1.3).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/togaf",
+      "label": "The Open Group Architecture Framework",
+      "type": "Architecture Concept",
+      "path": "/digest/togaf.md",
+      "tags": [
+        "digest",
+        "concept",
+        "methodik",
+        "security-governance-kritis",
+        "year-1995"
+      ],
+      "description": "Weltweiter De-facto-Standard für methodische Unternehmens- und Integrationsarchitektur (ADM).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/trace",
+      "label": "HTTP TRACE (RFC 9110)",
+      "type": "Architecture Concept",
+      "path": "/digest/trace.md",
+      "tags": [
+        "digest",
+        "concept",
+        "http-verb",
+        "web-ui-frameworks"
+      ],
+      "description": "Remote-Loopback-Methode zur Diagnose von Proxies und Zwischenstationen entlang des Request-Pfads.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/transistor",
+      "label": "Erfindung des Bipolartransistors (Bell Labs 1947)",
+      "type": "Architecture Concept",
+      "path": "/digest/transistor.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "hardware-physis",
+        "year-1947"
+      ],
+      "description": "Halbleiterbauelement von Bardeen, Brattain und Shockley: Ersetzte fehleranfällige Elektronenröhren und ermöglichte die Mikroelektronik.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/turing-test-bestanden",
+      "label": "Turing Test bestanden (LLMs im Benchmark)",
+      "type": "Architecture Concept",
+      "path": "/digest/turing-test-bestanden.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ki-meilenstein",
+        "ki-agenten-frontier"
+      ],
+      "description": "Empirischer Nachweis: Moderne Frontier-Modelle (GPT-4, Claude 3.5, Gemini 1.5) bestehen standardisierte Turing- und Fachprüfungen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/typescript",
+      "label": "TypeScript Open-Source Release (Anders Hejlsberg / Microsoft 2012)",
+      "type": "Architecture Concept",
+      "path": "/digest/typescript.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sprache-standard",
+        "web-ui-frameworks",
+        "year-2012"
+      ],
+      "description": "Typsicheres Superset von JavaScript mit statischer Analyse und Generics. Verhindert typische Laufzeitfehler in Großprojekten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ui",
+      "label": "User Interface (Benutzeroberfläche)",
+      "type": "Architecture Concept",
+      "path": "/digest/ui.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-ux",
+        "web-ui-frameworks"
+      ],
+      "description": "Die visuelle Interaktionsschicht zwischen Mensch und Softwaresystem.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/ukraine-krieg",
+      "label": "Ukraine-Krieg: Cloud-Migration & Cyberwar (Februar 2022)",
+      "type": "Architecture Concept",
+      "path": "/digest/ukraine-krieg.md",
+      "tags": [
+        "digest",
+        "concept",
+        "epoche-resilienz",
+        "ki-agenten-frontier",
+        "year-2022"
+      ],
+      "description": "Erster voll-hybrider Krieg der Moderne: Massive russische Cyberangriffe, Starlink-Satellitenresilienz und Cloud-Disaster-Recovery.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/unix",
+      "label": "UNIX – Mutter aller modernen Betriebssysteme (Bell Labs 1969)",
+      "type": "Architecture Concept",
+      "path": "/digest/unix.md",
+      "tags": [
+        "digest",
+        "concept",
+        "architektur-os",
+        "os-netzwerk-transport",
+        "year-1969"
+      ],
+      "description": "Pionier-Betriebssystem von Ken Thompson & Dennis Ritchie bei Bell Labs. Schuf hierarchische Dateisysteme, Unix-Pipes, modulare Utilities und Multi-User-Konzepte",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/url",
+      "label": "Uniform Resource Locator (RFC 3986)",
+      "type": "Architecture Concept",
+      "path": "/digest/url.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-protocol",
+        "web-ui-frameworks"
+      ],
+      "description": "Standardisierte Zeichenkette zur Lokalisierung von Ressourcen im Internet.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/va01",
+      "label": "Kundenauftrag anlegen (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/va01.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-1992"
+      ],
+      "description": "Komplexe Business-Transaktion zur Generierung von Verkaufsbelegen auf Basis valider Geschäftspartner.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/vue-js",
+      "label": "Vue.js Progressive Framework (Evan You 2014)",
+      "type": "Architecture Concept",
+      "path": "/digest/vue-js.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework",
+        "web-ui-frameworks",
+        "year-2014"
+      ],
+      "description": "Progressives, reaktives HTML5-Komponentenframework mit virtueller DOM-Optimierung und Template-Syntax.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/walgesaenge-ki",
+      "label": "KI-Entschlüsselung von Walgesängen (Project CETI Potwalsprache 2024)",
+      "type": "Architecture Concept",
+      "path": "/digest/walgesaenge-ki.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-meilenstein",
+        "ki-agenten-frontier",
+        "year-2024"
+      ],
+      "description": "Project CETI (MIT/Harvard/National Geographic): Forscher nutzen generative LLMs, um die Klick-Kombinationen (Codas) von Pottwalen als phonetisches Alphabet zu e",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/we02",
+      "label": "IDoc-Liste & Monitoring (SAP GUI Transaktion)",
+      "type": "Architecture Concept",
+      "path": "/digest/we02.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-transaktion",
+        "enterprise-erp-sap-btp",
+        "year-1992"
+      ],
+      "description": "Nachrichten-Monitoring für asynchrone EDIFACT/XML-Dateicontainer in Enterprise-Kopplungen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/web-components",
+      "label": "W3C Web Components Standard (Custom Elements & Shadow DOM 2014)",
+      "type": "Architecture Concept",
+      "path": "/digest/web-components.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ui-framework-standard",
+        "web-ui-frameworks",
+        "year-2014"
+      ],
+      "description": "Nativer W3C-Standard für wiederverwendbare, gekapselte HTML-Tags (Custom Elements, Shadow DOM, HTML Templates).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/web-dynpro",
+      "label": "SAP Web Dynpro ABAP / Java (SAP 2003)",
+      "type": "Architecture Concept",
+      "path": "/digest/web-dynpro.md",
+      "tags": [
+        "digest",
+        "concept",
+        "sap-ui-historie",
+        "enterprise-erp-sap-btp",
+        "year-2003"
+      ],
+      "description": "Zustandsbehaftetes Server-Rendering auf Basis von HTML 4.01 und IFrames. Hohe Latenz, keine responsive Mobilfähigkeit.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/webhook",
+      "label": "Webhooks – Ereignisgesteuerte HTTP-Callbacks (Jeff Lindsay 2007)",
+      "type": "Architecture Concept",
+      "path": "/digest/webhook.md",
+      "tags": [
+        "digest",
+        "concept",
+        "api-protokoll",
+        "os-netzwerk-transport",
+        "year-2007"
+      ],
+      "description": "Benutzerdefinierte HTTP-POST-Callbacks, die bei Eintreten eines Ereignisses asynchron Echtzeitdaten an Abonnenten pushen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/websocket",
+      "label": "WebSocket Protokoll (RFC 6455 / W3C)",
+      "type": "Architecture Concept",
+      "path": "/digest/websocket.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-netzwerk",
+        "web-ui-frameworks"
+      ],
+      "description": "Bidirektionales, vollduplex TCP-Netzwerkprotokoll über eine persistente Single-Socket Verbindung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/wikipedia",
+      "label": "Gründung von Wikipedia (Jimmy Wales & Larry Sanger Jan 2001)",
+      "type": "Architecture Concept",
+      "path": "/digest/wikipedia.md",
+      "tags": [
+        "digest",
+        "concept",
+        "wissens-meilenstein",
+        "web-ui-frameworks",
+        "year-2001"
+      ],
+      "description": "Freie, gemeinnützige Online-Enzyklopädie basierend auf dem Wiki-Prinzip. Größte Wissenssammlung der Menschheitsgeschichte.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/wsdl",
+      "label": "Web Services Description Language (W3C)",
+      "type": "Architecture Concept",
+      "path": "/digest/wsdl.md",
+      "tags": [
+        "digest",
+        "concept",
+        "xml-api",
+        "enterprise-erp-sap-btp",
+        "year-2001"
+      ],
+      "description": "XML-basierte Schnittstellen-Beschreibungssprache für SOAP-Webservices (Operationen, Datentypen, Endpunkte).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/www",
+      "label": "Tim Berners-Lee erfindet das World Wide Web am CERN (März 1989)",
+      "type": "Architecture Concept",
+      "path": "/digest/www.md",
+      "tags": [
+        "digest",
+        "concept",
+        "web-meilenstein",
+        "web-ui-frameworks",
+        "year-1989"
+      ],
+      "description": "Historisches Proposal 'Information Management: A Proposal' am CERN: Verknüpfung von Hypertext mit dem Internet zur weltweiten Informationsvernetzung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/x-509",
+      "label": "ITU-T Standard für Public-Key-Zertifikate",
+      "type": "Architecture Concept",
+      "path": "/digest/x-509.md",
+      "tags": [
+        "digest",
+        "concept",
+        "security",
+        "security-governance-kritis",
+        "year-1988"
+      ],
+      "description": "Kryptografischer Standard zur Bindung von Identitäten an öffentliche Schlüssel per Signaturkette.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/x-grok",
+      "label": "X (vormals Twitter / Plattform für xAI Grok)",
+      "type": "Architecture Concept",
+      "path": "/digest/x-grok.md",
+      "tags": [
+        "digest",
+        "concept",
+        "ai-ecosystem",
+        "ki-agenten-frontier"
+      ],
+      "description": "Globale Social-Media- und Microblogging-Plattform, Datenbasis und Host-Infrastruktur für xAI und Grok.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/xhtml",
+      "label": "Extensible HyperText Markup Language 1.0 (W3C 2000)",
+      "type": "Architecture Concept",
+      "path": "/digest/xhtml.md",
+      "tags": [
+        "digest",
+        "concept",
+        "xml-web",
+        "web-ui-frameworks",
+        "year-2000"
+      ],
+      "description": "Strikte Reformulierung von HTML 4 als wohlgeformtes XML-Dokument (Groß-/Kleinschreibung, schließende Tags).",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/xml",
+      "label": "Extensible Markup Language (W3C)",
+      "type": "Architecture Concept",
+      "path": "/digest/xml.md",
+      "tags": [
+        "digest",
+        "concept",
+        "datenformate",
+        "web-ui-frameworks"
+      ],
+      "description": "Strukturierte Auszeichnungssprache für hierarchische Datensätze.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/xpath",
+      "label": "XML Path Language (W3C Standard)",
+      "type": "Architecture Concept",
+      "path": "/digest/xpath.md",
+      "tags": [
+        "digest",
+        "concept",
+        "xml-mapping",
+        "web-ui-frameworks"
+      ],
+      "description": "Deklarative Abfragesprache zur Navigation und Selektion von Elementen und Attributen in XML-Dokumentenbäumen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/xsd",
+      "label": "XML Schema Definition (W3C)",
+      "type": "Architecture Concept",
+      "path": "/digest/xsd.md",
+      "tags": [
+        "digest",
+        "concept",
+        "data-schema",
+        "enterprise-erp-sap-btp",
+        "year-2001"
+      ],
+      "description": "W3C-Standard zur formalen syntaktischen und semantischen Validierung und Typisierung von XML-Dokumenten.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/xslt",
+      "label": "Extensible Stylesheet Language Transformations (W3C)",
+      "type": "Architecture Concept",
+      "path": "/digest/xslt.md",
+      "tags": [
+        "digest",
+        "concept",
+        "data-mapping",
+        "web-ui-frameworks",
+        "year-1999"
+      ],
+      "description": "Turing-vollständige, deklarative XML-Transformationstechnologie zur Konvertierung hierarchischer Dokumentstrukturen.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/xsuaa",
+      "label": "XML/Extended Services User Account and Authentication",
+      "type": "Architecture Concept",
+      "path": "/digest/xsuaa.md",
+      "tags": [
+        "digest",
+        "concept",
+        "security-sap",
+        "enterprise-erp-sap-btp",
+        "year-2016"
+      ],
+      "description": "Extended OAuth 2.0 Auth Server & Token Broker, der JWT-Tokens mit proprietären SAP-Scopes signiert.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/yaml",
+      "label": "YAML Ain't Markup Language",
+      "type": "Architecture Concept",
+      "path": "/digest/yaml.md",
+      "tags": [
+        "digest",
+        "concept",
+        "devops-daten",
+        "daten-middleware-apis"
+      ],
+      "description": "Für Menschen optimal lesbares Datenserialisierungsformat mit strenger Einrückung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/zero-trust",
+      "label": "Zero Trust Sicherheitsarchitektur (John Kindervag / Forrester 2010)",
+      "type": "Architecture Concept",
+      "path": "/digest/zero-trust.md",
+      "tags": [
+        "digest",
+        "concept",
+        "security-paradigma",
+        "security-governance-kritis",
+        "year-2010"
+      ],
+      "description": "Sicherheitsmodell: 'Never trust, always verify'. Hebt den überholten Perimeter-Schutz auf und verlangt granulare Verifikation jeder Anfrage.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/zuse-z1",
+      "label": "Konrad Zuse Z1 – Erster frei programmierbarer Rechner (1938)",
+      "type": "Architecture Concept",
+      "path": "/digest/zuse-z1.md",
+      "tags": [
+        "digest",
+        "concept",
+        "hardware-meilenstein",
+        "hardware-physis",
+        "year-1938"
+      ],
+      "description": "Weltweit erster frei programmierbarer, binärer mechanischer Rechner mit Gleitkomma-Arithmetik und Lochstreifen-Steuerung.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
+    },
+    {
+      "id": "digest/zweiter-weltkrieg",
+      "label": "Zweiter Weltkrieg – Bletchley Park, Enigma & Turing-Bombe (1939–1945)",
+      "type": "Architecture Concept",
+      "path": "/digest/zweiter-weltkrieg.md",
+      "tags": [
+        "digest",
+        "concept",
+        "epoche-meilenstein",
+        "security-governance-kritis",
+        "year-1939"
+      ],
+      "description": "Katalysator der Computerrevolution: Alan Turings Kryptoanalyse der Enigma in Bletchley Park, Zuse Z3, Radar-Elektronik und ENIAC.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 0
     },
     {
       "id": "iflows/batch-receiver-iflow",
