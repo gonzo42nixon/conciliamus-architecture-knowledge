@@ -824,27 +824,64 @@ with st.sidebar:
 
     # BEREICH 4: BTP Live-Workbench
     with st.expander("🧪 BTP Live-Workbench", expanded=False):
-        st.markdown("Führen Sie einen Live-Batch-Test gegen den BTP-Tenant aus:")
-        default_client_id = "sb-e1a4ca1f-7a33-4513-858d-77ba2c5e58dd!b706425|it-rt-b9c123f3trial!b55215"
-        default_client_secret = "11930c12-a78b-4172-8004-f8c5a3a024b4$NCHm0cqnZea8wy3M_TT2Kp_Geurr7DE1cReWFnC2FJU="
-        default_token_url = "https://b9c123f3trial.authentication.us10.hana.ondemand.com/oauth/token"
-        default_runtime_url = "https://b9c123f3trial.it-cpitrial06-rt.cfapps.us10-001.hana.ondemand.com"
+        st.markdown("Führen Sie einen Live-Batch-Test gegen den SAP BTP CPI Tenant aus:")
+        
+        # Sicher aus Secrets / Umgebungsvariablen laden (niemals hardcoded im Quellcode!)
+        btp_client_id = get_secret("BTP_CLIENT_ID", "")
+        btp_client_secret = get_secret("BTP_CLIENT_SECRET", "")
+        btp_token_url = get_secret("BTP_TOKEN_URL", "")
+        btp_runtime_url = get_secret("BTP_RUNTIME_URL", "")
+
+        # Konfigurationsfelder für BTP Service-Key Credentials (anonymisiert / passwort-geschützt)
+        with st.expander("🔑 BTP Service-Key Credentials konfigurieren", expanded=not bool(btp_client_secret)):
+            c_id = st.text_input(
+                "BTP Client-ID:",
+                value=btp_client_id,
+                placeholder="sb-xxxxxx!b000000|it-rt-trial!b00000",
+                type="password" if btp_client_id else "default",
+                help="Client-ID aus dem SAP BTP Service Key (oder in secrets.toml als BTP_CLIENT_ID hinterlegen)"
+            )
+            c_sec = st.text_input(
+                "BTP Client-Secret:",
+                value=btp_client_secret,
+                placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx$...",
+                type="password",
+                help="Client-Secret aus dem SAP BTP Service Key (oder in secrets.toml als BTP_CLIENT_SECRET hinterlegen)"
+            )
+            t_url = st.text_input(
+                "BTP Token-URL:",
+                value=btp_token_url or "https://<subaccount>.authentication.us10.hana.ondemand.com/oauth/token",
+                placeholder="https://<subaccount>.authentication.<region>.hana.ondemand.com/oauth/token"
+            )
+            r_url = st.text_input(
+                "BTP Runtime-URL:",
+                value=btp_runtime_url or "https://<subaccount>.it-cpitrial06-rt.cfapps.us10-001.hana.ondemand.com",
+                placeholder="https://<subaccount>.it-cpitrial06-rt.cfapps.<region>.hana.ondemand.com"
+            )
 
         if st.button("🚀 10er-Batch an BTP CPI senden", key="sb_btn_live_batch", use_container_width=True):
-            with st.spinner("Sende Live-Batch an SAP Cloud Integration..."):
-                creds = {
-                    "token_url": default_token_url,
-                    "runtime_url": default_runtime_url,
-                    "client_id": default_client_id,
-                    "client_secret": default_client_secret
-                }
-                testdata_file = TESTDATA_DIR / "Testdaten_prepared.json"
-                payload = testdata_file.read_text(encoding="utf-8") if testdata_file.exists() else "{}"
-                res = execute_cpi_live_test(payload, creds)
-                if res.get("success"):
-                    st.success(f"🎉 Erfolg: HTTP {res.get('status')} in {res.get('duration')}s")
-                else:
-                    st.error(f"❌ Fehler: {res.get('error')}")
+            active_cid = c_id or btp_client_id
+            active_csec = c_sec or btp_client_secret
+            active_turl = t_url or btp_token_url
+            active_rurl = r_url or btp_runtime_url
+
+            if not active_csec or not active_cid or "xxxx" in active_csec:
+                st.warning("⚠️ Bitte tragen Sie gültige BTP Service-Key Credentials ein (oder hinterlegen Sie diese sicher in secrets.toml).")
+            else:
+                with st.spinner("Sende Live-Batch an SAP Cloud Integration..."):
+                    creds = {
+                        "token_url": active_turl,
+                        "runtime_url": active_rurl,
+                        "client_id": active_cid,
+                        "client_secret": active_csec
+                    }
+                    testdata_file = TESTDATA_DIR / "Testdaten_prepared.json"
+                    payload = testdata_file.read_text(encoding="utf-8") if testdata_file.exists() else "{}"
+                    res = execute_cpi_live_test(payload, creds)
+                    if res.get("success"):
+                        st.success(f"🎉 Erfolg: HTTP {res.get('status')} in {res.get('duration')}s")
+                    else:
+                        st.error(f"❌ Fehler: {res.get('error')}")
 
         st.link_button("🌐 Test-Runner öffnen ↗", "https://orcai-54321.web.app/test-runner.html", use_container_width=True)
 
