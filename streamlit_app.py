@@ -192,6 +192,35 @@ st.markdown("""
         font-weight: 600;
         border: 1px solid #c6f6d5;
     }
+    /* Fixed Bottom Chat Bar (like ChatGPT / Claude / modern AI bots) */
+    div[data-testid="stBottom"] {
+        position: fixed !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        z-index: 9999 !important;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.7) 0%, rgba(15, 23, 42, 0.98) 35%, rgba(15, 23, 42, 1) 100%) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        border-top: 1px solid rgba(255, 255, 255, 0.12) !important;
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+    }
+
+    /* Prevent bottom content from being obscured behind fixed chat input */
+    .main .block-container {
+        padding-bottom: 125px !important;
+        padding-top: 1.25rem !important;
+        max-width: 100% !important;
+    }
+
+    /* Clean subtle starter suggestion buttons */
+    div[data-testid="stButton"] button {
+        border-radius: 10px !important;
+        transition: all 0.2s ease !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -329,10 +358,11 @@ Aufgabe: {purpose}
 
 Verbindliche Richtlinien:
 1. Beantworte alle Fragen strikt auf Basis der beigefügten Dokumente aus dem Google Open Knowledge Format (OKF v0.2) Wissensbündel.
-2. Zitiere konkrete Architecture Decision Records (z.B. [ADR-001] bis [ADR-011]) und Konzeptdateien.
+2. Zitiere konkrete Architecture Decision Records (z.B. [ADR-001] bis [ADR-012]) und Konzeptdateien.
 3. Wenn Diagramme den Sachverhalt verdeutlichen, formatiere sie als Mermaid-Codeblöcke (`mermaid`).
 4. Betone stets Idempotenz, Entkopplung (Dual-iFlow), Bruce Silver BPMN 2.0 Method & Style Nomenklatur und Resilienz.
-5. Wenn eine Information im Wissensbündel nicht enthalten ist, weise transparent darauf hin, statt zu spekulieren.
+5. Beachte stets die Preservation von Camel Exchange Properties bei Request-Reply-Schritten zur Vermeidung von HTTP 401 Header-Verlusten (ADR-012) und Zero-Hardcoding via parameters.prop.
+6. Wenn eine Information im Wissensbündel nicht enthalten ist, weise transparent darauf hin, statt zu spekulieren.
 """
 
 # Call Gemini API
@@ -439,28 +469,8 @@ with st.sidebar:
     edges_count = len(graph.get("edges", [])) if "edges" in graph else graph.get("edgesCount", 93)
     st.markdown(f"- **OKF Dokumente:** `{len(concepts)}`")
     st.markdown(f"- **Wissensgraph:** `{nodes_count} Knoten / {edges_count} Kanten`")
-    st.markdown(f"- **Architektur-Entscheidungen:** `11 ADRs (ADR-001 bis ADR-011)`")
+    st.markdown(f"- **Architektur-Entscheidungen:** `12 ADRs (ADR-001 bis ADR-012)`")
     st.markdown(f"- **OKF Version:** `v0.2`")
-
-    st.markdown("---")
-    st.markdown("### 🚀 Schnellanfragen (ADR-001 bis ADR-011)")
-    sample_queries = [
-        "Wie funktioniert das Dual-iFlow Entkopplungsmuster nach ADR-001?",
-        "Wie setzt ADR-002 die Zero-Trust & BTP PaaS Security (OAuth2/XSUAA) um?",
-        "Wie gewährleistet ADR-003 die End-to-End Traceability im SAP MPL-Log?",
-        "Welche BPMN 2.0 Regeln nach Bruce Silver definiert ADR-004 für den Ingest-Flow?",
-        "Warum nutzt die Architektur ProcessDirect statt Message Queues (ADR-005)?",
-        "Wie funktioniert die idempotente Existenzprüfung (POST vs. PATCH) nach ADR-006?",
-        "Wie läuft der Two-Legged CSRF- und Cookie-Handshake nach ADR-007 ab?",
-        "Wie unterscheidet ADR-008 zwischen fachlichen Fehlern und technischem DLQ-Replay?",
-        "Welche Ergonomie-Prinzipien definiert ADR-009 für die Fiori Horizon Workbench?",
-        "Wie löst ADR-010 das BTP CORS-Problem und das serverlose GitOps-Deployment?",
-        "Wie stellt ADR-011 mit OKF v0.2 und Gemini 3.6 quellenbasierte Beratung sicher?"
-    ]
-    for idx, sq in enumerate(sample_queries):
-        if st.button(sq, key=f"sb_chip_{idx}", use_container_width=True):
-            st.session_state.current_prompt = sq
-            st.rerun()
 
     st.markdown("---")
     if st.button("🔄 Wissensbasis neu laden", use_container_width=True):
@@ -491,6 +501,21 @@ tab_chat, tab_pecha, tab_runner, tab_adrs, tab_specs = st.tabs([
 ])
 
 # ----------------- TAB 1: CHAT -----------------
+sample_queries = [
+    "Wie funktioniert das Dual-iFlow Entkopplungsmuster nach ADR-001?",
+    "Wie setzt ADR-002 die Zero-Trust & BTP PaaS Security (OAuth2/XSUAA) um?",
+    "Wie gewährleistet ADR-003 die End-to-End Traceability im SAP MPL-Log?",
+    "Welche BPMN 2.0 Regeln nach Bruce Silver definiert ADR-004 für den Ingest-Flow?",
+    "Warum nutzt die Architektur ProcessDirect statt Message Queues (ADR-005)?",
+    "Wie funktioniert die idempotente Existenzprüfung (POST vs. PATCH) nach ADR-006?",
+    "Wie läuft der Two-Legged CSRF- und Cookie-Handshake nach ADR-007 ab?",
+    "Wie unterscheidet ADR-008 zwischen fachlichen Fehlern und technischem DLQ-Replay?",
+    "Welche Ergonomie-Prinzipien definiert ADR-009 für die Fiori Horizon Workbench?",
+    "Wie löst ADR-010 das BTP CORS-Problem und das serverlose GitOps-Deployment?",
+    "Wie stellt ADR-011 mit OKF v0.2 und Gemini 3.6 quellenbasierte Beratung sicher?",
+    "Wie verhindert ADR-012 den HTTP 401 Header-Verlust bei Camel Request-Reply durch Exchange Properties & Zero-Hardcoding?"
+]
+
 with tab_chat:
     if "messages" not in st.session_state:
         st.session_state.messages = [
@@ -499,8 +524,8 @@ with tab_chat:
                 "content": (
                     "Hallo! Ich bin der **Conciliamus Architecture Advisor** (Senior SAP BTP Cloud Integration Specialist & Enterprise Architect).\n\n"
                     "Ich beantworte alle Fragen zur MDM-zu-S/4HANA Geschäftspartner-Synchronisation auf Basis der 34 kuratierten "
-                    "OKF-Architekturdokumente und 11 verifizierten Architecture Decision Records (ADR-001 bis ADR-011).\n\n"
-                    "**Wählen Sie unten eine Schnellanfrage zu den ADRs oder tippen Sie Ihre Frage in das Chatfeld!**"
+                    "OKF-Architekturdokumente und 12 verifizierten Architecture Decision Records (ADR-001 bis ADR-012).\n\n"
+                    "**Wählen Sie unten eine Beispielfrage oder tippen Sie Ihre Frage in das Eingabefeld am unteren Rand!**"
                 )
             }
         ]
@@ -509,19 +534,43 @@ with tab_chat:
         with st.chat_message(msg["role"]):
             st.markdown(msg["content"])
 
-    # Schnellanfragen direkt im Chat-Viewport (ideal für die Drawer-Ansicht)
+    # Vorgeschlagene Beispielfragen nur initial im Drawer anzeigen, damit der Benutzer nicht erschlagen wird
     if len(st.session_state.messages) <= 1:
-        st.markdown("---")
-        st.markdown("##### 💡 Schnellanfragen zu den Architektur-Entscheidungen (ADR-001 bis ADR-011):")
-        cols = st.columns(2)
-        for idx, sq in enumerate(sample_queries):
-            with cols[idx % 2]:
-                adr_badge = sq.split("ADR-")[1][:3] if "ADR-" in sq else ""
-                label = f"📌 [ADR-{adr_badge}] {sq}" if adr_badge else sq
-                if st.button(label, key=f"chat_chip_{idx}", use_container_width=True):
-                    st.session_state.current_prompt = sq
+        st.markdown("""
+        <div style="background: rgba(30, 41, 59, 0.45); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 12px; padding: 12px 16px; margin: 12px 0 14px 0;">
+            <div style="font-size: 13px; font-weight: 700; color: #f1f5f9; display: flex; align-items: center; gap: 6px;">
+                <span>💡</span><span>Vorgeschlagene Themenschwerpunkte:</span>
+            </div>
+            <div style="font-size: 11.5px; color: #94a3b8; margin-top: 2px;">
+                Klicken Sie auf ein Thema oder tippen Sie Ihre individuelle Frage in das Feld unten:
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        starter_topics = [
+            ("⚡ Dual-iFlow & ProcessDirect", "Wie funktioniert das Dual-iFlow Entkopplungsmuster nach ADR-001 und ADR-005?"),
+            ("🛡️ Two-Legged CSRF & Cookies", "Wie läuft der Two-Legged CSRF- und Cookie-Handshake nach ADR-007 ab?"),
+            ("💾 DLQ & Resilienz-Routing", "Wie unterscheidet ADR-008 zwischen fachlichen Fehlern und technischem DLQ-Replay?"),
+            ("🔑 Camel Header Preservation", "Wie verhindert ADR-012 den HTTP 401 Header-Verlust bei Camel Request-Reply durch Exchange Properties & Zero-Hardcoding?")
+        ]
+
+        col1, col2 = st.columns(2)
+        for idx, (label, query) in enumerate(starter_topics):
+            col = col1 if idx % 2 == 0 else col2
+            with col:
+                if st.button(label, key=f"starter_chip_{idx}", use_container_width=True, help=query):
+                    st.session_state.current_prompt = query
                     st.rerun()
-        st.markdown("---")
+
+        with st.expander("📚 Weitere Beispielfragen (ADR-001 bis ADR-012) anzeigen", expanded=False):
+            exp_cols = st.columns(2)
+            for idx, sq in enumerate(sample_queries):
+                with exp_cols[idx % 2]:
+                    adr_badge = sq.split("ADR-")[1][:3] if "ADR-" in sq else ""
+                    label = f"📌 [ADR-{adr_badge}] {sq}" if adr_badge else sq
+                    if st.button(label, key=f"chat_chip_more_{idx}", use_container_width=True):
+                        st.session_state.current_prompt = sq
+                        st.rerun()
 
     user_input = st.chat_input("Ihre Frage zur Conciliamus-Architektur...")
     if "current_prompt" in st.session_state and st.session_state.current_prompt:
