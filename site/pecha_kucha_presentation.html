@@ -550,7 +550,7 @@
     "badgeColor": "bg-amber-100 text-amber-800",
     "title": "Die Integrationsaufgabe",
     "subtitle": "Heterogenes Quellsystem trifft auf modernes SAP S/4HANA OData V2 Backend",
-    "visual": "\n          <div class=\"h-full flex flex-col justify-between gap-3\">\n            <div class=\"grid grid-cols-1 md:grid-cols-11 gap-3 flex-1 items-center\">\n              <div class=\"md:col-span-4 bg-slate-900 text-white p-5 rounded-2xl border border-slate-700 shadow-xl h-full flex flex-col justify-between\">\n                <div>\n                  <span class=\"px-2 py-0.5 bg-amber-500/20 text-amber-400 text-[10px] font-bold rounded uppercase\">Quellsystem</span>\n                  <h3 class=\"text-base font-black text-white mt-1\">\n                    <a href=\"https://www.johannesstift-diakonie.de/mitarbeitenden-login\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"hover:text-amber-400 transition-colors inline-flex items-center gap-1.5\" title=\"Johannesstift Diakonie Mitarbeitenden-Login öffnen\">\n                      <span>JSD-MDM</span>\n                      <i class=\"fa-solid fa-arrow-up-right-from-square text-[11px] text-amber-400 opacity-70\"></i>\n                    </a>\n                  </h3>\n                  <div class=\"text-xs text-slate-300 mt-1\">Zentrales Stammdaten-Tool</div>\n                </div>\n                <div class=\"my-3 space-y-1.5 font-mono text-xs\">\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• JSON-Array (Massen-Batch)</div>\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• Unregelmäßige Push-Intervalle</div>\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• Erwartet sofortige Quittierung</div>\n                </div>\n                <div class=\"text-[10px] text-amber-400 font-bold font-mono\">Format: JSON Payload</div>\n              </div>\n\n              <div class=\"md:col-span-3 flex flex-col items-center justify-center text-center p-2\">\n                <div class=\"w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-2xl shadow mb-2\">\n                  <i class=\"fa-solid fa-triangle-exclamation\"></i>\n                </div>\n                <div class=\"text-xs font-black text-slate-900\">Die Hürde</div>\n                <div class=\"text-[11px] text-slate-600 mt-1\">\n                  1 fehlerhafter Datensatz darf niemals den gesamten 10er-Batch stoppen!\n                </div>\n              </div>\n\n              <div class=\"md:col-span-4 bg-gradient-to-br from-blue-900 to-indigo-950 text-white p-5 rounded-2xl border border-blue-500/40 shadow-xl h-full flex flex-col justify-between\">\n                <div>\n                  <span class=\"px-2 py-0.5 bg-blue-500/20 text-blue-300 text-[10px] font-bold rounded uppercase\">Zielsystem</span>\n                  <h3 class=\"text-base font-black text-white mt-1\">SAP S/4HANA</h3>\n                  <div class=\"text-xs text-slate-300 mt-1\">OData V2 API_BUSINESS_PARTNER</div>\n                </div>\n                <div class=\"my-3 space-y-1.5 font-mono text-xs\">\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• Atomare Einzelverarbeitung</div>\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• POST (Neu) vs. PATCH (Update)</div>\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• Two-Legged CSRF Token</div>\n                </div>\n                <div class=\"text-[10px] text-blue-300 font-bold font-mono\">Schnittstelle: OData V2</div>\n              </div>\n            </div>\n\n            <div class=\"grid grid-cols-3 gap-2 text-center pt-2 border-t border-slate-100 items-stretch\">\n              <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-260907-16H03-JSON-2ZSPP\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"px-2 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-300/80 rounded-xl text-xs font-bold text-amber-900 flex items-center justify-between transition group shadow-2xs hover:shadow-xs\" title=\"10er-JSON-Batch Ingest Payload anzeigen (ORCAI-260907-16H03-JSON-2ZSPP)\">\n                <span class=\"flex items-center gap-1.5 truncate\">\n                  <i class=\"fa-solid fa-file-code text-amber-600 text-xs\"></i>\n                  <span>1. Batch Ingest</span>\n                </span>\n                <span class=\"px-1.5 py-0.5 bg-amber-200/70 group-hover:bg-amber-300 text-amber-950 rounded text-[9px] font-mono font-bold flex items-center gap-1 shrink-0\">\n                  <span>Batch JSON</span>\n                  <i class=\"fa-solid fa-arrow-up-right-from-square text-[8px]\"></i>\n                </span>\n              </a>\n\n              <div class=\"px-2 py-1 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-between gap-1 shadow-2xs\">\n                <span class=\"text-[11px] font-bold text-blue-950 flex items-center gap-1 shrink-0\" title=\"2. Vereinzelung &amp; Isolation (Atomare Einzeltransaktionen)\">\n                  <i class=\"fa-solid fa-arrows-split-up-and-left text-blue-600 text-xs\"></i>\n                  <span class=\"hidden xl:inline\">2. Vereinzelung:</span>\n                  <span class=\"xl:hidden\">2. Einzel:</span>\n                </span>\n                <div class=\"flex items-center gap-0.5 overflow-x-auto py-0.5\">\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-CUST15\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"1. Musterfirma Berlin GmbH (CUST15) • ORCAI-S4HBP-JSDMDM-CUST15 ↗\">1</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-BECHTLE-AG\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"2. Bechtle AG • ORCAI-S4HBP-JSDMDM-BECHTLE-AG ↗\">2</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-XYZ-PEPPOL\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"3. XYZ Peppol • ORCAI-S4HBP-JSDMDM-XYZ-PEPPOL ↗\">3</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-JSD-BP-100001\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"4. JSD-BP-100001 • ORCAI-S4HBP-JSDMDM-JSD-BP-100001 ↗\">4</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-JSD-BP-100002\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"5. JSD-BP-100002 • ORCAI-S4HBP-JSDMDM-JSD-BP-100002 ↗\">5</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-JSD-BP-100003\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"6. JSD-BP-100003 • ORCAI-S4HBP-JSDMDM-JSD-BP-100003 ↗\">6</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-JSD-BP-100004\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"7. JSD-BP-100004 • ORCAI-S4HBP-JSDMDM-JSD-BP-100004 ↗\">7</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-JSD-BP-100005\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"8. JSD-BP-100005 • ORCAI-S4HBP-JSDMDM-JSD-BP-100005 ↗\">8</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-JSD-BP-100006\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"9. JSD-BP-100006 • ORCAI-S4HBP-JSDMDM-JSD-BP-100006 ↗\">9</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-JSD-BP-100007\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"10. JSD-BP-100007 • ORCAI-S4HBP-JSDMDM-JSD-BP-100007 ↗\">10</a>\n                  <a href=\"https://orcai-54321.web.app/json/?key=ORCAI-S4HBP-JSDMDM-NEW-BP-999\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0\" title=\"11. NEW-BP-999 • ORCAI-S4HBP-JSDMDM-NEW-BP-999 ↗\">11</a>\n                </div>\n              </div>\n\n              <span class=\"px-2 py-1.5 bg-slate-100 rounded-xl text-xs font-bold text-slate-700 flex items-center justify-center gap-1.5 border border-slate-200\">\n                <i class=\"fa-solid fa-shield-halved text-emerald-600 text-xs\"></i>\n                <span>3. Idempotente OData Calls</span>\n              </span>\n            </div>\n\n            <div class=\"pt-1.5 border-t border-slate-100 flex items-center gap-1.5 text-[11px] text-slate-500\">              <i class=\"fa-solid fa-circle-info text-amber-500 text-xs shrink-0\"></i>              <span class=\"font-semibold text-slate-700\">Zusatz-Challenge bei R/3-Transition:</span>              <span class=\"text-slate-500\">Harmonisierung getrennter Debitoren & Kreditoren zum unifizierten Business Partner via</span>              <a href=\"https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/74b0b157c81944ffaac6ebc07245b9dc/25b46c8241fd4852bf7876d87bed8fd0.html\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"font-semibold text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1 shrink-0\" title=\"SAP Help Portal: Customer-Vendor-Integration (CVI) öffnen\">                <span>Customer-Vendor-Integration</span>                <i class=\"fa-solid fa-arrow-up-right-from-square text-[9px]\"></i>              </a>            </div>\n          </div>\n        ",
+    "visual": "\n          <div class=\"h-full flex flex-col justify-between gap-3\">\n            <div class=\"grid grid-cols-1 md:grid-cols-11 gap-3 flex-1 items-center\">\n              <div class=\"md:col-span-4 bg-slate-900 text-white p-5 rounded-2xl border border-slate-700 shadow-xl h-full flex flex-col justify-between\">\n                <div>\n                  <span class=\"px-2 py-0.5 bg-amber-500/20 text-amber-400 text-[10px] font-bold rounded uppercase\">Quellsystem</span>\n                  <h3 class=\"text-base font-black text-white mt-1\">\n                    <a href=\"https://www.johannesstift-diakonie.de/mitarbeitenden-login\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"hover:text-amber-400 transition-colors inline-flex items-center gap-1.5\" title=\"Johannesstift Diakonie Mitarbeitenden-Login öffnen\">\n                      <span>JSD-MDM</span>\n                      <i class=\"fa-solid fa-arrow-up-right-from-square text-[11px] text-amber-400 opacity-70\"></i>\n                    </a>\n                  </h3>\n                  <div class=\"text-xs text-slate-300 mt-1\">Zentrales Stammdaten-Tool</div>\n                </div>\n                <div class=\"my-3 space-y-1.5 font-mono text-xs\">\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• JSON-Array (Massen-Batch)</div>\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• Unregelmäßige Push-Intervalle</div>\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• Erwartet sofortige Quittierung</div>\n                </div>\n                <div class=\"text-[10px] text-amber-400 font-bold font-mono\">Format: JSON Payload</div>\n              </div>\n\n              <div class=\"md:col-span-3 flex flex-col items-center justify-center text-center p-2\">\n                <div class=\"w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-2xl shadow mb-2\">\n                  <i class=\"fa-solid fa-triangle-exclamation\"></i>\n                </div>\n                <div class=\"text-xs font-black text-slate-900\">Die Hürde</div>\n                <div class=\"text-[11px] text-slate-600 mt-1\">\n                  1 fehlerhafter Datensatz darf niemals den gesamten 10er-Batch stoppen!\n                </div>\n              </div>\n\n              <div class=\"md:col-span-4 bg-gradient-to-br from-blue-900 to-indigo-950 text-white p-5 rounded-2xl border border-blue-500/40 shadow-xl h-full flex flex-col justify-between\">\n                <div>\n                  <span class=\"px-2 py-0.5 bg-blue-500/20 text-blue-300 text-[10px] font-bold rounded uppercase\">Zielsystem</span>\n                  <h3 class=\"text-base font-black text-white mt-1\">SAP S/4HANA</h3>\n                  <div class=\"text-xs text-slate-300 mt-1\">OData V2 API_BUSINESS_PARTNER</div>\n                </div>\n                <div class=\"my-3 space-y-1.5 font-mono text-xs\">\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• Atomare Einzelverarbeitung</div>\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• POST (Neu) vs. PATCH (Update)</div>\n                  <div class=\"p-2 bg-white/10 rounded-lg text-slate-200\">• Two-Legged CSRF Token</div>\n                </div>\n                <div class=\"text-[10px] text-blue-300 font-bold font-mono\">Schnittstelle: OData V2</div>\n              </div>\n            </div>\n\n            <div class=\"grid grid-cols-3 gap-2 text-center pt-2 border-t border-slate-100 items-stretch\">\n              <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-260907-16H03-JSON-2ZSPP\', \'1. Batch Ingest (10 Partner Payload)\')\" class=\"px-2 py-1.5 bg-amber-50 hover:bg-amber-100 border border-amber-300/80 rounded-xl text-xs font-bold text-amber-900 flex items-center justify-between transition group shadow-2xs hover:shadow-xs cursor-pointer\" title=\"10er-JSON-Batch Ingest im Pop-Out öffnen (ORCAI-260907-16H03-JSON-2ZSPP)\">\n                <span class=\"flex items-center gap-1.5 truncate\">\n                  <i class=\"fa-solid fa-file-code text-amber-600 text-xs\"></i>\n                  <span>1. Batch Ingest</span>\n                </span>\n                <span class=\"px-1.5 py-0.5 bg-amber-200/70 group-hover:bg-amber-300 text-amber-950 rounded text-[9px] font-mono font-bold flex items-center gap-1 shrink-0\">\n                  <span>Batch Pop-Out</span>\n                  <i class=\"fa-solid fa-window-restore text-[8px]\"></i>\n                </span>\n              </button>\n\n              <div class=\"px-2 py-1 bg-blue-50 border border-blue-200 rounded-xl flex items-center justify-between gap-1 shadow-2xs\">\n                <span class=\"text-[11px] font-bold text-blue-950 flex items-center gap-1 shrink-0\" title=\"2. Vereinzelung &amp; Isolation (Atomare Einzeltransaktionen)\">\n                  <i class=\"fa-solid fa-arrows-split-up-and-left text-blue-600 text-xs\"></i>\n                  <span class=\"hidden xl:inline\">2. Vereinzelung:</span>\n                  <span class=\"xl:hidden\">2. Einzel:</span>\n                </span>\n                <div class=\"flex items-center gap-0.5 overflow-x-auto py-0.5\">\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-CUST15\', \'1. Musterfirma Berlin GmbH (CUST15)\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"1. Musterfirma Berlin GmbH (CUST15) • Pop-Out öffnen\">1</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-BECHTLE-AG\', \'2. Bechtle AG\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"2. Bechtle AG • Pop-Out öffnen\">2</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-XYZ-PEPPOL\', \'3. XYZ Peppol\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"3. XYZ Peppol • Pop-Out öffnen\">3</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-JSD-BP-100001\', \'4. JSD-BP-100001\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"4. JSD-BP-100001 • Pop-Out öffnen\">4</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-JSD-BP-100002\', \'5. JSD-BP-100002\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"5. JSD-BP-100002 • Pop-Out öffnen\">5</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-JSD-BP-100003\', \'6. JSD-BP-100003\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"6. JSD-BP-100003 • Pop-Out öffnen\">6</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-JSD-BP-100004\', \'7. JSD-BP-100004\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"7. JSD-BP-100004 • Pop-Out öffnen\">7</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-JSD-BP-100005\', \'8. JSD-BP-100005\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"8. JSD-BP-100005 • Pop-Out öffnen\">8</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-JSD-BP-100006\', \'9. JSD-BP-100006\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"9. JSD-BP-100006 • Pop-Out öffnen\">9</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-JSD-BP-100007\', \'10. JSD-BP-100007\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"10. JSD-BP-100007 • Pop-Out öffnen\">10</button>\n                  <button type=\"button\" onclick=\"openJsonPopout(\'ORCAI-S4HBP-JSDMDM-NEW-BP-999\', \'11. NEW-BP-999\')\" class=\"w-4 h-4 rounded bg-white hover:bg-blue-600 hover:text-white border border-blue-300 text-blue-800 text-[9px] font-bold font-mono flex items-center justify-center transition shadow-2xs hover:scale-110 shrink-0 cursor-pointer\" title=\"11. NEW-BP-999 • Pop-Out öffnen\">11</button>\n                </div>\n              </div>\n\n              <span class=\"px-2 py-1.5 bg-slate-100 rounded-xl text-xs font-bold text-slate-700 flex items-center justify-center gap-1.5 border border-slate-200\">\n                <i class=\"fa-solid fa-shield-halved text-emerald-600 text-xs\"></i>\n                <span>3. Idempotente OData Calls</span>\n              </span>\n            </div>\n\n            <div class=\"pt-1.5 border-t border-slate-100 flex items-center gap-1.5 text-[11px] text-slate-500\">              <i class=\"fa-solid fa-circle-info text-amber-500 text-xs shrink-0\"></i>              <span class=\"font-semibold text-slate-700\">Zusatz-Challenge bei R/3-Transition:</span>              <span class=\"text-slate-500\">Harmonisierung getrennter Debitoren & Kreditoren zum unifizierten Business Partner via</span>              <a href=\"https://help.sap.com/docs/SAP_S4HANA_ON-PREMISE/74b0b157c81944ffaac6ebc07245b9dc/25b46c8241fd4852bf7876d87bed8fd0.html\" target=\"_blank\" rel=\"noopener noreferrer\" class=\"font-semibold text-blue-600 hover:text-blue-800 hover:underline inline-flex items-center gap-1 shrink-0\" title=\"SAP Help Portal: Customer-Vendor-Integration (CVI) öffnen\">                <span>Customer-Vendor-Integration</span>                <i class=\"fa-solid fa-arrow-up-right-from-square text-[9px]\"></i>              </a>            </div>\n          </div>\n        ",
     "notes": "Die Ausgangslage: Unser MDM-System liefert Geschäftspartner gesammelt als JSON-Batch an. Das Zielsystem, ein SAP S/4HANA Cloud, verlangt jedoch granulare OData-Aufrufe. Wie verhindern wir, dass ein einziger fehlerhafter Datensatz den gesamten Batch abbricht? Und wie schützen wir das ERP vor Lastspitzen? Die Antwort liegt in einer entkoppelten Integrationsarchitektur."
   },
   {
@@ -4985,6 +4985,248 @@
       }
     }
 
+    
+    // ========================================================
+    // JSON PAYLOAD POP-OUT VIEWER (Draggable, Resizable, Quick-Close)
+    // ========================================================
+    let activeJsonPopouts = new Map(); // safeKey -> DOM Element
+    let jsonPopoutCounter = 0;
+
+    function openJsonPopout(key, title) {
+      if (!key) return;
+      const safeKey = key.replace(/[^a-zA-Z0-9_-]/g, '_');
+
+      // If already open, bring to front, highlight, and focus
+      if (activeJsonPopouts.has(safeKey)) {
+        const existing = activeJsonPopouts.get(safeKey);
+        if (existing && document.body.contains(existing)) {
+          topPopoutZIndex++;
+          existing.style.zIndex = topPopoutZIndex;
+          existing.style.display = 'flex';
+          existing.style.boxShadow = '0 0 0 4px #38bdf8, 0 25px 60px -15px rgba(0,0,0,0.9)';
+          setTimeout(() => {
+            if (existing) existing.style.boxShadow = '0 25px 60px -15px rgba(0,0,0,0.85), 0 0 0 2px #0070f2';
+          }, 400);
+          return;
+        }
+      }
+
+      jsonPopoutCounter++;
+      topPopoutZIndex++;
+
+      // Dimensions & Cascading Position
+      const w = Math.min(840, Math.max(500, Math.floor(window.innerWidth * 0.72)));
+      const h = Math.min(580, Math.max(380, Math.floor(window.innerHeight * 0.75)));
+      const baseLeft = Math.max(20, Math.floor((window.innerWidth - w) / 2));
+      const baseTop = Math.max(25, Math.floor((window.innerHeight - h) / 2));
+      const offset = (jsonPopoutCounter - 1) % 7;
+      const left = Math.max(10, Math.min(window.innerWidth - w - 20, baseLeft + (offset * 28) - 60));
+      const top = Math.max(15, Math.min(window.innerHeight - h - 20, baseTop + (offset * 24) - 40));
+
+      const isFileProtocol = (window.location.protocol === 'file:' || !window.location.origin || window.location.origin === 'null');
+      const originBase = isFileProtocol ? 'https://orcai-54321.web.app' : '';
+      const iframeUrl = originBase + '/json/?key=' + encodeURIComponent(key) + '&preview=1';
+      const fullUrl = 'https://orcai-54321.web.app/json/?key=' + encodeURIComponent(key);
+
+      const modal = document.createElement('div');
+      modal.id = 'jsonPopout_' + safeKey;
+      modal.className = 'json-popout-window';
+      modal.style.cssText = 'display: flex; flex-direction: column; position: fixed; z-index: ' + topPopoutZIndex + '; width: ' + w + 'px; min-width: 420px; max-width: 96vw; height: ' + h + 'px; min-height: 300px; max-height: 94vh; left: ' + left + 'px; top: ' + top + 'px; overflow: hidden; border-radius: 18px; box-shadow: 0 25px 60px -15px rgba(0,0,0,0.85), 0 0 0 2px #0070f2; background: #0f172a; color: white; font-family: ui-sans-serif, system-ui, sans-serif; pointer-events: auto;';
+
+      const escKey = (typeof escapeDigestHtml === 'function') ? escapeDigestHtml(key) : key;
+      const escTitle = (typeof escapeDigestHtml === 'function') ? escapeDigestHtml(title || key) : (title || key);
+
+      modal.innerHTML = [
+        '<div class="popout-header px-4 py-2.5 bg-slate-900 border-b border-slate-700/80 flex items-center justify-between shrink-0 select-none cursor-move" title="Klicken & Ziehen zum Verschieben">',
+        '  <div class="flex items-center gap-2.5 overflow-hidden">',
+        '    <span class="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-400 border border-amber-500/40 flex items-center justify-center shrink-0">',
+        '      <i class="fa-solid fa-file-code text-xs"></i>',
+        '    </span>',
+        '    <div class="flex flex-col overflow-hidden">',
+        '      <div class="flex items-center gap-2">',
+        '        <span class="text-xs sm:text-sm font-bold text-white truncate">' + escTitle + '</span>',
+        '        <span class="px-1.5 py-0.2 bg-blue-500/20 text-blue-300 border border-blue-500/40 rounded text-[9.5px] font-mono shrink-0 font-semibold">' + escKey + '</span>',
+        '      </div>',
+        '      <span class="text-[10px] text-slate-400 font-mono">ORCAI JSON Inspection Pop-Out</span>',
+        '    </div>',
+        '  </div>',
+        '  <div class="flex items-center gap-1.5 shrink-0 ml-2">',
+        '    <a href="' + fullUrl + '" target="_blank" rel="noopener noreferrer" title="In neuem Browser-Tab öffnen ↗" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition text-xs shadow-sm cursor-pointer">',
+        '      <i class="fa-solid fa-arrow-up-right-from-square"></i>',
+        '    </a>',
+        '    <button type="button" onclick="toggleMaximizeJsonPopout(\'' + safeKey + '\')" title="Größe maximieren / wiederherstellen" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white flex items-center justify-center transition text-xs shadow-sm cursor-pointer">',
+        '      <i class="fa-solid fa-expand" id="jsonPopoutMaxIcon_' + safeKey + '"></i>',
+        '    </button>',
+        '    <button type="button" onclick="closeJsonPopout(\'' + safeKey + '\')" title="Schließen (Taste Esc)" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-red-600 text-slate-300 hover:text-white flex items-center justify-center transition text-xs shadow-sm cursor-pointer ml-1">',
+        '      <i class="fa-solid fa-xmark text-sm"></i>',
+        '    </button>',
+        '  </div>',
+        '</div>',
+        '<div class="flex-1 relative overflow-hidden bg-slate-900">',
+        '  <div id="jsonPopoutLoader_' + safeKey + '" class="absolute inset-0 bg-slate-900 flex flex-col items-center justify-center gap-2 text-slate-300 z-10">',
+        '    <i class="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500"></i>',
+        '    <span class="text-xs font-mono">Lade Payload (' + escKey + ')...</span>',
+        '  </div>',
+        '  <iframe id="jsonPopoutFrame_' + safeKey + '" src="' + iframeUrl + '" class="w-full h-full border-0 block bg-white" onload="document.getElementById(\'jsonPopoutLoader_' + safeKey + '\')?.remove()"></iframe>',
+        '</div>',
+        '<div class="px-3 py-1.5 bg-slate-900/95 border-t border-slate-800 flex items-center justify-between text-[10px] text-slate-400 shrink-0 select-none">',
+        '  <span class="flex items-center gap-1.5">',
+        '    <i class="fa-solid fa-arrows-up-down-left-right text-blue-400 text-[9px]"></i>',
+        '    <span>Verschiebbar &amp; unten rechts frei skalierbar</span>',
+        '  </span>',
+        '  <span class="flex items-center gap-1">',
+        '    <span class="font-mono bg-slate-800 px-1 py-0.2 rounded border border-slate-700 text-slate-300">Esc</span>',
+        '    <span>zum schnellen Schließen</span>',
+        '  </span>',
+        '</div>',
+        '<div class="json-popout-resizer absolute bottom-0 right-0 w-6 h-6 cursor-nwse-resize z-20 flex items-end justify-end p-1 text-slate-500 hover:text-blue-400 select-none" title="Ziehen zum Vergrößern/Verkleinern">',
+        '  <i class="fa-solid fa-grip-lines text-[10px] transform -rotate-45"></i>',
+        '</div>'
+      ].join('\n');
+
+      const iframe = modal.querySelector('iframe');
+      const header = modal.querySelector('.popout-header');
+      const resizer = modal.querySelector('.json-popout-resizer');
+
+      // Bring to front on click
+      modal.addEventListener('pointerdown', () => {
+        topPopoutZIndex++;
+        modal.style.zIndex = topPopoutZIndex;
+      });
+
+      // Dragging Implementation
+      if (header) {
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let initialLeft = 0, initialTop = 0;
+
+        header.addEventListener('pointerdown', (e) => {
+          if (e.target.closest('button') || e.target.closest('a')) return;
+          isDragging = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          const rect = modal.getBoundingClientRect();
+          initialLeft = rect.left;
+          initialTop = rect.top;
+          if (iframe) iframe.style.pointerEvents = 'none';
+          document.body.style.userSelect = 'none';
+          header.setPointerCapture(e.pointerId);
+        });
+
+        header.addEventListener('pointermove', (e) => {
+          if (!isDragging) return;
+          const dx = e.clientX - startX;
+          const dy = e.clientY - startY;
+          let newLeft = initialLeft + dx;
+          let newTop = initialTop + dy;
+          newLeft = Math.max(10, Math.min(window.innerWidth - modal.offsetWidth - 10, newLeft));
+          newTop = Math.max(10, Math.min(window.innerHeight - modal.offsetHeight - 10, newTop));
+          modal.style.left = newLeft + 'px';
+          modal.style.top = newTop + 'px';
+        });
+
+        const stopDrag = (e) => {
+          if (isDragging) {
+            isDragging = false;
+            if (iframe) iframe.style.pointerEvents = 'auto';
+            document.body.style.userSelect = '';
+            try { header.releasePointerCapture(e.pointerId); } catch(err) {}
+          }
+        };
+        header.addEventListener('pointerup', stopDrag);
+        header.addEventListener('pointercancel', stopDrag);
+      }
+
+      // Resizing Implementation
+      if (resizer) {
+        let isResizing = false;
+        let startX = 0, startY = 0;
+        let startW = 0, startH = 0;
+
+        resizer.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          isResizing = true;
+          startX = e.clientX;
+          startY = e.clientY;
+          startW = modal.offsetWidth;
+          startH = modal.offsetHeight;
+          if (iframe) iframe.style.pointerEvents = 'none';
+          document.body.style.userSelect = 'none';
+          resizer.setPointerCapture(e.pointerId);
+        });
+
+        resizer.addEventListener('pointermove', (e) => {
+          if (!isResizing) return;
+          const newW = Math.max(420, Math.min(window.innerWidth - modal.offsetLeft - 10, startW + (e.clientX - startX)));
+          const newH = Math.max(300, Math.min(window.innerHeight - modal.offsetTop - 10, startH + (e.clientY - startY)));
+          modal.style.width = newW + 'px';
+          modal.style.height = newH + 'px';
+        });
+
+        const stopResize = (e) => {
+          if (isResizing) {
+            isResizing = false;
+            if (iframe) iframe.style.pointerEvents = 'auto';
+            document.body.style.userSelect = '';
+            try { resizer.releasePointerCapture(e.pointerId); } catch(err) {}
+          }
+        };
+        resizer.addEventListener('pointerup', stopResize);
+        resizer.addEventListener('pointercancel', stopResize);
+      }
+
+      document.body.appendChild(modal);
+      activeJsonPopouts.set(safeKey, modal);
+    }
+
+    function toggleMaximizeJsonPopout(safeKey) {
+      const modal = activeJsonPopouts.get(safeKey);
+      if (!modal) return;
+      const icon = document.getElementById('jsonPopoutMaxIcon_' + safeKey);
+      if (modal.dataset.isMaximized === 'true') {
+        modal.style.left = modal.dataset.prevLeft;
+        modal.style.top = modal.dataset.prevTop;
+        modal.style.width = modal.dataset.prevWidth;
+        modal.style.height = modal.dataset.prevHeight;
+        modal.dataset.isMaximized = 'false';
+        if (icon) icon.className = 'fa-solid fa-expand';
+      } else {
+        modal.dataset.prevLeft = modal.style.left;
+        modal.dataset.prevTop = modal.style.top;
+        modal.dataset.prevWidth = modal.style.width;
+        modal.dataset.prevHeight = modal.style.height;
+        modal.style.left = '16px';
+        modal.style.top = '16px';
+        modal.style.width = 'calc(100vw - 32px)';
+        modal.style.height = 'calc(100vh - 32px)';
+        modal.dataset.isMaximized = 'true';
+        if (icon) icon.className = 'fa-solid fa-compress text-amber-400';
+      }
+    }
+
+    function closeJsonPopout(safeKey) {
+      if (safeKey) {
+        const modal = activeJsonPopouts.get(safeKey);
+        if (modal) {
+          modal.remove();
+          activeJsonPopouts.delete(safeKey);
+        }
+      } else {
+        let highestZ = -1;
+        let topmostKey = null;
+        for (const [key, el] of activeJsonPopouts.entries()) {
+          const z = parseInt(el.style.zIndex) || 0;
+          if (z > highestZ) {
+            highestZ = z;
+            topmostKey = key;
+          }
+        }
+        if (topmostKey) {
+          closeJsonPopout(topmostKey);
+        }
+      }
+    }
+
     function updateDigestInspector(termOrElement) {
       const data = resolveDigestData(termOrElement);
       if (!data) return;
@@ -5526,6 +5768,7 @@
 
     window.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
+        closeJsonPopout();
         closeDigestPopout();
         closeLightbox();
         closeAccountMenu();
