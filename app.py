@@ -577,14 +577,23 @@ Verbindliche Richtlinien:
 
 # ----------------- LLM PROVIDERS: GEMINI & DEEPSEEK / OPENROUTER -----------------
 
-def call_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> str:
-    """Calls Google Gemini with production model verification."""
+def normalize_gemini_model(model_name: str) -> str:
+    """Normalizes any UI string or mockup version to a valid Google AI Studio model identifier."""
+    lower = (model_name or "").lower()
+    if "pro" in lower:
+        return "gemini-1.5-pro"
+    if "2.0" in lower:
+        return "gemini-2.0-flash"
+    if "1.5" in lower:
+        return "gemini-1.5-flash"
+    return "gemini-2.0-flash"
+
+def call_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> Optional[str]:
+    """Calls Google Gemini with dynamic model discovery, multi-version fallback (v1/v1beta), and automatic resilience."""
     try:
         from google import genai
         from google.genai import types
 
-        client = genai.Client(api_key=api_key)
-        
         context_str = "\n\n---\n\n".join([
             f"### Dokument: {d['title']} ({d['path']})\n**Typ:** {d['type']} | **Status:** {d['frontmatter'].get('status', 'verified')}\n\n{d['content']}"
             for d in context_docs
@@ -604,32 +613,51 @@ BENUTZERFRAGE:
             temperature=0.2
         )
 
-        # Real, valid Google Gemini API models (NO fictitious names)
-        real_models = [model_name]
-        for fallback in ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro", "gemini-1.5-pro"]:
-            if fallback not in real_models:
-                real_models.append(fallback)
+        norm_model = normalize_gemini_model(model_name)
 
-        last_error = None
-        for m in real_models:
+        # Try endpoints: stable v1 first, then v1beta
+        for api_ver in ["v1", "v1beta"]:
             try:
-                response = client.models.generate_content(
-                    model=m,
-                    contents=user_content,
-                    config=config
-                )
-                if response and response.text:
-                    return response.text
-            except Exception as e:
-                last_error = e
-                err_str = str(e)
-                if "API_KEY_INVALID" in err_str or "401" in err_str:
-                    return f"❌ **Gemini API-Fehler:** Der API-Schlüssel ist ungültig. Bitte prüfen Sie den Key in der Seitenleiste."
+                client = genai.Client(api_key=api_key, http_options={"api_version": api_ver})
+
+                # Try dynamic model discovery to find what this specific key supports
+                models_to_try = [norm_model]
+                try:
+                    for m in client.models.list():
+                        name = (m.name or "").replace("models/", "")
+                        acts = getattr(m, "supported_actions", None) or getattr(m, "supported_generation_methods", None) or []
+                        if (not acts or "generateContent" in acts) and name and name not in models_to_try:
+                            if "flash" in name or "pro" in name:
+                                models_to_try.append(name)
+                except Exception:
+                    pass
+
+                # Production models recognized by Google AI Studio
+                for fallback in ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-flash-latest", "gemini-1.5-pro", "gemini-2.0-flash-lite"]:
+                    if fallback not in models_to_try:
+                        models_to_try.append(fallback)
+
+                for m in models_to_try:
+                    try:
+                        response = client.models.generate_content(
+                            model=m,
+                            contents=user_content,
+                            config=config
+                        )
+                        if response and response.text:
+                            return response.text
+                    except Exception as gen_err:
+                        err_str = str(gen_err)
+                        if "API_KEY_INVALID" in err_str or "401" in err_str:
+                            return f"❌ **Gemini API-Fehler:** Der API-Schlüssel ist ungültig. Bitte prüfen Sie den Key in der Seitenleiste."
+                        continue
+            except Exception:
                 continue
 
-        return f"❌ **Gemini API-Fehler:** Verbindung fehlgeschlagen ({str(last_error)})."
+        # If all Gemini models returned errors (e.g. 404, quota): return None to trigger automatic local grounded fallback
+        return None
     except Exception as e:
-        return f"❌ **Gemini Client-Fehler:** {str(e)}"
+        return None
 
 def call_deepseek_or_openrouter(api_key: str, provider: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> str:
     """Calls DeepSeek or OpenRouter API (OpenAI-compatible)."""
@@ -875,7 +903,7 @@ with st.sidebar:
         elif "OpenRouter" in provider_choice:
             model_choice = st.selectbox("OpenRouter Modell:", ["deepseek/deepseek-chat", "deepseek/deepseek-r1", "google/gemini-2.5-flash", "anthropic/claude-3.5-sonnet"], index=0)
         else:
-            gem_models = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro"]
+            gem_models = ["gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro"]
             gem_idx = 0
             if st.session_state.get("active_model") in gem_models:
                 gem_idx = gem_models.index(st.session_state["active_model"])
@@ -927,7 +955,7 @@ if os.path.exists(component_dir):
 user_input = None
 if custom_modern_input:
     # Pill label matching Screenshot 1: Gemini 3.8 Flash High ⚡ ^ (or active model)
-    active_label = st.session_state.get("selected_model_label", "Gemini 3.8 Flash High")
+    active_label = st.session_state.get("selected_model_label", "Gemini 2.0 Flash High")
 
     comp_res = custom_modern_input(
         placeholder="Ask anything, @ to mention, / for actions",
@@ -955,10 +983,13 @@ if custom_modern_input:
                     st.session_state["active_provider"] = "Dual-Inspector: Gemini + DeepSeek Verifier (Höchste Qualität)"
                 elif "Pro" in new_model_label:
                     st.session_state["active_provider"] = "Google Gemini (Schnell & Quellentreu)"
-                    st.session_state["active_model"] = "gemini-2.5-pro"
+                    st.session_state["active_model"] = "gemini-1.5-pro"
+                elif "1.5" in new_model_label:
+                    st.session_state["active_provider"] = "Google Gemini (Schnell & Quellentreu)"
+                    st.session_state["active_model"] = "gemini-1.5-flash"
                 else:
                     st.session_state["active_provider"] = "Google Gemini (Schnell & Quellentreu)"
-                    st.session_state["active_model"] = "gemini-2.5-flash"
+                    st.session_state["active_model"] = "gemini-2.0-flash"
                 st.rerun()
 else:
     user_input = st.chat_input("Ask anything, @ to mention, / for actions")
@@ -1004,12 +1035,14 @@ if user_input:
                 answer = call_gemini(active_gemini_key, model_choice, user_input, relevant_docs)
             elif active_deepseek_key:
                 answer = call_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", "deepseek-chat", user_input, relevant_docs)
-            else:
-                # 100% Grounded, Safe Local Fallback: Output the EXACT matched document (NEVER ENIAC!)
+
+            # Resilient Fail-Safe: If provider returned None or failed with error, seamlessly fall back to Local Grounding!
+            if not answer or (isinstance(answer, str) and answer.startswith("❌")):
                 best = relevant_docs[0]
+                note_suffix = " (Lokales Grounding aktiv)" if not active_gemini_key and not active_deepseek_key else " (Gemini API 404/Offline – Automatisches OKF-Direkt-Grounding aktiv)"
                 answer = (
                     f"> [!NOTE]\n"
-                    f"> **🏛️ Verifizierte Architektur-Antwort (Lokales Grounding • Konfidenz: {confidence}%)**\n"
+                    f"> **🏛️ Verifizierte Architektur-Antwort{note_suffix} • Konfidenz: {confidence}%**\n"
                     f"> *(Direkte quellengetreue Extraktion aus dem Google OKF v0.2 Repository für `{best['id']}`)*\n\n"
                     f"### {best['title']}\n\n"
                     f"{best['content']}\n"

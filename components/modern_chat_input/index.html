@@ -16,8 +16,8 @@
       --pill-bg: rgba(255, 255, 255, 0.07);
       --pill-border: rgba(255, 255, 255, 0.14);
       --pill-text: #e2e8f0;
-      --btn-action-bg: #2d3748;
-      --btn-action-hover: #3f4d67;
+      --btn-action-bg: rgba(255, 255, 255, 0.15);
+      --btn-action-hover: rgba(255, 255, 255, 0.25);
       --popover-bg: #1e293b;
     }
 
@@ -128,7 +128,7 @@
       background: rgba(255, 255, 255, 0.12);
     }
 
-    /* Model Selector Pill (Matches Screenshot 1: Gemini 3.8 Flash High ⚡ ^) */
+    /* Model Selector Pill */
     .model-pill {
       display: inline-flex;
       align-items: center;
@@ -208,7 +208,6 @@
       fill: currentColor;
     }
 
-    /* Microphone active / listening state */
     .btn-mic.recording {
       color: #ef4444;
       background: rgba(239, 68, 68, 0.22);
@@ -222,7 +221,7 @@
       100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
     }
 
-    /* Submit / Stop Action Button (Matches Screenshot 1 circle with red rounded square) */
+    /* Submit Action Button */
     .btn-action {
       display: inline-flex;
       align-items: center;
@@ -232,14 +231,12 @@
       border-radius: 50%;
       border: none;
       background: var(--btn-action-bg);
-      background: rgba(255, 255, 255, 0.15);
       cursor: pointer;
       transition: all 0.15s ease;
     }
 
     .btn-action:hover {
       background: var(--btn-action-hover);
-      background: rgba(255, 255, 255, 0.25);
       transform: scale(1.06);
     }
 
@@ -247,7 +244,6 @@
       transform: scale(0.95);
     }
 
-    /* Red square / Stop / Action indicator inside button */
     .red-square {
       width: 10.5px;
       height: 10.5px;
@@ -298,7 +294,7 @@
       100% { height: 12px; }
     }
 
-    /* Popover Menus (Model Dropdown & Plus Actions) */
+    /* Popover Menus */
     .popover-menu {
       display: none;
       position: absolute;
@@ -389,20 +385,20 @@
     <!-- Model Selector Popover -->
     <div class="popover-menu" id="modelMenu">
       <div class="popover-header">KI-Architektur &amp; Provider</div>
-      <div class="popover-item active" data-model="Gemini 2.5 Flash High" onclick="selectModel('Gemini 2.5 Flash High', '⚡')">
-        <span>⚡</span> <span>Gemini 2.5 Flash (Schnell &amp; Quellentreu)</span>
+      <div class="popover-item active" data-model="Gemini 2.0 Flash High" onclick="selectModel('Gemini 2.0 Flash High', '⚡')">
+        <span>⚡</span> <span>Gemini 2.0 Flash (Google AI Studio • Standard)</span>
       </div>
-      <div class="popover-item" data-model="Gemini 2.5 Pro High" onclick="selectModel('Gemini 2.5 Pro High', '🚀')">
-        <span>🚀</span> <span>Gemini 2.5 Pro (Deep Architecture Analysis)</span>
+      <div class="popover-item" data-model="Gemini 1.5 Flash High" onclick="selectModel('Gemini 1.5 Flash High', '⚡')">
+        <span>⚡</span> <span>Gemini 1.5 Flash (Google AI Studio • Schnell)</span>
+      </div>
+      <div class="popover-item" data-model="Gemini 1.5 Pro High" onclick="selectModel('Gemini 1.5 Pro High', '🚀')">
+        <span>🚀</span> <span>Gemini 1.5 Pro (Google AI Studio • Detail)</span>
       </div>
       <div class="popover-item" data-model="DeepSeek Reasoner High" onclick="selectModel('DeepSeek Reasoner High', '🧠')">
-        <span>🧠</span> <span>DeepSeek R1 Reasoner (Method &amp; Style)</span>
+        <span>🧠</span> <span>DeepSeek R1 Reasoner (Optional mit Key)</span>
       </div>
       <div class="popover-item" data-model="DeepSeek V3 High" onclick="selectModel('DeepSeek V3 High', '💬')">
-        <span>💬</span> <span>DeepSeek V3 (Cloud Integration Specialist)</span>
-      </div>
-      <div class="popover-item" data-model="Dual-Inspector High" onclick="selectModel('Dual-Inspector High', '🛡️')">
-        <span>🛡️</span> <span>Dual-Inspector (Gemini + DeepSeek Audit)</span>
+        <span>💬</span> <span>DeepSeek V3 (Optional mit Key)</span>
       </div>
     </div>
 
@@ -417,9 +413,9 @@
         <!-- Plus Button -->
         <button type="button" class="btn-plus" id="btnPlus" title="Schnell-Referenzen einfügen (+)">+</button>
 
-        <!-- Model Picker Pill (Matches Screenshot 1: Gemini 3.8 Flash High ⚡ ^) -->
+        <!-- Model Picker Pill: Defaults to valid Gemini 2.0 Flash High ⚡ ^ -->
         <div class="model-pill" id="modelPill" title="KI-Modell &amp; Provider wählen">
-          <span id="modelNameText">Gemini 3.8 Flash</span>
+          <span id="modelNameText">Gemini 2.0 Flash</span>
           <span class="badge-tag">High</span>
           <span class="icon-bolt" id="modelIcon">⚡</span>
           <span class="icon-chevron">▲</span>
@@ -443,7 +439,7 @@
           </svg>
         </button>
 
-        <!-- Submit / Stop Action Button (Matches Screenshot 1 circle with red square) -->
+        <!-- Submit Action Button -->
         <button type="button" class="btn-action" id="btnAction" title="Frage senden (Enter)">
           <div class="red-square" id="redSquare"></div>
         </button>
@@ -464,13 +460,10 @@
     const voiceStatus = document.getElementById('voiceStatus');
     const btnAction = document.getElementById('btnAction');
 
-    let currentModel = 'Gemini 3.8 Flash High';
+    let currentModel = 'Gemini 2.0 Flash High';
     let isRecording = false;
     let recognition = null;
 
-    // -------------------------------------------------------------
-    // Streamlit Component Protocol Handlers
-    // -------------------------------------------------------------
     function notifyHeight(forcedHeight) {
       let height;
       const isMenuOpen = plusMenu.classList.contains('open') || modelMenu.classList.contains('open');
@@ -502,7 +495,6 @@
       }, '*');
     }
 
-    // Auto-resize textarea
     function autoResize() {
       promptInput.style.height = 'auto';
       const newHeight = Math.min(promptInput.scrollHeight, 140);
@@ -512,7 +504,6 @@
 
     promptInput.addEventListener('input', autoResize);
 
-    // Keyboard handlers
     promptInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
@@ -523,9 +514,6 @@
       }
     });
 
-    // -------------------------------------------------------------
-    // Submit Handler
-    // -------------------------------------------------------------
     function handleSubmit() {
       const text = promptInput.value.trim();
       if (!text) return;
@@ -542,9 +530,6 @@
 
     btnAction.addEventListener('click', handleSubmit);
 
-    // -------------------------------------------------------------
-    // Menus: Popovers (+ and Model)
-    // -------------------------------------------------------------
     function closeAllMenus() {
       plusMenu.classList.remove('open');
       modelMenu.classList.remove('open');
@@ -601,16 +586,14 @@
       closeAllMenus();
     }
 
-    // -------------------------------------------------------------
-    // Web Speech API (Spracheingabe / Speech-to-Text)
-    // -------------------------------------------------------------
+    // Web Speech API
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
     if (SpeechRecognition) {
       recognition = new SpeechRecognition();
       recognition.continuous = false;
       recognition.interimResults = true;
-      recognition.lang = 'de-DE'; // Default German for BTP Architecture queries
+      recognition.lang = 'de-DE';
 
       recognition.onstart = () => {
         isRecording = true;
@@ -674,9 +657,6 @@
       }
     });
 
-    // -------------------------------------------------------------
-    // Streamlit Message Listener
-    // -------------------------------------------------------------
     window.addEventListener('message', (event) => {
       if (!event.data || event.data.type !== 'streamlit:render') return;
       const args = event.data.args || {};
