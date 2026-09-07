@@ -30,6 +30,8 @@ PECHA_KONZEPT_PATH = ROOT_DIR / "knowledge" / "presentation-and-ui" / "pecha_kuc
 TEST_RUNNER_HTML_PATH = ROOT_DIR / "site" / "test-runner.html"
 ISTQB_STRATEGY_PATH = ROOT_DIR / "knowledge" / "verification" / "istqb-test-strategy.md"
 TESTDATA_DIR = ROOT_DIR / "testdata"
+USER_AVATAR_PATH = ROOT_DIR / "assets" / "avatar_user.png"
+ASSISTANT_AVATAR_PATH = ROOT_DIR / "assets" / "avatar_assistant.png"
 
 def get_advisor_logo_base64() -> str:
     """Returns the base64-encoded IT-Advisor logo (ki_advisor_icon.png) for 100% reliable rendering."""
@@ -1131,7 +1133,9 @@ if len(st.session_state.messages) == 0:
 else:
     # Render Chat Conversation
     for msg in st.session_state.messages:
-        with st.chat_message(msg["role"]):
+        avatar_path = USER_AVATAR_PATH if msg["role"] == "user" else ASSISTANT_AVATAR_PATH
+        avatar = str(avatar_path) if avatar_path.exists() else None
+        with st.chat_message(msg["role"], avatar=avatar):
             st.markdown(msg["content"])
 
 # ----------------- RIGIDLY FIXED MODERN CHAT INPUT (SCREENSHOT 1 + SPRACHEINGABE) -----------------
@@ -1192,10 +1196,12 @@ if "current_prompt" in st.session_state and st.session_state.current_prompt:
 
 if user_input:
     st.session_state.messages.append({"role": "user", "content": user_input})
-    with st.chat_message("user"):
+    user_avatar = str(USER_AVATAR_PATH) if USER_AVATAR_PATH.exists() else None
+    assistant_avatar = str(ASSISTANT_AVATAR_PATH) if ASSISTANT_AVATAR_PATH.exists() else None
+    with st.chat_message("user", avatar=user_avatar):
         st.markdown(user_input)
 
-    with st.chat_message("assistant"):
+    with st.chat_message("assistant", avatar=assistant_avatar):
         relevant_docs, confidence, meta = retrieve_relevant_docs(user_input, top_k=5)
 
         # CONFIDENCE GATE: Warn user cleanly if no matching architecture docs found
