@@ -21,6 +21,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from glossary_advisor import GLOSSARY_SWEEP_QUESTION, build_glossary_analysis_prompt, parse_glossary_query
+from chat_history import active_chat, bind_session, select_chat, serialize_store, start_new_chat, touch_active_chat
 
 # Setup paths
 ROOT_DIR = Path(__file__).parent.resolve()
@@ -32,8 +33,8 @@ PECHA_KONZEPT_PATH = ROOT_DIR / "knowledge" / "presentation-and-ui" / "pecha_kuc
 TEST_RUNNER_HTML_PATH = ROOT_DIR / "site" / "test-runner.html"
 ISTQB_STRATEGY_PATH = ROOT_DIR / "knowledge" / "verification" / "istqb-test-strategy.md"
 TESTDATA_DIR = ROOT_DIR / "testdata"
-USER_AVATAR_PATH = ROOT_DIR / "assets" / "avatar_user.png"
-ASSISTANT_AVATAR_PATH = ROOT_DIR / "assets" / "avatar_assistant.png"
+USER_AVATAR_URL = "https://firebasestorage.googleapis.com/v0/b/orcai-54321.firebasestorage.app/o/clients%2FACME%2Frecords%2FORCAI-260908-09H03-IMAGE-4PN9F%2Fpreview.png?alt=media&token=3246238a-cad5-4cdd-a9bf-ce4e8044ff72"
+ASSISTANT_AVATAR_URL = "https://firebasestorage.googleapis.com/v0/b/orcai-54321.firebasestorage.app/o/clients%2FACME%2Frecords%2FORCAI-260908-09H03-IMAGE-NF52H%2Fpreview.png?alt=media&token=47c7f6b6-2801-4b7a-bac0-5f9ebe67bf8b"
 
 def get_advisor_logo_base64() -> str:
     """Returns the base64-encoded IT-Advisor logo (ki_advisor_icon.png) for 100% reliable rendering."""
@@ -194,7 +195,7 @@ st.set_page_config(
     page_title="Conciliamus AI Advisor",
     page_icon=str(logo_icon_file) if logo_icon_file.exists() else "🤖",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # Custom CSS for high contrast typography, fixed bottom input & Google-like layout
@@ -774,7 +775,7 @@ question_groups = [
     {
         "id": "adr",
         "title": "🏛️ ADR – Architecture Decision Records (12)",
-        "expanded": True,
+        "expanded": False,
         "questions": [
             "Wie funktioniert das Dual-iFlow Entkopplungsmuster nach ADR-001?",
             "Wie setzt ADR-002 die Zero-Trust & BTP PaaS Security (OAuth2/XSUAA) um?",
@@ -942,6 +943,8 @@ question_groups = [
 
 # ----------------- SIDEBAR (AUF- UND ZUKLAPPBARE BEREICHE) -----------------
 logo_b64 = get_advisor_logo_base64()
+if "chat_store" not in st.session_state:
+    bind_session(st.session_state)
 
 with st.sidebar:
     # Sidebar Header with Dieter's Logo
@@ -954,6 +957,19 @@ with st.sidebar:
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # Persisted chat timeline. The browser-storage bridge lives in modern_chat_input.
+    with st.expander("💬 Chats", expanded=True):
+        if st.button("＋ Neuer Chat", key="btn_new_chat", use_container_width=True, type="primary"):
+            start_new_chat(st.session_state.chat_store)
+            bind_session(st.session_state)
+            st.rerun()
+        for chat in sorted(st.session_state.chat_store["chats"], key=lambda item: item["updated_at"], reverse=True):
+            prefix = "● " if chat["id"] == st.session_state.chat_store["active_id"] else ""
+            if st.button(prefix + chat["label"], key=f"chat_timeline_{chat['id']}", use_container_width=True):
+                if select_chat(st.session_state.chat_store, chat["id"]):
+                    bind_session(st.session_state)
+                    st.rerun()
 
     # BEREICH 1: Rollen- und themenbezogene Starterfragen
     st.markdown("<div style='font-size:13px; color:#cbd5e1; font-weight:500; margin-bottom:10px;'>Thema öffnen und eine quellenbasierte Frage auswählen:</div>", unsafe_allow_html=True)
@@ -1117,14 +1133,9 @@ with st.sidebar:
 
         enable_audit = st.checkbox("🛡️ DeepSeek Qualitäts-Audit aktivieren", value=bool(deepseek_key))
 
-        if st.button("🗑️ Chat-Verlauf löschen", key="btn_clear_chat", use_container_width=True):
-            st.session_state.messages = []
-            st.rerun()
+        st.caption("Chats bleiben im Browser gespeichert, bis Sie bewusst „Neuer Chat“ wählen.")
 
 # ----------------- HAUPTBEREICH (SO LEER UND AUFGERÄUMT WIE DIE GOOGLE-SUCHSEITE) -----------------
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
 glossary_context = parse_glossary_query(st.query_params)
 if glossary_context and glossary_context["request_id"] != st.session_state.get("last_glossary_request_id"):
     st.session_state.last_glossary_request_id = glossary_context["request_id"]
@@ -1151,8 +1162,7 @@ if len(st.session_state.messages) == 0:
 else:
     # Render Chat Conversation
     for msg in st.session_state.messages:
-        avatar_path = USER_AVATAR_PATH if msg["role"] == "user" else ASSISTANT_AVATAR_PATH
-        avatar = str(avatar_path) if avatar_path.exists() else None
+        avatar = USER_AVATAR_URL if msg["role"] == "user" else ASSISTANT_AVATAR_URL
         with st.chat_message(msg["role"], avatar=avatar):
             st.markdown(msg["content"])
 
@@ -1174,6 +1184,8 @@ if custom_modern_input:
     comp_res = custom_modern_input(
         placeholder="Ask anything, @ to mention, / for actions",
         initial_model=active_label,
+        chat_store_json=serialize_store(st.session_state.chat_store),
+        storage_hydrated=bool(st.session_state.get("chat_store_hydrated")),
         key="modern_input_widget"
     )
 
@@ -1184,6 +1196,20 @@ if custom_modern_input:
             st.session_state["last_handled_input_ts"] = ts
             if action == "submit" and comp_res.get("text"):
                 user_input = comp_res.get("text")
+            elif action == "hydrate":
+                bind_session(st.session_state, comp_res.get("text"))
+                st.session_state["chat_store_hydrated"] = True
+                st.rerun()
+            elif action == "glossary" and comp_res.get("text"):
+                try:
+                    incoming_context = json.loads(comp_res.get("text"))
+                except (TypeError, ValueError):
+                    incoming_context = None
+                request_id = incoming_context.get("request_id") if isinstance(incoming_context, dict) else None
+                if request_id and request_id != st.session_state.get("last_glossary_request_id"):
+                    st.session_state["last_glossary_request_id"] = request_id
+                    st.session_state["current_glossary_context"] = incoming_context
+                    user_input = GLOSSARY_SWEEP_QUESTION
             elif action == "model_change":
                 new_model_label = comp_res.get("model")
                 st.session_state["selected_model_label"] = new_model_label
@@ -1220,12 +1246,11 @@ if user_input:
         else user_input
     )
     st.session_state.messages.append({"role": "user", "content": user_input})
-    user_avatar = str(USER_AVATAR_PATH) if USER_AVATAR_PATH.exists() else None
-    assistant_avatar = str(ASSISTANT_AVATAR_PATH) if ASSISTANT_AVATAR_PATH.exists() else None
-    with st.chat_message("user", avatar=user_avatar):
+    with st.chat_message("user", avatar=USER_AVATAR_URL):
         st.markdown(user_input)
 
-    with st.chat_message("assistant", avatar=assistant_avatar):
+    touch_active_chat(st.session_state.chat_store, active_glossary_context.get("term") if active_glossary_context else None)
+    with st.chat_message("assistant", avatar=ASSISTANT_AVATAR_URL):
         relevant_docs, confidence, meta = retrieve_relevant_docs(analysis_input, top_k=5)
 
         # CONFIDENCE GATE: Warn user cleanly if no matching architecture docs found
@@ -1240,6 +1265,7 @@ if user_input:
             )
             st.markdown(answer)
             st.session_state.messages.append({"role": "assistant", "content": answer})
+            touch_active_chat(st.session_state.chat_store)
             st.rerun()
 
         # Check API key configuration
@@ -1284,4 +1310,5 @@ if user_input:
                     st.markdown(f"- **[{d['title']}](https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/knowledge/{d['path']})** (`{d['type']}`)")
 
         st.session_state.messages.append({"role": "assistant", "content": answer})
+        touch_active_chat(st.session_state.chat_store)
         st.rerun()
