@@ -21,12 +21,13 @@ import streamlit as st
 import streamlit.components.v1 as components
 
 from glossary_advisor import (
-    GLOSSARY_SWEEP_QUESTION,
     build_glossary_analysis_prompt,
+    build_glossary_visible_question,
     parse_glossary_query,
+    polish_glossary_answer,
     should_dispatch_pending_glossary,
 )
-from chat_history import active_chat, bind_session, select_chat, serialize_store, start_new_chat, touch_active_chat
+from chat_history import active_chat, bind_session, delete_chat, select_chat, serialize_store, start_new_chat, touch_active_chat
 
 # Setup paths
 ROOT_DIR = Path(__file__).parent.resolve()
@@ -285,7 +286,7 @@ st.markdown("""
 
     /* Scrollable content container with generous bottom offset */
     .main .block-container {
-        padding-bottom: 160px !important;
+        padding-bottom: 330px !important;
         padding-top: 1.2rem !important;
         max-width: 860px !important;
         margin: 0 auto !important;
@@ -403,6 +404,44 @@ st.markdown("""
         border-color: #38bdf8 !important;
         color: #ffffff !important;
         transform: translateX(3px) !important;
+    }
+
+    /* DAY MODE: keep the complete embedded drawer legible on light desktops. */
+    @media (prefers-color-scheme: light) {
+        html, body, [class*="css"], .stApp {
+            color: #172033 !important;
+            background-color: #f7f9fc !important;
+        }
+        div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]),
+        div[data-testid="stElementContainer"]:has(iframe[title*="modern_chat_input"]) {
+            background: linear-gradient(180deg, rgba(247,249,252,0) 0%, rgba(247,249,252,0.97) 18%, #f7f9fc 100%) !important;
+        }
+        [data-testid="stChatMessage"] {
+            background: #ffffff !important;
+            border-color: #cbd5e1 !important;
+            box-shadow: 0 4px 16px rgba(15, 23, 42, 0.10) !important;
+        }
+        [data-testid="stChatMessage"] p, [data-testid="stChatMessage"] li,
+        p, span, label { color: #172033 !important; }
+        h1, h2 { color: #0f172a !important; }
+        h4, h5, h6 { color: #334155 !important; }
+        [data-testid="stSidebar"] {
+            background-color: #eef3f8 !important;
+            border-right-color: #cbd5e1 !important;
+        }
+        [data-testid="stSidebar"] p,
+        [data-testid="stSidebar"] span,
+        [data-testid="stSidebar"] div { color: #172033 !important; }
+        [data-testid="stSidebar"] [data-testid="stExpander"] {
+            background: #ffffff !important;
+            border-color: #cbd5e1 !important;
+        }
+        [data-testid="stSidebar"] div[data-testid="stButton"] button {
+            background: #ffffff !important;
+            border-color: #94a3b8 !important;
+            color: #172033 !important;
+            box-shadow: none !important;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -594,6 +633,8 @@ Verbindliche Richtlinien:
 4. Betone stets Idempotenz, Entkopplung (Dual-iFlow), Bruce Silver BPMN 2.0 Method & Style Nomenklatur und Resilienz.
 5. Beachte stets die Preservation von Camel Exchange Properties bei Request-Reply-Schritten zur Vermeidung von HTTP 401 Header-Verlusten (ADR-012) und Zero-Hardcoding via parameters.prop.
 6. Wenn eine Information im Wissensbündel nicht enthalten ist, weise transparent darauf hin, statt zu spekulieren.
+7. Beginne unmittelbar mit der inhaltlichen Antwort. Verwende keine Anrede, keine Selbstvorstellung und keinen Meta-Vorspann zur Rolle oder zum OKF-Wissensbündel.
+8. Verwende als Schlussüberschrift ausschließlich „Zusammenfassung“, niemals „Zusammenfassung für das Team“.
 """
 
 # ----------------- LLM PROVIDERS: GEMINI & DEEPSEEK / OPENROUTER -----------------
@@ -988,13 +1029,35 @@ with st.sidebar:
         if st.button("＋ Neuer Chat", key="btn_new_chat", use_container_width=True, type="primary"):
             start_new_chat(st.session_state.chat_store)
             bind_session(st.session_state)
+            st.session_state.pop("chat_delete_candidate", None)
             st.rerun()
         for chat in sorted(st.session_state.chat_store["chats"], key=lambda item: item["updated_at"], reverse=True):
             prefix = "● " if chat["id"] == st.session_state.chat_store["active_id"] else ""
-            if st.button(prefix + chat["label"], key=f"chat_timeline_{chat['id']}", use_container_width=True):
-                if select_chat(st.session_state.chat_store, chat["id"]):
-                    bind_session(st.session_state)
+            chat_col, delete_col = st.columns([0.82, 0.18], gap="small")
+            with chat_col:
+                if st.button(prefix + chat["label"], key=f"chat_timeline_{chat['id']}", use_container_width=True):
+                    if select_chat(st.session_state.chat_store, chat["id"]):
+                        bind_session(st.session_state)
+                        st.session_state.pop("chat_delete_candidate", None)
+                        st.rerun()
+            with delete_col:
+                if st.button("🗑️", key=f"chat_delete_{chat['id']}", help=f"„{chat['label']}“ löschen"):
+                    st.session_state["chat_delete_candidate"] = chat["id"]
                     st.rerun()
+
+            if st.session_state.get("chat_delete_candidate") == chat["id"]:
+                st.warning(f"Chat „{chat['label']}“ wirklich löschen?")
+                confirm_col, cancel_col = st.columns(2)
+                with confirm_col:
+                    if st.button("Löschen", key=f"chat_delete_confirm_{chat['id']}", type="primary", use_container_width=True):
+                        if delete_chat(st.session_state.chat_store, chat["id"]):
+                            bind_session(st.session_state)
+                        st.session_state.pop("chat_delete_candidate", None)
+                        st.rerun()
+                with cancel_col:
+                    if st.button("Abbrechen", key=f"chat_delete_cancel_{chat['id']}", use_container_width=True):
+                        st.session_state.pop("chat_delete_candidate", None)
+                        st.rerun()
 
     # BEREICH 1: Rollen- und themenbezogene Starterfragen
     st.markdown("<div style='font-size:13px; color:#cbd5e1; font-weight:500; margin-bottom:10px;'>Thema öffnen und eine quellenbasierte Frage auswählen:</div>", unsafe_allow_html=True)
@@ -1236,7 +1299,7 @@ if custom_modern_input:
                 if request_id and request_id != st.session_state.get("last_glossary_request_id"):
                     st.session_state["last_glossary_request_id"] = request_id
                     st.session_state["current_glossary_context"] = incoming_context
-                    user_input = GLOSSARY_SWEEP_QUESTION
+                    user_input = build_glossary_visible_question(incoming_context)
             elif action == "model_change":
                 new_model_label = comp_res.get("model")
                 st.session_state["selected_model_label"] = new_model_label
@@ -1270,7 +1333,7 @@ if should_dispatch_pending_glossary(
     st.session_state["last_glossary_request_id"] = pending_glossary_context["request_id"]
     st.session_state["current_glossary_context"] = pending_glossary_context
     st.session_state.pop("pending_glossary_context", None)
-    user_input = GLOSSARY_SWEEP_QUESTION
+    user_input = build_glossary_visible_question(pending_glossary_context)
 
 if "current_prompt" in st.session_state and st.session_state.current_prompt:
     user_input = st.session_state.current_prompt
@@ -1338,6 +1401,9 @@ if user_input:
             if enable_audit and active_deepseek_key and not answer.startswith("❌") and not answer.startswith("⚠️"):
                 with st.spinner("DeepSeek führt unabhängigen Architektur-Audit durch..."):
                     answer = run_critic_audit(active_deepseek_key, analysis_input, answer, relevant_docs)
+
+            if active_glossary_context:
+                answer = polish_glossary_answer(answer)
 
         st.markdown(answer)
 

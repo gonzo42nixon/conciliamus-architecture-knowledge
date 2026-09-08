@@ -84,6 +84,23 @@ def select_chat(store: dict[str, Any], chat_id: str) -> bool:
     return False
 
 
+def delete_chat(store: dict[str, Any], chat_id: str) -> bool:
+    """Delete one persisted chat and keep the store in a usable state."""
+    original_count = len(store["chats"])
+    store["chats"] = [chat for chat in store["chats"] if chat["id"] != chat_id]
+    if len(store["chats"]) == original_count:
+        return False
+
+    if not store["chats"]:
+        replacement = _new_chat()
+        store["chats"] = [replacement]
+        store["active_id"] = replacement["id"]
+    elif store.get("active_id") == chat_id:
+        newest = max(store["chats"], key=lambda chat: chat["updated_at"])
+        store["active_id"] = newest["id"]
+    return True
+
+
 def touch_active_chat(store: dict[str, Any], label_hint: str | None = None) -> None:
     chat = active_chat(store)
     if chat["label"] == UNTITLED_LABEL:

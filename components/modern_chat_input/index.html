@@ -21,6 +21,29 @@
       --popover-bg: #1e293b;
     }
 
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg-card: #ffffff;
+        --bg-gradient: linear-gradient(180deg, #ffffff 0%, #f1f5f9 100%);
+        --border-card: #94a3b8;
+        --text-input: #0f172a;
+        --text-placeholder: #64748b;
+        --icon-color: #475569;
+        --pill-bg: #e2e8f0;
+        --pill-border: #94a3b8;
+        --pill-text: #172033;
+        --btn-action-bg: #cbd5e1;
+        --btn-action-hover: #94a3b8;
+        --popover-bg: #ffffff;
+      }
+      .input-card { box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16); }
+      .popover-menu { border-color: #94a3b8; box-shadow: 0 16px 32px rgba(15, 23, 42, 0.18); }
+      .popover-item { color: #172033; }
+      .popover-item:hover { color: #0f172a; }
+      .popover-header, .model-pill .badge-tag, .model-pill .icon-chevron { color: #475569; }
+      .btn-plus:hover, .model-pill:hover { color: #0f172a; background: #cbd5e1; }
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;

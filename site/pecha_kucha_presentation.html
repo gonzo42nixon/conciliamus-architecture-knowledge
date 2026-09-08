@@ -361,6 +361,7 @@
        class="select-none transition-transform duration-200 hover:scale-105 cursor-grab">
     <button id="kiAdvisorLink"
        type="button"
+       style="background: transparent !important; border: 0 !important; box-shadow: none !important;"
        aria-label="KI-Advisor öffnen"
        title="URL zum Agenten: https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/ • Ziehen zum Verschieben"
        class="block relative group bg-transparent border-0 p-0 cursor-pointer">
@@ -433,7 +434,7 @@
       </div>
     </div>
     <div id="kiAdvisorFrameContainer" class="flex-1 min-h-0 bg-transparent relative overflow-hidden">
-      <iframe id="kiAdvisorFrame" title="KI-Advisor" src="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/?embed=true" allow="microphone; clipboard-write;" style="opacity: 1.0; transition: opacity 0.25s ease;" class="w-full h-full border-0 bg-[#090d16]"></iframe>
+      <iframe id="kiAdvisorFrame" title="KI-Advisor" src="https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/?embed=true" allow="microphone; clipboard-write;" style="opacity: 1.0; transition: opacity 0.25s ease; background: transparent;" class="w-full h-full border-0 bg-transparent"></iframe>
     </div>
   </aside>
 
@@ -4907,7 +4908,7 @@
             </div>
           </div>
 
-          <button type="button" onclick="askKiAdvisorAboutDigest('${safeKey}')" title="KI-Advisor zu dieser Glossar-Karte fragen" aria-label="KI-Advisor zu ${escapeDigestHtml(data.term)} fragen" class="absolute right-4 bottom-4 z-20 w-24 h-16 bg-transparent border-0 p-0 flex items-center justify-center transition cursor-pointer drop-shadow-[0_10px_20px_rgba(15,23,42,0.55)] hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded-2xl">
+          <button type="button" onclick="askKiAdvisorAboutDigest('${safeKey}')" title="KI-Advisor zu dieser Glossar-Karte fragen" aria-label="KI-Advisor zu ${escapeDigestHtml(data.term)} fragen" style="background: transparent !important; border: 0 !important; box-shadow: none !important;" class="absolute right-4 bottom-4 z-20 w-24 h-16 bg-transparent border-0 p-0 flex items-center justify-center transition cursor-pointer hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-offset-2 focus:ring-offset-slate-900 rounded-2xl">
             <img src="https://firebasestorage.googleapis.com/v0/b/orcai-54321.firebasestorage.app/o/clients%2FACME%2Frecords%2FORCAI-260907-23H47-IMAGE-EB3EB%2Fpreview.png?alt=media&amp;token=c2a4463b-25c4-44d0-8a4f-02ad3d180f10" data-orcai-key="ORCAI-260907-23H47-IMAGE-EB3EB" onerror="this.onerror=null; this.src='./ki_advisor_icon.png'" alt="" class="w-full h-full object-contain pointer-events-none" />
           </button>
 
