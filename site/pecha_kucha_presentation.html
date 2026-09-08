@@ -5905,10 +5905,9 @@
         real: data.real || '',
         context: data.context || ''
       });
-      const context = Object.fromEntries(params.entries());
       const currentSrc = kiAdvisorFrame.getAttribute('src') || 'https://conciliamus-architecture-knowledge-n7yvultp4bp95kpjwx3hrb.streamlit.app/?embed=true';
-      const baseSrc = currentSrc.split('#')[0].split('?')[0] + '?embed=true';
-      kiAdvisorFrame.setAttribute('src', `${baseSrc}#glossary=${encodeURIComponent(JSON.stringify(context))}`);
+      const baseSrc = currentSrc.split('#')[0].split('?')[0];
+      kiAdvisorFrame.setAttribute('src', `${baseSrc}?${params.toString()}`);
       openKiAdvisorDrawer();
     }
 

@@ -20,7 +20,12 @@ import http.cookiejar
 import streamlit as st
 import streamlit.components.v1 as components
 
-from glossary_advisor import GLOSSARY_SWEEP_QUESTION, build_glossary_analysis_prompt, parse_glossary_query
+from glossary_advisor import (
+    GLOSSARY_SWEEP_QUESTION,
+    build_glossary_analysis_prompt,
+    parse_glossary_query,
+    should_dispatch_pending_glossary,
+)
 from chat_history import active_chat, bind_session, select_chat, serialize_store, start_new_chat, touch_active_chat
 
 # Setup paths
@@ -1159,9 +1164,10 @@ with st.sidebar:
 # ----------------- HAUPTBEREICH (SO LEER UND AUFGERÄUMT WIE DIE GOOGLE-SUCHSEITE) -----------------
 glossary_context = parse_glossary_query(st.query_params)
 if glossary_context and glossary_context["request_id"] != st.session_state.get("last_glossary_request_id"):
-    st.session_state.last_glossary_request_id = glossary_context["request_id"]
-    st.session_state.current_glossary_context = glossary_context
-    st.session_state.current_prompt = GLOSSARY_SWEEP_QUESTION
+    # Query-based glossary launches reload the Streamlit document. Defer the
+    # question until browser-local chat history has been hydrated, otherwise the
+    # answer would be written into a temporary empty session.
+    st.session_state.pending_glossary_context = glossary_context
 
 # If no messages yet: Google-like centered landing view
 if len(st.session_state.messages) == 0:
@@ -1254,6 +1260,17 @@ if custom_modern_input:
                 st.rerun()
 else:
     user_input = st.chat_input("Ask anything, @ to mention, / for actions")
+
+pending_glossary_context = st.session_state.get("pending_glossary_context")
+if should_dispatch_pending_glossary(
+    pending_glossary_context,
+    bool(st.session_state.get("chat_store_hydrated")),
+    st.session_state.get("last_glossary_request_id"),
+):
+    st.session_state["last_glossary_request_id"] = pending_glossary_context["request_id"]
+    st.session_state["current_glossary_context"] = pending_glossary_context
+    st.session_state.pop("pending_glossary_context", None)
+    user_input = GLOSSARY_SWEEP_QUESTION
 
 if "current_prompt" in st.session_state and st.session_state.current_prompt:
     user_input = st.session_state.current_prompt

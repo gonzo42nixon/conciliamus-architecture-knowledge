@@ -48,3 +48,13 @@ Conciliamus-/Kundenrelevanz und Handlungsbedarf. Unterscheide klar zwischen Kart
 OKF-Wissensbasis und extern zu verifizierenden Aussagen. Erfinde keine SAP-Quellen, Suchergebnisse,
 Change Requests oder Ausschreibungen. Der Impact-Wert ist eine kuratierte Heuristik; erläutere ihn
 anhand der Kartendaten und kennzeichne fehlende Berechnungsnachweise transparent."""
+
+
+def should_dispatch_pending_glossary(
+    context: object, storage_hydrated: bool, last_request_id: object
+) -> bool:
+    """Dispatch a query launch once, but only after persisted chat hydration."""
+    if not isinstance(context, Mapping) or not storage_hydrated:
+        return False
+    request_id = str(context.get("request_id", "")).strip()
+    return bool(request_id and request_id != str(last_request_id or ""))
