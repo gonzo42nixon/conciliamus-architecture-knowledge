@@ -448,7 +448,7 @@ def load_knowledge_base(mtime_key: float) -> Tuple[List[Dict[str, Any]], Dict[st
                     body = text[match.end():].strip()
                     cid = fm.get("id") or rel_path.replace(".md", "")
                     full_text = (fm.get("title", "") + " " + fm.get("description", "") + " " + body).lower()
-                    tokens = set(re.findall(r"\b[a-z0-9_\-äöüß]{2,}\b", full_text))
+                    tokens = set(re.findall(r"\b[a-z0-9_äöüß]{2,}\b", full_text.replace("-", " ")))
                     concepts.append({
                         "id": cid,
                         "path": rel_path,
@@ -502,7 +502,7 @@ def retrieve_relevant_docs(query: str, top_k: int = 5) -> Tuple[List[Dict[str, A
     explicit_adrs = [m.lower() for m in re.findall(r"adr-\d{3}", query, re.IGNORECASE)]
 
     # Extract alphanumeric and hyphenated keywords (min length 3, excluding stop words)
-    raw_words = re.findall(r"\b[a-zA-Z0-9_\-äöüÄÖÜß]{3,}\b", query)
+    raw_words = re.findall(r"\b[a-zA-Z0-9_äöüÄÖÜß]{3,}\b", query.replace("-", " "))
     keywords = [w.lower() for w in raw_words if w.lower() not in stop_words]
 
     if not keywords and not explicit_adrs:
@@ -941,6 +941,26 @@ question_groups = [
     },
 ]
 
+# Only offer starter questions that pass the same grounding gate as free-text input.
+# This prevents a manually curated question from promising an answer the current OKF
+# pool cannot support yet.
+question_audit = [
+    (group["id"], question, retrieve_relevant_docs(question, top_k=1)[1])
+    for group in question_groups
+    for question in group["questions"]
+]
+question_groups = [
+    {
+        **group,
+        "questions": [
+            question
+            for question in group["questions"]
+            if retrieve_relevant_docs(question, top_k=1)[1] >= 25
+        ],
+    }
+    for group in question_groups
+]
+
 # ----------------- SIDEBAR (AUF- UND ZUKLAPPBARE BEREICHE) -----------------
 logo_b64 = get_advisor_logo_base64()
 if "chat_store" not in st.session_state:
@@ -985,6 +1005,7 @@ with st.sidebar:
         nodes_count = len(graph.get("nodes", [])) if "nodes" in graph else graph.get("nodesCount", 308)
         edges_count = len(graph.get("edges", [])) if "edges" in graph else graph.get("edgesCount", 99)
         st.markdown(f"- **OKF Dokumente:** `{len(concepts)}`")
+        st.markdown(f"- **Geprüfte Starterfragen:** `{sum(len(group['questions']) for group in question_groups)} / {len(question_audit)}`")
         st.markdown(f"- **Wissensgraph:** `{nodes_count} Knoten / {edges_count} Kanten`")
         st.markdown(f"- **Architektur-Entscheidungen:** `12 ADRs (ADR-001 bis ADR-012)`")
         st.markdown(f"- **OKF Version:** `v0.2`")
