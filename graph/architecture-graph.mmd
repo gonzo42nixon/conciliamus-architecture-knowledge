@@ -3,6 +3,7 @@ graph TD
   architecture_agent_deployment_and_gitops["KI-Agenten-Bereitstellung & GitOps-Architektur<br/><i>Architecture Concept</i>"]
   architecture_dual_iflow_pattern["Dual-iFlow Entkopplungsmuster<br/><i>Architecture Concept</i>"]
   architecture_existence_check_and_routing["Existenzprüfung & Deterministische Router-Matrix<br/><i>Architecture Concept</i>"]
+  architecture_message_format_transformations["Nachrichtenformat-Transformationen vom MDM-Batch zur S/4HANA OData Payload<br/><i>Architecture Concept</i>"]
   architecture_process_direct_interconnect["ProcessDirect Interconnect<br/><i>Architecture Concept</i>"]
   architecture_resilience_and_dead_letter["Resilienz & Dead-Letter-Behandlung<br/><i>Architecture Concept</i>"]
   architecture_session_and_csrf_handshake["Session & CSRF Handshake<br/><i>Architecture Concept</i>"]
@@ -325,10 +326,16 @@ graph TD
   architecture_dual_iflow_pattern -->|contains| iflows_item_processor_iflow
   architecture_dual_iflow_pattern -->|implements| decisions_adr_001_dual_iflow_decoupling
   architecture_dual_iflow_pattern -->|dependsOn| architecture_process_direct_interconnect
+  architecture_dual_iflow_pattern -->|contains| architecture_message_format_transformations
   architecture_dual_iflow_pattern -->|verifies| verification_live_btp_execution
   architecture_existence_check_and_routing -->|contains| iflows_item_processor_iflow
   architecture_existence_check_and_routing -->|implements| data_contracts_s4_odata_mapping
   architecture_existence_check_and_routing -->|verifies| verification_istqb_test_strategy
+  architecture_message_format_transformations -->|partOf| architecture_dual_iflow_pattern
+  architecture_message_format_transformations -->|describes| iflows_batch_receiver_iflow
+  architecture_message_format_transformations -->|describes| iflows_item_processor_iflow
+  architecture_message_format_transformations -->|uses| data_contracts_mdm_inbound_contract
+  architecture_message_format_transformations -->|produces| data_contracts_s4_odata_mapping
   architecture_process_direct_interconnect -->|implements| decisions_adr_005_process_direct
   architecture_process_direct_interconnect -->|dependsOn| architecture_dual_iflow_pattern
   architecture_process_direct_interconnect -->|routesTo| iflows_item_processor_iflow

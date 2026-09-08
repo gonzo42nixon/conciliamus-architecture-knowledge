@@ -14,6 +14,7 @@ relations:
   - { type: contains, target: /iflows/item-processor-iflow.md }
   - { type: implements, target: /decisions/adr-001-dual-iflow-decoupling.md }
   - { type: dependsOn, target: /architecture/process-direct-interconnect.md }
+  - { type: contains, target: /architecture/message-format-transformations.md }
   - { type: verifies, target: /verification/live-btp-execution.md }
 sources:
   - id: conciliamus-arch

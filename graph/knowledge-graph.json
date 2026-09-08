@@ -1,7 +1,7 @@
 {
   "okfVersion": "0.2",
-  "nodesCount": 319,
-  "edgesCount": 126,
+  "nodesCount": 320,
+  "edgesCount": 132,
   "nodes": [
     {
       "id": "architecture/agent-deployment-and-gitops",
@@ -41,7 +41,7 @@
       "description": "Trennung von Netzwerk-Ingest/Transport und atomarer Geschäftslogik zur Erzielung von Fehlertoleranz und Skalierbarkeit.",
       "status": "verified",
       "domain": "General",
-      "degree": 13
+      "degree": 15
     },
     {
       "id": "architecture/existence-check-and-routing",
@@ -60,6 +60,28 @@
       "status": "verified",
       "domain": "General",
       "degree": 8
+    },
+    {
+      "id": "architecture/message-format-transformations",
+      "label": "Nachrichtenformat-Transformationen vom MDM-Batch zur S/4HANA OData Payload",
+      "type": "Architecture Concept",
+      "path": "/architecture/message-format-transformations.md",
+      "tags": [
+        "message-format",
+        "transformation",
+        "json",
+        "xml",
+        "batch",
+        "business-partner",
+        "odata",
+        "payload",
+        "btp",
+        "integration-suite"
+      ],
+      "description": "Vollständige Format- und Strukturänderungen in Batch Receiver und Item Processor von JSON über XML und atomare JSON-Nachrichten bis zur OData Payload.",
+      "status": "verified",
+      "domain": "General",
+      "degree": 6
     },
     {
       "id": "architecture/process-direct-interconnect",
@@ -254,7 +276,7 @@
       "description": "Schnittstellenspezifikation und Validierungsregeln für die vom Quellsystem JSD-MDM übermittelten JSON-Sammelbatches.",
       "status": "verified",
       "domain": "General",
-      "degree": 3
+      "degree": 4
     },
     {
       "id": "data-contracts/s4-odata-mapping",
@@ -271,7 +293,7 @@
       "description": "Vollständige Zuordnungsmatrix zwischen MDM-Feldern und den SAP OData Entitäten A_BusinessPartner und Address.",
       "status": "verified",
       "domain": "General",
-      "degree": 5
+      "degree": 6
     },
     {
       "id": "decisions/adr-001-dual-iflow-decoupling",
@@ -5165,7 +5187,7 @@
       "description": "Spezifikation des Ingestion-iFlows zur Annahme von MDM-Massen-Batches, syntaktischen Vorvalidierung und Streaming-Zerlegung.",
       "status": "verified",
       "domain": "General",
-      "degree": 14
+      "degree": 15
     },
     {
       "id": "iflows/item-processor-iflow",
@@ -5185,7 +5207,7 @@
       "description": "Spezifikation des verarbeitenden iFlows für Validierung, OData GET Existenzprüfung, deterministisches Routing und S/4HANA OData Aufrufe.",
       "status": "verified",
       "domain": "General",
-      "degree": 24
+      "degree": 25
     },
     {
       "id": "iflows/reprocessor-iflow",
@@ -5460,6 +5482,11 @@
     },
     {
       "source": "architecture/dual-iflow-pattern",
+      "target": "architecture/message-format-transformations",
+      "relation": "contains"
+    },
+    {
+      "source": "architecture/dual-iflow-pattern",
       "target": "verification/live-btp-execution",
       "relation": "verifies"
     },
@@ -5477,6 +5504,31 @@
       "source": "architecture/existence-check-and-routing",
       "target": "verification/istqb-test-strategy",
       "relation": "verifies"
+    },
+    {
+      "source": "architecture/message-format-transformations",
+      "target": "architecture/dual-iflow-pattern",
+      "relation": "partOf"
+    },
+    {
+      "source": "architecture/message-format-transformations",
+      "target": "iflows/batch-receiver-iflow",
+      "relation": "describes"
+    },
+    {
+      "source": "architecture/message-format-transformations",
+      "target": "iflows/item-processor-iflow",
+      "relation": "describes"
+    },
+    {
+      "source": "architecture/message-format-transformations",
+      "target": "data-contracts/mdm-inbound-contract",
+      "relation": "uses"
+    },
+    {
+      "source": "architecture/message-format-transformations",
+      "target": "data-contracts/s4-odata-mapping",
+      "relation": "produces"
     },
     {
       "source": "architecture/process-direct-interconnect",

@@ -532,7 +532,7 @@ def retrieve_relevant_docs(query: str, top_k: int = 5) -> Tuple[List[Dict[str, A
                 score += 60
             elif kw in cid_lower.split("/")[-1].split("-"):
                 score += 30
-            elif kw in re.findall(r"\b[a-z0-9_\-äöüß]{2,}\b", ctitle_lower):
+            elif kw in re.findall(r"\b[a-z0-9_äöüß]{2,}\b", ctitle_lower.replace("-", " ")):
                 score += 25
             elif any(kw == t.lower() for t in c["tags"]):
                 score += 20

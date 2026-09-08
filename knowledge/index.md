@@ -12,6 +12,7 @@ Willkommen im **Google Open Knowledge Format (OKF v0.2)** Bundle der Conciliamus
 
 ## 🏛️ 1. Architekturkonzepte (`architecture/`)
 * [Dual-iFlow Entkopplungsmuster](/architecture/dual-iflow-pattern.md) – Grundlegendes Entwurfsmuster zur Trennung von Ingest und Fachlogik.
+* [Nachrichtenformat-Transformationen](/architecture/message-format-transformations.md) – JSON/XML-Formatkette und strukturelle Zerlegung bis zur S/4HANA OData Payload.
 * [ProcessDirect Interconnect](/architecture/process-direct-interconnect.md) – Hochperformante, latenzfreie In-Memory-Kopplung innerhalb des BTP-Tenants.
 * [Streaming Iterating Splitter](/architecture/streaming-iterating-splitter.md) – Speicheroptimierte Zerlegung von Massen-Batches ohne OOM-Gefahr.
 * [Existenzprüfung & Router-Matrix](/architecture/existence-check-and-routing.md) – Idempotente OData GET Suche und deterministisches POST/PATCH Routing.
