@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import json
+import re
+import time
 from collections.abc import Iterable, Iterator
 
 
@@ -42,3 +44,11 @@ def iter_gemini_sse_lines(lines: Iterable[bytes]) -> Iterator[str]:
             text = part.get("text") if isinstance(part, dict) else None
             if text:
                 yield text
+
+
+def iter_text_chunks(text: str, delay_seconds: float = 0.012) -> Iterator[str]:
+    """Stream a local Markdown fallback in readable word-sized chunks."""
+    for chunk in re.findall(r"\S+\s*|\s+", text):
+        yield chunk
+        if delay_seconds:
+            time.sleep(delay_seconds)

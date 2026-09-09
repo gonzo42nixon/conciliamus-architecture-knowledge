@@ -1,4 +1,4 @@
-from streaming_utils import iter_gemini_sse_lines, iter_openai_sse_lines
+from streaming_utils import iter_gemini_sse_lines, iter_openai_sse_lines, iter_text_chunks
 
 
 def test_iter_openai_sse_lines_yields_only_visible_content():
@@ -21,3 +21,8 @@ def test_iter_gemini_sse_lines_yields_candidate_parts():
     ]
 
     assert list(iter_gemini_sse_lines(lines)) == ["Token", " Stream"]
+
+
+def test_iter_text_chunks_preserves_markdown_exactly():
+    markdown = "## Titel\n\nEin kurzer **Fallback**."
+    assert "".join(iter_text_chunks(markdown, delay_seconds=0)) == markdown
