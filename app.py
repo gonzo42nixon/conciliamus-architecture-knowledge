@@ -682,13 +682,23 @@ Verbindliche Richtlinien:
 def normalize_gemini_model(model_name: str) -> str:
     """Normalizes any UI string or mockup version to a valid Google AI Studio model identifier."""
     lower = (model_name or "").lower()
+    if "3.8" in lower:
+        return "gemini-3.8-flash"
+    if "3.7" in lower:
+        return "gemini-3.7-flash"
+    if "3.6" in lower:
+        return "gemini-3.6-flash"
+    if "3.5" in lower:
+        return "gemini-3.5-flash"
+    if "3.1" in lower and "pro" in lower:
+        return "gemini-3.1-pro-preview"
     if "pro" in lower:
-        return "gemini-1.5-pro"
+        return "gemini-3.1-pro-preview"
     if "2.0" in lower:
         return "gemini-2.0-flash"
     if "1.5" in lower:
         return "gemini-1.5-flash"
-    return "gemini-2.0-flash"
+    return "gemini-3.6-flash"
 
 def call_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> Optional[str]:
     """Calls Google Gemini with dynamic model discovery, multi-version fallback (v1/v1beta), and automatic resilience."""
@@ -776,7 +786,12 @@ def stream_gemini(api_key: str, model_name: str, query: str, context_docs: List[
 BENUTZERFRAGE:
 {query}
 """
-    models_to_try = [normalize_gemini_model(model_name), "gemini-2.0-flash", "gemini-1.5-flash"]
+    models_to_try = [
+        normalize_gemini_model(model_name),
+        "gemini-3.6-flash",
+        "gemini-3.8-flash",
+        "gemini-3.5-flash",
+    ]
     last_error: Exception | None = None
     payload = {
         "system_instruction": {"parts": [{"text": get_system_prompt()}]},
@@ -1467,7 +1482,7 @@ if os.path.exists(component_dir):
 user_input = None
 if custom_modern_input:
     # Pill label matching Screenshot 1: Gemini 3.8 Flash High ⚡ ^ (or active model)
-    active_label = st.session_state.get("selected_model_label", "Gemini 2.0 Flash High")
+    active_label = st.session_state.get("selected_model_label", "Gemini 3.6 Flash High")
 
     comp_res = custom_modern_input(
         placeholder="Ask anything, @ to mention, / for actions",
