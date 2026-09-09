@@ -357,53 +357,78 @@ st.markdown("""
         border-radius: 8px !important;
     }
 
-    /* SIDEBAR - High-contrast container */
+    /* SIDEBAR - compact, theme-independent light surface with dark text */
     [data-testid="stSidebar"] {
-        background-color: #0d1322 !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.15) !important;
+        background-color: #f3f6fa !important;
+        border-right: 1px solid #cbd5e1 !important;
     }
     [data-testid="stSidebar"] p,
     [data-testid="stSidebar"] span,
-    [data-testid="stSidebar"] div {
-        color: #e2e8f0 !important;
+    [data-testid="stSidebar"] label,
+    [data-testid="stSidebar"] div:not([data-baseweb="select"]) {
+        color: #172033 !important;
+    }
+    [data-testid="stSidebarContent"] {
+        padding-top: 0.45rem !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+        gap: 0.35rem !important;
     }
 
     /* SIDEBAR EXPANDERS */
     [data-testid="stSidebar"] [data-testid="stExpander"] {
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        border-radius: 10px !important;
-        margin-bottom: 10px !important;
-        background: rgba(19, 27, 46, 0.95) !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 8px !important;
+        margin-bottom: 4px !important;
+        background: #ffffff !important;
     }
     [data-testid="stSidebar"] [data-testid="stExpander"] summary {
-        padding: 10px 14px !important;
+        padding: 6px 10px !important;
+        min-height: 34px !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpanderDetails"] {
+        padding: 2px 8px 7px !important;
     }
     [data-testid="stSidebar"] [data-testid="stExpander"] summary p,
     [data-testid="stSidebar"] [data-testid="stExpander"] summary span {
-        font-size: 14px !important;
+        font-size: 13px !important;
         font-weight: 700 !important;
-        color: #f8fafc !important;
+        color: #172033 !important;
     }
 
     /* SIDEBAR BUTTONS - Highly readable, bold, clear border & hover state */
     [data-testid="stSidebar"] div[data-testid="stButton"] button {
-        border-radius: 8px !important;
-        font-size: 13.5px !important;
+        border-radius: 7px !important;
+        font-size: 12.5px !important;
         font-weight: 600 !important;
         text-align: left !important;
-        padding: 10px 13px !important;
-        line-height: 1.4 !important;
-        background: #1e293b !important;
-        border: 1px solid rgba(255, 255, 255, 0.18) !important;
-        color: #ffffff !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+        padding: 6px 9px !important;
+        min-height: 34px !important;
+        line-height: 1.25 !important;
+        background: #ffffff !important;
+        border: 1px solid #94a3b8 !important;
+        color: #172033 !important;
+        box-shadow: none !important;
         transition: all 0.2s ease !important;
     }
     [data-testid="stSidebar"] div[data-testid="stButton"] button:hover {
         background: #0284c7 !important;
         border-color: #38bdf8 !important;
         color: #ffffff !important;
-        transform: translateX(3px) !important;
+        transform: translateX(2px) !important;
+    }
+    [data-testid="stSidebar"] div[data-testid="stButton"] button:hover p,
+    [data-testid="stSidebar"] div[data-testid="stButton"] button:hover span {
+        color: #ffffff !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stLinkButton"] a {
+        min-height: 34px !important;
+        padding: 6px 9px !important;
+        border-radius: 7px !important;
+        border-color: #94a3b8 !important;
+        color: #172033 !important;
+        background: #ffffff !important;
+        font-size: 12.5px !important;
     }
 
     /* DAY MODE: keep the complete embedded drawer legible on light desktops. */
@@ -425,23 +450,6 @@ st.markdown("""
         p, span, label { color: #172033 !important; }
         h1, h2 { color: #0f172a !important; }
         h4, h5, h6 { color: #334155 !important; }
-        [data-testid="stSidebar"] {
-            background-color: #eef3f8 !important;
-            border-right-color: #cbd5e1 !important;
-        }
-        [data-testid="stSidebar"] p,
-        [data-testid="stSidebar"] span,
-        [data-testid="stSidebar"] div { color: #172033 !important; }
-        [data-testid="stSidebar"] [data-testid="stExpander"] {
-            background: #ffffff !important;
-            border-color: #cbd5e1 !important;
-        }
-        [data-testid="stSidebar"] div[data-testid="stButton"] button {
-            background: #ffffff !important;
-            border-color: #94a3b8 !important;
-            color: #172033 !important;
-            box-shadow: none !important;
-        }
     }
 </style>
 """, unsafe_allow_html=True)
@@ -1015,11 +1023,11 @@ if "chat_store" not in st.session_state:
 with st.sidebar:
     # Sidebar Header with Dieter's Logo
     st.markdown(f"""
-    <div style="display: flex; align-items: center; gap: 12px; padding: 8px 0 14px 0; border-bottom: 1px solid rgba(255,255,255,0.18); margin-bottom: 14px;">
-        <img src="{logo_b64}" style="height: 42px; width: auto; object-fit: contain;" alt="IT-Advisor Logo" />
+    <div style="display:flex;align-items:center;gap:9px;padding:3px 0 7px;border-bottom:1px solid #cbd5e1;margin-bottom:5px;">
+        <img src="{logo_b64}" style="height:32px;width:auto;object-fit:contain;" alt="IT-Advisor Logo" />
         <div>
-            <div style="font-weight: 800; font-size: 15px; color: #ffffff; letter-spacing: -0.3px;">Conciliamus AI Advisor</div>
-            <div style="font-size: 12px; color: #38bdf8; font-family: monospace; font-weight: 700;">OKF v0.2 • 12 ADRs</div>
+            <div style="font-weight:800;font-size:14px;color:#0f172a;letter-spacing:-0.2px;">Conciliamus AI Advisor</div>
+            <div style="font-size:11px;color:#0369a1;font-family:monospace;font-weight:700;">OKF v0.2 • 12 ADRs</div>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -1059,14 +1067,26 @@ with st.sidebar:
                         st.session_state.pop("chat_delete_candidate", None)
                         st.rerun()
 
-    # BEREICH 1: Rollen- und themenbezogene Starterfragen
-    st.markdown("<div style='font-size:13px; color:#cbd5e1; font-weight:500; margin-bottom:10px;'>Thema öffnen und eine quellenbasierte Frage auswählen:</div>", unsafe_allow_html=True)
-    for group in question_groups:
-        with st.expander(group["title"], expanded=group["expanded"]):
+    # BEREICH 1: Kompakte, standardmäßig geschlossene Q&A-Starter
+    with st.expander("Q&A", expanded=False):
+        for group in question_groups:
+            st.markdown(f"**{group['title']}**")
             for idx, question in enumerate(group["questions"]):
                 if st.button(f"📌 {question}", key=f"sb_question_{group['id']}_{idx}", use_container_width=True):
                     st.session_state.current_prompt = question
                     st.rerun()
+
+    with st.expander("Links", expanded=False):
+        st.link_button(
+            "BTP ↗",
+            "https://account.hanatrial.ondemand.com/trial/#/globalaccount/34eec884-0c14-4a9d-a509-55a912f83aee/accountModel&//?section=SubaccountsSection&view=TilesView",
+            use_container_width=True,
+        )
+        st.link_button(
+            "OpenAPI ↗",
+            "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/api/conciliamus-architecture.openapi.yaml",
+            use_container_width=True,
+        )
 
     # BEREICH 2: Wissensbasis & Metriken
     with st.expander("📊 Wissensbasis & Status", expanded=False):
