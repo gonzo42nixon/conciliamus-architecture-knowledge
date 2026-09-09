@@ -28,7 +28,7 @@ from glossary_advisor import (
     should_dispatch_pending_glossary,
 )
 from chat_history import active_chat, bind_session, delete_chat, select_chat, serialize_store, start_new_chat, touch_active_chat
-from streaming_utils import iter_openai_sse_lines
+from streaming_utils import iter_gemini_sse_lines, iter_openai_sse_lines
 
 # Setup paths
 ROOT_DIR = Path(__file__).parent.resolve()
@@ -763,10 +763,7 @@ BENUTZERFRAGE:
 
 
 def stream_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> Iterator[str]:
-    """Stream Gemini text chunks without rendering intermediate draft documents."""
-    from google import genai
-    from google.genai import types
-
+    """Stream Gemini tokens through Google's native SSE REST endpoint."""
     context_str = "\n\n---\n\n".join([
         f"### Dokument: {d['title']} ({d['path']})\n**Typ:** {d['type']} | **Status:** {d['frontmatter'].get('status', 'verified')}\n\n{d['content']}"
         for d in context_docs
@@ -779,22 +776,29 @@ def stream_gemini(api_key: str, model_name: str, query: str, context_docs: List[
 BENUTZERFRAGE:
 {query}
 """
-    config = types.GenerateContentConfig(system_instruction=get_system_prompt(), temperature=0.2)
     models_to_try = [normalize_gemini_model(model_name), "gemini-2.0-flash", "gemini-1.5-flash"]
     last_error: Exception | None = None
-    for api_ver in ("v1", "v1beta"):
-        client = genai.Client(api_key=api_key, http_options={"api_version": api_ver})
+    payload = {
+        "system_instruction": {"parts": [{"text": get_system_prompt()}]},
+        "contents": [{"role": "user", "parts": [{"text": user_content}]}],
+        "generationConfig": {"temperature": 0.2},
+    }
+    headers = {"Content-Type": "application/json", "x-goog-api-key": api_key}
+    for api_ver in ("v1beta", "v1"):
         for active_model in dict.fromkeys(models_to_try):
             emitted = False
             try:
-                for chunk in client.models.generate_content_stream(
-                    model=active_model,
-                    contents=user_content,
-                    config=config,
-                ):
-                    if chunk.text:
+                url = f"https://generativelanguage.googleapis.com/{api_ver}/models/{active_model}:streamGenerateContent?alt=sse"
+                request = urllib.request.Request(
+                    url,
+                    data=json.dumps(payload).encode("utf-8"),
+                    headers=headers,
+                    method="POST",
+                )
+                with urllib.request.urlopen(request, timeout=90) as response:
+                    for token in iter_gemini_sse_lines(response):
                         emitted = True
-                        yield chunk.text
+                        yield token
                 if emitted:
                     return
             except Exception as error:

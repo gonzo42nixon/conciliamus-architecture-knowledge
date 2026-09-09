@@ -22,3 +22,23 @@ def iter_openai_sse_lines(lines: Iterable[bytes]) -> Iterator[str]:
             continue
         if content:
             yield content
+
+
+def iter_gemini_sse_lines(lines: Iterable[bytes]) -> Iterator[str]:
+    """Yield text tokens from Gemini's streamGenerateContent SSE format."""
+    for raw_line in lines:
+        line = raw_line.decode("utf-8", errors="replace").strip()
+        if not line.startswith("data:"):
+            continue
+        payload = line[5:].strip()
+        if not payload:
+            continue
+        try:
+            event = json.loads(payload)
+            parts = event.get("candidates", [{}])[0].get("content", {}).get("parts", [])
+        except (TypeError, ValueError, IndexError):
+            continue
+        for part in parts:
+            text = part.get("text") if isinstance(part, dict) else None
+            if text:
+                yield text

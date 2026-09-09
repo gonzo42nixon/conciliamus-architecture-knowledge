@@ -1,4 +1,4 @@
-from streaming_utils import iter_openai_sse_lines
+from streaming_utils import iter_gemini_sse_lines, iter_openai_sse_lines
 
 
 def test_iter_openai_sse_lines_yields_only_visible_content():
@@ -11,3 +11,13 @@ def test_iter_openai_sse_lines_yields_only_visible_content():
     ]
 
     assert list(iter_openai_sse_lines(lines)) == ["Hallo", " Welt"]
+
+
+def test_iter_gemini_sse_lines_yields_candidate_parts():
+    lines = [
+        b'data: {"candidates":[{"content":{"parts":[{"text":"Token"}]}}]}\n',
+        b'data: {"candidates":[{"content":{"parts":[{"text":" Stream"}]}}]}\n',
+        b'data: {"candidates":[]}\n',
+    ]
+
+    assert list(iter_gemini_sse_lines(lines)) == ["Token", " Stream"]
