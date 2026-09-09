@@ -1005,6 +1005,19 @@ question_groups = [
     },
 ]
 
+QA_SECTION_LABELS = {
+    "adr": "ADR",
+    "flows": "Iflows",
+    "development": "Dev",
+    "contracts": "Data",
+    "security": "Security",
+    "testing": "Tests",
+    "operations": "Ops",
+    "troubleshooting": "Troubleshooting",
+    "conformance": "Conformance",
+    "digest": "Glossar",
+}
+
 # Only offer starter questions that pass the same grounding gate as free-text input.
 # This prevents a manually curated question from promising an answer the current OKF
 # pool cannot support yet.
@@ -1080,11 +1093,22 @@ with st.sidebar:
     # BEREICH 1: Kompakte, standardmäßig geschlossene Q&A-Starter
     with st.expander("Q&A", expanded=False):
         for group in question_groups:
-            st.markdown(f"**{group['title']}**")
-            for idx, question in enumerate(group["questions"]):
-                if st.button(f"📌 {question}", key=f"sb_question_{group['id']}_{idx}", use_container_width=True):
-                    st.session_state.current_prompt = question
-                    st.rerun()
+            state_key = f"qa_section_open_{group['id']}"
+            is_open = bool(st.session_state.get(state_key, False))
+            chevron = "⌄" if is_open else "›"
+            section_label = QA_SECTION_LABELS.get(group["id"], group["title"])
+            if st.button(
+                f"{chevron} {section_label}",
+                key=f"qa_section_toggle_{group['id']}",
+                use_container_width=True,
+            ):
+                st.session_state[state_key] = not is_open
+                st.rerun()
+            if is_open:
+                for idx, question in enumerate(group["questions"]):
+                    if st.button(f"📌 {question}", key=f"sb_question_{group['id']}_{idx}", use_container_width=True):
+                        st.session_state.current_prompt = question
+                        st.rerun()
 
     with st.expander("Links", expanded=False):
         st.link_button(
@@ -1192,11 +1216,38 @@ with st.sidebar:
     # BEREICH 5: OpenAPI Spezifikationen & Schemas
     with st.expander("📐 OpenAPI & Schemas", expanded=False):
         st.markdown("""
-        **Spezifizierte Integrationsendpunkte:**
+        **ORCAI**
+
+        Spezifizierte Integrationsendpunkte:
         - `POST /http/conciliamus/v1/businesspartners/batch` (Inbound)
         - `POST /conciliamus/v1/businesspartners/item` (ProcessDirect)
         """)
-        st.link_button("📂 OpenAPI Spec auf GitHub ↗", "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/api/conciliamus-architecture.openapi.yaml", use_container_width=True)
+        st.link_button("ORCAI OpenAPI ↗", "https://github.com/gonzo42nixon/conciliamus-architecture-knowledge/blob/main/api/conciliamus-architecture.openapi.yaml", use_container_width=True)
+
+        st.markdown("""
+        **SAP – API_BUSINESS_PARTNER**
+
+        Basis-URL:
+        `https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_BUSINESS_PARTNER`
+
+        - `GET /A_BusinessPartner`
+        - `POST /A_BusinessPartner`
+        - `PATCH /A_BusinessPartner('{BusinessPartner}')`
+
+        HTTP-Header:
+
+        - `Accept: application/json`
+        - `Content-Type: application/json`
+        - `APIKey: separat bereitgestellt`
+
+        Der API-Key darf weder im Integration Flow noch im Groovy-Code fest hinterlegt werden.
+        """)
+        st.link_button("SAP API-Dokumentation ↗", "https://api.sap.com/api/API_BUSINESS_PARTNER/tryout", use_container_width=True)
+        st.link_button(
+            "Quelle: Praxisaufgabe (PDF) ↗",
+            "https://firebasestorage.googleapis.com/v0/b/orcai-54321.firebasestorage.app/o/clients%2FACME%2Frecords%2FORCAI-260905-17H10-FILE-HSWWD%2FPraxisaufgabe%20%E2%80%93%20SAP%20Cloud%20Integration%20(SAP%20Integration%20Suite.pdf?alt=media&token=afecb33d-7bb0-4045-8bbe-579581fb67be",
+            use_container_width=True,
+        )
 
     # BEREICH 6: Multi-LLM Provider & Qualitäts-Audit Konfiguration
     with st.expander("⚙️ KI-Provider, DeepSeek & Audit", expanded=False):
