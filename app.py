@@ -385,6 +385,16 @@ st.markdown("""
     [data-testid="stSidebar"] [data-testid="stExpander"] summary {
         padding: 6px 10px !important;
         min-height: 34px !important;
+        background: #ffffff !important;
+        color: #172033 !important;
+        border-radius: 7px !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary:hover {
+        background: #e8f1fb !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stExpander"] summary svg {
+        fill: #334155 !important;
+        color: #334155 !important;
     }
     [data-testid="stSidebar"] [data-testid="stExpanderDetails"] {
         padding: 2px 8px 7px !important;
