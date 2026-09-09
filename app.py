@@ -43,6 +43,7 @@ TESTDATA_DIR = ROOT_DIR / "testdata"
 USER_AVATAR_URL = "https://firebasestorage.googleapis.com/v0/b/orcai-54321.firebasestorage.app/o/clients%2FACME%2Frecords%2FORCAI-260908-09H03-IMAGE-4PN9F%2Fpreview.png?alt=media&token=3246238a-cad5-4cdd-a9bf-ce4e8044ff72"
 ASSISTANT_AVATAR_URL = "https://firebasestorage.googleapis.com/v0/b/orcai-54321.firebasestorage.app/o/clients%2FACME%2Frecords%2FORCAI-260908-09H03-IMAGE-NF52H%2Fpreview.png?alt=media&token=47c7f6b6-2801-4b7a-bac0-5f9ebe67bf8b"
 
+@st.cache_data(show_spinner=False)
 def get_advisor_logo_base64() -> str:
     """Returns the base64-encoded IT-Advisor logo (ki_advisor_icon.png) for 100% reliable rendering."""
     for loc in [ROOT_DIR / "site" / "ki_advisor_icon.png", ROOT_DIR / "ki_advisor_icon.png"]:
@@ -498,24 +499,10 @@ def get_secret(key: str, default: str = "") -> str:
         pass
     return os.environ.get(key, default)
 
-# Load Knowledge Base
-def get_knowledge_mtime() -> float:
-    mtime = 0.0
-    if KNOWLEDGE_DIR.exists():
-        for file_path in KNOWLEDGE_DIR.rglob("*.md"):
-            try:
-                mtime = max(mtime, file_path.stat().st_mtime)
-            except Exception:
-                pass
-    if GRAPH_PATH.exists():
-        try:
-            mtime = max(mtime, GRAPH_PATH.stat().st_mtime)
-        except Exception:
-            pass
-    return mtime
-
-@st.cache_resource
-def load_knowledge_base(mtime_key: float) -> Tuple[List[Dict[str, Any]], Dict[str, Any], Dict[str, Any]]:
+# Load the immutable deployment bundle once per Streamlit worker. The explicit
+# sidebar reload action remains available when a manual refresh is required.
+@st.cache_resource(show_spinner=False)
+def load_knowledge_base() -> Tuple[List[Dict[str, Any]], Dict[str, Any], Dict[str, Any]]:
     concepts = []
     frontmatter_re = re.compile(r"^---\s*\n(.*?)\n---\s*\n", re.DOTALL)
     
@@ -563,9 +550,10 @@ def load_knowledge_base(mtime_key: float) -> Tuple[List[Dict[str, Any]], Dict[st
 
     return concepts, graph, manifest
 
-concepts, graph, manifest = load_knowledge_base(get_knowledge_mtime())
+concepts, graph, manifest = load_knowledge_base()
 
 # ----------------- HIGH-PRECISION RETRIEVAL WITH CONFIDENCE SCORING -----------------
+@st.cache_data(show_spinner=False, max_entries=512)
 def retrieve_relevant_docs(query: str, top_k: int = 5) -> Tuple[List[Dict[str, Any]], int, Dict[str, Any]]:
     """
     Retrieves the most relevant OKF architecture documents and computes a calibrated confidence score (0-99%).
@@ -700,6 +688,18 @@ def normalize_gemini_model(model_name: str) -> str:
         return "gemini-1.5-flash"
     return "gemini-3.6-flash"
 
+
+@st.cache_resource(show_spinner=False, max_entries=4)
+def get_gemini_client(api_key: str):
+    """Reuse the SDK client and its HTTP connection pool across Streamlit reruns."""
+    from google import genai
+    from google.genai import types
+
+    return genai.Client(
+        api_key=api_key,
+        http_options=types.HttpOptions(api_version="v1beta", timeout=20000),
+    )
+
 def call_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> Optional[str]:
     """Calls Google Gemini with dynamic model discovery, multi-version fallback (v1/v1beta), and automatic resilience."""
     try:
@@ -774,7 +774,6 @@ BENUTZERFRAGE:
 
 def stream_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> Iterator[str]:
     """Stream Gemini tokens with the current Google GenAI SDK."""
-    from google import genai
     from google.genai import types
 
     context_str = "\n\n---\n\n".join([
@@ -796,10 +795,7 @@ BENUTZERFRAGE:
         "gemini-3.5-flash",
     ]
     last_error: Exception | None = None
-    client = genai.Client(
-        api_key=api_key,
-        http_options=types.HttpOptions(api_version="v1beta", timeout=20000),
-    )
+    client = get_gemini_client(api_key)
     config = types.GenerateContentConfig(system_instruction=get_system_prompt(), temperature=0.2)
     for active_model in dict.fromkeys(models_to_try[:2]):
         emitted = False
@@ -1263,6 +1259,7 @@ with st.sidebar:
         st.markdown("---")
         if st.button("🔄 Wissensbasis neu laden", key="btn_reload_kb", use_container_width=True):
             st.cache_resource.clear()
+            st.cache_data.clear()
             st.rerun()
 
     # BEREICH 3: ADR-Katalog Übersicht
