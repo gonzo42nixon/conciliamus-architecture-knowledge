@@ -36,7 +36,7 @@
         --btn-action-hover: #94a3b8;
         --popover-bg: #ffffff;
       }
-      .input-card { box-shadow: 0 8px 24px rgba(15, 23, 42, 0.16); }
+      .input-card { box-shadow: 0 5px 16px rgba(15, 23, 42, 0.11); }
       .popover-menu { border-color: #94a3b8; box-shadow: 0 16px 32px rgba(15, 23, 42, 0.18); }
       .popover-item { color: #172033; }
       .popover-item:hover { color: #0f172a; }
@@ -72,14 +72,14 @@
       border: 1.5px solid var(--border-card);
       border-radius: 24px;
       padding: 13px 18px 11px 18px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 7px 22px rgba(0, 0, 0, 0.24), 0 2px 5px rgba(0, 0, 0, 0.14);
       transition: border-color 0.2s ease, box-shadow 0.2s ease;
       width: 100%;
     }
 
     .input-card:focus-within {
       border-color: var(--border-focus);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2), 0 14px 35px rgba(0, 0, 0, 0.65);
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.16), 0 8px 24px rgba(0, 0, 0, 0.28);
     }
 
     /* Top text input row */
@@ -490,6 +490,15 @@
     let storageHydrated = false;
     let lastGlossaryRequestId = '';
     let autoFollowUntil = 0;
+    let autoFollowFrame = 0;
+
+    function currentAutoFollowDeadline() {
+      try {
+        return Math.max(autoFollowUntil, Number(window.parent.__conciliamusAutoFollowUntil || 0));
+      } catch (error) {
+        return autoFollowUntil;
+      }
+    }
 
     function parentScrollHost() {
       try {
@@ -506,7 +515,18 @@
 
     function startAutoFollow() {
       autoFollowUntil = Date.now() + 120000;
+      try {
+        window.parent.__conciliamusAutoFollowUntil = autoFollowUntil;
+      } catch (error) {}
       scrollConversationToEnd('smooth');
+    }
+
+    function scheduleAutoFollow() {
+      if (Date.now() >= currentAutoFollowDeadline() || autoFollowFrame) return;
+      autoFollowFrame = window.requestAnimationFrame(() => {
+        autoFollowFrame = 0;
+        scrollConversationToEnd('auto');
+      });
     }
 
     function syncInputWithMainColumn() {
@@ -529,8 +549,9 @@
       const parentMain = parentScrollHost();
       if (parentMain) {
         new MutationObserver(() => {
-          if (Date.now() < autoFollowUntil) scrollConversationToEnd('auto');
+          scheduleAutoFollow();
         }).observe(parentMain, { childList: true, subtree: true, characterData: true });
+        scheduleAutoFollow();
       }
       window.parent.addEventListener('resize', syncInputWithMainColumn);
       syncInputWithMainColumn();

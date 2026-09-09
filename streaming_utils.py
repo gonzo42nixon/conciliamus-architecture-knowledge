@@ -46,9 +46,28 @@ def iter_gemini_sse_lines(lines: Iterable[bytes]) -> Iterator[str]:
                 yield text
 
 
-def iter_text_chunks(text: str, delay_seconds: float = 0.012) -> Iterator[str]:
-    """Stream a local Markdown fallback in readable word-sized chunks."""
-    for chunk in re.findall(r"\S+\s*|\s+", text):
+def smooth_stream(chunks: Iterable[str], target_chars: int = 48) -> Iterator[str]:
+    """Coalesce tiny provider tokens so the UI updates smoothly, not per token."""
+    buffer = ""
+    for chunk in chunks:
+        if not chunk:
+            continue
+        buffer += chunk
+        if len(buffer) >= target_chars and (buffer[-1].isspace() or "\n" in buffer):
+            yield buffer
+            buffer = ""
+    if buffer:
+        yield buffer
+
+
+def iter_text_chunks(
+    text: str,
+    delay_seconds: float = 0.035,
+    target_chars: int = 48,
+) -> Iterator[str]:
+    """Stream local Markdown in stable phrase-sized chunks."""
+    words = re.findall(r"\S+\s*|\s+", text)
+    for chunk in smooth_stream(words, target_chars=target_chars):
         yield chunk
         if delay_seconds:
             time.sleep(delay_seconds)

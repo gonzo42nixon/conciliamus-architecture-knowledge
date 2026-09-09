@@ -28,7 +28,7 @@ from glossary_advisor import (
     should_dispatch_pending_glossary,
 )
 from chat_history import active_chat, bind_session, delete_chat, select_chat, serialize_store, start_new_chat, touch_active_chat
-from streaming_utils import iter_openai_sse_lines, iter_text_chunks
+from streaming_utils import iter_openai_sse_lines, iter_text_chunks, smooth_stream
 
 # Setup paths
 ROOT_DIR = Path(__file__).parent.resolve()
@@ -226,8 +226,8 @@ st.markdown("""
         right: 0px !important;
         width: auto !important;
         z-index: 999999 !important;
-        background: linear-gradient(180deg, rgba(11, 15, 25, 0) 0%, rgba(11, 15, 25, 0.94) 18%, rgba(11, 15, 25, 0.98) 100%) !important;
-        padding: 6px 16px 14px 16px !important;
+        background: transparent !important;
+        padding: 0 16px !important;
         box-sizing: border-box !important;
         pointer-events: none !important;
     }
@@ -462,7 +462,7 @@ st.markdown("""
         }
         div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]),
         div[data-testid="stElementContainer"]:has(iframe[title*="modern_chat_input"]) {
-            background: linear-gradient(180deg, rgba(247,249,252,0) 0%, rgba(247,249,252,0.97) 18%, #f7f9fc 100%) !important;
+            background: transparent !important;
         }
         [data-testid="stChatMessage"] {
             background: #ffffff !important;
@@ -1597,7 +1597,7 @@ if user_input:
 
         if answer_stream is not None:
             try:
-                answer = st.write_stream(answer_stream) or ""
+                answer = st.write_stream(smooth_stream(answer_stream)) or ""
             except Exception:
                 answer = ""
 
