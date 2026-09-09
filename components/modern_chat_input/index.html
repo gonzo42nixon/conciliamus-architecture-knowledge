@@ -489,6 +489,52 @@
     const CHAT_STORAGE_KEY = 'conciliamus.ai-advisor.chats.v1';
     let storageHydrated = false;
     let lastGlossaryRequestId = '';
+    let autoFollowUntil = 0;
+
+    function parentScrollHost() {
+      try {
+        return window.parent.document.querySelector('[data-testid="stMain"]') || window.parent.document.scrollingElement;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    function scrollConversationToEnd(behavior = 'smooth') {
+      const host = parentScrollHost();
+      if (host) host.scrollTo({ top: host.scrollHeight, behavior });
+    }
+
+    function startAutoFollow() {
+      autoFollowUntil = Date.now() + 120000;
+      scrollConversationToEnd('smooth');
+    }
+
+    function syncInputWithMainColumn() {
+      try {
+        const frame = window.frameElement;
+        const wrapper = frame && (
+          frame.closest('div[data-testid="stCustomComponentV1"]') ||
+          frame.closest('div[data-testid="stElementContainer"]')
+        );
+        if (!wrapper) return;
+        const sidebar = window.parent.document.querySelector('[data-testid="stSidebar"]');
+        const sidebarRight = sidebar && window.parent.innerWidth > 760
+          ? Math.max(0, sidebar.getBoundingClientRect().right)
+          : 0;
+        wrapper.style.setProperty('left', `${sidebarRight}px`, 'important');
+      } catch (error) {}
+    }
+
+    try {
+      const parentMain = parentScrollHost();
+      if (parentMain) {
+        new MutationObserver(() => {
+          if (Date.now() < autoFollowUntil) scrollConversationToEnd('auto');
+        }).observe(parentMain, { childList: true, subtree: true, characterData: true });
+      }
+      window.parent.addEventListener('resize', syncInputWithMainColumn);
+      syncInputWithMainColumn();
+    } catch (error) {}
 
     function notifyHeight(forcedHeight) {
       let height;
@@ -529,6 +575,7 @@
         const context = JSON.parse(decodeURIComponent(hash.slice('#glossary='.length)));
         if (!context.request_id || context.request_id === lastGlossaryRequestId) return;
         lastGlossaryRequestId = context.request_id;
+        startAutoFollow();
         sendToStreamlit('glossary', JSON.stringify(context));
       } catch (error) {
         console.warn('Glossary handoff could not be decoded.', error);
@@ -562,6 +609,7 @@
         stopRecording();
       }
 
+      startAutoFollow();
       sendToStreamlit('submit', text);
       promptInput.value = '';
       autoResize();

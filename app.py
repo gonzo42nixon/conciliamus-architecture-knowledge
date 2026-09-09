@@ -11,7 +11,7 @@ import json
 import yaml
 import base64
 from pathlib import Path
-from typing import List, Dict, Any, Tuple, Optional
+from typing import List, Dict, Any, Tuple, Optional, Iterator
 import time
 import urllib.request
 import urllib.parse
@@ -28,6 +28,7 @@ from glossary_advisor import (
     should_dispatch_pending_glossary,
 )
 from chat_history import active_chat, bind_session, delete_chat, select_chat, serialize_store, start_new_chat, touch_active_chat
+from streaming_utils import iter_openai_sse_lines
 
 # Setup paths
 ROOT_DIR = Path(__file__).parent.resolve()
@@ -220,7 +221,7 @@ st.markdown("""
     div[data-testid="stCustomComponentV1"]:has(iframe[title*="modern_chat_input"]),
     div[data-testid="stElementContainer"]:has(iframe[title*="modern_chat_input"]) {
         position: fixed !important;
-        bottom: 0px !important;
+        bottom: 18px !important;
         left: 21rem !important;
         right: 0px !important;
         width: auto !important;
@@ -286,10 +287,22 @@ st.markdown("""
 
     /* Scrollable content container with generous bottom offset */
     .main .block-container {
-        padding-bottom: 330px !important;
+        padding-bottom: 24px !important;
         padding-top: 1.2rem !important;
         max-width: 860px !important;
+        width: 100% !important;
         margin: 0 auto !important;
+    }
+    [data-testid="stMainBlockContainer"] {
+        max-width: 860px !important;
+        width: 100% !important;
+        margin-inline: auto !important;
+        padding-bottom: 24px !important;
+    }
+    .conversation-safe-space, #advisor-scroll-anchor {
+        height: 150px !important;
+        min-height: 150px !important;
+        pointer-events: none !important;
     }
 
     /* Headings - Bold, high-contrast pure white and bright sky blue */
@@ -458,6 +471,15 @@ st.markdown("""
         }
         [data-testid="stChatMessage"] p, [data-testid="stChatMessage"] li,
         p, span, label { color: #172033 !important; }
+        [data-testid="stChatMessage"] code {
+            background: #e6edf5 !important;
+            color: #0369a1 !important;
+            border-color: #b7c7d9 !important;
+        }
+        [data-testid="stChatMessage"] pre {
+            background: #f1f5f9 !important;
+            border-color: #cbd5e1 !important;
+        }
         h1, h2 { color: #0f172a !important; }
         h4, h5, h6 { color: #334155 !important; }
     }
@@ -738,6 +760,96 @@ BENUTZERFRAGE:
         return None
     except Exception as e:
         return None
+
+
+def stream_gemini(api_key: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> Iterator[str]:
+    """Stream Gemini text chunks without rendering intermediate draft documents."""
+    from google import genai
+    from google.genai import types
+
+    context_str = "\n\n---\n\n".join([
+        f"### Dokument: {d['title']} ({d['path']})\n**Typ:** {d['type']} | **Status:** {d['frontmatter'].get('status', 'verified')}\n\n{d['content']}"
+        for d in context_docs
+    ])
+    user_content = f"""Folgende verifizierte Architektur-Dokumente liegen dir vor:
+
+{context_str}
+
+---
+BENUTZERFRAGE:
+{query}
+"""
+    config = types.GenerateContentConfig(system_instruction=get_system_prompt(), temperature=0.2)
+    models_to_try = [normalize_gemini_model(model_name), "gemini-2.0-flash", "gemini-1.5-flash"]
+    last_error: Exception | None = None
+    for api_ver in ("v1", "v1beta"):
+        client = genai.Client(api_key=api_key, http_options={"api_version": api_ver})
+        for active_model in dict.fromkeys(models_to_try):
+            emitted = False
+            try:
+                for chunk in client.models.generate_content_stream(
+                    model=active_model,
+                    contents=user_content,
+                    config=config,
+                ):
+                    if chunk.text:
+                        emitted = True
+                        yield chunk.text
+                if emitted:
+                    return
+            except Exception as error:
+                last_error = error
+                if emitted:
+                    return
+    if last_error:
+        raise last_error
+
+
+def stream_deepseek_or_openrouter(
+    api_key: str,
+    provider: str,
+    model_name: str,
+    query: str,
+    context_docs: List[Dict[str, Any]],
+) -> Iterator[str]:
+    """Stream DeepSeek/OpenRouter tokens from their compatible SSE API."""
+    context_str = "\n\n---\n\n".join([
+        f"### Dokument: {d['title']} ({d['path']})\n**Typ:** {d['type']} | **Status:** {d['frontmatter'].get('status', 'verified')}\n\n{d['content']}"
+        for d in context_docs
+    ])
+    user_content = f"Folgende verifizierte Architektur-Dokumente liegen dir vor:\n\n{context_str}\n\n---\nBENUTZERFRAGE:\n{query}\n"
+    if "deepseek" in provider.lower() and "openrouter" not in provider.lower():
+        url = "https://api.deepseek.com/chat/completions"
+        headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
+        active_model = model_name if model_name in {"deepseek-chat", "deepseek-reasoner"} else "deepseek-chat"
+    else:
+        url = "https://openrouter.ai/api/v1/chat/completions"
+        headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json",
+            "HTTP-Referer": "https://orcai-54321.web.app",
+            "X-Title": "Conciliamus AI Advisor",
+        }
+        active_model = model_name if "/" in model_name else "deepseek/deepseek-chat"
+    payload = {
+        "model": active_model,
+        "messages": [
+            {"role": "system", "content": get_system_prompt()},
+            {"role": "user", "content": user_content},
+        ],
+        "temperature": 0.2,
+        "stream": True,
+    }
+    request = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"), headers=headers, method="POST")
+    emitted = False
+    try:
+        with urllib.request.urlopen(request, timeout=90) as response:
+            for token in iter_openai_sse_lines(response):
+                emitted = True
+                yield token
+    except Exception:
+        if not emitted:
+            raise
 
 def call_deepseek_or_openrouter(api_key: str, provider: str, model_name: str, query: str, context_docs: List[Dict[str, Any]]) -> str:
     """Calls DeepSeek or OpenRouter API (OpenAI-compatible)."""
@@ -1336,6 +1448,7 @@ else:
         avatar = USER_AVATAR_URL if msg["role"] == "user" else ASSISTANT_AVATAR_URL
         with st.chat_message(msg["role"], avatar=avatar):
             st.markdown(msg["content"])
+    st.markdown('<div class="conversation-safe-space" aria-hidden="true"></div>', unsafe_allow_html=True)
 
 # ----------------- RIGIDLY FIXED MODERN CHAT INPUT (SCREENSHOT 1 + SPRACHEINGABE) -----------------
 component_dir = os.path.join(os.path.dirname(__file__), "components", "modern_chat_input")
@@ -1455,38 +1568,36 @@ if user_input:
         active_deepseek_key = deepseek_key or get_secret("DEEPSEEK_API_KEY", "") or get_secret("OPENROUTER_API_KEY", "")
 
         answer = ""
-        with st.spinner("Conciliamus Advisor prüft Wissensgraph und generiert Antwort..."):
-            # Provider Execution
-            if "DeepSeek" in provider_choice and "Dual" not in provider_choice and active_deepseek_key:
-                answer = call_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", model_choice, analysis_input, relevant_docs)
-            elif "OpenRouter" in provider_choice and active_deepseek_key:
-                answer = call_deepseek_or_openrouter(active_deepseek_key, "OpenRouter", model_choice, analysis_input, relevant_docs)
-            elif active_gemini_key:
-                answer = call_gemini(active_gemini_key, model_choice, analysis_input, relevant_docs)
-            elif active_deepseek_key:
-                answer = call_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", "deepseek-chat", analysis_input, relevant_docs)
+        answer_stream = None
+        if "DeepSeek" in provider_choice and "Dual" not in provider_choice and active_deepseek_key:
+            answer_stream = stream_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", model_choice, analysis_input, relevant_docs)
+        elif "OpenRouter" in provider_choice and active_deepseek_key:
+            answer_stream = stream_deepseek_or_openrouter(active_deepseek_key, "OpenRouter", model_choice, analysis_input, relevant_docs)
+        elif active_gemini_key:
+            answer_stream = stream_gemini(active_gemini_key, model_choice, analysis_input, relevant_docs)
+        elif active_deepseek_key:
+            answer_stream = stream_deepseek_or_openrouter(active_deepseek_key, "DeepSeek", "deepseek-chat", analysis_input, relevant_docs)
 
-            # Resilient Fail-Safe: If provider returned None or failed with error, seamlessly fall back to Local Grounding!
-            if not answer or (isinstance(answer, str) and answer.startswith("❌")):
-                best = relevant_docs[0]
-                note_suffix = " (Lokales Grounding aktiv)" if not active_gemini_key and not active_deepseek_key else " (Gemini API 404/Offline – Automatisches OKF-Direkt-Grounding aktiv)"
-                answer = (
-                    f"> [!NOTE]\n"
-                    f"> **🏛️ Verifizierte Architektur-Antwort{note_suffix} • Konfidenz: {confidence}%**\n"
-                    f"> *(Direkte quellengetreue Extraktion aus dem Google OKF v0.2 Repository für `{best['id']}`)*\n\n"
-                    f"### {best['title']}\n\n"
-                    f"{best['content']}\n"
-                )
+        if answer_stream is not None:
+            try:
+                answer = st.write_stream(answer_stream) or ""
+            except Exception:
+                answer = ""
 
-            # Optional Critic / Audit Pass with DeepSeek
-            if enable_audit and active_deepseek_key and not answer.startswith("❌") and not answer.startswith("⚠️"):
-                with st.spinner("DeepSeek führt unabhängigen Architektur-Audit durch..."):
-                    answer = run_critic_audit(active_deepseek_key, analysis_input, answer, relevant_docs)
-
+        # Quiet fail-safe: render exactly one grounded response if streaming was unavailable.
+        if not answer:
+            best = relevant_docs[0]
+            note_suffix = " (Lokales Grounding aktiv)" if not active_gemini_key and not active_deepseek_key else " (Provider nicht erreichbar – OKF-Direkt-Grounding aktiv)"
+            answer = (
+                f"> [!NOTE]\n"
+                f"> **🏛️ Verifizierte Architektur-Antwort{note_suffix} • Konfidenz: {confidence}%**\n"
+                f"> *(Direkte quellengetreue Extraktion aus dem Google OKF v0.2 Repository für `{best['id']}`)*\n\n"
+                f"### {best['title']}\n\n"
+                f"{best['content']}\n"
+            )
             if active_glossary_context:
                 answer = polish_glossary_answer(answer)
-
-        st.markdown(answer)
+            st.markdown(answer)
 
         # Citations & Source Links
         if relevant_docs:
@@ -1496,4 +1607,17 @@ if user_input:
 
         st.session_state.messages.append({"role": "assistant", "content": answer})
         touch_active_chat(st.session_state.chat_store)
-        st.rerun()
+        persisted_store = json.dumps(serialize_store(st.session_state.chat_store))
+        components.html(
+            f"""
+            <script>
+              try {{ window.parent.localStorage.setItem('conciliamus.ai-advisor.chats.v1', {persisted_store}); }} catch (error) {{}}
+              try {{
+                const main = window.parent.document.querySelector('[data-testid="stMain"]');
+                if (main) main.scrollTo({{ top: main.scrollHeight, behavior: 'smooth' }});
+              }} catch (error) {{}}
+            </script>
+            """,
+            height=0,
+        )
+        st.markdown('<div id="advisor-scroll-anchor" aria-hidden="true"></div>', unsafe_allow_html=True)
